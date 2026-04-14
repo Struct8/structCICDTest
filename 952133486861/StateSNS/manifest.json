@@ -1,10 +1,10 @@
 {
   "external_repositories": [],
   "action": "apply",
-  "trigger_id": "1776200828277",
+  "trigger_id": "1776201291837",
   "backend_global_config": {
     "provider": "aws",
-    "role_arn": "arn:aws:iam::952133486861:role/CloudMan-Gitops-struct8-structCICDTest",
+    "role_arn": "arn:aws:iam::952133486861:role/CloudMan-Gitops-Struct8-structCICDTest",
     "region": "us-east-1",
     "bucket": "pro112-teste-cicd"
   },
@@ -17,7 +17,7 @@
           "path": "952133486861/StateSNS",
           "provider": "aws",
           "target_auth": {
-            "role_arn": "arn:aws:iam::952133486861:role/CloudMan-Gitops-struct8-structCICDTest",
+            "role_arn": "arn:aws:iam::952133486861:role/CloudMan-Gitops-Struct8-structCICDTest",
             "region": "us-east-1",
             "secret_name": "AUTH_AWS_952133486861"
           }
