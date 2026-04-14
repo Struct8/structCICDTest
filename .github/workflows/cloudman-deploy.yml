@@ -1,4 +1,4 @@
-name: Cloudman Pipeline
+name: Struct8 Pipeline
 
 on:
   push:
