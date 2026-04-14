@@ -12,5 +12,5 @@ permissions:
 jobs:
   infrastructure:
     name: Call GitOps Engine
-    uses: CloudManPro/cloudman-core/.github/workflows/engine.yml@main
+    uses: Struct8/cloudman-core/.github/workflows/engine.yml@main
     secrets: inherit
