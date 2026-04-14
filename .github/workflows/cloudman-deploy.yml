@@ -1,0 +1,16 @@
+name: Cloudman Pipeline
+
+on:
+  push:
+    paths:
+      - '**/manifest.json'
+
+permissions:
+  id-token: write  
+  contents: write    
+
+jobs:
+  infrastructure:
+    name: Call GitOps Engine
+    uses: CloudManPro/cloudman-core/.github/workflows/engine.yml@main
+    secrets: inherit
