@@ -324,6 +324,8 @@ resource "aws_eks_addon" "vpc_cni_ekstest" {
   cluster_name                      = aws_eks_cluster.ekstest.name
   configuration_values              = jsonencode({"env":{"ENABLE_PREFIX_DELEGATION":"true", "WARM_PREFIX_TARGET":"1"}})
   resolve_conflicts                 = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+
 }
 
 resource "aws_eks_cluster" "ekstest" {
@@ -333,9 +335,6 @@ resource "aws_eks_cluster" "ekstest" {
   enabled_cluster_log_types         = ["api"]
   force_update_version              = false
   role_arn                          = aws_iam_role.role_eks_ekstest.arn
-  compute_config {
-    node_role_arn                   = aws_iam_role.role_eks_ekstest.arn
-  }
   tags                              = {
     "Name" = "ekstest"
     "State" = "stateeks"
