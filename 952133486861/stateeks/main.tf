@@ -75,6 +75,12 @@ resource "helm_release" "argocd" {
   create_namespace = true
   version          = "5.51.6"
 
+  # ADICIONE ESTE BLOCO AQUI:
+  set {
+    name  = "server.extraArgs"
+    value = "{--insecure}"
+  }
+
   depends_on = [aws_eks_node_group.NodeGroup, helm_release.aws_load_balancer_controller]
 }
 
@@ -329,6 +335,11 @@ resource "aws_eks_cluster" "ekstest" {
     public_access_cidrs     = ["0.0.0.0/0"]
     subnet_ids              = [aws_subnet.Subnet15.id, aws_subnet.Subnet16.id]
   }
+  access_config {
+    authentication_mode                         = "API_AND_CONFIG_MAP"
+    bootstrap_cluster_creator_admin_permissions = true
+  }
+
   depends_on = [aws_iam_role_policy_attachment.attach_AmazonEKSClusterPolicy_to_ekstest]
 }
 
