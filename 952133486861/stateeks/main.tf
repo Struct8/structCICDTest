@@ -13,9 +13,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "cloudan-v2-cicd"
+    bucket         = "pro112-teste-cicd"
     key            = "952133486861/stateeks/main.tfstate"
     region         = "us-east-1"
+    dynamodb_table = "teste-cicd"
     encrypt        = true
   }
 }
@@ -41,19 +42,6 @@ provider "helm" {
   }
 }
 
-provider "kubernetes" {
-  host                   = aws_eks_cluster.ekstest.endpoint
-  cluster_ca_certificate = base64decode(aws_eks_cluster.ekstest.certificate_authority[0].data)
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    args        = ["eks", "get-token", "--cluster-name", aws_eks_cluster.ekstest.name]
-    command     = "aws"
-  }
-}
-
-
-
-
 ### SYSTEM DATA SOURCES ###
 
 data "tls_certificate" "eks_tls_ekstest" {
@@ -64,29 +52,6 @@ data "http" "lbc_iam_policy" {
   url                               = "https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json"
 }
 
-resource "kubernetes_namespace" "argocd" {
-  metadata {
-    name = "argocd"
-  }
-}
-
-# Instalar o Argo CD via Helm
-resource "helm_release" "argocd" {
-  name       = "argocd"
-  repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-cd"
-  namespace  = kubernetes_namespace.argocd.metadata[0].name
-  version    = "7.3.11" # Versão estável
-
-  # Define o serviço como LoadBalancer para você receber uma URL da AWS
-  set {
-    name  = "server.service.type"
-    value = "LoadBalancer"
-  }
-
-  # Importante: O Argo só instala se houver Nodes rodando
-  depends_on = [aws_eks_node_group.NodeGroup]
-}
 
 
 
