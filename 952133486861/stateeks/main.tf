@@ -298,7 +298,7 @@ resource "aws_route_table_association" "aws_route_table_association_Subnet17_RTe
 resource "aws_launch_template" "Template" {
   name                   = "Template"
   ebs_optimized          = true
-  instance_type          = "t3.small"
+  instance_type          = "t3.medium"
   update_default_version = true
 
   # REMOVIDO "vpc_security_group_ids" propositalmente. 
@@ -347,8 +347,8 @@ resource "aws_eks_node_group" "NodeGroup" {
   }
   
   scaling_config {
-    desired_size = 1
-    max_size     = 2
+    desired_size = 2
+    max_size     = 3
     min_size     = 1
   }
   tags = { "Name" = "NodeGroup", "State" = "stateeks", "Struct8User" = "Ricardo" }
