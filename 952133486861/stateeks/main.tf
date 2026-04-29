@@ -330,7 +330,6 @@ resource "aws_eks_cluster" "ekstest" {
   version                           = "1.30"
   name                              = "ekstest"
   bootstrap_self_managed_addons     = true
-  deletion_protection               = false
   enabled_cluster_log_types         = ["api"]
   force_update_version              = false
   role_arn                          = aws_iam_role.role_eks_ekstest.arn
