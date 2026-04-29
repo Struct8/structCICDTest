@@ -32,7 +32,7 @@ resource "aws_sns_topic" "Topic1" {
   tags                              = {
     "Name" = "Topic1"
     "State" = "StateSNS"
-    "CloudmanUser" = "Ricardo"
+    "Struct8User" = "Ricardo"
   }
 }
 
