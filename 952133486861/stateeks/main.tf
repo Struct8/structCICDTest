@@ -329,6 +329,28 @@ resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_egress_all_protocol
 
 ### CATEGORY: COMPUTE ###
 
+data "aws_ami" "AMI_Data_Source_Template" {
+  most_recent                       = true
+  owners                            = ["amazon"]
+  filter {
+    name                            = "name"
+    values                          = ["amazon-eks-node-*-v*"]
+  }
+}
+
+resource "aws_launch_template" "Template" {
+  name                              = "Template"
+  ebs_optimized                     = true
+  instance_type                     = "t3.small"
+  update_default_version            = true
+  vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id]
+  tags                              = {
+    Name = "Template"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
+}
+
 resource "aws_eks_addon" "vpc_cni_ekstest" {
   addon_name                        = "vpc-cni"
   cluster_name                      = aws_eks_cluster.ekstest.name
@@ -363,9 +385,12 @@ resource "aws_eks_node_group" "NodeGroup" {
   version                           = "1.30"
   cluster_name                      = aws_eks_cluster.ekstest.name
   node_group_name                   = "NodeGroup"
-  instance_types                    = ["t3.small"]
   node_role_arn                     = aws_iam_role.role_eksng_NodeGroup.arn
   subnet_ids                        = [aws_subnet.Subnet17.id, aws_subnet.Subnet16.id]
+  launch_template {
+    version                         = "$Latest"
+    id                              = aws_launch_template.Template.id
+  }
   remote_access {
     source_security_group_ids       = [aws_security_group.eks_node_group_NodeGroup_group.id]
   }
