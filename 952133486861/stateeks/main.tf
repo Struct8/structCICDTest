@@ -276,6 +276,26 @@ resource "aws_security_group" "lb_alb_ALBeks_group" {
   }
 }
 
+resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_dns_tcp" {
+  security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
+  source_security_group_id          = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
+  description                       = "Allow Control Plane to DNS pods (TCP)"
+  from_port                         = 53
+  protocol                          = "tcp"
+  to_port                           = 53
+  type                              = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_dns_udp" {
+  security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
+  source_security_group_id          = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
+  description                       = "Allow Control Plane to DNS pods (UDP)"
+  from_port                         = 53
+  protocol                          = "udp"
+  to_port                           = 53
+  type                              = "ingress"
+}
+
 resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_kubelet" {
   security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
   source_security_group_id          = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
@@ -351,6 +371,20 @@ resource "aws_launch_template" "Template" {
   }
 }
 
+resource "aws_eks_addon" "coredns_ekstest" {
+  addon_name                        = "coredns"
+  cluster_name                      = aws_eks_cluster.ekstest.name
+  resolve_conflicts_on_create       = "OVERWRITE"
+  resolve_conflicts_on_update       = "OVERWRITE"
+}
+
+resource "aws_eks_addon" "kube_proxy_ekstest" {
+  addon_name                        = "kube-proxy"
+  cluster_name                      = aws_eks_cluster.ekstest.name
+  resolve_conflicts_on_create       = "OVERWRITE"
+  resolve_conflicts_on_update       = "OVERWRITE"
+}
+
 resource "aws_eks_addon" "vpc_cni_ekstest" {
   addon_name                        = "vpc-cni"
   cluster_name                      = aws_eks_cluster.ekstest.name
@@ -358,24 +392,6 @@ resource "aws_eks_addon" "vpc_cni_ekstest" {
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
 }
-
-resource "aws_eks_addon" "coredns" {
-  cluster_name                = aws_eks_cluster.ekstest.name
-  addon_name                  = "coredns"
-  resolve_conflicts_on_create = "OVERWRITE"
-  resolve_conflicts_on_update = "OVERWRITE"
-  
-  # O CoreDNS só consegue rodar DEPOIS que os nós existem
-  depends_on = [aws_eks_node_group.NodeGroup] 
-}
-
-resource "aws_eks_addon" "kube_proxy" {
-  cluster_name                = aws_eks_cluster.ekstest.name
-  addon_name                  = "kube-proxy"
-  resolve_conflicts_on_create = "OVERWRITE"
-  resolve_conflicts_on_update = "OVERWRITE"
-}
-
 
 resource "aws_eks_cluster" "ekstest" {
   version                           = "1.30"
@@ -456,14 +472,8 @@ resource "helm_release" "aws_load_balancer_controller" {
     name                            = "region"
     value                           = data.aws_region.current.id
   }
-  depends_on = [
-    aws_iam_role_policy_attachment.eks_lb_controller_role_ekstest_attach, 
-    aws_eks_node_group.NodeGroup,
-    aws_eks_addon.vpc_cni_ekstest,
-    aws_eks_addon.kube_proxy
-  ]
+  depends_on                        = [aws_iam_role_policy_attachment.eks_lb_controller_role_ekstest_attach, aws_eks_node_group.NodeGroup]
 }
-
 
 resource "helm_release" "helm_argocd" {
   name                              = "argocd"
@@ -490,13 +500,7 @@ resource "helm_release" "helm_argocd" {
         }
       })
   ]
-  depends_on = [
-    aws_eks_node_group.NodeGroup,
-    aws_eks_addon.vpc_cni_ekstest,
-    aws_eks_addon.coredns,
-    aws_eks_addon.kube_proxy
-  ]
-
+  depends_on                        = [aws_eks_node_group.NodeGroup]
 }
 
 
