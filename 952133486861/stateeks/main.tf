@@ -500,7 +500,7 @@ resource "helm_release" "helm_argocd" {
           repositories = {
             argocd = {
               name = "argocd"
-              url = "https://github.com/Struct8/Argotest.git"
+              url = "https://github.com/Struct8/TestArgo.git"
               type = "git"
               insecure = "false"
               username = "mename"
@@ -518,5 +518,45 @@ resource "helm_release" "helm_argocd" {
   ]
 
 }
+
+resource "helm_release" "argocd_applications" {
+  name       = "argocd-apps"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argocd-apps"
+  version    = "2.0.0" # Verifique a versão mais atual
+  namespace  = "argocd1"
+
+  values = [
+    yamlencode({
+      applications = [
+        {
+          name      = "meu-app-configmap"
+          namespace = "argocd1" # Onde o ArgoCD está instalado
+          finalizers = ["resources-finalizer.argocd.argoproj.io"]
+          project    = "default"
+          source = {
+            repoURL        = "https://github.com/Struct8/TestArgo.git" # Nome corrigido
+            targetRevision = "HEAD"
+            path           = "." # Pasta raiz onde está o seu yaml
+          }
+          destination = {
+            server    = "https://kubernetes.default.svc"
+            namespace = "default" # Onde o ConfigMap será criado
+          }
+          syncPolicy = {
+            automated = {
+              prune    = true
+              selfHeal = true
+            }
+          }
+        }
+      ]
+    })
+  ]
+
+  # IMPORTANTE: Só tenta criar a app depois que o ArgoCD estiver pronto
+  depends_on = [helm_release.helm_argocd]
+}
+
 
 
