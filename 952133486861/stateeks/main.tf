@@ -464,7 +464,6 @@ resource "helm_release" "aws_load_balancer_controller" {
   ]
 }
 
-}
 
 resource "helm_release" "helm_argocd" {
   name                              = "argocd"
