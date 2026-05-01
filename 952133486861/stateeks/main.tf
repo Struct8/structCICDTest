@@ -341,7 +341,7 @@ data "aws_ami" "AMI_Data_Source_Template" {
 resource "aws_launch_template" "Template" {
   name                              = "Template"
   ebs_optimized                     = true
-  instance_type                     = "t3.small"
+  instance_type                     = "t3.medium"
   update_default_version            = true
   vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id]
   tags                              = {
@@ -358,6 +358,24 @@ resource "aws_eks_addon" "vpc_cni_ekstest" {
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
 }
+
+resource "aws_eks_addon" "coredns" {
+  cluster_name                = aws_eks_cluster.ekstest.name
+  addon_name                  = "coredns"
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+  
+  # O CoreDNS só consegue rodar DEPOIS que os nós existem
+  depends_on = [aws_eks_node_group.NodeGroup] 
+}
+
+resource "aws_eks_addon" "kube_proxy" {
+  cluster_name                = aws_eks_cluster.ekstest.name
+  addon_name                  = "kube-proxy"
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+}
+
 
 resource "aws_eks_cluster" "ekstest" {
   version                           = "1.30"
@@ -438,7 +456,14 @@ resource "helm_release" "aws_load_balancer_controller" {
     name                            = "region"
     value                           = data.aws_region.current.id
   }
-  depends_on                        = [aws_iam_role_policy_attachment.eks_lb_controller_role_ekstest_attach, aws_eks_node_group.NodeGroup]
+  depends_on = [
+    aws_iam_role_policy_attachment.eks_lb_controller_role_ekstest_attach, 
+    aws_eks_node_group.NodeGroup,
+    aws_eks_addon.vpc_cni_ekstest,
+    aws_eks_addon.kube_proxy
+  ]
+}
+
 }
 
 resource "helm_release" "helm_argocd" {
@@ -466,7 +491,13 @@ resource "helm_release" "helm_argocd" {
         }
       })
   ]
-  depends_on                        = [aws_eks_node_group.NodeGroup]
+  depends_on = [
+    aws_eks_node_group.NodeGroup,
+    aws_eks_addon.vpc_cni_ekstest,
+    aws_eks_addon.coredns,
+    aws_eks_addon.kube_proxy
+  ]
+
 }
 
 
