@@ -391,9 +391,7 @@ resource "aws_eks_node_group" "NodeGroup" {
     version                         = "$Latest"
     id                              = aws_launch_template.Template.id
   }
-  remote_access {
-    source_security_group_ids       = [aws_security_group.eks_node_group_NodeGroup_group.id]
-  }
+  
   scaling_config {
     desired_size                    = 2
     max_size                        = 2
