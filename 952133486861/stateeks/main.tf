@@ -306,6 +306,16 @@ resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_kubel
   type                              = "ingress"
 }
 
+resource "aws_security_group_rule" "ingress_cluster_to_node_9443" {
+  description              = "Control Plane para ALBC Webhook"
+  protocol                 = "tcp"
+  from_port                = 9443
+  to_port                  = 9443
+  type                     = "ingress"
+  security_group_id        = aws_security_group.eks_node_group_NodeGroup_group.id
+  source_security_group_id = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
+}
+
 resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_webhooks" {
   security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
   source_security_group_id          = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
@@ -500,7 +510,13 @@ resource "helm_release" "helm_argocd" {
         }
       })
   ]
-  depends_on                        = [aws_eks_node_group.NodeGroup]
+  depends_on = [
+    aws_eks_node_group.NodeGroup,
+    aws_eks_addon.vpc_cni_ekstest,
+    aws_eks_addon.coredns_ekstest,
+    helm_release.aws_load_balancer_controller
+  ]
+
 }
 
 
