@@ -502,9 +502,7 @@ resource "helm_release" "helm_argocd" {
               name = "argocd"
               url = "https://github.com/Struct8/TestArgo.git"
               type = "git"
-              insecure = "false"
-              username = "mename"
-              password = "mypassword"
+
             }
           }
         }
