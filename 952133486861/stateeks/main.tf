@@ -391,7 +391,6 @@ resource "aws_eks_node_group" "NodeGroup" {
     version                         = "$Latest"
     id                              = aws_launch_template.Template.id
   }
-  
   scaling_config {
     desired_size                    = 2
     max_size                        = 2
@@ -437,7 +436,7 @@ resource "helm_release" "aws_load_balancer_controller" {
   }
   set {
     name                            = "region"
-    value                           = data.aws_region.current.name
+    value                           = data.aws_region.current.id
   }
   depends_on                        = [aws_iam_role_policy_attachment.eks_lb_controller_role_ekstest_attach, aws_eks_node_group.NodeGroup]
 }
@@ -459,7 +458,7 @@ resource "helm_release" "helm_argocd" {
               name = "argocd"
               url = "https://github.com/Struct8/Argotest.git"
               type = "git"
-              insecure = false
+              insecure = "false"
               username = "mename"
               password = "mypassword"
             }
