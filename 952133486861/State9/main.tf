@@ -1,15 +1,9 @@
 terraform {
-  required_version = ">= 1.4.0" # Requerido para terraform_data
+  required_version = ">= 1.4.0"
 
   required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 5.0"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.12.1"
-    }
+    aws  = { source = "hashicorp/aws", version = ">= 5.0" }
+    helm = { source = "hashicorp/helm", version = "~> 2.12.1" }
   }
 
   backend "s3" {
@@ -21,44 +15,39 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "us-east-1"
+provider "aws" { 
+  region = "us-east-1" 
 }
 
-data "aws_eks_cluster" "ekstest1" {
+# --- Dados do Cluster (Necessário para o Helm e para o comando de terminal) ---
+data "aws_eks_cluster" "eks" {
   name = "ekstest1"
 }
 
-# --- Instalação dos CRDs via Shell (Evita erro de pasta no Plan) ---
-resource "terraform_data" "install_gateway_crds" {
-  # Este bloco só roda no Apply, então não quebra o Plan
+# --- 1. Instalação dos CRDs do Gateway API (O jeito mais simples) ---
+resource "terraform_data" "gateway_api_crds" {
   provisioner "local-exec" {
     command = <<EOT
-      aws eks update-kubeconfig --name ${data.aws_eks_cluster.ekstest1.name} --region us-east-1
+      aws eks update-kubeconfig --name ${data.aws_eks_cluster.eks.name} --region us-east-1
       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
     EOT
   }
-
-  # Gatilho para reinstalar se a versão mudar
-  triggers_replace = [
-    "v1.5.1-standard"
-  ]
 }
 
-# --- Provider Helm configurado para o EKS ---
+# --- Configuração do Provider Helm ---
 provider "helm" {
   kubernetes {
-    host                   = data.aws_eks_cluster.ekstest1.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
+    host                   = data.aws_eks_cluster.eks.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
+      args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.eks.name]
       command     = "aws"
     }
   }
 }
 
-# --- Instalação do Kong ---
+# --- 2. Instalação do Kong ---
 resource "helm_release" "kong1" {
   name             = "kong1"
   chart            = "kong"
@@ -67,6 +56,9 @@ resource "helm_release" "kong1" {
   namespace        = "infrab"
   create_namespace = true
   
+  # Garante que os CRDs já existam antes de subir o Kong
+  depends_on = [terraform_data.gateway_api_crds]
+
   values = [
     yamlencode({
       ingressController = {
@@ -75,17 +67,14 @@ resource "helm_release" "kong1" {
       }
     })
   ]
-
-  # GARANTE que o comando kubectl apply terminou antes de tentar instalar o Kong
-  depends_on = [terraform_data.install_gateway_crds]
 }
 
-# --- Instalação do ArgoCD ---
-resource "helm_release" "helm_Argo1" {
+# --- 3. Instalação do ArgoCD (A que faltava!) ---
+resource "helm_release" "argocd" {
   name             = "argocd"
+  repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
   namespace        = "argocd1"
   create_namespace = true
-  repository       = "https://argoproj.github.io/argo-helm"
   wait             = true
 }
