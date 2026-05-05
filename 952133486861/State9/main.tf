@@ -14,7 +14,7 @@ terraform {
 
   backend "s3" {
     bucket         = "pro112-teste-cicd"
-    key            = "952133486861/State9/main.tfstate"
+    key            = "undefined/State9/main.tfstate"
     region         = "us-east-1"
     dynamodb_table = "teste-cicd"
     encrypt        = true
@@ -32,16 +32,15 @@ data "aws_region" "current" {}
 # --- Extra Providers ---
 provider "helm" {
   kubernetes {
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
-    host                   = data.aws_eks_cluster.ekstest1.endpoint
+    cluster_ca_certificate          = base64decode(aws_eks_cluster.ekstest1.certificate_authority[0].data)
+    host                            = aws_eks_cluster.ekstest1.endpoint
     exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      args        =["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
-      command     = "aws"
+      api_version                   = "client.authentication.k8s.io/v1beta1"
+      args                          = ["eks", "get-token", "--cluster-name", aws_eks_cluster.ekstest1.name]
+      command                       = "aws"
     }
   }
 }
-
 
 ### SYSTEM DATA SOURCES ###
 
@@ -58,14 +57,6 @@ data "aws_eks_cluster" "ekstest1" {
   name                              = "ekstest1"
 }
 
-resource "terraform_data" "gateway_api_crds" {
-  provisioner "local-exec" {
-    command = <<EOT
-      aws eks update-kubeconfig --name ${data.aws_eks_cluster.ekstest1.name} --region us-east-1
-      kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
-    EOT
-  }
-}
 
 
 
@@ -127,6 +118,15 @@ resource "helm_release" "helm_Argo1" {
 
 
 
+resource "terraform_data" "gateway_api_crds" {
+  provisioner "local-exec" {
+    command = <<EOT
+      aws eks update-kubeconfig --name ${data.aws_eks_cluster.ekstest1.name} --region us-east-1
+      kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+    EOT
+  }
+}
+
 resource "helm_release" "kong1" {
   name             = "kong1"
   chart            = "kong"
@@ -138,10 +138,5 @@ resource "helm_release" "kong1" {
   wait             = true
   cleanup_on_fail  = true
   timeout          = 600
-  depends_on =[terraform_data.gateway_api_crds]
-
 }
-
-
-
 
