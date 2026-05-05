@@ -35,6 +35,20 @@ data "aws_eks_cluster" "ekstest1" {
   name = "ekstest1"
 }
 
+provider "helm" {
+  kubernetes {
+    host                   = data.aws_eks_cluster.ekstest1.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
+    
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
+      command     = "aws"
+    }
+  }
+}
+
+
 # Configuração do Provider Kubectl (igual ao Helm)
 provider "kubectl" {
   host                   = data.aws_eks_cluster.ekstest1.endpoint
