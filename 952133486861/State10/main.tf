@@ -54,14 +54,19 @@ data "http" "gateway_api_crds" {
 
 # 2. Divide o arquivo YAML (que tem vários documentos) e aplica um por um
 resource "kubectl_manifest" "gateway_api" {
-  for_each  = toset(split("---", data.http.gateway_api_crds.response_body))
+  for_each = {
+    for idx, manifest in split("---", data.http.gateway_api_crds.response_body) :
+    idx => manifest
+    if trimspace(manifest) != "" && length(regexall("(?i)kind:", manifest)) > 0
+  }
+
   yaml_body = each.value
 
-  # Isso garante que não tentemos criar strings vazias se o arquivo começar/terminar com ---
   lifecycle {
     ignore_changes = [yaml_body]
   }
 }
+
 
 # 3. Agora o Kong pode ser instalado via Helm normalmente, 
 # pois os CRDs já estarão lá graças ao 'depends_on'
