@@ -32,11 +32,11 @@ data "aws_region" "current" {}
 # --- Extra Providers ---
 provider "helm" {
   kubernetes {
-    cluster_ca_certificate          = base64decode(aws_eks_cluster.ekstest.certificate_authority[0].data)
-    host                            = aws_eks_cluster.ekstest.endpoint
+    cluster_ca_certificate          = base64decode(aws_eks_cluster.ekstest1.certificate_authority[0].data)
+    host                            = aws_eks_cluster.ekstest1.endpoint
     exec {
       api_version                   = "client.authentication.k8s.io/v1beta1"
-      args                          = ["eks", "get-token", "--cluster-name", aws_eks_cluster.ekstest.name]
+      args                          = ["eks", "get-token", "--cluster-name", aws_eks_cluster.ekstest1.name]
       command                       = "aws"
     }
   }
@@ -44,12 +44,8 @@ provider "helm" {
 
 ### SYSTEM DATA SOURCES ###
 
-data "tls_certificate" "eks_tls_ekstest" {
-  url                               = aws_eks_cluster.ekstest.identity[0].oidc[0].issuer
-}
-
-data "http" "lbc_iam_policy" {
-  url                               = "https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json"
+data "tls_certificate" "eks_tls_ekstest1" {
+  url                               = aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
 }
 
 
@@ -57,42 +53,14 @@ data "http" "lbc_iam_policy" {
 
 ### CATEGORY: IAM ###
 
-resource "aws_iam_openid_connect_provider" "eks_oidc_ekstest" {
+resource "aws_iam_openid_connect_provider" "eks_oidc_ekstest1" {
   client_id_list                    = ["sts.amazonaws.com"]
-  thumbprint_list                   = [data.tls_certificate.eks_tls_ekstest.certificates[0].sha1_fingerprint]
-  url                               = aws_eks_cluster.ekstest.identity[0].oidc[0].issuer
+  thumbprint_list                   = [data.tls_certificate.eks_tls_ekstest1.certificates[0].sha1_fingerprint]
+  url                               = aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
 }
 
-resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
-  name                              = "AWSLoadBalancerControllerIAMPolicy"
-  description                       = "AWS Load Balancer Controller IAM Policy"
-  path                              = "/"
-  policy                            = data.http.lbc_iam_policy.response_body
-}
-
-data "aws_iam_policy_document" "doc_trust_eks_lb_ekstest" {
-  statement {
-    effect                          = "Allow"
-    principals {
-      identifiers                   = [aws_iam_openid_connect_provider.eks_oidc_ekstest.arn]
-      type                          = "Federated"
-    }
-    actions                         = ["sts:AssumeRoleWithWebIdentity"]
-    condition {
-      test                          = "StringEquals"
-      values                        = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
-      variable                      = "${substr(aws_iam_openid_connect_provider.eks_oidc_ekstest.url, 8, length(aws_iam_openid_connect_provider.eks_oidc_ekstest.url))}:sub"
-    }
-  }
-}
-
-resource "aws_iam_role" "eks_lb_controller_role_ekstest" {
-  name                              = "eks_lb_controller_role_ekstest"
-  assume_role_policy                = data.aws_iam_policy_document.doc_trust_eks_lb_ekstest.json
-}
-
-resource "aws_iam_role" "role_eks_ekstest" {
-  name                              = "role_eks_ekstest"
+resource "aws_iam_role" "role_eks_ekstest1" {
+  name                              = "role_eks_ekstest1"
   assume_role_policy                = jsonencode({
   "Version": "2012-10-17",
   "Statement": [
@@ -106,7 +74,7 @@ resource "aws_iam_role" "role_eks_ekstest" {
   ]
 })
   tags                              = {
-    Name = "role_eks_ekstest"
+    Name = "role_eks_ekstest1"
     State = "stateeks"
     Struct8User = "Ricardo"
   }
@@ -138,9 +106,9 @@ resource "aws_iam_role_policy_attachment" "attach_AmazonEC2ContainerRegistryRead
   role                              = aws_iam_role.role_eksng_NodeGroup.name
 }
 
-resource "aws_iam_role_policy_attachment" "attach_AmazonEKSClusterPolicy_to_ekstest" {
+resource "aws_iam_role_policy_attachment" "attach_AmazonEKSClusterPolicy_to_ekstest1" {
   policy_arn                        = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role                              = aws_iam_role.role_eks_ekstest.name
+  role                              = aws_iam_role.role_eks_ekstest1.name
 }
 
 resource "aws_iam_role_policy_attachment" "attach_AmazonEKSWorkerNodePolicy_to_NodeGroup" {
@@ -151,11 +119,6 @@ resource "aws_iam_role_policy_attachment" "attach_AmazonEKSWorkerNodePolicy_to_N
 resource "aws_iam_role_policy_attachment" "attach_AmazonEKS_CNI_Policy_to_NodeGroup" {
   policy_arn                        = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role                              = aws_iam_role.role_eksng_NodeGroup.name
-}
-
-resource "aws_iam_role_policy_attachment" "eks_lb_controller_role_ekstest_attach" {
-  policy_arn                        = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
-  role                              = aws_iam_role.eks_lb_controller_role_ekstest.name
 }
 
 
@@ -179,8 +142,7 @@ resource "aws_subnet" "Subnet15" {
   cidr_block                        = "10.4.0.0/24"
   map_public_ip_on_launch           = true
   tags                              = {
-    "kubernetes.io/cluster/ekstest" = "shared"
-    "kubernetes.io/role/elb" = "1"
+    "kubernetes.io/cluster/ekstest1" = "shared"
     Name = "Subnet15"
     State = "stateeks"
     Struct8User = "Ricardo"
@@ -193,7 +155,7 @@ resource "aws_subnet" "Subnet16" {
   cidr_block                        = "10.4.1.0/24"
   map_public_ip_on_launch           = true
   tags                              = {
-    "kubernetes.io/cluster/ekstest" = "shared"
+    "kubernetes.io/cluster/ekstest1" = "shared"
     "kubernetes.io/role/elb" = "1"
     Name = "Subnet16"
     State = "stateeks"
@@ -207,7 +169,7 @@ resource "aws_subnet" "Subnet17" {
   cidr_block                        = "10.4.2.0/24"
   map_public_ip_on_launch           = true
   tags                              = {
-    "kubernetes.io/cluster/ekstest" = "shared"
+    "kubernetes.io/cluster/ekstest1" = "shared"
     "kubernetes.io/role/elb" = "1"
     Name = "Subnet17"
     State = "stateeks"
@@ -278,7 +240,7 @@ resource "aws_security_group" "lb_alb_ALBeks_group" {
 
 resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_dns_tcp" {
   security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
-  source_security_group_id          = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
+  source_security_group_id          = aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id
   description                       = "Allow Control Plane to DNS pods (TCP)"
   from_port                         = 53
   protocol                          = "tcp"
@@ -288,7 +250,7 @@ resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_dns_t
 
 resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_dns_udp" {
   security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
-  source_security_group_id          = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
+  source_security_group_id          = aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id
   description                       = "Allow Control Plane to DNS pods (UDP)"
   from_port                         = 53
   protocol                          = "udp"
@@ -298,7 +260,7 @@ resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_dns_u
 
 resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_kubelet" {
   security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
-  source_security_group_id          = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
+  source_security_group_id          = aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id
   description                       = "Allow Control Plane to Kubelet (logs/exec)"
   from_port                         = 10250
   protocol                          = "tcp"
@@ -306,19 +268,9 @@ resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_kubel
   type                              = "ingress"
 }
 
-resource "aws_security_group_rule" "ingress_cluster_to_node_9443" {
-  description              = "Control Plane para ALBC Webhook"
-  protocol                 = "tcp"
-  from_port                = 9443
-  to_port                  = 9443
-  type                     = "ingress"
-  security_group_id        = aws_security_group.eks_node_group_NodeGroup_group.id
-  source_security_group_id = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
-}
-
 resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_webhooks" {
   security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
-  source_security_group_id          = aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id
+  source_security_group_id          = aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id
   description                       = "Allow Control Plane to Node Webhooks (LB Controller, etc)"
   from_port                         = 443
   protocol                          = "tcp"
@@ -354,6 +306,19 @@ resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_egress_all_protocol
   type                              = "egress"
 }
 
+resource "aws_lb" "ALBeks" {
+  name                              = "ALBeks"
+  idle_timeout                      = 60
+  load_balancer_type                = "application"
+  security_groups                   = [aws_security_group.lb_alb_ALBeks_group.id]
+  subnets                           = [aws_subnet.Subnet15.id, aws_subnet.Subnet16.id]
+  tags                              = {
+    Name = "ALBeks"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
+}
+
 
 
 
@@ -373,7 +338,7 @@ resource "aws_launch_template" "Template" {
   ebs_optimized                     = true
   instance_type                     = "t3.medium"
   update_default_version            = true
-  vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id,aws_eks_cluster.ekstest.vpc_config[0].cluster_security_group_id]
+  vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id]
   tags                              = {
     Name = "Template"
     State = "stateeks"
@@ -381,38 +346,38 @@ resource "aws_launch_template" "Template" {
   }
 }
 
-resource "aws_eks_addon" "coredns_ekstest" {
+resource "aws_eks_addon" "coredns_ekstest1" {
   addon_name                        = "coredns"
-  cluster_name                      = aws_eks_cluster.ekstest.name
+  cluster_name                      = aws_eks_cluster.ekstest1.name
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
 }
 
-resource "aws_eks_addon" "kube_proxy_ekstest" {
+resource "aws_eks_addon" "kube_proxy_ekstest1" {
   addon_name                        = "kube-proxy"
-  cluster_name                      = aws_eks_cluster.ekstest.name
+  cluster_name                      = aws_eks_cluster.ekstest1.name
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
 }
 
-resource "aws_eks_addon" "vpc_cni_ekstest" {
+resource "aws_eks_addon" "vpc_cni_ekstest1" {
   addon_name                        = "vpc-cni"
-  cluster_name                      = aws_eks_cluster.ekstest.name
+  cluster_name                      = aws_eks_cluster.ekstest1.name
   configuration_values              = jsonencode({"env":{"ENABLE_PREFIX_DELEGATION":"true", "WARM_PREFIX_TARGET":"1"}})
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
 }
 
-resource "aws_eks_cluster" "ekstest" {
-  version                           = "1.30"
-  name                              = "ekstest"
+resource "aws_eks_cluster" "ekstest1" {
+  version                           = "1.32"
+  name                              = "ekstest1"
   bootstrap_self_managed_addons     = true
   deletion_protection               = false
   enabled_cluster_log_types         = ["api"]
   force_update_version              = false
-  role_arn                          = aws_iam_role.role_eks_ekstest.arn
+  role_arn                          = aws_iam_role.role_eks_ekstest1.arn
   tags                              = {
-    Name = "ekstest"
+    Name = "ekstest1"
     State = "stateeks"
     Struct8User = "Ricardo"
   }
@@ -422,12 +387,12 @@ resource "aws_eks_cluster" "ekstest" {
     public_access_cidrs             = ["0.0.0.0/0"]
     subnet_ids                      = [aws_subnet.Subnet15.id, aws_subnet.Subnet16.id]
   }
-  depends_on                        = [aws_iam_role_policy_attachment.attach_AmazonEKSClusterPolicy_to_ekstest]
+  depends_on                        = [aws_iam_role_policy_attachment.attach_AmazonEKSClusterPolicy_to_ekstest1]
 }
 
 resource "aws_eks_node_group" "NodeGroup" {
   version                           = "1.30"
-  cluster_name                      = aws_eks_cluster.ekstest.name
+  cluster_name                      = aws_eks_cluster.ekstest1.name
   node_group_name                   = "NodeGroup"
   node_role_arn                     = aws_iam_role.role_eksng_NodeGroup.arn
   subnet_ids                        = [aws_subnet.Subnet17.id, aws_subnet.Subnet16.id]
@@ -447,113 +412,5 @@ resource "aws_eks_node_group" "NodeGroup" {
   }
   depends_on                        = [aws_iam_role_policy_attachment.attach_AmazonEKSWorkerNodePolicy_to_NodeGroup, aws_iam_role_policy_attachment.attach_AmazonEKS_CNI_Policy_to_NodeGroup, aws_iam_role_policy_attachment.attach_AmazonEC2ContainerRegistryReadOnly_to_NodeGroup]
 }
-
-
-
-
-### CATEGORY: MISC ###
-
-resource "helm_release" "aws_load_balancer_controller" {
-  name                              = "aws-load-balancer-controller"
-  chart                             = "aws-load-balancer-controller"
-  namespace                         = "kube-system"
-  repository                        = "https://aws.github.io/eks-charts"
-  set {
-    name                            = "clusterName"
-    value                           = aws_eks_cluster.ekstest.name
-  }
-  set {
-    name                            = "serviceAccount.create"
-    value                           = true
-  }
-  set {
-    name                            = "serviceAccount.name"
-    value                           = "aws-load-balancer-controller"
-  }
-  set {
-    name                            = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value                           = aws_iam_role.eks_lb_controller_role_ekstest.arn
-  }
-  set {
-    name                            = "vpcId"
-    value                           = aws_vpc.VPCeks.id
-  }
-  set {
-    name                            = "region"
-    value                           = data.aws_region.current.id
-  }
-  depends_on                        = [aws_iam_role_policy_attachment.eks_lb_controller_role_ekstest_attach, aws_eks_node_group.NodeGroup]
-}
-
-resource "helm_release" "helm_argocd" {
-  name                              = "argocd"
-  atomic                            = true
-  chart                             = "argo-cd"
-  create_namespace                  = true
-  namespace                         = "argocd1"
-  repository                        = "https://argoproj.github.io/argo-helm"
-  timeout                           = 600
-  wait                              = true
-  values                            = [
-    yamlencode({
-        configs = {
-          repositories = {
-            argocd = {
-              name = "argocd"
-              url = "https://github.com/Struct8/TestArgo.git"
-              type = "git"
-
-            }
-          }
-        }
-      })
-  ]
-  depends_on = [
-    aws_eks_node_group.NodeGroup,
-    aws_eks_addon.vpc_cni_ekstest,
-    aws_eks_addon.coredns_ekstest,
-    helm_release.aws_load_balancer_controller
-  ]
-
-}
-resource "helm_release" "argocd_applications" {
-  name       = "argocd-apps"
-  repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argocd-apps"
-  version    = "2.0.0" 
-  namespace  = "argocd1"
-
-  values = [
-    yamlencode({
-      applications = {
-        # O nome da aplicação agora é a chave do mapa
-        "meu-app-configmap" = { 
-          namespace  = "argocd1"
-          finalizers = ["resources-finalizer.argocd.argoproj.io"]
-          project    = "default"
-          source = {
-            repoURL        = "https://github.com/Struct8/TestArgo.git"
-            targetRevision = "HEAD"
-            path           = "."
-          }
-          destination = {
-            server    = "https://kubernetes.default.svc"
-            namespace = "default"
-          }
-          syncPolicy = {
-            automated = {
-              prune    = true
-              selfHeal = true
-            }
-          }
-        }
-      }
-    })
-  ]
-
-  depends_on = [helm_release.helm_argocd]
-}
-
-
 
 
