@@ -143,12 +143,5 @@ resource "helm_release" "kong1" {
 }
 
 
-resource "terraform_data" "gateway_api_crds" {
-  provisioner "local-exec" {
-    command = <<EOT
-      aws eks update-kubeconfig --name ${data.aws_eks_cluster.eks.name} --region us-east-1
-      kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
-    EOT
-  }
-}
+
 
