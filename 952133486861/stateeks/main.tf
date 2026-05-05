@@ -379,6 +379,10 @@ resource "aws_eks_cluster" "ekstest1" {
   enabled_cluster_log_types         = ["api"]
   force_update_version              = false
   role_arn                          = aws_iam_role.role_eks_ekstest1.arn
+  access_config {
+    authentication_mode             = "API_AND_CONFIG_MAP"
+    bootstrap_cluster_creator_admin_permissions = true
+  }
   tags                              = {
     Name = "ekstest1"
     State = "stateeks"
@@ -416,3 +420,18 @@ resource "aws_eks_node_group" "NodeGroup" {
 }
 
 
+resource "aws_eks_access_entry" "root_access" {
+  cluster_name      = aws_eks_cluster.ekstest1.name
+  principal_arn     = "arn:aws:iam::952133486861:root" # Exemplo do ARN do root
+  type              = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "root_admin" {
+  cluster_name  = aws_eks_cluster.ekstest1.name
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = "arn:aws:iam::952133486861:root"
+
+  access_scope {
+    type = "cluster"
+  }
+}
