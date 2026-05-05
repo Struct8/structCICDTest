@@ -338,8 +338,7 @@ resource "aws_launch_template" "Template" {
   ebs_optimized                     = true
   instance_type                     = "t3.medium"
   update_default_version            = true
-  vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id,aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id
-]
+  vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id, aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id]
   tags                              = {
     Name = "Template"
     State = "stateeks"
@@ -352,6 +351,7 @@ resource "aws_eks_addon" "coredns_ekstest1" {
   cluster_name                      = aws_eks_cluster.ekstest1.name
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
+  depends_on                        = [aws_eks_node_group.NodeGroup]
 }
 
 resource "aws_eks_addon" "kube_proxy_ekstest1" {
@@ -359,6 +359,7 @@ resource "aws_eks_addon" "kube_proxy_ekstest1" {
   cluster_name                      = aws_eks_cluster.ekstest1.name
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
+  depends_on                        = [aws_eks_node_group.NodeGroup]
 }
 
 resource "aws_eks_addon" "vpc_cni_ekstest1" {
@@ -367,6 +368,7 @@ resource "aws_eks_addon" "vpc_cni_ekstest1" {
   configuration_values              = jsonencode({"env":{"ENABLE_PREFIX_DELEGATION":"true", "WARM_PREFIX_TARGET":"1"}})
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
+  depends_on                        = [aws_eks_node_group.NodeGroup]
 }
 
 resource "aws_eks_cluster" "ekstest1" {
@@ -392,7 +394,6 @@ resource "aws_eks_cluster" "ekstest1" {
 }
 
 resource "aws_eks_node_group" "NodeGroup" {
-  
   cluster_name                      = aws_eks_cluster.ekstest1.name
   node_group_name                   = "NodeGroup"
   node_role_arn                     = aws_iam_role.role_eksng_NodeGroup.arn
@@ -402,9 +403,9 @@ resource "aws_eks_node_group" "NodeGroup" {
     id                              = aws_launch_template.Template.id
   }
   scaling_config {
-    desired_size                    = 2
+    desired_size                    = 1
     max_size                        = 2
-    min_size                        = 2
+    min_size                        = 1
   }
   tags                              = {
     Name = "NodeGroup"
