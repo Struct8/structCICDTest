@@ -1,7 +1,7 @@
 {
   "external_repositories": [],
-  "action": "plan",
-  "trigger_id": "1778015256942",
+  "action": "apply",
+  "trigger_id": "1778017366997",
   "backend_global_config": {
     "provider": "aws",
     "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
@@ -15,11 +15,11 @@
       "states": [
         {
           "path": "952133486861/State9",
-          "provider": "kubernetes",
+          "provider": "aws",
           "target_auth": {
             "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
             "region": "us-east-1",
-            "secret_name": "AUTH_KUBERNETES_952133486861"
+            "secret_name": "AUTH_AWS_952133486861"
           }
         }
       ]
