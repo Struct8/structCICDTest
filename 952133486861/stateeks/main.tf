@@ -420,18 +420,3 @@ resource "aws_eks_node_group" "NodeGroup" {
 }
 
 
-resource "aws_eks_access_entry" "root_access" {
-  cluster_name      = aws_eks_cluster.ekstest1.name
-  principal_arn     = "arn:aws:iam::952133486861:root" # Exemplo do ARN do root
-  type              = "STANDARD"
-}
-
-resource "aws_eks_access_policy_association" "root_admin" {
-  cluster_name  = aws_eks_cluster.ekstest1.name
-  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-  principal_arn = "arn:aws:iam::952133486861:root"
-
-  access_scope {
-    type = "cluster"
-  }
-}
