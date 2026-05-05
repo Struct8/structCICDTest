@@ -338,7 +338,8 @@ resource "aws_launch_template" "Template" {
   ebs_optimized                     = true
   instance_type                     = "t3.medium"
   update_default_version            = true
-  vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id]
+  vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id,aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id
+]
   tags                              = {
     Name = "Template"
     State = "stateeks"
@@ -391,7 +392,7 @@ resource "aws_eks_cluster" "ekstest1" {
 }
 
 resource "aws_eks_node_group" "NodeGroup" {
-  version                           = "1.30"
+  
   cluster_name                      = aws_eks_cluster.ekstest1.name
   node_group_name                   = "NodeGroup"
   node_role_arn                     = aws_iam_role.role_eksng_NodeGroup.arn
