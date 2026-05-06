@@ -32,15 +32,12 @@ data "aws_region" "current" {}
 # --- Extra Providers ---
 provider "helm" {
   kubernetes {
-    # ADICIONE "data." antes de aws_eks_cluster
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
-    host                   = data.aws_eks_cluster.ekstest1.endpoint
-    
+    cluster_ca_certificate          = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
+    host                            = data.aws_eks_cluster.ekstest1.endpoint
     exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      # ADICIONE "data." aqui também
-      args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
-      command     = "aws"
+      api_version                   = "client.authentication.k8s.io/v1beta1"
+      args                          = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
+      command                       = "aws"
     }
   }
 }
@@ -48,8 +45,7 @@ provider "helm" {
 ### SYSTEM DATA SOURCES ###
 
 data "tls_certificate" "eks_tls_ekstest1" {
-  # ADICIONE "data." aqui também
-  url = data.aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
+  url                               = data.aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
 }
 
 
@@ -131,31 +127,142 @@ resource "terraform_data" "gateway_api_crds" {
   }
 }
 
-resource "helm_release" "kong1" {
-  name             = "kong1"
+resource "helm_release" "kong-crds" {
+  name             = "kong-crds"
   chart            = "kong"
   repository       = "https://charts.konghq.com"
-  version          = "2.38.0"
-  namespace        = "argocd1"
-  create_namespace = false
+  version          = "2.44.0"
+  namespace        = "kong-system"
+  create_namespace = true
   atomic           = true
   wait             = true
   cleanup_on_fail  = true
   timeout          = 600
+
+  set {
+    name  = "ingressController.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "deployment.kong.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "migrations.install"
+    value = "false"
+  }
+
+  set {
+    name  = "migrations.preUpgrade"
+    value = "false"
+  }
 
   depends_on = [terraform_data.gateway_api_crds]
 }
 
-resource "helm_release" "rmq" {
-  name             = "rmq"
-  chart            = "rabbitmq"
-  repository       = "https://charts.bitnami.com/bitnami"
-  version          = "14.4.1"
-  namespace        = "argocd1"
-  create_namespace = false
+resource "helm_release" "rabbit-crds" {
+  name             = "rabbit-crds"
+  chart            = "rabbitmq-cluster-operator"
+  repository       = "oci://registry-1.docker.io/bitnamicharts"
+  version          = "4.4.37"
+  namespace        = "rabbitmq-cluster-operator-system"
+  create_namespace = true
   atomic           = true
   wait             = true
   cleanup_on_fail  = true
   timeout          = 600
+
+  set {
+    name  = "clusterOperator.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "msgTopologyOperator.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "serviceAccount.create"
+    value = "false"
+  }
+
+  set {
+    name  = "rbac.create"
+    value = "false"
+  }
+}
+
+resource "helm_release" "monitoring-crds" {
+  name             = "monitoring-crds"
+  chart            = "kube-prometheus-stack"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  version          = "65.2.0"
+  namespace        = "kube-prometheus-stack-system"
+  create_namespace = true
+  atomic           = true
+  wait             = true
+  cleanup_on_fail  = true
+  timeout          = 600
+
+  set {
+    name  = "prometheusOperator.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "prometheus.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "alertmanager.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "grafana.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "kubeStateMetrics.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "nodeExporter.enabled"
+    value = "false"
+  }
+}
+
+resource "helm_release" "keycloak-crds" {
+  name             = "keycloak-crds"
+  chart            = "keycloak-operator"
+  repository       = "https://charts.bitnami.com/bitnami"
+  version          = "24.0.5"
+  namespace        = "keycloak-operator-system"
+  create_namespace = true
+  atomic           = true
+  wait             = true
+  cleanup_on_fail  = true
+  timeout          = 600
+
+  set {
+    name  = "operator.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "rbac.create"
+    value = "false"
+  }
+
+  set {
+    name  = "serviceAccount.create"
+    value = "false"
+  }
 }
 
