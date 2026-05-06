@@ -32,11 +32,11 @@ data "aws_region" "current" {}
 # --- Extra Providers ---
 provider "helm" {
   kubernetes {
-    cluster_ca_certificate          = base64decode(aws_eks_cluster.ekstest1.certificate_authority[0].data)
-    host                            = aws_eks_cluster.ekstest1.endpoint
+    cluster_ca_certificate          = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
+    host                            = data.aws_eks_cluster.ekstest1.endpoint
     exec {
       api_version                   = "client.authentication.k8s.io/v1beta1"
-      args                          = ["eks", "get-token", "--cluster-name", aws_eks_cluster.ekstest1.name]
+      args                          = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
       command                       = "aws"
     }
   }
@@ -339,6 +339,13 @@ resource "aws_launch_template" "Template" {
   instance_type                     = "t3.medium"
   update_default_version            = true
   vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id, aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id]
+  instance_market_options {
+    market_type                     = "spot"
+    spot_options {
+      instance_interruption_behavior = "terminate"
+      spot_instance_type            = "one-time"
+    }
+  }
   tags                              = {
     Name = "Template"
     State = "stateeks"
@@ -372,7 +379,7 @@ resource "aws_eks_addon" "vpc_cni_ekstest1" {
 }
 
 resource "aws_eks_cluster" "ekstest1" {
-  version                           = "1.32"
+  version                           = "1.33"
   name                              = "ekstest1"
   bootstrap_self_managed_addons     = true
   deletion_protection               = false
