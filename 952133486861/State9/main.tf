@@ -162,8 +162,6 @@ resource "helm_release" "kong-crds" {
   depends_on = [terraform_data.gateway_api_crds]
 }
 
-
-
 resource "helm_release" "monitoring-crds" {
   name             = "monitoring-crds"
   chart            = "kube-prometheus-stack"
@@ -207,52 +205,13 @@ resource "helm_release" "monitoring-crds" {
   }
 }
 
-resource "helm_release" "rabbit-crds" {
-  name             = "rabbit-crds"
-  chart            = "rabbitmq-cluster-operator"
-  repository       = "oci://registry-1.docker.io/bitnamicharts"
-  version          = "4.4.34" 
-  namespace        = "rabbitmq-cluster-operator-system"
-  create_namespace = true
-
-  # ISTO RESOLVE O TIMEOUT DE 10 MINUTOS:
-  atomic           = false
-  wait             = false
-  cleanup_on_fail  = false 
-  timeout          = 600
-
-  set {
-    name  = "clusterOperator.enabled"
-    value = "false"
-  }
-  set {
-    name  = "msgTopologyOperator.enabled"
-    value = "false"
-  }
-  set {
-    name  = "serviceAccount.create"
-    value = "false"
-  }
-  set {
-    name  = "rbac.create"
-    value = "false"
-  }
-}
-
 resource "helm_release" "keycloak-crds" {
   name             = "keycloak-crds"
-  
-  # CORREÇÃO 1: O NOME CORRETO DO CHART É APENAS "keycloak"
   chart            = "keycloak"
-  
-  # CORREÇÃO 2: A NOVA URL OCI DA BITNAMI
-  repository       = "oci://registry-1.docker.io/bitnamicharts"
-  
-  version          = "24.1.0" # ou a versão 24.0.5 que vc queria
-  namespace        = "keycloak-operator-system"
+  repository       = "https://charts.bitnami.com/bitnami"
+  version          = "24.1.0"
+  namespace        = "keycloak-system"
   create_namespace = true
-
-  # ISTO RESOLVE O TIMEOUT (CASO OCORRA AQUI TAMBÉM):
   atomic           = false
   wait             = false
   cleanup_on_fail  = false
@@ -262,14 +221,48 @@ resource "helm_release" "keycloak-crds" {
     name  = "operator.enabled"
     value = "false"
   }
+
   set {
     name  = "rbac.create"
     value = "false"
   }
+
   set {
     name  = "serviceAccount.create"
     value = "false"
   }
 }
 
+resource "helm_release" "rabbit-crds" {
+  name             = "rabbit-crds"
+  chart            = "rabbitmq-cluster-operator"
+  repository       = "oci://registry-1.docker.io/bitnamicharts"
+  version          = "4.4.34"
+  namespace        = "rabbitmq-cluster-operator-system"
+  create_namespace = true
+  atomic           = false
+  wait             = false
+  cleanup_on_fail  = false
+  timeout          = 600
+
+  set {
+    name  = "clusterOperator.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "msgTopologyOperator.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "serviceAccount.create"
+    value = "false"
+  }
+
+  set {
+    name  = "rbac.create"
+    value = "false"
+  }
+}
 
