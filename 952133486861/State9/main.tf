@@ -166,7 +166,7 @@ resource "helm_release" "rabbit-crds" {
   name             = "rabbit-crds"
   chart            = "rabbitmq-cluster-operator"
   repository       = "oci://registry-1.docker.io/bitnamicharts"
-  version          = "4.4.37"
+  version          = "4.4.34"
   namespace        = "rabbitmq-cluster-operator-system"
   create_namespace = true
   atomic           = true
@@ -242,7 +242,7 @@ resource "helm_release" "keycloak-crds" {
   name             = "keycloak-crds"
   chart            = "keycloak-operator"
   repository       = "https://charts.bitnami.com/bitnami"
-  version          = "24.0.5"
+  version          = "24.1.0"
   namespace        = "keycloak-operator-system"
   create_namespace = true
   atomic           = true
