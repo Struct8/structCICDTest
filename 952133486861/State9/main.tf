@@ -14,7 +14,7 @@ terraform {
 
   backend "s3" {
     bucket         = "pro112-teste-cicd"
-    key            = "undefined/State9/main.tfstate"
+    key            = "952133486861/State9/main.tfstate"
     region         = "us-east-1"
     dynamodb_table = "teste-cicd"
     encrypt        = true
@@ -32,12 +32,15 @@ data "aws_region" "current" {}
 # --- Extra Providers ---
 provider "helm" {
   kubernetes {
-    cluster_ca_certificate          = base64decode(aws_eks_cluster.ekstest1.certificate_authority[0].data)
-    host                            = aws_eks_cluster.ekstest1.endpoint
+    # ADICIONE "data." antes de aws_eks_cluster
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
+    host                   = data.aws_eks_cluster.ekstest1.endpoint
+    
     exec {
-      api_version                   = "client.authentication.k8s.io/v1beta1"
-      args                          = ["eks", "get-token", "--cluster-name", aws_eks_cluster.ekstest1.name]
-      command                       = "aws"
+      api_version = "client.authentication.k8s.io/v1beta1"
+      # ADICIONE "data." aqui também
+      args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
+      command     = "aws"
     }
   }
 }
@@ -45,7 +48,8 @@ provider "helm" {
 ### SYSTEM DATA SOURCES ###
 
 data "tls_certificate" "eks_tls_ekstest1" {
-  url                               = data.aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
+  # ADICIONE "data." aqui também
+  url = data.aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
 }
 
 
@@ -132,6 +136,21 @@ resource "helm_release" "kong1" {
   chart            = "kong"
   repository       = "https://charts.konghq.com"
   version          = "2.38.0"
+  namespace        = "argocd1"
+  create_namespace = false
+  atomic           = true
+  wait             = true
+  cleanup_on_fail  = true
+  timeout          = 600
+
+  depends_on = [terraform_data.gateway_api_crds]
+}
+
+resource "helm_release" "rmq" {
+  name             = "rmq"
+  chart            = "rabbitmq"
+  repository       = "https://charts.bitnami.com/bitnami"
+  version          = "14.4.1"
   namespace        = "argocd1"
   create_namespace = false
   atomic           = true
