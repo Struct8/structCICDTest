@@ -271,5 +271,5 @@ resource "helm_release" "keycloak-crds" {
     value = "false"
   }
 }
-}
+
 
