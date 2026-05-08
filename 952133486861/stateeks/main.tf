@@ -44,8 +44,8 @@ provider "helm" {
 
 ### SYSTEM DATA SOURCES ###
 
-data "tls_certificate" "eks_tls_ekstest1" {
-  url                               = aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
+data "aws_route53_zone" "Zone" {
+  name                              = "cloudman.pro"
 }
 
 
@@ -57,6 +57,55 @@ resource "aws_iam_openid_connect_provider" "eks_oidc_ekstest1" {
   client_id_list                    = ["sts.amazonaws.com"]
   thumbprint_list                   = [data.tls_certificate.eks_tls_ekstest1.certificates[0].sha1_fingerprint]
   url                               = aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
+}
+
+resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy_ALBeks" {
+  name                              = "AWSLoadBalancerControllerIAMPolicy_ALBeks"
+  description                       = "AWS Load Balancer Controller IAM Policy"
+  path                              = "/"
+  policy                            = data.http.lbc_iam_policy_ALBeks.response_body
+}
+
+data "aws_iam_policy_document" "policy_external_dns_ekstest1_st_stateeks_doc" {
+  statement {
+    sid                             = "AllowRoute53Changes"
+    effect                          = "Allow"
+    actions                         = ["route53:ChangeResourceRecordSets"]
+    resources                       = [data.aws_route53_zone.Zone.arn]
+  }
+  statement {
+    sid                             = "AllowRoute53Listing"
+    effect                          = "Allow"
+    actions                         = ["route53:ListHostedZones", "route53:ListResourceRecordSets"]
+    resources                       = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "policy_external_dns_ekstest1_st_stateeks" {
+  name                              = "policy_external_dns_ekstest1_st_stateeks"
+  description                       = "External-DNS Route53 permissions for ekstest1"
+  policy                            = data.aws_iam_policy_document.policy_external_dns_ekstest1_st_stateeks_doc.json
+  tags                              = {
+    Name = "policy_external_dns_ekstest1_st_stateeks"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
+}
+
+data "aws_iam_policy_document" "doc_trust_lbc_ALBeks" {
+  statement {
+    effect                          = "Allow"
+    principals {
+      identifiers                   = [aws_iam_openid_connect_provider.eks_oidc_ekstest1.arn]
+      type                          = "Federated"
+    }
+    actions                         = ["sts:AssumeRoleWithWebIdentity"]
+    condition {
+      test                          = "StringEquals"
+      values                        = ["system:serviceaccount:kube-system:aws-lbc-ALBeks"]
+      variable                      = "${substr(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, 8, length(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url))}:sub"
+    }
+  }
 }
 
 resource "aws_iam_role" "role_eks_ekstest1" {
@@ -101,6 +150,37 @@ resource "aws_iam_role" "role_eksng_NodeGroup" {
   }
 }
 
+data "aws_iam_policy_document" "doc_trust_external_dns_ekstest1" {
+  statement {
+    effect                          = "Allow"
+    principals {
+      identifiers                   = [aws_iam_openid_connect_provider.eks_oidc_ekstest1.arn]
+      type                          = "Federated"
+    }
+    actions                         = ["sts:AssumeRoleWithWebIdentity"]
+    condition {
+      test                          = "StringEquals"
+      values                        = ["system:serviceaccount:kube-system:external-dns"]
+      variable                      = "${replace(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, \"https://\", \"\")}:sub"
+    }
+  }
+}
+
+resource "aws_iam_role" "role_external_dns_ekstest1_st_stateeks" {
+  name                              = "role_external_dns_ekstest1_st_stateeks"
+  assume_role_policy                = data.aws_iam_policy_document.doc_trust_external_dns_ekstest1.json
+  tags                              = {
+    Name = "role_external_dns_ekstest1_st_stateeks"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_iam_role" "role_lbc_ALBeks" {
+  name                              = "role_lbc_ALBeks"
+  assume_role_policy                = data.aws_iam_policy_document.doc_trust_lbc_ALBeks.json
+}
+
 resource "aws_iam_role_policy_attachment" "attach_AmazonEC2ContainerRegistryReadOnly_to_NodeGroup" {
   policy_arn                        = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role                              = aws_iam_role.role_eksng_NodeGroup.name
@@ -119,6 +199,40 @@ resource "aws_iam_role_policy_attachment" "attach_AmazonEKSWorkerNodePolicy_to_N
 resource "aws_iam_role_policy_attachment" "attach_AmazonEKS_CNI_Policy_to_NodeGroup" {
   policy_arn                        = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role                              = aws_iam_role.role_eksng_NodeGroup.name
+}
+
+resource "aws_iam_role_policy_attachment" "attach_ext_dns_ekstest1_st_stateeks" {
+  policy_arn                        = aws_iam_policy.policy_external_dns_ekstest1_st_stateeks.arn
+  role                              = aws_iam_role.role_external_dns_ekstest1_st_stateeks.name
+}
+
+resource "aws_iam_role_policy_attachment" "role_lbc_ALBeks_attach" {
+  policy_arn                        = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy_ALBeks.arn
+  role                              = aws_iam_role.role_lbc_ALBeks.name
+}
+
+resource "aws_acm_certificate" "k8s" {
+  domain_name                       = "k8s.cloudman.pro"
+  key_algorithm                     = "RSA_2048"
+  subject_alternative_names         = ["*.k8s.cloudman.pro"]
+  validation_method                 = "DNS"
+  lifecycle {
+    create_before_destroy           = true
+  }
+  options {
+    certificate_transparency_logging_preference = "ENABLED"
+  }
+  tags                              = {
+    "kubernetes.io/cluster/GAPI" = "shared"
+    Name = "k8s"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_acm_certificate_validation" "Validation_k8s" {
+  certificate_arn                   = aws_acm_certificate.k8s.arn
+  validation_record_fqdns           = [for record in aws_route53_record.Route53_Record_k8s_k8s_cloudman_pro : record.fqdn]
 }
 
 
@@ -143,6 +257,7 @@ resource "aws_subnet" "Subnet15" {
   map_public_ip_on_launch           = true
   tags                              = {
     "kubernetes.io/cluster/ekstest1" = "shared"
+    "kubernetes.io/role/elb" = "1"
     Name = "Subnet15"
     State = "stateeks"
     Struct8User = "Ricardo"
@@ -190,6 +305,19 @@ resource "aws_route" "aws_route_RTeks_IGWeks" {
   gateway_id                        = aws_internet_gateway.IGWeks.id
   route_table_id                    = aws_route_table.RTeks.id
   destination_cidr_block            = "0.0.0.0/0"
+}
+
+resource "aws_route53_record" "Route53_Record_k8s_k8s_cloudman_pro" {
+  for_each                          = {
+    for dvo in aws_acm_certificate.k8s.domain_validation_options : dvo.domain_name => dvo
+    if dvo.domain_name == "k8s.cloudman.pro"
+  }
+  name                              = "${each.value.resource_record_name}"
+  zone_id                           = data.aws_route53_zone.Zone.zone_id
+  allow_overwrite                   = true
+  records                           = ["${each.value.resource_record_value}"]
+  ttl                               = 300
+  type                              = "${each.value.resource_record_type}"
 }
 
 resource "aws_route_table" "RTeks" {
@@ -306,19 +434,6 @@ resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_egress_all_protocol
   type                              = "egress"
 }
 
-resource "aws_lb" "ALBeks" {
-  name                              = "ALBeks"
-  idle_timeout                      = 60
-  load_balancer_type                = "application"
-  security_groups                   = [aws_security_group.lb_alb_ALBeks_group.id]
-  subnets                           = [aws_subnet.Subnet15.id, aws_subnet.Subnet16.id]
-  tags                              = {
-    Name = "ALBeks"
-    State = "stateeks"
-    Struct8User = "Ricardo"
-  }
-}
-
 
 
 
@@ -417,6 +532,31 @@ resource "aws_eks_node_group" "NodeGroup" {
     Struct8User = "Ricardo"
   }
   depends_on                        = [aws_iam_role_policy_attachment.attach_AmazonEKSWorkerNodePolicy_to_NodeGroup, aws_iam_role_policy_attachment.attach_AmazonEKS_CNI_Policy_to_NodeGroup, aws_iam_role_policy_attachment.attach_AmazonEC2ContainerRegistryReadOnly_to_NodeGroup]
+}
+
+
+
+
+### CATEGORY: KUBERNETES ###
+
+resource "helm_release" "aws_lbc_ALBeks" {
+  name                              = "aws-lbc-albeks"
+  chart                             = "aws-load-balancer-controller"
+  namespace                         = "kube-system"
+  repository                        = "https://aws.github.io/eks-charts"
+  set {
+    name                            = "clusterName"
+    value                           = aws_eks_cluster.ekstest1.name
+  }
+  set {
+    name                            = "serviceAccount.create"
+    value                           = true
+  }
+  set {
+    name                            = "serviceAccount.name"
+    value                           = "aws-lbc-ALBeks"
+  }
+  depends_on                        = [aws_iam_role_policy_attachment.role_lbc_ALBeks_attach, aws_eks_node_group.NodeGroup]
 }
 
 
