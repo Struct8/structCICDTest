@@ -32,11 +32,11 @@ data "aws_region" "current" {}
 # --- Extra Providers ---
 provider "helm" {
   kubernetes {
-    cluster_ca_certificate          = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
-    host                            = data.aws_eks_cluster.ekstest1.endpoint
+    cluster_ca_certificate          = base64decode(aws_eks_cluster.ekstest1.certificate_authority[0].data)
+    host                            = aws_eks_cluster.ekstest1.endpoint
     exec {
       api_version                   = "client.authentication.k8s.io/v1beta1"
-      args                          = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
+      args                          = ["eks", "get-token", "--cluster-name", aws_eks_cluster.ekstest1.name]
       command                       = "aws"
     }
   }
@@ -103,7 +103,7 @@ data "aws_iam_policy_document" "doc_trust_lbc_ALBeks" {
     condition {
       test                          = "StringEquals"
       values                        = ["system:serviceaccount:kube-system:aws-lbc-ALBeks"]
-      variable                      = "${substr(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, 8, length(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url))}:sub"
+      variable                      = ${substr(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, 8, length(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url))}:sub
     }
   }
 }
@@ -161,8 +161,7 @@ data "aws_iam_policy_document" "doc_trust_external_dns_ekstest1" {
     condition {
       test                          = "StringEquals"
       values                        = ["system:serviceaccount:kube-system:external-dns"]
-      variable = "${replace(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, "https://", "")}:sub"
-
+      variable                      = ${replace(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, "https://", "")}:sub
     }
   }
 }
@@ -313,12 +312,12 @@ resource "aws_route53_record" "Route53_Record_k8s_k8s_cloudman_pro" {
     for dvo in aws_acm_certificate.k8s.domain_validation_options : dvo.domain_name => dvo
     if dvo.domain_name == "k8s.cloudman.pro"
   }
-  name                              = "${each.value.resource_record_name}"
+  name                              = ${each.value.resource_record_name}
   zone_id                           = data.aws_route53_zone.Zone.zone_id
   allow_overwrite                   = true
-  records                           = ["${each.value.resource_record_value}"]
+  records                           = [${each.value.resource_record_value}]
   ttl                               = 300
-  type                              = "${each.value.resource_record_type}"
+  type                              = ${each.value.resource_record_type}
 }
 
 resource "aws_route_table" "RTeks" {
