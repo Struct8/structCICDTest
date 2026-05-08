@@ -161,7 +161,8 @@ data "aws_iam_policy_document" "doc_trust_external_dns_ekstest1" {
     condition {
       test                          = "StringEquals"
       values                        = ["system:serviceaccount:kube-system:external-dns"]
-      variable                      = "${replace(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, \"https://\", \"\")}:sub"
+      variable = "${replace(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, "https://", "")}:sub"
+
     }
   }
 }
