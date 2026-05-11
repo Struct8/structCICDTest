@@ -10,6 +10,18 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.12.1"
     }
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 3.4.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.24.0"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0"
+    }
   }
 
   backend "s3" {
@@ -41,11 +53,28 @@ provider "helm" {
     }
   }
 }
+provider "kubernetes" {
+  cluster_ca_certificate            = base64decode(aws_eks_cluster.ekstest1.certificate_authority[0].data)
+  host                              = aws_eks_cluster.ekstest1.endpoint
+  exec {
+    api_version                     = "client.authentication.k8s.io/v1beta1"
+    args                            = ["eks", "get-token", "--cluster-name", aws_eks_cluster.ekstest1.name]
+    command                         = "aws"
+  }
+}
 
 ### SYSTEM DATA SOURCES ###
 
 data "aws_route53_zone" "Zone" {
   name                              = "cloudman.pro"
+}
+
+data "tls_certificate" "eks_tls_ekstest1" {
+  url                               = aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
+}
+
+data "http" "lbc_iam_policy_ALBeks" {
+  url                               = "https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json"
 }
 
 
@@ -257,7 +286,6 @@ resource "aws_subnet" "Subnet15" {
   map_public_ip_on_launch           = true
   tags                              = {
     "kubernetes.io/cluster/ekstest1" = "shared"
-    "kubernetes.io/role/elb" = "1"
     Name = "Subnet15"
     State = "stateeks"
     Struct8User = "Ricardo"
@@ -432,6 +460,26 @@ resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_egress_all_protocol
   protocol                          = "-1"
   to_port                           = 0
   type                              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_ingress_tcp_443" {
+  security_group_id                 = aws_security_group.lb_alb_ALBeks_group.id
+  cidr_blocks                       = ["0.0.0.0/0"]
+  description                       = "permits https"
+  from_port                         = 443
+  protocol                          = "tcp"
+  to_port                           = 443
+  type                              = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_to_eks_node_group_NodeGroup_group_tcp_0_65535" {
+  security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
+  source_security_group_id          = aws_security_group.lb_alb_ALBeks_group.id
+  description                       = "permits all ports form ALB"
+  from_port                         = 0
+  protocol                          = "tcp"
+  to_port                           = 65535
+  type                              = "ingress"
 }
 
 
