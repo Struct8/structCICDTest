@@ -73,7 +73,7 @@ data "tls_certificate" "eks_tls_ekstest1" {
   url                               = aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
 }
 
-data "http" "lbc_iam_policy_ALBeks" {
+data "http" "lbc_iam_policy_albeks" {
   url                               = "https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json"
 }
 
@@ -88,11 +88,11 @@ resource "aws_iam_openid_connect_provider" "eks_oidc_ekstest1" {
   url                               = aws_eks_cluster.ekstest1.identity[0].oidc[0].issuer
 }
 
-resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy_ALBeks" {
-  name                              = "AWSLoadBalancerControllerIAMPolicy_ALBeks"
+resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy_albeks" {
+  name                              = "AWSLoadBalancerControllerIAMPolicy_albeks"
   description                       = "AWS Load Balancer Controller IAM Policy"
   path                              = "/"
-  policy                            = data.http.lbc_iam_policy_ALBeks.response_body
+  policy                            = data.http.lbc_iam_policy_albeks.response_body
 }
 
 data "aws_iam_policy_document" "policy_external_dns_ekstest1_st_stateeks_doc" {
@@ -121,7 +121,7 @@ resource "aws_iam_policy" "policy_external_dns_ekstest1_st_stateeks" {
   }
 }
 
-data "aws_iam_policy_document" "doc_trust_lbc_ALBeks" {
+data "aws_iam_policy_document" "doc_trust_lbc_albeks" {
   statement {
     effect                          = "Allow"
     principals {
@@ -205,9 +205,9 @@ resource "aws_iam_role" "role_external_dns_ekstest1_st_stateeks" {
   }
 }
 
-resource "aws_iam_role" "role_lbc_ALBeks" {
-  name                              = "role_lbc_ALBeks"
-  assume_role_policy                = data.aws_iam_policy_document.doc_trust_lbc_ALBeks.json
+resource "aws_iam_role" "role_lbc_albeks" {
+  name                              = "role_lbc_albeks"
+  assume_role_policy                = data.aws_iam_policy_document.doc_trust_lbc_albeks.json
 }
 
 resource "aws_iam_role_policy_attachment" "attach_AmazonEC2ContainerRegistryReadOnly_to_NodeGroup" {
@@ -235,9 +235,9 @@ resource "aws_iam_role_policy_attachment" "attach_ext_dns_ekstest1_st_stateeks" 
   role                              = aws_iam_role.role_external_dns_ekstest1_st_stateeks.name
 }
 
-resource "aws_iam_role_policy_attachment" "role_lbc_ALBeks_attach" {
-  policy_arn                        = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy_ALBeks.arn
-  role                              = aws_iam_role.role_lbc_ALBeks.name
+resource "aws_iam_role_policy_attachment" "role_lbc_albeks_attach" {
+  policy_arn                        = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy_albeks.arn
+  role                              = aws_iam_role.role_lbc_albeks.name
 }
 
 resource "aws_acm_certificate" "k8s" {
@@ -587,7 +587,7 @@ resource "aws_eks_node_group" "NodeGroup" {
 
 ### CATEGORY: KUBERNETES ###
 
-resource "helm_release" "aws_lbc_ALBeks" {
+resource "helm_release" "aws_lbc_albeks" {
   name                              = "aws-lbc-albeks"
   chart                             = "aws-load-balancer-controller"
   namespace                         = "kube-system"
@@ -602,9 +602,9 @@ resource "helm_release" "aws_lbc_ALBeks" {
   }
   set {
     name                            = "serviceAccount.name"
-    value                           = "aws-lbc-ALBeks"
+    value                           = "aws-lbc-albeks"
   }
-  depends_on                        = [aws_iam_role_policy_attachment.role_lbc_ALBeks_attach, aws_eks_node_group.NodeGroup]
+  depends_on                        = [aws_iam_role_policy_attachment.role_lbc_albeks_attach, aws_eks_node_group.NodeGroup]
 }
 
 
