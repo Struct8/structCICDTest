@@ -131,7 +131,7 @@ data "aws_iam_policy_document" "doc_trust_lbc_ALBeks" {
     actions                         = ["sts:AssumeRoleWithWebIdentity"]
     condition {
       test                          = "StringEquals"
-      values                        = ["system:serviceaccount:kube-system:aws-lbc-ALBeks"]
+      values                        = ["system:serviceaccount:kube-system:aws-lbc-albeks"]
       variable                      = "${substr(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, 8, length(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url))}:sub"
     }
   }
