@@ -109,13 +109,13 @@ resource "helm_release" "argocd_applications" {
               }
             }
           }
-          struct8-testecicd-bootstrap = {
-            name = "struct8-testecicd-bootstrap"
+          struct8-testargo-bootstrap = {
+            name = "struct8-testargo-bootstrap"
             namespace = "argocd1"
             finalizers = ["resources-finalizer.argocd.argoproj.io"]
             project = "default"
             source = {
-              repoURL = "https://github.com/Struct8/TesteCICD.git"
+              repoURL = "https://github.com/Struct8/TestArgo.git"
               targetRevision = "HEAD"
               path = "bootstrap"
             }
@@ -177,9 +177,9 @@ resource "helm_release" "helm_Argo1" {
               username = "gitops-token"
               password = kubernetes_secret_v1.secret1.data.password
             }
-            struct8-testecicd = {
-              name = "struct8-testecicd"
-              url = "https://github.com/Struct8/TesteCICD.git"
+            struct8-testargo = {
+              name = "struct8-testargo"
+              url = "https://github.com/Struct8/TestArgo.git"
               type = "git"
             }
             cloudman-cloudmanmain = {
