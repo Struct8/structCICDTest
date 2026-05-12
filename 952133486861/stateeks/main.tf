@@ -608,6 +608,15 @@ resource "helm_release" "aws_lbc_albeks" {
     name                            = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value                           = aws_iam_role.role_lbc_albeks.arn
   }
+  set {
+    name  = "region"
+    value = data.aws_region.current.name  # Ou "us-east-1"
+  }
+  set {
+    name  = "vpcId"
+    value = aws_vpc.VPCeks.id
+  }
+
   depends_on                        = [aws_iam_role_policy_attachment.role_lbc_albeks_attach, aws_eks_node_group.NodeGroup]
 }
 
