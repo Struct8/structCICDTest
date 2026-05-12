@@ -83,7 +83,7 @@ resource "helm_release" "argocd_applications" {
   version                           = "1.4.1"
   name                              = "argocd-apps"
   chart                             = "argocd-apps"
-  namespace                         = "argocd1"
+  namespace                         = kubernetes_namespace.argocd1.metadata[0].name
   repository                        = "https://argoproj.github.io/argo-helm"
   values                            = [
     yamlencode({
@@ -151,15 +151,15 @@ resource "helm_release" "argocd_applications" {
         }
       })
   ]
-  depends_on                        = [helm_release.helm_Argo1]
+  depends_on                        = [helm_release.helm_Argo1, kubernetes_namespace.argocd1]
 }
 
 resource "helm_release" "helm_Argo1" {
   name                              = "Argo1"
   atomic                            = true
   chart                             = "argo-cd"
-  create_namespace                  = true
-  namespace                         = "argocd1"
+  create_namespace                  = false
+  namespace                         = kubernetes_namespace.argocd1.metadata[0].name
   repository                        = "https://argoproj.github.io/argo-helm"
   timeout                           = 600
   wait                              = true
@@ -196,6 +196,13 @@ resource "helm_release" "helm_Argo1" {
         }
       })
   ]
+  depends_on                        = [kubernetes_namespace.argocd1]
+}
+
+resource "kubernetes_namespace" "argocd1" {
+  metadata {
+    name                            = "argocd1"
+  }
 }
 
 resource "kubernetes_secret_v1" "secret1" {
@@ -205,8 +212,9 @@ resource "kubernetes_secret_v1" "secret1" {
   }
   metadata {
     name                            = "secret-secret1"
-    namespace                       = "argocd1"
+    namespace                       = kubernetes_namespace.argocd1.metadata[0].name
   }
+  depends_on                        = [kubernetes_namespace.argocd1]
 }
 
 resource "kubernetes_secret_v1" "secret2" {
@@ -216,8 +224,9 @@ resource "kubernetes_secret_v1" "secret2" {
   }
   metadata {
     name                            = "secret-secret2"
-    namespace                       = "argocd1"
+    namespace                       = kubernetes_namespace.argocd1.metadata[0].name
   }
+  depends_on                        = [kubernetes_namespace.argocd1]
 }
 
 
