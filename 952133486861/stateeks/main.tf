@@ -604,6 +604,10 @@ resource "helm_release" "aws_lbc_albeks" {
     name                            = "serviceAccount.name"
     value                           = "aws-lbc-albeks"
   }
+  set {
+    name                            = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value                           = aws_iam_role.role_lbc_albeks.arn
+  }
   depends_on                        = [aws_iam_role_policy_attachment.role_lbc_albeks_attach, aws_eks_node_group.NodeGroup]
 }
 
