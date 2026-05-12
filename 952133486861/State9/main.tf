@@ -89,6 +89,7 @@ resource "helm_release" "argocd_applications" {
     yamlencode({
         applications = {
           cloudmanpro-teste-bootstrap = {
+            name = "cloudmanpro-teste-bootstrap"
             namespace = "argocd1"
             finalizers = ["resources-finalizer.argocd.argoproj.io"]
             project = "default"
@@ -109,6 +110,7 @@ resource "helm_release" "argocd_applications" {
             }
           }
           struct8-testecicd-bootstrap = {
+            name = "struct8-testecicd-bootstrap"
             namespace = "argocd1"
             finalizers = ["resources-finalizer.argocd.argoproj.io"]
             project = "default"
@@ -129,6 +131,7 @@ resource "helm_release" "argocd_applications" {
             }
           }
           cloudman-cloudmanmain-bootstrap = {
+            name = "cloudman-cloudmanmain-bootstrap"
             namespace = "argocd1"
             finalizers = ["resources-finalizer.argocd.argoproj.io"]
             project = "default"
