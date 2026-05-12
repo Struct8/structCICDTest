@@ -535,7 +535,7 @@ resource "aws_eks_addon" "vpc_cni_ekstest1" {
 }
 
 resource "aws_eks_cluster" "ekstest1" {
-  version                           = "1.32"
+  version                           = "1.33"
   name                              = "ekstest1"
   bootstrap_self_managed_addons     = true
   deletion_protection               = false
