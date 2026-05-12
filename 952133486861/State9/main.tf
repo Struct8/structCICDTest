@@ -10,6 +10,14 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.12.1"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.24.0"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0"
+    }
   }
 
   backend "s3" {
@@ -41,6 +49,15 @@ provider "helm" {
     }
   }
 }
+provider "kubernetes" {
+  cluster_ca_certificate            = base64decode(data.aws_eks_cluster.ekstest1.certificate_authority[0].data)
+  host                              = data.aws_eks_cluster.ekstest1.endpoint
+  exec {
+    api_version                     = "client.authentication.k8s.io/v1beta1"
+    args                            = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ekstest1.name]
+    command                         = "aws"
+  }
+}
 
 ### SYSTEM DATA SOURCES ###
 
@@ -63,7 +80,7 @@ data "aws_eks_cluster" "ekstest1" {
 ### CATEGORY: KUBERNETES ###
 
 resource "helm_release" "argocd_applications" {
-  version                           = "2.0.0"
+  version                           = "1.4.1"
   name                              = "argocd-apps"
   chart                             = "argocd-apps"
   namespace                         = "argocd1"
@@ -71,12 +88,52 @@ resource "helm_release" "argocd_applications" {
   values                            = [
     yamlencode({
         applications = {
-          master-bootstrap = {
+          cloudmanpro-teste-bootstrap = {
             namespace = "argocd1"
             finalizers = ["resources-finalizer.argocd.argoproj.io"]
             project = "default"
             source = {
-              repoURL = "https://github.com/Struct8/TestArgo.git"
+              repoURL = "https://github.com/CloudManPro/Teste.git"
+              targetRevision = "HEAD"
+              path = "bootstrap"
+            }
+            destination = {
+              server = "https://kubernetes.default.svc"
+              namespace = "argocd1"
+            }
+            syncPolicy = {
+              automated = {
+                prune = true
+                selfHeal = true
+              }
+            }
+          }
+          struct8-testecicd-bootstrap = {
+            namespace = "argocd1"
+            finalizers = ["resources-finalizer.argocd.argoproj.io"]
+            project = "default"
+            source = {
+              repoURL = "https://github.com/Struct8/TesteCICD.git"
+              targetRevision = "HEAD"
+              path = "bootstrap"
+            }
+            destination = {
+              server = "https://kubernetes.default.svc"
+              namespace = "argocd1"
+            }
+            syncPolicy = {
+              automated = {
+                prune = true
+                selfHeal = true
+              }
+            }
+          }
+          cloudman-cloudmanmain-bootstrap = {
+            namespace = "argocd1"
+            finalizers = ["resources-finalizer.argocd.argoproj.io"]
+            project = "default"
+            source = {
+              repoURL = "https://github.com/CloudMan/CloudManMain.git"
               targetRevision = "HEAD"
               path = "bootstrap"
             }
@@ -98,7 +155,7 @@ resource "helm_release" "argocd_applications" {
 }
 
 resource "helm_release" "helm_Argo1" {
-  name                              = "argocd"
+  name                              = "Argo1"
   atomic                            = true
   chart                             = "argo-cd"
   create_namespace                  = true
@@ -109,10 +166,58 @@ resource "helm_release" "helm_Argo1" {
   values                            = [
     yamlencode({
         configs = {
-          repositories = {}
+          repositories = {
+            cloudmanpro-teste = {
+              name = "cloudmanpro-teste"
+              url = "https://github.com/CloudManPro/Teste.git"
+              type = "git"
+              insecure = false
+              username = "gitops-token"
+              password = kubernetes_secret_v1.secret1.data.password
+            }
+            struct8-testecicd = {
+              name = "struct8-testecicd"
+              url = "https://github.com/Struct8/TesteCICD.git"
+              type = "git"
+              insecure = false
+            }
+            cloudman-cloudmanmain = {
+              name = "cloudman-cloudmanmain"
+              url = "https://github.com/CloudMan/CloudManMain.git"
+              type = "git"
+              insecure = false
+              username = "gitops-token"
+              password = kubernetes_secret_v1.secret2.data.password
+            }
+          }
+        }
+        server = {
+          extraArgs = ["--insecure"]
         }
       })
   ]
+}
+
+resource "kubernetes_secret_v1" "secret1" {
+  type                              = "Opaque"
+  data                              = {
+    password = "trocar"
+  }
+  metadata {
+    name                            = "secret-secret1"
+    namespace                       = "argocd1"
+  }
+}
+
+resource "kubernetes_secret_v1" "secret2" {
+  type                              = "Opaque"
+  data                              = {
+    password = "novo pass"
+  }
+  metadata {
+    name                            = "secret-secret2"
+    namespace                       = "argocd1"
+  }
 }
 
 
@@ -127,8 +232,8 @@ resource "terraform_data" "gateway_api_crds" {
   }
 }
 
-resource "helm_release" "kong-crds" {
-  name             = "kong-crds"
+resource "helm_release" "app_kong" {
+  name             = "kong"
   chart            = "kong"
   repository       = "https://charts.konghq.com"
   version          = "2.44.0"
@@ -160,109 +265,5 @@ resource "helm_release" "kong-crds" {
   }
 
   depends_on = [terraform_data.gateway_api_crds]
-}
-
-resource "helm_release" "monitoring-crds" {
-  name             = "monitoring-crds"
-  chart            = "kube-prometheus-stack"
-  repository       = "https://prometheus-community.github.io/helm-charts"
-  version          = "65.2.0"
-  namespace        = "kube-prometheus-stack-system"
-  create_namespace = true
-  atomic           = true
-  wait             = true
-  cleanup_on_fail  = true
-  timeout          = 600
-
-  set {
-    name  = "prometheusOperator.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "prometheus.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "alertmanager.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "grafana.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "kubeStateMetrics.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "nodeExporter.enabled"
-    value = "false"
-  }
-}
-
-resource "helm_release" "keycloak-crds" {
-  name             = "keycloak-crds"
-  chart            = "keycloak"
-  repository       = "https://charts.bitnami.com/bitnami"
-  version          = "24.1.0"
-  namespace        = "keycloak-system"
-  create_namespace = true
-  atomic           = false
-  wait             = false
-  cleanup_on_fail  = false
-  timeout          = 600
-
-  set {
-    name  = "operator.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "rbac.create"
-    value = "false"
-  }
-
-  set {
-    name  = "serviceAccount.create"
-    value = "false"
-  }
-}
-
-resource "helm_release" "rabbit-crds" {
-  name             = "rabbit-crds"
-  chart            = "rabbitmq-cluster-operator"
-  repository       = "oci://registry-1.docker.io/bitnamicharts"
-  version          = "4.4.34"
-  namespace        = "rabbitmq-cluster-operator-system"
-  create_namespace = true
-  atomic           = false
-  wait             = false
-  cleanup_on_fail  = false
-  timeout          = 600
-
-  set {
-    name  = "clusterOperator.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "msgTopologyOperator.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "serviceAccount.create"
-    value = "false"
-  }
-
-  set {
-    name  = "rbac.create"
-    value = "false"
-  }
 }
 
