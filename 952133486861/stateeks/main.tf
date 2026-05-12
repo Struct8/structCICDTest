@@ -428,9 +428,9 @@ resource "aws_security_group_rule" "rule_NodeGroup_ingress_cluster_to_node_webho
   security_group_id                 = aws_security_group.eks_node_group_NodeGroup_group.id
   source_security_group_id          = aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id
   description                       = "Allow Control Plane to Node Webhooks (LB Controller, etc)"
-  from_port                         = 443
+  from_port                         = 9443
   protocol                          = "tcp"
-  to_port                           = 443
+  to_port                           = 9443
   type                              = "ingress"
 }
 
@@ -466,9 +466,9 @@ resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_ingress_tcp_443" {
   security_group_id                 = aws_security_group.lb_alb_ALBeks_group.id
   cidr_blocks                       = ["0.0.0.0/0"]
   description                       = "permits https"
-  from_port                         = 9443
+  from_port                         = 443
   protocol                          = "tcp"
-  to_port                           = 9443
+  to_port                           = 443
   type                              = "ingress"
 }
 
@@ -609,14 +609,13 @@ resource "helm_release" "aws_lbc_albeks" {
     value                           = aws_iam_role.role_lbc_albeks.arn
   }
   set {
-    name  = "region"
-    value = data.aws_region.current.name  # Ou "us-east-1"
+    name                            = "region"
+    value                           = data.aws_region.current.name
   }
   set {
-    name  = "vpcId"
-    value = aws_vpc.VPCeks.id
+    name                            = "vpcId"
+    value                           = aws_vpc.VPCeks.id
   }
-
   depends_on                        = [aws_iam_role_policy_attachment.role_lbc_albeks_attach, aws_eks_node_group.NodeGroup]
 }
 
