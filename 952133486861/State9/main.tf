@@ -171,7 +171,6 @@ resource "helm_release" "helm_Argo1" {
               name = "cloudmanpro-teste"
               url = "https://github.com/CloudManPro/Teste.git"
               type = "git"
-              insecure = false
               username = "gitops-token"
               password = kubernetes_secret_v1.secret1.data.password
             }
@@ -179,13 +178,11 @@ resource "helm_release" "helm_Argo1" {
               name = "struct8-testecicd"
               url = "https://github.com/Struct8/TesteCICD.git"
               type = "git"
-              insecure = false
             }
             cloudman-cloudmanmain = {
               name = "cloudman-cloudmanmain"
               url = "https://github.com/CloudMan/CloudManMain.git"
               type = "git"
-              insecure = false
               username = "gitops-token"
               password = kubernetes_secret_v1.secret2.data.password
             }
