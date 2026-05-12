@@ -621,3 +621,42 @@ resource "helm_release" "aws_lbc_albeks" {
 }
 
 
+resource "helm_release" "external_dns" {
+  name       = "external-dns"
+  repository = "https://kubernetes-sigs.github.io/external-dns/"
+  chart      = "external-dns"
+  namespace  = "kube-system"
+
+  set {
+    name  = "serviceAccount.create"
+    value = "true"
+  }
+
+  set {
+    name  = "serviceAccount.name"
+    value = "external-dns" # DEVE ser igual ao que está na condição do seu IAM Role Trust Policy
+  }
+
+  set {
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = aws_iam_role.role_external_dns_ekstest1_st_stateeks.arn
+  }
+
+  set {
+    name  = "provider"
+    value = "aws"
+  }
+
+  set {
+    name  = "domainFilters[0]"
+    value = "cloudman.pro"
+  }
+
+  # Isso garante que ele não saia deletando registros que ele não gerencia
+  set {
+    name  = "policy"
+    value = "upsert-only" 
+  }
+
+  depends_on = [aws_eks_node_group.NodeGroup, aws_iam_role_policy_attachment.attach_ext_dns_ekstest1_st_stateeks]
+}
