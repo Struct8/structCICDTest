@@ -466,9 +466,9 @@ resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_ingress_tcp_443" {
   security_group_id                 = aws_security_group.lb_alb_ALBeks_group.id
   cidr_blocks                       = ["0.0.0.0/0"]
   description                       = "permits https"
-  from_port                         = 443
+  from_port                         = 9443
   protocol                          = "tcp"
-  to_port                           = 443
+  to_port                           = 9443
   type                              = "ingress"
 }
 
