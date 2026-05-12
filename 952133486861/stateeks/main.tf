@@ -132,7 +132,7 @@ data "aws_iam_policy_document" "doc_trust_lbc_albeks" {
     condition {
       test                          = "StringEquals"
       values                        = ["system:serviceaccount:kube-system:aws-lbc-albeks"]
-      variable                      = "${substr(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, 8, length(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url))}:sub"
+      variable                      = "${replace(aws_iam_openid_connect_provider.eks_oidc_ekstest1.url, "https://", "")}:sub"
     }
   }
 }
@@ -286,6 +286,7 @@ resource "aws_subnet" "Subnet15" {
   map_public_ip_on_launch           = true
   tags                              = {
     "kubernetes.io/cluster/ekstest1" = "shared"
+    "kubernetes.io/role/elb" = "1"
     Name = "Subnet15"
     State = "stateeks"
     Struct8User = "Ricardo"
