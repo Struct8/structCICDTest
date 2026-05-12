@@ -155,7 +155,7 @@ resource "helm_release" "argocd_applications" {
 }
 
 resource "helm_release" "helm_Argo1" {
-  name                              = "Argo1"
+  name                              = "argo1"
   atomic                            = true
   chart                             = "argo-cd"
   create_namespace                  = false
