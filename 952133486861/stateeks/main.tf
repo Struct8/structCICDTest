@@ -709,6 +709,36 @@ resource "helm_release" "aws_lbc_albeks" {
   depends_on                        = [aws_iam_role_policy_attachment.role_lbc_albeks_attach, aws_eks_node_group.NodeGroup]
 }
 
-
+resource "helm_release" "ext_dns_ekstest1" {
+  name                              = "external-dns"
+  chart                             = "external-dns"
+  namespace                         = "kube-system"
+  repository                        = "https://kubernetes-sigs.github.io/external-dns/"
+  set {
+    name                            = "serviceAccount.create"
+    value                           = true
+  }
+  set {
+    name                            = "serviceAccount.name"
+    value                           = "external-dns"
+  }
+  set {
+    name                            = "provider"
+    value                           = "aws"
+  }
+  set {
+    name                            = "policy"
+    value                           = "upsert-only"
+  }
+  set {
+    name                            = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value                           = aws_iam_role.role_external_dns_ekstest1_st_stateeks.arn
+  }
+  set {
+    name                            = "domainFilters[0]"
+    value                           = "cloudman.pro"
+  }
+  depends_on                        = [aws_iam_role_policy_attachment.attach_ext_dns_ekstest1_st_stateeks, aws_eks_node_group.NodeGroup]
+}
 
 
