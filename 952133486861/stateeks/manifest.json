@@ -1,7 +1,7 @@
 {
   "external_repositories": [],
   "action": "apply",
-  "trigger_id": "1778866324069",
+  "trigger_id": "1778867830886",
   "backend_global_config": {
     "provider": "aws",
     "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
