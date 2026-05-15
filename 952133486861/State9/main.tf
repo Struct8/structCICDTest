@@ -204,7 +204,7 @@ resource "helm_release" "helm_Argo1" {
 }
 
 resource "kubernetes_manifest" "tgb_tg" {
-  manifest {
+  manifest = {
     apiVersion                      = "elbv2.k8s.aws/v1beta1"
     kind                            = "TargetGroupBinding"
     metadata {
