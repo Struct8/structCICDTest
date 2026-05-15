@@ -215,7 +215,7 @@ resource "kubernetes_manifest" "tgb_tg" {
       targetGroupARN = "${data.aws_lb_target_group.TG.arn}"
       targetType = "ip"
       serviceRef = {
-        name = "kong1-proxy"
+        name = "kong-proxy"
         port = 80
       }
     }
