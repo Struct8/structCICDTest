@@ -100,7 +100,7 @@ data "aws_iam_policy_document" "policy_external_dns_ekstest1_st_stateeks_doc" {
     sid                             = "AllowRoute53Changes"
     effect                          = "Allow"
     actions                         = ["route53:ChangeResourceRecordSets"]
-    resources                       = [[data.aws_route53_zone.Zone.arn]]
+    resources                       = [data.aws_route53_zone.Zone.arn]
   }
   statement {
     sid                             = "AllowRoute53Listing"
