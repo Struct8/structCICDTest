@@ -100,7 +100,7 @@ data "aws_iam_policy_document" "policy_external_dns_ekstest1_st_stateeks_doc" {
     sid                             = "AllowRoute53Changes"
     effect                          = "Allow"
     actions                         = ["route53:ChangeResourceRecordSets"]
-    resources                       = [data.aws_route53_zone.Zone.arn]
+    resources                       = [[data.aws_route53_zone.Zone.arn]]
   }
   statement {
     sid                             = "AllowRoute53Listing"
@@ -252,7 +252,7 @@ resource "aws_acm_certificate" "k8s" {
     certificate_transparency_logging_preference = "ENABLED"
   }
   tags                              = {
-    "kubernetes.io/cluster/GAPI" = "shared"
+    "kubernetes.io/cluster/gapi" = "shared"
     Name = "k8s"
     State = "stateeks"
     Struct8User = "Ricardo"
@@ -347,6 +347,28 @@ resource "aws_route53_record" "Route53_Record_k8s_k8s_cloudman_pro" {
   records                           = ["${each.value.resource_record_value}"]
   ttl                               = 300
   type                              = "${each.value.resource_record_type}"
+}
+
+resource "aws_route53_record" "alias_a_aws_lb_Xalb_ALBeks_k8s_cloudman_pro" {
+  name                              = "k8s.cloudman.pro"
+  zone_id                           = data.aws_route53_zone.Zone.zone_id
+  type                              = "A"
+  alias {
+    name                            = aws_lb.ALBeks.dns_name
+    zone_id                         = aws_lb.ALBeks.zone_id
+    evaluate_target_health          = true
+  }
+}
+
+resource "aws_route53_record" "alias_a_aws_lb_Xalb_ALBeks_wildcard_k8s_cloudman_pro" {
+  name                              = "*.k8s.cloudman.pro"
+  zone_id                           = data.aws_route53_zone.Zone.zone_id
+  type                              = "A"
+  alias {
+    name                            = aws_lb.ALBeks.dns_name
+    zone_id                         = aws_lb.ALBeks.zone_id
+    evaluate_target_health          = true
+  }
 }
 
 resource "aws_route_table" "RTeks" {
@@ -481,6 +503,73 @@ resource "aws_security_group_rule" "rule_lb_alb_ALBeks_group_to_eks_node_group_N
   protocol                          = "tcp"
   to_port                           = 65535
   type                              = "ingress"
+}
+
+resource "aws_lb" "ALBeks" {
+  name                              = "ALBeks"
+  idle_timeout                      = 60
+  load_balancer_type                = "application"
+  security_groups                   = [aws_security_group.lb_alb_ALBeks_group.id]
+  subnets                           = [aws_subnet.Subnet15.id, aws_subnet.Subnet16.id]
+  tags                              = {
+    Name = "ALBeks"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_lb_listener" "Listener" {
+  certificate_arn                   = aws_acm_certificate.k8s.arn
+  load_balancer_arn                 = aws_lb.ALBeks.arn
+  port                              = 443
+  protocol                          = "HTTPS"
+  routing_http_response_server_enabled = true
+  default_action {
+    order                           = 1
+    target_group_arn                = aws_lb_target_group.TG.arn
+    type                            = "forward"
+    forward {
+      target_group {
+        arn                         = aws_lb_target_group.TG.arn
+      }
+    }
+  }
+  tags                              = {
+    Name = "Listener"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_lb_target_group" "TG" {
+  name                              = "TG"
+  vpc_id                            = aws_vpc.VPCeks.id
+  connection_termination            = false
+  deregistration_delay              = "300"
+  ip_address_type                   = "ipv4"
+  load_balancing_algorithm_type     = "round_robin"
+  port                              = 8000
+  protocol                          = "HTTP"
+  protocol_version                  = "HTTP1"
+  proxy_protocol_v2                 = false
+  slow_start                        = 0
+  target_type                       = "ip"
+  health_check {
+    enabled                         = true
+    healthy_threshold               = 3
+    interval                        = 30
+    matcher                         = "200-399,404"
+    path                            = "/"
+    port                            = "traffic-port"
+    protocol                        = "HTTP"
+    timeout                         = 5
+    unhealthy_threshold             = 3
+  }
+  tags                              = {
+    Name = "TG"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
 }
 
 
@@ -620,43 +709,36 @@ resource "helm_release" "aws_lbc_albeks" {
   depends_on                        = [aws_iam_role_policy_attachment.role_lbc_albeks_attach, aws_eks_node_group.NodeGroup]
 }
 
-
-resource "helm_release" "external_dns" {
-  name       = "external-dns"
-  repository = "https://kubernetes-sigs.github.io/external-dns/"
-  chart      = "external-dns"
-  namespace  = "kube-system"
-
+resource "helm_release" "ext_dns_ekstest1" {
+  name                              = "external-dns"
+  chart                             = "external-dns"
+  namespace                         = "kube-system"
+  repository                        = "https://kubernetes-sigs.github.io/external-dns/"
   set {
-    name  = "serviceAccount.create"
-    value = "true"
+    name                            = "serviceAccount.create"
+    value                           = true
   }
-
   set {
-    name  = "serviceAccount.name"
-    value = "external-dns" # DEVE ser igual ao que está na condição do seu IAM Role Trust Policy
+    name                            = "serviceAccount.name"
+    value                           = "external-dns"
   }
-
   set {
-    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = aws_iam_role.role_external_dns_ekstest1_st_stateeks.arn
+    name                            = "provider"
+    value                           = "aws"
   }
-
   set {
-    name  = "provider"
-    value = "aws"
+    name                            = "policy"
+    value                           = "upsert-only"
   }
-
   set {
-    name  = "domainFilters[0]"
-    value = "cloudman.pro"
+    name                            = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value                           = aws_iam_role.role_external_dns_ekstest1_st_stateeks.arn
   }
-
-  # Isso garante que ele não saia deletando registros que ele não gerencia
   set {
-    name  = "policy"
-    value = "upsert-only" 
+    name                            = "domainFilters[0]"
+    value                           = "cloudman.pro"
   }
-
-  depends_on = [aws_eks_node_group.NodeGroup, aws_iam_role_policy_attachment.attach_ext_dns_ekstest1_st_stateeks]
+  depends_on                        = [aws_iam_role_policy_attachment.attach_ext_dns_ekstest1_st_stateeks, aws_eks_node_group.NodeGroup]
 }
+
+
