@@ -710,5 +710,3 @@ resource "helm_release" "aws_lbc_albeks" {
 }
 
 
-
-
