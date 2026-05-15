@@ -74,6 +74,10 @@ data "aws_eks_cluster" "ekstest1" {
   name                              = "ekstest1"
 }
 
+data "aws_lb_target_group" "TG" {
+  name                              = "TG"
+}
+
 
 
 
@@ -199,9 +203,34 @@ resource "helm_release" "helm_Argo1" {
   depends_on                        = [kubernetes_namespace.argocd1]
 }
 
+resource "kubernetes_manifest" "tgb_tg" {
+  manifest {
+    apiVersion                      = "elbv2.k8s.aws/v1beta1"
+    kind                            = "TargetGroupBinding"
+    metadata {
+      name                          = "tg-tgb"
+      namespace                     = "${kubernetes_namespace.infrab.metadata[0].name}"
+    }
+    spec {
+      targetGroupARN                = "${data.aws_lb_target_group.TG.arn}"
+      targetType                    = "ip"
+      serviceRef {
+        name                        = "kong1-proxy"
+        port                        = 80
+      }
+    }
+  }
+}
+
 resource "kubernetes_namespace" "argocd1" {
   metadata {
     name                            = "argocd1"
+  }
+}
+
+resource "kubernetes_namespace" "infrab" {
+  metadata {
+    name                            = "infrab"
   }
 }
 
