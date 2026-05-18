@@ -92,27 +92,6 @@ resource "helm_release" "argocd_applications" {
   values                            = [
     yamlencode({
         applications = {
-          cloudmanpro-teste-bootstrap = {
-            name = "cloudmanpro-teste-bootstrap"
-            namespace = "argocd1"
-            finalizers = ["resources-finalizer.argocd.argoproj.io"]
-            project = "default"
-            source = {
-              repoURL = "https://github.com/CloudManPro/Teste.git"
-              targetRevision = "HEAD"
-              path = "bootstrap"
-            }
-            destination = {
-              server = "https://kubernetes.default.svc"
-              namespace = "argocd1"
-            }
-            syncPolicy = {
-              automated = {
-                prune = true
-                selfHeal = true
-              }
-            }
-          }
           struct8-testargo-bootstrap = {
             name = "struct8-testargo-bootstrap"
             namespace = "argocd1"
@@ -120,27 +99,6 @@ resource "helm_release" "argocd_applications" {
             project = "default"
             source = {
               repoURL = "https://github.com/Struct8/TestArgo.git"
-              targetRevision = "HEAD"
-              path = "bootstrap"
-            }
-            destination = {
-              server = "https://kubernetes.default.svc"
-              namespace = "argocd1"
-            }
-            syncPolicy = {
-              automated = {
-                prune = true
-                selfHeal = true
-              }
-            }
-          }
-          cloudman-cloudmanmain-bootstrap = {
-            name = "cloudman-cloudmanmain-bootstrap"
-            namespace = "argocd1"
-            finalizers = ["resources-finalizer.argocd.argoproj.io"]
-            project = "default"
-            source = {
-              repoURL = "https://github.com/CloudMan/CloudManMain.git"
               targetRevision = "HEAD"
               path = "bootstrap"
             }
@@ -174,24 +132,10 @@ resource "helm_release" "helm_Argo1" {
     yamlencode({
         configs = {
           repositories = {
-            cloudmanpro-teste = {
-              name = "cloudmanpro-teste"
-              url = "https://github.com/CloudManPro/Teste.git"
-              type = "git"
-              username = "gitops-token"
-              password = kubernetes_secret_v1.secret1.data.password
-            }
             struct8-testargo = {
               name = "struct8-testargo"
               url = "https://github.com/Struct8/TestArgo.git"
               type = "git"
-            }
-            cloudman-cloudmanmain = {
-              name = "cloudman-cloudmanmain"
-              url = "https://github.com/CloudMan/CloudManMain.git"
-              type = "git"
-              username = "gitops-token"
-              password = kubernetes_secret_v1.secret2.data.password
             }
           }
         }
@@ -234,28 +178,10 @@ resource "kubernetes_namespace" "infrab" {
   }
 }
 
-resource "kubernetes_secret_v1" "secret1" {
-  type                              = "Opaque"
-  data                              = {
-    password = "trocar"
-  }
+resource "kubernetes_namespace" "monitoringtest" {
   metadata {
-    name                            = "secret-secret1"
-    namespace                       = kubernetes_namespace.argocd1.metadata[0].name
+    name                            = "monitoringtest"
   }
-  depends_on                        = [kubernetes_namespace.argocd1]
-}
-
-resource "kubernetes_secret_v1" "secret2" {
-  type                              = "Opaque"
-  data                              = {
-    password = "novo pass"
-  }
-  metadata {
-    name                            = "secret-secret2"
-    namespace                       = kubernetes_namespace.argocd1.metadata[0].name
-  }
-  depends_on                        = [kubernetes_namespace.argocd1]
 }
 
 
@@ -275,7 +201,8 @@ resource "helm_release" "app_kong" {
   chart            = "kong"
   repository       = "https://charts.konghq.com"
   version          = "2.44.0"
-  create_namespace = false
+  namespace        = "kong-system"
+  create_namespace = true
   atomic           = true
   wait             = true
   cleanup_on_fail  = true
@@ -302,5 +229,48 @@ resource "helm_release" "app_kong" {
   }
 
   depends_on = [terraform_data.gateway_api_crds]
+}
+
+resource "helm_release" "app_kube_prometheus_stack" {
+  name             = "kube-prometheus-stack"
+  chart            = "kube-prometheus-stack"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  version          = "65.2.0"
+  namespace        = "kube-prometheus-stack-system"
+  create_namespace = true
+  atomic           = true
+  wait             = true
+  cleanup_on_fail  = true
+  timeout          = 600
+
+  set {
+    name  = "prometheusOperator.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "prometheus.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "alertmanager.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "grafana.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "kubeStateMetrics.enabled"
+    value = "false"
+  }
+
+  set {
+    name  = "nodeExporter.enabled"
+    value = "false"
+  }
 }
 
