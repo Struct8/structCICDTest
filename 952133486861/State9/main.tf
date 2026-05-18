@@ -275,8 +275,7 @@ resource "helm_release" "app_kong" {
   chart            = "kong"
   repository       = "https://charts.konghq.com"
   version          = "2.44.0"
-  namespace        = "kong-system"
-  create_namespace = true
+  create_namespace = false
   atomic           = true
   wait             = true
   cleanup_on_fail  = true
