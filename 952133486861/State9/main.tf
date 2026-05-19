@@ -128,6 +128,7 @@ resource "helm_release" "helm_Argo1" {
   repository                        = "https://argoproj.github.io/argo-helm"
   timeout                           = 600
   wait                              = true
+  
   values                            = [
     yamlencode({
         configs = {
@@ -147,6 +148,10 @@ resource "helm_release" "helm_Argo1" {
               enabled = true
               interval = "30s"
               scrapeTimeout = "10s"
+              # Label para o Prometheus encontrar este ServiceMonitor
+              additionalLabels = {
+                release = "kube-prometheus-stack" 
+              }
             }
           }
         }
@@ -157,6 +162,9 @@ resource "helm_release" "helm_Argo1" {
               enabled = true
               interval = "30s"
               scrapeTimeout = "10s"
+              additionalLabels = {
+                release = "kube-prometheus-stack"
+              }
             }
           }
         }
@@ -167,6 +175,9 @@ resource "helm_release" "helm_Argo1" {
               enabled = true
               interval = "30s"
               scrapeTimeout = "10s"
+              additionalLabels = {
+                release = "kube-prometheus-stack"
+              }
             }
           }
         }
@@ -177,12 +188,20 @@ resource "helm_release" "helm_Argo1" {
               enabled = true
               interval = "30s"
               scrapeTimeout = "10s"
+              additionalLabels = {
+                release = "kube-prometheus-stack"
+              }
             }
           }
         }
       })
   ]
-  depends_on                        = [kubernetes_namespace.argocd1]
+
+  # IMPORTANTE: O Argo CD depende do Prometheus Stack para criar os ServiceMonitors
+  depends_on = [
+    kubernetes_namespace.argocd1,
+    helm_release.app_kube_prometheus_stack 
+  ]
 }
 
 resource "kubernetes_manifest" "tgb_tg" {
@@ -269,46 +288,31 @@ resource "helm_release" "app_kong" {
   depends_on = [terraform_data.gateway_api_crds]
 }
 
-resource "helm_release" "app_kube_prometheus_stack" {
-  name             = "kube-prometheus-stack"
-  chart            = "kube-prometheus-stack"
+resource "helm_release" "prometheus_operator" {
+  name             = "prom-operator"
   repository       = "https://prometheus-community.github.io/helm-charts"
-  version          = "65.2.0"
-  namespace        = "kube-prometheus-stack-system"
+  chart            = "kube-prometheus-stack"
+  namespace        = "monitoring-system"
   create_namespace = true
-  atomic           = true
-  wait             = true
-  cleanup_on_fail  = true
-  timeout          = 600
 
-  set {
-    name  = "prometheusOperator.enabled"
-    value = "false"
-  }
+  values = [
+    yamlencode({
+      prometheus: { enabled: false },
+      alertmanager: { enabled: false },
+      grafana: { enabled: false }, # Desativamos o Grafana "comum"
+      prometheusOperator: { enabled: true }
+    })
+  ]
+}
 
-  set {
-    name  = "prometheus.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "alertmanager.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "grafana.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "kubeStateMetrics.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "nodeExporter.enabled"
-    value = "false"
-  }
+# 2. O "Cérebro" do Grafana (Necessário para usar kind: Grafana)
+resource "helm_release" "grafana_operator" {
+  name             = "graf-operator"
+  repository       = "https://grafana.github.io/helm-charts"
+  chart            = "grafana-operator"
+  namespace        = "monitoring-system"
+  create_namespace = true
+  
+  # Este operador é o que permite o seu gerador usar "kind: Grafana"
 }
 
