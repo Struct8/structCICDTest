@@ -200,8 +200,9 @@ resource "helm_release" "helm_Argo1" {
   # IMPORTANTE: O Argo CD depende do Prometheus Stack para criar os ServiceMonitors
   depends_on = [
     kubernetes_namespace.argocd1,
-    helm_release.app_kube_prometheus_stack 
+    helm_release.prometheus_operator # Alterado de app_kube_prometheus_stack para prometheus_operator
   ]
+
 }
 
 resource "kubernetes_manifest" "tgb_tg" {
