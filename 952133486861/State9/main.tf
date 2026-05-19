@@ -141,6 +141,44 @@ resource "helm_release" "helm_Argo1" {
         }
         server = {
           extraArgs = ["--insecure"]
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+            }
+          }
+        }
+        controller = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+            }
+          }
+        }
+        repoServer = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+            }
+          }
+        }
+        applicationSet = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+            }
+          }
         }
       })
   ]
