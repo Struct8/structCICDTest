@@ -128,107 +128,93 @@ resource "helm_release" "helm_Argo1" {
   repository                        = "https://argoproj.github.io/argo-helm"
   timeout                           = 600
   wait                              = true
-  
-  values = [
+  values                            = [
     yamlencode({
-      # 1. Configuração do Repositório (Preservado)
-      configs = {
-        repositories = {
-          struct8-testargo = {
-            name = "struct8-testargo"
-            url  = "https://github.com/Struct8/TestArgo.git"
-            type = "git"
+        configs = {
+          repositories = {
+            struct8-testargo = {
+              name = "struct8-testargo"
+              url = "https://github.com/Struct8/TestArgo.git"
+              type = "git"
+            }
           }
         }
-      }
-      
-      # 2. Configuração do Servidor com --insecure e Relabeling (Corrigido)
-      server = {
-        extraArgs = ["--insecure"]
-        metrics = {
-          enabled = true
-          serviceMonitor = {
-            enabled       = true
-            interval      = "30s"
-            scrapeTimeout = "10s"
-            relabelings = [
-              {
-                sourceLabels = ["job"]
-                regex        = ".*(argocd-server).*"
-                targetLabel  = "job"
-                replacement  = "$1"
-              }
-            ]
+        server = {
+          extraArgs = ["--insecure"]
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+              relabelings = [
+                {
+                  sourceLabels = ["job"]
+                  regex = ".*(argocd-server).*"
+                  targetLabel = "job"
+                  replacement = "$1"
+                }
+              ]
+            }
           }
         }
-      }
-      
-      # 3. Application Controller (Corrigido)
-      controller = {
-        metrics = {
-          enabled = true
-          serviceMonitor = {
-            enabled       = true
-            interval      = "30s"
-            scrapeTimeout = "10s"
-            relabelings = [
-              {
-                sourceLabels = ["job"]
-                regex        = ".*(argocd-application-controller).*"
-                targetLabel  = "job"
-                replacement  = "$1"
-              }
-            ]
+        controller = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+              relabelings = [
+                {
+                  sourceLabels = ["job"]
+                  regex = ".*(argocd-application-controller).*"
+                  targetLabel = "job"
+                  replacement = "$1"
+                }
+              ]
+            }
           }
         }
-      }
-      
-      # 4. Repo Server (Corrigido)
-      repoServer = {
-        metrics = {
-          enabled = true
-          serviceMonitor = {
-            enabled       = true
-            interval      = "30s"
-            scrapeTimeout = "10s"
-            relabelings = [
-              {
-                sourceLabels = ["job"]
-                regex        = ".*(argocd-repo-server).*"
-                targetLabel  = "job"
-                replacement  = "$1"
-              }
-            ]
+        repoServer = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+              relabelings = [
+                {
+                  sourceLabels = ["job"]
+                  regex = ".*(argocd-repo-server).*"
+                  targetLabel = "job"
+                  replacement = "$1"
+                }
+              ]
+            }
           }
         }
-      }
-      
-      # 5. Application Set (Corrigido)
-      applicationSet = {
-        metrics = {
-          enabled = true
-          serviceMonitor = {
-            enabled       = true
-            interval      = "30s"
-            scrapeTimeout = "10s"
-            relabelings = [
-              {
-                sourceLabels = ["job"]
-                regex        = ".*(argocd-applicationset-controller).*"
-                targetLabel  = "job"
-                replacement  = "$1"
-              }
-            ]
+        applicationSet = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+              relabelings = [
+                {
+                  sourceLabels = ["job"]
+                  regex = ".*(argocd-applicationset-controller).*"
+                  targetLabel = "job"
+                  replacement = "$1"
+                }
+              ]
+            }
           }
         }
-      }
-    })
+      })
   ]
-
-  depends_on = [
-    kubernetes_namespace.argocd1,
-    helm_release.prometheus_operator
-  ]
+  depends_on                        = [kubernetes_namespace.argocd1, helm_release.helm_app_kube_prometheus_stack]
 }
 
 resource "kubernetes_manifest" "tgb_tg" {
@@ -284,7 +270,6 @@ resource "helm_release" "app_kong" {
   name             = "kong"
   chart            = "kong"
   repository       = "https://charts.konghq.com"
-  version          = "2.44.0"
   namespace        = "kong-system"
   create_namespace = true
   atomic           = true
@@ -292,54 +277,72 @@ resource "helm_release" "app_kong" {
   cleanup_on_fail  = true
   timeout          = 600
 
-  set {
-    name  = "ingressController.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "deployment.kong.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "migrations.install"
-    value = "false"
-  }
-
-  set {
-    name  = "migrations.preUpgrade"
-    value = "false"
-  }
+  values = [
+    yamlencode({
+        "ingressController" = {
+          "enabled" = true
+        }
+        "deployment" = {
+          "kong" = {
+            "enabled" = false
+          }
+        }
+        "migrations" = {
+          "install" = false
+          "preUpgrade" = false
+        }
+    })
+  ]
 
   depends_on = [terraform_data.gateway_api_crds]
 }
 
-resource "helm_release" "prometheus_operator" {
-  name             = "prom-operator"
-  repository       = "https://prometheus-community.github.io/helm-charts"
+resource "helm_release" "app_kube_prometheus_stack" {
+  name             = "kube-prometheus-stack"
   chart            = "kube-prometheus-stack"
-  namespace        = "monitoring-system"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  namespace        = "kube-prometheus-stack-system"
   create_namespace = true
+  atomic           = true
+  wait             = true
+  cleanup_on_fail  = true
+  timeout          = 600
 
   values = [
     yamlencode({
-      prometheus: { enabled: false },
-      alertmanager: { enabled: false },
-      grafana: { enabled: false }, # Desativamos o Grafana "comum"
-      prometheusOperator: { enabled: true }
+        "prometheusOperator" = {
+          "enabled" = true
+        }
+        "prometheus" = {
+          "enabled" = false
+        }
+        "alertmanager" = {
+          "enabled" = false
+        }
+        "grafana" = {
+          "enabled" = false
+        }
+        "kubeStateMetrics" = {
+          "enabled" = false
+        }
+        "nodeExporter" = {
+          "enabled" = false
+        }
     })
   ]
 }
 
-# 2. O "Cérebro" do Grafana (Necessário para usar kind: Grafana)
-resource "helm_release" "grafana_operator" {
-  name             = "graf-operator"
-  repository       = "https://grafana.github.io/helm-charts"
+resource "helm_release" "app_grafana_operator" {
+  name             = "grafana-operator"
   chart            = "grafana-operator"
-  namespace        = "monitoring-system"
+  repository       = "https://grafana.github.io/helm-charts"
+  namespace        = "grafana-operator-system"
   create_namespace = true
-  
-  # Este operador é o que permite o seu gerador usar "kind: Grafana"
+  atomic           = true
+  wait             = true
+  cleanup_on_fail  = true
+  timeout          = 600
+
+  depends_on = [terraform_data.gateway_api_crds]
 }
 
