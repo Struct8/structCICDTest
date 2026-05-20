@@ -131,13 +131,26 @@ resource "helm_release" "helm_Argo1" {
   
   values = [
     yamlencode({
+      # 1. Configuração do Repositório (Preservado)
+      configs = {
+        repositories = {
+          struct8-testargo = {
+            name = "struct8-testargo"
+            url  = "https://github.com/Struct8/TestArgo.git"
+            type = "git"
+          }
+        }
+      }
+      
+      # 2. Configuração do Servidor com --insecure e Relabeling (Corrigido)
       server = {
+        extraArgs = ["--insecure"]
         metrics = {
           enabled = true
           serviceMonitor = {
-            enabled = true
-            interval = "30s"
-            # ADICIONE ESTE BLOCO DE RELABELING:
+            enabled       = true
+            interval      = "30s"
+            scrapeTimeout = "10s"
             relabelings = [
               {
                 sourceLabels = ["job"]
@@ -149,12 +162,15 @@ resource "helm_release" "helm_Argo1" {
           }
         }
       }
+      
+      # 3. Application Controller (Corrigido)
       controller = {
         metrics = {
           enabled = true
           serviceMonitor = {
-            enabled = true
-            interval = "30s"
+            enabled       = true
+            interval      = "30s"
+            scrapeTimeout = "10s"
             relabelings = [
               {
                 sourceLabels = ["job"]
@@ -166,12 +182,15 @@ resource "helm_release" "helm_Argo1" {
           }
         }
       }
+      
+      # 4. Repo Server (Corrigido)
       repoServer = {
         metrics = {
           enabled = true
           serviceMonitor = {
-            enabled = true
-            interval = "30s"
+            enabled       = true
+            interval      = "30s"
+            scrapeTimeout = "10s"
             relabelings = [
               {
                 sourceLabels = ["job"]
@@ -183,12 +202,15 @@ resource "helm_release" "helm_Argo1" {
           }
         }
       }
+      
+      # 5. Application Set (Corrigido)
       applicationSet = {
         metrics = {
           enabled = true
           serviceMonitor = {
-            enabled = true
-            interval = "30s"
+            enabled       = true
+            interval      = "30s"
+            scrapeTimeout = "10s"
             relabelings = [
               {
                 sourceLabels = ["job"]
@@ -203,10 +225,9 @@ resource "helm_release" "helm_Argo1" {
     })
   ]
 
-  # IMPORTANTE: O Argo CD depende do Prometheus Stack para criar os ServiceMonitors
   depends_on = [
     kubernetes_namespace.argocd1,
-    helm_release.prometheus_operator # Alterado de app_kube_prometheus_stack para prometheus_operator
+    helm_release.prometheus_operator
   ]
 }
 
