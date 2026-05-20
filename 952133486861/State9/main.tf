@@ -129,72 +129,78 @@ resource "helm_release" "helm_Argo1" {
   timeout                           = 600
   wait                              = true
   
-  values                            = [
+  values = [
     yamlencode({
-        configs = {
-          repositories = {
-            struct8-testargo = {
-              name = "struct8-testargo"
-              url = "https://github.com/Struct8/TestArgo.git"
-              type = "git"
-            }
-          }
-        }
-        server = {
-          extraArgs = ["--insecure"]
-          metrics = {
+      server = {
+        metrics = {
+          enabled = true
+          serviceMonitor = {
             enabled = true
-            serviceMonitor = {
-              enabled = true
-              interval = "30s"
-              scrapeTimeout = "10s"
-              # Label para o Prometheus encontrar este ServiceMonitor
-              additionalLabels = {
-                release = "kube-prometheus-stack" 
+            interval = "30s"
+            # ADICIONE ESTE BLOCO DE RELABELING:
+            relabelings = [
+              {
+                sourceLabels = ["job"]
+                regex        = ".*(argocd-server).*"
+                targetLabel  = "job"
+                replacement  = "$1"
               }
-            }
+            ]
           }
         }
-        controller = {
-          metrics = {
+      }
+      controller = {
+        metrics = {
+          enabled = true
+          serviceMonitor = {
             enabled = true
-            serviceMonitor = {
-              enabled = true
-              interval = "30s"
-              scrapeTimeout = "10s"
-              additionalLabels = {
-                release = "kube-prometheus-stack"
+            interval = "30s"
+            relabelings = [
+              {
+                sourceLabels = ["job"]
+                regex        = ".*(argocd-application-controller).*"
+                targetLabel  = "job"
+                replacement  = "$1"
               }
-            }
+            ]
           }
         }
-        repoServer = {
-          metrics = {
+      }
+      repoServer = {
+        metrics = {
+          enabled = true
+          serviceMonitor = {
             enabled = true
-            serviceMonitor = {
-              enabled = true
-              interval = "30s"
-              scrapeTimeout = "10s"
-              additionalLabels = {
-                release = "kube-prometheus-stack"
+            interval = "30s"
+            relabelings = [
+              {
+                sourceLabels = ["job"]
+                regex        = ".*(argocd-repo-server).*"
+                targetLabel  = "job"
+                replacement  = "$1"
               }
-            }
+            ]
           }
         }
-        applicationSet = {
-          metrics = {
+      }
+      applicationSet = {
+        metrics = {
+          enabled = true
+          serviceMonitor = {
             enabled = true
-            serviceMonitor = {
-              enabled = true
-              interval = "30s"
-              scrapeTimeout = "10s"
-              additionalLabels = {
-                release = "kube-prometheus-stack"
+            interval = "30s"
+            relabelings = [
+              {
+                sourceLabels = ["job"]
+                regex        = ".*(argocd-applicationset-controller).*"
+                targetLabel  = "job"
+                replacement  = "$1"
               }
-            }
+            ]
           }
         }
-      })
+      }
+    })
   ]
 
   # IMPORTANTE: O Argo CD depende do Prometheus Stack para criar os ServiceMonitors
@@ -202,7 +208,6 @@ resource "helm_release" "helm_Argo1" {
     kubernetes_namespace.argocd1,
     helm_release.prometheus_operator # Alterado de app_kube_prometheus_stack para prometheus_operator
   ]
-
 }
 
 resource "kubernetes_manifest" "tgb_tg" {
