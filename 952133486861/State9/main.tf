@@ -280,7 +280,7 @@ resource "helm_release" "app_kong" {
   values = [
     yamlencode({
         "ingressController" = {
-          "enabled" = true
+          "enabled" = false
         }
         "deployment" = {
           "kong" = {
