@@ -214,7 +214,7 @@ resource "helm_release" "helm_Argo1" {
         }
       })
   ]
-  depends_on                        = [kubernetes_namespace.argocd1, helm_release.helm_app_kube_prometheus_stack]
+  depends_on                        = [kubernetes_namespace.argocd1, helm_release.app_kube_prometheus_stack]
 }
 
 resource "kubernetes_manifest" "tgb_tg" {
