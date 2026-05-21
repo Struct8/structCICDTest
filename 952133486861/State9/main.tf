@@ -141,80 +141,10 @@ resource "helm_release" "helm_Argo1" {
         }
         server = {
           extraArgs = ["--insecure"]
-          metrics = {
-            enabled = true
-            serviceMonitor = {
-              enabled = true
-              interval = "30s"
-              scrapeTimeout = "10s"
-              relabelings = [
-                {
-                  sourceLabels = ["job"]
-                  regex = ".*(argocd-server).*"
-                  targetLabel = "job"
-                  replacement = "$1"
-                }
-              ]
-            }
-          }
-        }
-        controller = {
-          metrics = {
-            enabled = true
-            serviceMonitor = {
-              enabled = true
-              interval = "30s"
-              scrapeTimeout = "10s"
-              relabelings = [
-                {
-                  sourceLabels = ["job"]
-                  regex = ".*(argocd-application-controller).*"
-                  targetLabel = "job"
-                  replacement = "$1"
-                }
-              ]
-            }
-          }
-        }
-        repoServer = {
-          metrics = {
-            enabled = true
-            serviceMonitor = {
-              enabled = true
-              interval = "30s"
-              scrapeTimeout = "10s"
-              relabelings = [
-                {
-                  sourceLabels = ["job"]
-                  regex = ".*(argocd-repo-server).*"
-                  targetLabel = "job"
-                  replacement = "$1"
-                }
-              ]
-            }
-          }
-        }
-        applicationSet = {
-          metrics = {
-            enabled = true
-            serviceMonitor = {
-              enabled = true
-              interval = "30s"
-              scrapeTimeout = "10s"
-              relabelings = [
-                {
-                  sourceLabels = ["job"]
-                  regex = ".*(argocd-applicationset-controller).*"
-                  targetLabel = "job"
-                  replacement = "$1"
-                }
-              ]
-            }
-          }
         }
       })
   ]
-  depends_on                        = [kubernetes_namespace.argocd1, helm_release.app_kube_prometheus_stack]
+  depends_on                        = [kubernetes_namespace.argocd1]
 }
 
 resource "kubernetes_manifest" "tgb_tg" {
