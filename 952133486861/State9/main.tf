@@ -274,7 +274,7 @@ resource "terraform_data" "gateway_api_crds" {
 
 resource "helm_release" "app_kong_operator" {
   name             = "kong-operator"
-  chart            = "kong-operator" # <-- Mudança aqui
+  chart            = "kong-operator"
   repository       = "https://charts.konghq.com"
   namespace        = "kong-system"
   create_namespace = true
@@ -283,12 +283,18 @@ resource "helm_release" "app_kong_operator" {
   cleanup_on_fail  = true
   timeout          = 600
 
-  # Remova todo o bloco antigo de `values`. 
-  # O Kong Operator não precisa daqueles values para ser instalado.
-  values = []
+  # Passando values para desativar o webhook caso não tenha cert-manager
+  values = [
+    yamlencode({
+      webhook = {
+        enabled = false
+      }
+    })
+  ]
 
   depends_on = [terraform_data.gateway_api_crds]
 }
+
 
 
 resource "helm_release" "app_kube_prometheus_stack" {
