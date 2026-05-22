@@ -22,7 +22,7 @@ terraform {
 
   backend "s3" {
     bucket         = "pro112-teste-cicd"
-    key            = "952133486861/State9/main.tfstate"
+    key            = "undefined/State9/main.tfstate"
     region         = "us-east-1"
     dynamodb_table = "teste-cicd"
     encrypt        = true
@@ -116,10 +116,10 @@ resource "helm_release" "argocd_applications" {
         }
       })
   ]
-  depends_on                        = [helm_release.helm_Argo1, kubernetes_namespace.argocd1]
+  depends_on                        = [helm_release.helm_argo1, kubernetes_namespace.argocd1]
 }
 
-resource "helm_release" "helm_Argo1" {
+resource "helm_release" "helm_argo1" {
   name                              = "argo1"
   atomic                            = true
   chart                             = "argo-cd"
@@ -141,14 +141,85 @@ resource "helm_release" "helm_Argo1" {
         }
         server = {
           extraArgs = ["--insecure"]
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+              relabelings = [
+                {
+                  sourceLabels = ["job"]
+                  regex = ".*(argocd-server).*"
+                  targetLabel = "job"
+                  replacement = "$1"
+                }
+              ]
+            }
+          }
+        }
+        controller = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+              relabelings = [
+                {
+                  sourceLabels = ["job"]
+                  regex = ".*(argocd-application-controller).*"
+                  targetLabel = "job"
+                  replacement = "$1"
+                }
+              ]
+            }
+          }
+        }
+        repoServer = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+              relabelings = [
+                {
+                  sourceLabels = ["job"]
+                  regex = ".*(argocd-repo-server).*"
+                  targetLabel = "job"
+                  replacement = "$1"
+                }
+              ]
+            }
+          }
+        }
+        applicationSet = {
+          metrics = {
+            enabled = true
+            serviceMonitor = {
+              enabled = true
+              interval = "30s"
+              scrapeTimeout = "10s"
+              relabelings = [
+                {
+                  sourceLabels = ["job"]
+                  regex = ".*(argocd-applicationset-controller).*"
+                  targetLabel = "job"
+                  replacement = "$1"
+                }
+              ]
+            }
+          }
         }
       })
   ]
   depends_on                        = [kubernetes_namespace.argocd1]
 }
 
+
 resource "kubernetes_manifest" "tgb_tg" {
-  manifest                          = {
+  manifest = {
     apiVersion = "elbv2.k8s.aws/v1beta1"
     kind = "TargetGroupBinding"
     metadata = {
@@ -157,14 +228,15 @@ resource "kubernetes_manifest" "tgb_tg" {
     }
     spec = {
       targetGroupARN = "${data.aws_lb_target_group.TG.arn}"
-      targetType = "ip"
+      targetType = "ip" # <--- Importante! O pod do kong será mapeado diretamente
       serviceRef = {
-        name = "kong-proxy"
+        name = "kong-proxy-static" # <--- MUDANÇA: O Terraform vai plugar exatamente aqui
         port = 80
       }
     }
   }
 }
+
 
 resource "kubernetes_namespace" "argocd1" {
   metadata {
@@ -196,9 +268,9 @@ resource "terraform_data" "gateway_api_crds" {
   }
 }
 
-resource "helm_release" "app_kong" {
-  name             = "kong"
-  chart            = "kong"
+resource "helm_release" "app_kong_operator" {
+  name             = "kong-operator"
+  chart            = "kong-operator" # <-- Mudança aqui
   repository       = "https://charts.konghq.com"
   namespace        = "kong-system"
   create_namespace = true
@@ -207,25 +279,13 @@ resource "helm_release" "app_kong" {
   cleanup_on_fail  = true
   timeout          = 600
 
-  values = [
-    yamlencode({
-        "ingressController" = {
-          "enabled" = false
-        }
-        "deployment" = {
-          "kong" = {
-            "enabled" = false
-          }
-        }
-        "migrations" = {
-          "install" = false
-          "preUpgrade" = false
-        }
-    })
-  ]
+  # Remova todo o bloco antigo de `values`. 
+  # O Kong Operator não precisa daqueles values para ser instalado.
+  values = []
 
   depends_on = [terraform_data.gateway_api_crds]
 }
+
 
 resource "helm_release" "app_kube_prometheus_stack" {
   name             = "kube-prometheus-stack"
