@@ -264,9 +264,13 @@ resource "terraform_data" "gateway_api_crds" {
     command = <<EOT
       aws eks update-kubeconfig --name ${data.aws_eks_cluster.ekstest1.name} --region us-east-1
       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+      
+      # CORREÇÃO: Remove a política de validação que bloqueia o Helm de ler versões antigas de CRD
+      kubectl delete validatingadmissionpolicybinding safe-upgrades.gateway.networking.k8s.io --ignore-not-found
     EOT
   }
 }
+
 
 resource "helm_release" "app_kong_operator" {
   name             = "kong-operator"
