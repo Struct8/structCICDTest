@@ -577,19 +577,9 @@ resource "aws_lb_target_group" "TG" {
 
 ### CATEGORY: COMPUTE ###
 
-data "aws_ami" "AMI_Data_Source_Template" {
-  most_recent                       = true
-  owners                            = ["amazon"]
-  filter {
-    name                            = "name"
-    values                          = ["amazon-eks-node-*-v*"]
-  }
-}
-
 resource "aws_launch_template" "Template" {
   name                              = "Template"
   ebs_optimized                     = true
-  instance_type                     = "t3.medium"
   update_default_version            = true
   vpc_security_group_ids            = [aws_security_group.eks_node_group_NodeGroup_group.id, aws_eks_cluster.ekstest1.vpc_config[0].cluster_security_group_id]
   tags                              = {
@@ -653,6 +643,8 @@ resource "aws_eks_cluster" "ekstest1" {
 resource "aws_eks_node_group" "NodeGroup" {
   cluster_name                      = aws_eks_cluster.ekstest1.name
   node_group_name                   = "NodeGroup"
+  capacity_type                     = "SPOT"
+  instance_types                    = ["t3.medium", "t3a.medium"]
   node_role_arn                     = aws_iam_role.role_eksng_NodeGroup.arn
   subnet_ids                        = [aws_subnet.Subnet17.id, aws_subnet.Subnet16.id]
   launch_template {
@@ -660,7 +652,7 @@ resource "aws_eks_node_group" "NodeGroup" {
     id                              = aws_launch_template.Template.id
   }
   scaling_config {
-    desired_size                    = 2
+    desired_size                    = 1
     max_size                        = 2
     min_size                        = 1
   }
