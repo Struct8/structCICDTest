@@ -252,7 +252,7 @@ resource "aws_acm_certificate" "k8s" {
     certificate_transparency_logging_preference = "ENABLED"
   }
   tags                              = {
-    "kubernetes.io/cluster/gapi" = "shared"
+    "kubernetes.io/cluster/GAPI" = "shared"
     Name = "k8s"
     State = "stateeks"
     Struct8User = "Ricardo"
