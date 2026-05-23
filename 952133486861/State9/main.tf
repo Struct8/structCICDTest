@@ -261,10 +261,18 @@ resource "terraform_data" "gateway_api_crds" {
   provisioner "local-exec" {
     command = <<EOT
       aws eks update-kubeconfig --name ${data.aws_eks_cluster.ekstest1.name} --region us-east-1
+      
+      # 1. Instala os CRDs padrão na versão 1.5.1 (que cria a política de validação)
       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+      
+      # 2. Remove a política de bloqueio de upgrades/downgrades criada pelo v1.5.1.
+      # Isso evita que o Helm do Kong seja rejeitado ao tentar aplicar seus CRDs embutidos de versões anteriores.
+      kubectl delete validatingadmissionpolicy safe-upgrades.gateway.networking.k8s.io --ignore-not-found
+      kubectl delete validatingadmissionpolicybinding safe-upgrades.gateway.networking.k8s.io --ignore-not-found
     EOT
   }
 }
+
 
 resource "helm_release" "app_kube_prometheus_stack" {
   name             = "kube-prometheus-stack"
