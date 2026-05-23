@@ -22,7 +22,7 @@ terraform {
 
   backend "s3" {
     bucket         = "pro112-teste-cicd"
-    key            = "undefined/State9/main.tfstate"
+    key            = "952133486861/State9/main.tfstate"
     region         = "us-east-1"
     dynamodb_table = "teste-cicd"
     encrypt        = true
@@ -217,9 +217,8 @@ resource "helm_release" "helm_argo1" {
   depends_on                        = [kubernetes_namespace.argocd1]
 }
 
-
 resource "kubernetes_manifest" "tgb_tg" {
-  manifest = {
+  manifest                          = {
     apiVersion = "elbv2.k8s.aws/v1beta1"
     kind = "TargetGroupBinding"
     metadata = {
@@ -228,15 +227,14 @@ resource "kubernetes_manifest" "tgb_tg" {
     }
     spec = {
       targetGroupARN = "${data.aws_lb_target_group.TG.arn}"
-      targetType = "ip" # <--- Importante! O pod do kong será mapeado diretamente
+      targetType = "ip"
       serviceRef = {
-        name = "kong-proxy-static" # <--- MUDANÇA: O Terraform vai plugar exatamente aqui
+        name = "kong"
         port = 80
       }
     }
   }
 }
-
 
 resource "kubernetes_namespace" "argocd1" {
   metadata {
@@ -264,38 +262,9 @@ resource "terraform_data" "gateway_api_crds" {
     command = <<EOT
       aws eks update-kubeconfig --name ${data.aws_eks_cluster.ekstest1.name} --region us-east-1
       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
-      
-      # CORREÇÃO: Remove a política de validação que bloqueia o Helm de ler versões antigas de CRD
-      kubectl delete validatingadmissionpolicybinding safe-upgrades.gateway.networking.k8s.io --ignore-not-found
     EOT
   }
 }
-
-
-resource "helm_release" "app_kong_operator" {
-  name             = "kong-operator"
-  chart            = "kong-operator"
-  repository       = "https://charts.konghq.com"
-  namespace        = "kong-system"
-  create_namespace = true
-  atomic           = true
-  wait             = true
-  cleanup_on_fail  = true
-  timeout          = 600
-
-  # Passando values para desativar o webhook caso não tenha cert-manager
-  values = [
-    yamlencode({
-      webhook = {
-        enabled = false
-      }
-    })
-  ]
-
-  depends_on = [terraform_data.gateway_api_crds]
-}
-
-
 
 resource "helm_release" "app_kube_prometheus_stack" {
   name             = "kube-prometheus-stack"
@@ -337,6 +306,20 @@ resource "helm_release" "app_grafana_operator" {
   chart            = "grafana-operator"
   repository       = "https://grafana.github.io/helm-charts"
   namespace        = "grafana-operator-system"
+  create_namespace = true
+  atomic           = true
+  wait             = true
+  cleanup_on_fail  = true
+  timeout          = 600
+
+  depends_on = [terraform_data.gateway_api_crds]
+}
+
+resource "helm_release" "app_kong_operator" {
+  name             = "kong-operator"
+  chart            = "kong-operator"
+  repository       = "https://charts.konghq.com"
+  namespace        = "kong-operator-system"
   create_namespace = true
   atomic           = true
   wait             = true
