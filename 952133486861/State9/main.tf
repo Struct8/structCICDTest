@@ -214,7 +214,7 @@ resource "helm_release" "helm_argo1" {
         }
       })
   ]
-  depends_on                        = [kubernetes_namespace.argocd1]
+  depends_on                        = [kubernetes_namespace.argocd1,helm_release.app_kong_operator]
 }
 
 resource "kubernetes_manifest" "tgb_tg" {
@@ -307,6 +307,10 @@ resource "helm_release" "app_kube_prometheus_stack" {
         }
     })
   ]
+    depends_on = [
+    helm_release.app_kong_operator
+  ]
+
 }
 
 resource "helm_release" "app_grafana_operator" {
