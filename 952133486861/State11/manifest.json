@@ -11,8 +11,8 @@
       ]
     }
   ],
-  "action": "apply",
-  "trigger_id": "1779635822883",
+  "action": "destroy",
+  "trigger_id": "1779636496510",
   "backend_global_config": {
     "provider": "aws",
     "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
