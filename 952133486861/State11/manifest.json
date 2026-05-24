@@ -6,13 +6,12 @@
       "branch": "main",
       "target_dir": ".external_modules/CloudMan",
       "folders": [
-        "EC2/Scripts/IMDSv2.sh",
-        "EC2/NATGateway/NAT.sh"
+        "EC2/Scripts/IMDSv2.sh"
       ]
     }
   ],
-  "action": "destroy",
-  "trigger_id": "1779636496510",
+  "action": "apply",
+  "trigger_id": "1779637035571",
   "backend_global_config": {
     "provider": "aws",
     "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
