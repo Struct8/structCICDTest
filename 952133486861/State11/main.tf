@@ -46,16 +46,6 @@ resource "aws_iam_instance_profile" "profile_Grafana" {
   }
 }
 
-resource "aws_iam_instance_profile" "profile_Instance1" {
-  name                              = "profile_Instance1"
-  role                              = aws_iam_role.role_ec2_Instance1.name
-  tags                              = {
-    Name = "profile_Instance1"
-    State = "State11"
-    Struct8User = "Ricardo"
-  }
-}
-
 resource "aws_iam_role" "role_asg_Grafana" {
   name                              = "role_asg_Grafana"
   assume_role_policy                = jsonencode({
@@ -72,27 +62,6 @@ resource "aws_iam_role" "role_asg_Grafana" {
 })
   tags                              = {
     Name = "role_asg_Grafana"
-    State = "State11"
-    Struct8User = "Ricardo"
-  }
-}
-
-resource "aws_iam_role" "role_ec2_Instance1" {
-  name                              = "role_ec2_Instance1"
-  assume_role_policy                = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
-  tags                              = {
-    Name = "role_ec2_Instance1"
     State = "State11"
     Struct8User = "Ricardo"
   }
@@ -193,14 +162,25 @@ resource "aws_internet_gateway" "IGW1" {
   }
 }
 
+resource "aws_nat_gateway" "NAT1" {
+  allocation_id                     = aws_eip.eip_nat1.id
+  subnet_id                         = aws_subnet.Public-b.id
+  availability_mode                 = "zonal"
+  tags                              = {
+    Name = "NAT1"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
 resource "aws_route" "aws_route_RT2_IGW1" {
   gateway_id                        = aws_internet_gateway.IGW1.id
   route_table_id                    = aws_route_table.RT2.id
   destination_cidr_block            = "0.0.0.0/0"
 }
 
-resource "aws_route" "aws_route_RT3_Instance1" {
-  network_interface_id              = aws_instance.Instance1.primary_network_interface_id
+resource "aws_route" "aws_route_RT3_NAT1" {
+  nat_gateway_id                    = aws_nat_gateway.NAT1.id
   route_table_id                    = aws_route_table.RT3.id
   destination_cidr_block            = "0.0.0.0/0"
 }
@@ -289,17 +269,6 @@ resource "aws_security_group" "autoscaling_group_Grafana_group" {
   }
 }
 
-resource "aws_security_group" "instance_Instance1_group" {
-  name                              = "instance_Instance1_group"
-  vpc_id                            = aws_vpc.VPC3.id
-  revoke_rules_on_delete            = false
-  tags                              = {
-    Name = "instance_Instance1_group"
-    State = "State11"
-    Struct8User = "Ricardo"
-  }
-}
-
 resource "aws_security_group" "lb_alb_ALB1_group" {
   name                              = "lb_alb_ALB1_group"
   vpc_id                            = aws_vpc.VPC3.id
@@ -313,25 +282,6 @@ resource "aws_security_group" "lb_alb_ALB1_group" {
 
 resource "aws_security_group_rule" "rule_autoscaling_group_Grafana_group_egress_all_protocols" {
   security_group_id                 = aws_security_group.autoscaling_group_Grafana_group.id
-  cidr_blocks                       = ["0.0.0.0/0"]
-  from_port                         = 0
-  protocol                          = "-1"
-  to_port                           = 0
-  type                              = "egress"
-}
-
-resource "aws_security_group_rule" "rule_autoscaling_group_Grafana_group_to_instance_Instance1_group_all_protocols" {
-  security_group_id                 = aws_security_group.instance_Instance1_group.id
-  source_security_group_id          = aws_security_group.autoscaling_group_Grafana_group.id
-  description                       = "Allow from autoscaling_group_Grafana_group (-1:0-0)"
-  from_port                         = 0
-  protocol                          = "-1"
-  to_port                           = 0
-  type                              = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_instance_Instance1_group_egress_all_protocols" {
-  security_group_id                 = aws_security_group.instance_Instance1_group.id
   cidr_blocks                       = ["0.0.0.0/0"]
   from_port                         = 0
   protocol                          = "-1"
@@ -367,6 +317,15 @@ resource "aws_security_group_rule" "rule_lb_alb_ALB1_group_to_autoscaling_group_
   type                              = "ingress"
 }
 
+resource "aws_eip" "eip_nat1" {
+  domain                            = "vpc"
+  tags                              = {
+    Name = "eip_nat1"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
 resource "aws_lb" "ALB1" {
   name                              = "ALB1"
   idle_timeout                      = 60
@@ -391,7 +350,7 @@ resource "aws_lb_listener" "Listener2" {
     type                            = "fixed-response"
     fixed_response {
       content_type                  = "text/plain"
-      message_body                  = "bomdia"
+      message_body                  = "bom dia!!!"
       status_code                   = "200"
     }
   }
@@ -463,48 +422,6 @@ resource "aws_lb_target_group" "TG-Grafana" {
 
 ### CATEGORY: COMPUTE ###
 
-data "local_file" "UserData_Instance1" {
-  filename                          = "${path.module}/.external_modules/CloudMan/EC2/NATGateway/NAT.sh"
-}
-
-data "aws_ami" "AMI_Data_Source_Instance1" {
-  most_recent                       = true
-  owners                            = ["amazon"]
-  filter {
-    name                            = "name"
-    values                          = ["al2023-ami-2023.*-kernel-6.1-x86_64"]
-  }
-}
-
-resource "aws_instance" "Instance1" {
-  subnet_id                         = aws_subnet.Public-b.id
-  ami                               = data.aws_ami.AMI_Data_Source_Instance1.id
-  associate_public_ip_address       = false
-  iam_instance_profile              = aws_iam_instance_profile.profile_Instance1.name
-  instance_type                     = "t3.nano"
-  source_dest_check                 = false
-  user_data_base64                  = base64encode(<<-EOFUData
-#!/bin/bash
-
-${data.local_file.UserData_Instance1.content}
-EOFUData
-)
-  user_data_replace_on_change       = false
-  vpc_security_group_ids            = [aws_security_group.instance_Instance1_group.id]
-  instance_market_options {
-    market_type                     = "spot"
-    spot_options {
-      instance_interruption_behavior = "terminate"
-      spot_instance_type            = "one-time"
-    }
-  }
-  tags                              = {
-    Name = "Instance1"
-    State = "State11"
-    Struct8User = "Ricardo"
-  }
-}
-
 data "local_file" "UserData_Grafana" {
   filename                          = "${path.module}/.external_modules/CloudMan/EC2/Scripts/IMDSv2.sh"
 }
@@ -532,7 +449,6 @@ cat << 'EOFENV' > /etc/struct8_env
 NAME="Grafana"
 REGION="${data.aws_region.current.name}"
 ACCOUNT="${data.aws_caller_identity.current.account_id}"
-AWS_INSTANCE_NAME_0="Instance1"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
 sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
