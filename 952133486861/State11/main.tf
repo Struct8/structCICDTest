@@ -381,6 +381,7 @@ resource "aws_autoscaling_group" "Grafana" {
   default_cooldown                  = 300
   default_instance_warmup           = 0
   desired_capacity                  = 2
+  enabled_metrics                   = ["GroupDesiredCapacity", "GroupInServiceInstances", "GroupMaxSize", "GroupMinSize", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
   force_delete                      = false
   force_delete_warm_pool            = false
   health_check_grace_period         = 300
