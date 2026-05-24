@@ -396,21 +396,9 @@ resource "aws_autoscaling_group" "Grafana" {
   termination_policies              = ["Default"]
   vpc_zone_identifier               = [aws_subnet.Grafana-a.id, aws_subnet.Grafana-b.id]
   wait_for_elb_capacity             = 0
-  mixed_instances_policy {
-    instances_distribution {
-      on_demand_allocation_strategy = "lowest-price"
-      spot_allocation_strategy      = "lowest-price"
-      spot_instance_pools           = 1
-    }
-    launch_template {
-      launch_template_specification {
-        version                     = "$Latest"
-        launch_template_id          = aws_launch_template.Grafana.id
-      }
-      override {
-        instance_type               = "t3.micro"
-      }
-    }
+  launch_template {
+    version                         = "$Latest"
+    id                              = aws_launch_template.Grafana.id
   }
   tag {
     key                             = "Name"
