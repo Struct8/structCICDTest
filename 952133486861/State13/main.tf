@@ -181,7 +181,7 @@ resource "aws_db_instance" "rdsdb2" {
 
 resource "aws_db_subnet_group" "subnet_group_rdsdb2" {
   name                              = "rdsdb2-subnet-group"
-  subnet_ids                        = [aws_subnet.Subnet13.id, aws_subnet.Subnet10.id]
+  subnet_ids                        = [aws_subnet.Subnet10.id, aws_subnet.Subnet13.id]
   tags                              = {
     Name = "subnet_group_rdsdb2"
     State = "State13"
@@ -219,7 +219,7 @@ REGION="${data.aws_region.current.name}"
 ACCOUNT="${data.aws_caller_identity.current.account_id}"
 AWS_DB_INSTANCE_ENDPOINT_0="${aws_db_instance.rdsdb2.endpoint}"
 AWS_DB_INSTANCE_DB_NAME_0="${aws_db_instance.rdsdb2.db_name}"
-AWS_DB_INSTANCE_SECRET_ARN_0="${one(aws_db_instance.database6.master_user_secret[*].secret_arn)}"
+AWS_DB_INSTANCE_SECRET_ARN_0="${one(aws_db_instance.rdsdb2.master_user_secret[*].secret_arn)}"
 AWS_DB_INSTANCE_USER_NAME_0="${one(aws_db_instance.rdsdb2.master_user_secret[*].secret_arn)}:username::"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
