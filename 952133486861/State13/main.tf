@@ -108,12 +108,12 @@ resource "aws_security_group" "autoscaling_group_ASG1_group" {
   }
 }
 
-resource "aws_security_group" "db_instance_rds_db2_group" {
-  name                              = "db_instance_rds_db2_group"
+resource "aws_security_group" "db_instance_rdsdb2_group" {
+  name                              = "db_instance_rdsdb2_group"
   vpc_id                            = aws_vpc.VPC4.id
   revoke_rules_on_delete            = false
   tags                              = {
-    Name = "db_instance_rds_db2_group"
+    Name = "db_instance_rdsdb2_group"
     State = "State13"
     Struct8User = "Ricardo"
   }
@@ -128,8 +128,8 @@ resource "aws_security_group_rule" "rule_autoscaling_group_ASG1_group_egress_all
   type                              = "egress"
 }
 
-resource "aws_security_group_rule" "rule_autoscaling_group_ASG1_group_to_db_instance_rds_db2_group_tcp_3306" {
-  security_group_id                 = aws_security_group.db_instance_rds_db2_group.id
+resource "aws_security_group_rule" "rule_autoscaling_group_ASG1_group_to_db_instance_rdsdb2_group_tcp_3306" {
+  security_group_id                 = aws_security_group.db_instance_rdsdb2_group.id
   source_security_group_id          = aws_security_group.autoscaling_group_ASG1_group.id
   description                       = "Allow from autoscaling_group_ASG1_group (tcp:3306-3306)"
   from_port                         = 3306
@@ -138,8 +138,8 @@ resource "aws_security_group_rule" "rule_autoscaling_group_ASG1_group_to_db_inst
   type                              = "ingress"
 }
 
-resource "aws_security_group_rule" "rule_db_instance_rds_db2_group_egress_all_protocols" {
-  security_group_id                 = aws_security_group.db_instance_rds_db2_group.id
+resource "aws_security_group_rule" "rule_db_instance_rdsdb2_group_egress_all_protocols" {
+  security_group_id                 = aws_security_group.db_instance_rdsdb2_group.id
   cidr_blocks                       = ["0.0.0.0/0"]
   from_port                         = 0
   protocol                          = "-1"
@@ -152,8 +152,9 @@ resource "aws_security_group_rule" "rule_db_instance_rds_db2_group_egress_all_pr
 
 ### CATEGORY: STORAGE ###
 
-resource "aws_db_instance" "rds_db2" {
-  db_subnet_group_name              = aws_db_subnet_group.subnet_group_rds_db2.name
+resource "aws_db_instance" "rdsdb2" {
+  db_name                           = "test"
+  db_subnet_group_name              = aws_db_subnet_group.subnet_group_rdsdb2.name
   allocated_storage                 = 20
   availability_zone                 = aws_subnet.Subnet13.availability_zone
   backup_retention_period           = 0
@@ -161,27 +162,28 @@ resource "aws_db_instance" "rds_db2" {
   delete_automated_backups          = false
   engine                            = "mysql"
   engine_version                    = "8.0"
-  identifier                        = "rds_db2"
+  identifier                        = "rdsdb2"
   instance_class                    = "db.t3.micro"
+  manage_master_user_password       = true
   max_allocated_storage             = 100
   skip_final_snapshot               = true
   storage_encrypted                 = true
   storage_type                      = "gp3"
   upgrade_storage_config            = false
   username                          = "admin"
-  vpc_security_group_ids            = [aws_security_group.db_instance_rds_db2_group.id]
+  vpc_security_group_ids            = [aws_security_group.db_instance_rdsdb2_group.id]
   tags                              = {
-    Name = "rds_db2"
+    Name = "rdsdb2"
     State = "State13"
     Struct8User = "Ricardo"
   }
 }
 
-resource "aws_db_subnet_group" "subnet_group_rds_db2" {
-  name                              = "rds_db2-subnet-group"
+resource "aws_db_subnet_group" "subnet_group_rdsdb2" {
+  name                              = "rdsdb2-subnet-group"
   subnet_ids                        = [aws_subnet.Subnet13.id, aws_subnet.Subnet10.id]
   tags                              = {
-    Name = "subnet_group_rds_db2"
+    Name = "subnet_group_rdsdb2"
     State = "State13"
     Struct8User = "Ricardo"
   }
@@ -215,10 +217,10 @@ cat << 'EOFENV' > /etc/struct8_env
 NAME="ASG1"
 REGION="${data.aws_region.current.name}"
 ACCOUNT="${data.aws_caller_identity.current.account_id}"
-AWS_DB_INSTANCE_ENDPOINT_0="${aws_db_instance.rds_db2.endpoint}"
-AWS_DB_INSTANCE_DB_NAME_0="${aws_db_instance.rds_db2.db_name}"
+AWS_DB_INSTANCE_ENDPOINT_0="${aws_db_instance.rdsdb2.endpoint}"
+AWS_DB_INSTANCE_DB_NAME_0="${aws_db_instance.rdsdb2.db_name}"
 AWS_DB_INSTANCE_SECRET_ARN_0="${one(aws_db_instance.database6.master_user_secret[*].secret_arn)}"
-AWS_DB_INSTANCE_USER_NAME_0="${one(aws_db_instance.rds_db2.master_user_secret[*].secret_arn)}:username::"
+AWS_DB_INSTANCE_USER_NAME_0="${one(aws_db_instance.rdsdb2.master_user_secret[*].secret_arn)}:username::"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
 sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
