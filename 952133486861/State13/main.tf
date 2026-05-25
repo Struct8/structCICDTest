@@ -181,7 +181,7 @@ resource "aws_db_instance" "rdsdb2" {
 
 resource "aws_db_subnet_group" "subnet_group_rdsdb2" {
   name                              = "rdsdb2-subnet-group"
-  subnet_ids                        = [aws_subnet.Subnet10.id, aws_subnet.Subnet13.id]
+  subnet_ids                        = [aws_subnet.Subnet13.id, aws_subnet.Subnet10.id]
   tags                              = {
     Name = "subnet_group_rdsdb2"
     State = "State13"
@@ -205,6 +205,7 @@ data "aws_ami" "AMI_Data_Source_Template2" {
 
 resource "aws_launch_template" "Template2" {
   image_id                          = data.aws_ami.AMI_Data_Source_Template2.id
+  key_name                          = aws_key_pair.key.key_name
   name                              = "Template2"
   ebs_optimized                     = true
   instance_type                     = "t3.micro"
@@ -292,6 +293,21 @@ resource "aws_autoscaling_group" "ASG1" {
     key                             = "Struct8User"
     propagate_at_launch             = true
     value                           = "Ricardo"
+  }
+}
+
+
+
+
+### CATEGORY: MISC ###
+
+resource "aws_key_pair" "key" {
+  key_name                          = "key"
+  public_key                        = "asjdlajsdjlkasdjkljskdjklasjdkjlsdjklajksdjlkajskdjlask"
+  tags                              = {
+    Name = "key"
+    State = "State13"
+    Struct8User = "Ricardo"
   }
 }
 
