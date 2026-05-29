@@ -7,6 +7,14 @@ terraform {
       version = ">= 5.0"
     }
   }
+
+  backend "s3" {
+    bucket         = "pro112-teste-cicd"
+    key            = "952133486861/State11/main.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "teste-cicd"
+    encrypt        = true
+  }
 }
 
 # --- Main Cloud Provider ---
