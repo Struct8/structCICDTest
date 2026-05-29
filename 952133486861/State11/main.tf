@@ -36,16 +36,6 @@ data "aws_route53_zone" "Zone2" {
 
 ### CATEGORY: IAM ###
 
-resource "aws_iam_instance_profile" "profile_ASG3" {
-  name                              = "profile_ASG3"
-  role                              = aws_iam_role.role_asg_ASG3.name
-  tags                              = {
-    Name = "profile_ASG3"
-    State = "State11"
-    Struct8User = "Ricardo"
-  }
-}
-
 resource "aws_iam_instance_profile" "profile_Instance1" {
   name                              = "profile_Instance1"
   role                              = aws_iam_role.role_ec2_Instance1.name
@@ -56,8 +46,28 @@ resource "aws_iam_instance_profile" "profile_Instance1" {
   }
 }
 
-resource "aws_iam_role" "role_asg_ASG3" {
-  name                              = "role_asg_ASG3"
+resource "aws_iam_instance_profile" "profile_Loki" {
+  name                              = "profile_Loki"
+  role                              = aws_iam_role.role_asg_Loki.name
+  tags                              = {
+    Name = "profile_Loki"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_iam_instance_profile" "profile_grafana" {
+  name                              = "profile_grafana"
+  role                              = aws_iam_role.role_asg_grafana.name
+  tags                              = {
+    Name = "profile_grafana"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_iam_role" "role_asg_Loki" {
+  name                              = "role_asg_Loki"
   assume_role_policy                = jsonencode({
   "Version": "2012-10-17",
   "Statement": [
@@ -71,7 +81,28 @@ resource "aws_iam_role" "role_asg_ASG3" {
   ]
 })
   tags                              = {
-    Name = "role_asg_ASG3"
+    Name = "role_asg_Loki"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_iam_role" "role_asg_grafana" {
+  name                              = "role_asg_grafana"
+  assume_role_policy                = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      }
+    }
+  ]
+})
+  tags                              = {
+    Name = "role_asg_grafana"
     State = "State11"
     Struct8User = "Ricardo"
   }
@@ -276,12 +307,23 @@ resource "aws_route_table_association" "aws_route_table_association_Public_b_RT2
   subnet_id                         = aws_subnet.Public-b.id
 }
 
-resource "aws_security_group" "autoscaling_group_ASG3_group" {
-  name                              = "autoscaling_group_ASG3_group"
+resource "aws_security_group" "autoscaling_group_Loki_group" {
+  name                              = "autoscaling_group_Loki_group"
   vpc_id                            = aws_vpc.VPC3.id
   revoke_rules_on_delete            = false
   tags                              = {
-    Name = "autoscaling_group_ASG3_group"
+    Name = "autoscaling_group_Loki_group"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_security_group" "autoscaling_group_grafana_group" {
+  name                              = "autoscaling_group_grafana_group"
+  vpc_id                            = aws_vpc.VPC3.id
+  revoke_rules_on_delete            = false
+  tags                              = {
+    Name = "autoscaling_group_grafana_group"
     State = "State11"
     Struct8User = "Ricardo"
   }
@@ -309,8 +351,17 @@ resource "aws_security_group" "lb_alb_ALB1_group" {
   }
 }
 
-resource "aws_security_group_rule" "rule_autoscaling_group_ASG3_group_egress_all_protocols" {
-  security_group_id                 = aws_security_group.autoscaling_group_ASG3_group.id
+resource "aws_security_group_rule" "rule_autoscaling_group_Loki_group_egress_all_protocols" {
+  security_group_id                 = aws_security_group.autoscaling_group_Loki_group.id
+  cidr_blocks                       = ["0.0.0.0/0"]
+  from_port                         = 0
+  protocol                          = "-1"
+  to_port                           = 0
+  type                              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_autoscaling_group_grafana_group_egress_all_protocols" {
+  security_group_id                 = aws_security_group.autoscaling_group_grafana_group.id
   cidr_blocks                       = ["0.0.0.0/0"]
   from_port                         = 0
   protocol                          = "-1"
@@ -336,17 +387,18 @@ resource "aws_security_group_rule" "rule_lb_alb_ALB1_group_egress_all_protocols"
   type                              = "egress"
 }
 
-resource "aws_security_group_rule" "rule_lb_alb_ALB1_group_ingress_tcp_443" {
-  security_group_id                 = aws_security_group.lb_alb_ALB1_group.id
-  cidr_blocks                       = ["0.0.0.0/0"]
-  from_port                         = 443
-  protocol                          = "tcp"
-  to_port                           = 443
+resource "aws_security_group_rule" "rule_lb_alb_ALB1_group_to_autoscaling_group_Loki_group_all_protocols" {
+  security_group_id                 = aws_security_group.autoscaling_group_Loki_group.id
+  source_security_group_id          = aws_security_group.lb_alb_ALB1_group.id
+  description                       = "Allow from lb_alb_ALB1_group (-1:0-0)"
+  from_port                         = 0
+  protocol                          = "-1"
+  to_port                           = 0
   type                              = "ingress"
 }
 
-resource "aws_security_group_rule" "rule_lb_alb_ALB1_group_to_autoscaling_group_ASG3_group_tcp_80" {
-  security_group_id                 = aws_security_group.autoscaling_group_ASG3_group.id
+resource "aws_security_group_rule" "rule_lb_alb_ALB1_group_to_autoscaling_group_grafana_group_tcp_80" {
+  security_group_id                 = aws_security_group.autoscaling_group_grafana_group.id
   source_security_group_id          = aws_security_group.lb_alb_ALB1_group.id
   description                       = "Allow from lb_alb_ALB1_group (tcp:80-80)"
   from_port                         = 80
@@ -360,7 +412,6 @@ resource "aws_lb" "ALB1" {
   idle_timeout                      = 60
   load_balancer_type                = "application"
   security_groups                   = [aws_security_group.lb_alb_ALB1_group.id]
-  subnet_count                      = 1
   subnets                           = [aws_subnet.Public-a.id, aws_subnet.Public-b.id]
   tags                              = {
     Name = "ALB1"
@@ -386,6 +437,31 @@ resource "aws_lb_listener" "Listener2" {
   }
   tags                              = {
     Name = "Listener2"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_lb_listener_rule" "Loki" {
+  action {
+    order                           = 1
+    target_group_arn                = aws_lb_target_group.grafana.arn
+    type                            = "forward"
+    forward {
+      target_group {
+        arn                         = aws_lb_target_group.grafana.arn
+      }
+    }
+  }
+  condition {
+    path_pattern {
+      values                        = ["/*"]
+    }
+  }
+  listener_arn                      = aws_lb_listener.Listener2.arn
+  priority                          = 1
+  tags                              = {
+    Name = "Loki"
     State = "State11"
     Struct8User = "Ricardo"
   }
@@ -442,6 +518,37 @@ resource "aws_lb_target_group" "TG-Grafana" {
   }
   tags                              = {
     Name = "TG-Grafana"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_lb_target_group" "grafana" {
+  name                              = "grafana"
+  vpc_id                            = aws_vpc.VPC3.id
+  connection_termination            = false
+  deregistration_delay              = "300"
+  ip_address_type                   = "ipv4"
+  load_balancing_algorithm_type     = "round_robin"
+  port                              = 80
+  protocol                          = "HTTP"
+  protocol_version                  = "HTTP1"
+  proxy_protocol_v2                 = false
+  slow_start                        = 0
+  target_type                       = "instance"
+  health_check {
+    enabled                         = true
+    healthy_threshold               = 3
+    interval                        = 30
+    matcher                         = "200"
+    path                            = "/"
+    port                            = 80
+    protocol                        = "HTTP"
+    timeout                         = 5
+    unhealthy_threshold             = 3
+  }
+  tags                              = {
+    Name = "grafana"
     State = "State11"
     Struct8User = "Ricardo"
   }
@@ -513,7 +620,7 @@ resource "aws_launch_template" "Grafana" {
 
 # --- BEGIN STRUCT8 VARIABLES ---
 cat << 'EOFENV' > /etc/struct8_env
-NAME="ASG3"
+NAME="grafana"
 REGION="${data.aws_region.current.name}"
 ACCOUNT="${data.aws_caller_identity.current.account_id}"
 EOFENV
@@ -526,7 +633,7 @@ chmod 644 /etc/struct8_env
 ${data.local_file.UserData_Grafana.content}
 EOFUData
 )
-  vpc_security_group_ids            = [aws_security_group.autoscaling_group_ASG3_group.id]
+  vpc_security_group_ids            = [aws_security_group.autoscaling_group_grafana_group.id]
   block_device_mappings {
     ebs {
       delete_on_termination         = true
@@ -537,7 +644,7 @@ EOFUData
     }
   }
   iam_instance_profile {
-    name                            = aws_iam_instance_profile.profile_ASG3.name
+    name                            = aws_iam_instance_profile.profile_grafana.name
   }
   instance_market_options {
     market_type                     = "spot"
@@ -553,8 +660,94 @@ EOFUData
   }
 }
 
-resource "aws_autoscaling_group" "ASG3" {
-  name                              = "ASG3"
+data "aws_ami" "AMI_Data_Source_Template3" {
+  most_recent                       = true
+  owners                            = ["amazon"]
+  filter {
+    name                            = "name"
+    values                          = ["al2023-ami-2023.*-kernel-6.1-x86_64"]
+  }
+}
+
+resource "aws_launch_template" "Template3" {
+  image_id                          = data.aws_ami.AMI_Data_Source_Template3.id
+  name                              = "Template3"
+  ebs_optimized                     = true
+  instance_type                     = "t3.micro"
+  update_default_version            = true
+  user_data                         = base64encode(<<-EOFUData
+#!/bin/bash
+
+# --- BEGIN STRUCT8 VARIABLES ---
+cat << 'EOFENV' > /etc/struct8_env
+NAME="Loki"
+REGION="${data.aws_region.current.name}"
+ACCOUNT="${data.aws_caller_identity.current.account_id}"
+EOFENV
+cat /etc/struct8_env >> /etc/environment
+sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
+chmod +x /etc/profile.d/struct8_vars.sh
+chmod 644 /etc/struct8_env
+# --- END STRUCT8 VARIABLES ---
+
+
+EOFUData
+)
+  vpc_security_group_ids            = [aws_security_group.autoscaling_group_Loki_group.id]
+  iam_instance_profile {
+    name                            = aws_iam_instance_profile.profile_Loki.name
+  }
+  tags                              = {
+    Name = "Template3"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_autoscaling_group" "Loki" {
+  name                              = "Loki"
+  capacity_rebalance                = false
+  default_cooldown                  = 300
+  default_instance_warmup           = 0
+  desired_capacity                  = 1
+  force_delete                      = false
+  force_delete_warm_pool            = false
+  health_check_grace_period         = 300
+  health_check_type                 = "ELB"
+  ignore_failed_scaling_activities  = false
+  max_instance_lifetime             = 0
+  max_size                          = 1
+  metrics_granularity               = "1Minute"
+  min_elb_capacity                  = 0
+  min_size                          = 1
+  protect_from_scale_in             = false
+  target_group_arns                 = [aws_lb_target_group.grafana.arn]
+  termination_policies              = ["Default"]
+  vpc_zone_identifier               = [aws_subnet.Grafana-a.id]
+  wait_for_elb_capacity             = 0
+  launch_template {
+    version                         = "$Latest"
+    id                              = aws_launch_template.Template3.id
+  }
+  tag {
+    key                             = "Name"
+    propagate_at_launch             = true
+    value                           = "Loki"
+  }
+  tag {
+    key                             = "State"
+    propagate_at_launch             = true
+    value                           = "State11"
+  }
+  tag {
+    key                             = "Struct8User"
+    propagate_at_launch             = true
+    value                           = "Ricardo"
+  }
+}
+
+resource "aws_autoscaling_group" "grafana" {
+  name                              = "grafana"
   capacity_rebalance                = false
   default_cooldown                  = 300
   default_instance_warmup           = 0
@@ -581,7 +774,7 @@ resource "aws_autoscaling_group" "ASG3" {
   tag {
     key                             = "Name"
     propagate_at_launch             = true
-    value                           = "ASG3"
+    value                           = "grafana"
   }
   tag {
     key                             = "State"
