@@ -432,7 +432,6 @@ resource "aws_lb" "ALB1" {
   idle_timeout                      = 60
   load_balancer_type                = "application"
   security_groups                   = [aws_security_group.lb_alb_ALB1_group.id]
-  subnet_count                      = 1
   subnets                           = [aws_subnet.Public-a.id, aws_subnet.Public-b.id]
   tags                              = {
     Name = "ALB1"
