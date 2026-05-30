@@ -171,7 +171,7 @@ resource "aws_subnet" "Grafana-a" {
   vpc_id                            = aws_vpc.VPC3.id
   availability_zone                 = "us-east-1a"
   cidr_block                        = "10.5.0.0/22"
-  map_public_ip_on_launch           = true
+  map_public_ip_on_launch           = false
   tags                              = {
     Name = "Grafana-a"
     State = "State11"
@@ -225,8 +225,9 @@ resource "aws_internet_gateway" "IGW1" {
 }
 
 resource "aws_nat_gateway" "NAT1" {
-  vpc_id                            = aws_vpc.VPC3.id
-  availability_mode                 = "regional"
+  allocation_id                     = aws_eip.eip_nat1.id
+  subnet_id                         = aws_subnet.Public-b.id
+  availability_mode                 = "zonal"
   tags                              = {
     Name = "NAT1"
     State = "State11"
@@ -360,6 +361,16 @@ resource "aws_security_group_rule" "rule_autoscaling_group_Loki_group_egress_all
   type                              = "egress"
 }
 
+resource "aws_security_group_rule" "rule_autoscaling_group_Loki_group_to_autoscaling_group_grafana_group_tcp_0" {
+  security_group_id                 = aws_security_group.autoscaling_group_grafana_group.id
+  source_security_group_id          = aws_security_group.autoscaling_group_Loki_group.id
+  description                       = "Allow from autoscaling_group_Loki_group (tcp:0-0)"
+  from_port                         = 0
+  protocol                          = "tcp"
+  to_port                           = 0
+  type                              = "ingress"
+}
+
 resource "aws_security_group_rule" "rule_autoscaling_group_grafana_group_egress_all_protocols" {
   security_group_id                 = aws_security_group.autoscaling_group_grafana_group.id
   cidr_blocks                       = ["0.0.0.0/0"]
@@ -407,11 +418,21 @@ resource "aws_security_group_rule" "rule_lb_alb_ALB1_group_to_autoscaling_group_
   type                              = "ingress"
 }
 
+resource "aws_eip" "eip_nat1" {
+  domain                            = "vpc"
+  tags                              = {
+    Name = "eip_nat1"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
 resource "aws_lb" "ALB1" {
   name                              = "ALB1"
   idle_timeout                      = 60
   load_balancer_type                = "application"
   security_groups                   = [aws_security_group.lb_alb_ALB1_group.id]
+  subnet_count                      = 1
   subnets                           = [aws_subnet.Public-a.id, aws_subnet.Public-b.id]
   tags                              = {
     Name = "ALB1"
@@ -445,11 +466,10 @@ resource "aws_lb_listener" "Listener2" {
 resource "aws_lb_listener_rule" "Loki" {
   action {
     order                           = 1
-    target_group_arn                = aws_lb_target_group.grafana.arn
     type                            = "forward"
     forward {
       target_group {
-        arn                         = aws_lb_target_group.grafana.arn
+        arn                         = aws_lb_target_group.Loki.arn
       }
     }
   }
@@ -470,7 +490,6 @@ resource "aws_lb_listener_rule" "Loki" {
 resource "aws_lb_listener_rule" "Rule" {
   action {
     order                           = 1
-    target_group_arn                = aws_lb_target_group.TG-Grafana.arn
     type                            = "forward"
     forward {
       target_group {
@@ -483,10 +502,46 @@ resource "aws_lb_listener_rule" "Rule" {
       values                        = ["grafana.albx.cloudman.pro"]
     }
   }
+  condition {
+    source_ip {
+      values                        = ["192.168.0.1/32", "192.4.4.4/32", "12.12.12.12/32", "192.12.12.12/32", "11.12.12.12/32"]
+    }
+  }
   listener_arn                      = aws_lb_listener.Listener2.arn
   priority                          = 1
   tags                              = {
     Name = "Rule"
+    State = "State11"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_lb_target_group" "Loki" {
+  name                              = "Loki"
+  vpc_id                            = aws_vpc.VPC3.id
+  connection_termination            = false
+  deregistration_delay              = "300"
+  ip_address_type                   = "ipv4"
+  load_balancing_algorithm_type     = "round_robin"
+  port                              = 80
+  protocol                          = "HTTP"
+  protocol_version                  = "HTTP1"
+  proxy_protocol_v2                 = false
+  slow_start                        = 0
+  target_type                       = "instance"
+  health_check {
+    enabled                         = true
+    healthy_threshold               = 3
+    interval                        = 30
+    matcher                         = "200"
+    path                            = "/"
+    port                            = 80
+    protocol                        = "HTTP"
+    timeout                         = 5
+    unhealthy_threshold             = 3
+  }
+  tags                              = {
+    Name = "Loki"
     State = "State11"
     Struct8User = "Ricardo"
   }
@@ -518,37 +573,6 @@ resource "aws_lb_target_group" "TG-Grafana" {
   }
   tags                              = {
     Name = "TG-Grafana"
-    State = "State11"
-    Struct8User = "Ricardo"
-  }
-}
-
-resource "aws_lb_target_group" "grafana" {
-  name                              = "grafana"
-  vpc_id                            = aws_vpc.VPC3.id
-  connection_termination            = false
-  deregistration_delay              = "300"
-  ip_address_type                   = "ipv4"
-  load_balancing_algorithm_type     = "round_robin"
-  port                              = 80
-  protocol                          = "HTTP"
-  protocol_version                  = "HTTP1"
-  proxy_protocol_v2                 = false
-  slow_start                        = 0
-  target_type                       = "instance"
-  health_check {
-    enabled                         = true
-    healthy_threshold               = 3
-    interval                        = 30
-    matcher                         = "200"
-    path                            = "/"
-    port                            = 80
-    protocol                        = "HTTP"
-    timeout                         = 5
-    unhealthy_threshold             = 3
-  }
-  tags                              = {
-    Name = "grafana"
     State = "State11"
     Struct8User = "Ricardo"
   }
@@ -673,7 +697,7 @@ resource "aws_launch_template" "Template3" {
   image_id                          = data.aws_ami.AMI_Data_Source_Template3.id
   name                              = "Template3"
   ebs_optimized                     = true
-  instance_type                     = "t3.micro"
+  instance_type                     = "t3.medium"
   update_default_version            = true
   user_data                         = base64encode(<<-EOFUData
 #!/bin/bash
@@ -683,6 +707,7 @@ cat << 'EOFENV' > /etc/struct8_env
 NAME="Loki"
 REGION="${data.aws_region.current.name}"
 ACCOUNT="${data.aws_caller_identity.current.account_id}"
+AWS_AUTOSCALING_GROUP_NAME_0="grafana"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
 sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
@@ -721,7 +746,7 @@ resource "aws_autoscaling_group" "Loki" {
   min_elb_capacity                  = 0
   min_size                          = 1
   protect_from_scale_in             = false
-  target_group_arns                 = [aws_lb_target_group.grafana.arn]
+  target_group_arns                 = [aws_lb_target_group.Loki.arn]
   termination_policies              = ["Default"]
   vpc_zone_identifier               = [aws_subnet.Grafana-a.id]
   wait_for_elb_capacity             = 0
@@ -751,7 +776,7 @@ resource "aws_autoscaling_group" "grafana" {
   capacity_rebalance                = false
   default_cooldown                  = 300
   default_instance_warmup           = 0
-  desired_capacity                  = 1
+  desired_capacity                  = 3
   force_delete                      = false
   force_delete_warm_pool            = false
   health_check_grace_period         = 300
@@ -767,6 +792,16 @@ resource "aws_autoscaling_group" "grafana" {
   termination_policies              = ["Default"]
   vpc_zone_identifier               = [aws_subnet.Grafana-a.id, aws_subnet.Grafana-b.id]
   wait_for_elb_capacity             = 0
+  instance_refresh {
+    strategy                        = "Rolling"
+    preferences {
+      auto_rollback                 = false
+      instance_warmup               = 300
+      max_healthy_percentage        = 0
+      min_healthy_percentage        = 90
+      skip_matching                 = false
+    }
+  }
   launch_template {
     version                         = "$Latest"
     id                              = aws_launch_template.Grafana.id
