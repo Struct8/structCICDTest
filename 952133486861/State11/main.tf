@@ -796,7 +796,7 @@ resource "aws_autoscaling_group" "grafana" {
     preferences {
       auto_rollback                 = false
       instance_warmup               = 300
-      max_healthy_percentage        = 0
+      max_healthy_percentage        = 100
       min_healthy_percentage        = 90
       skip_matching                 = false
     }
