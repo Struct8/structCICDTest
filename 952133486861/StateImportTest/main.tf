@@ -71,7 +71,7 @@ resource "aws_iam_role" "wp_asg_role" {
 ### CATEGORY: NETWORK ###
 
 resource "aws_vpc" "main" {
-  cidr_block                        = "10.0.0.0/16"
+  cidr_block                        = "10.1.0.0/16"
   enable_dns_hostnames              = true
   enable_dns_support                = true
   instance_tenancy                  = "default"
@@ -79,43 +79,43 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "db_0" {
   vpc_id                            = aws_vpc.main.id
-  availability_zone                 = "a"
-  cidr_block                        = "10.0.20.0/24"
+  availability_zone                 = "us-east-1a"
+  cidr_block                        = "10.1.0.0/24"
   map_public_ip_on_launch           = false
 }
 
 resource "aws_subnet" "db_1" {
   vpc_id                            = aws_vpc.main.id
-  availability_zone                 = "b"
-  cidr_block                        = "10.0.21.0/24"
+  availability_zone                 = "us-east-1b"
+  cidr_block                        = "10.1.3.0/24"
   map_public_ip_on_launch           = false
 }
 
 resource "aws_subnet" "private_0" {
   vpc_id                            = aws_vpc.main.id
-  availability_zone                 = "a"
-  cidr_block                        = "10.0.10.0/24"
+  availability_zone                 = "us-east-1a"
+  cidr_block                        = "10.1.1.0/24"
   map_public_ip_on_launch           = false
 }
 
 resource "aws_subnet" "private_1" {
   vpc_id                            = aws_vpc.main.id
-  availability_zone                 = "b"
-  cidr_block                        = "10.0.11.0/24"
+  availability_zone                 = "us-east-1b"
+  cidr_block                        = "10.1.4.0/24"
   map_public_ip_on_launch           = false
 }
 
 resource "aws_subnet" "public_0" {
   vpc_id                            = aws_vpc.main.id
-  availability_zone                 = "a"
-  cidr_block                        = "10.0.1.0/24"
+  availability_zone                 = "us-east-1a"
+  cidr_block                        = "10.1.2.0/24"
   map_public_ip_on_launch           = true
 }
 
 resource "aws_subnet" "public_1" {
   vpc_id                            = aws_vpc.main.id
-  availability_zone                 = "b"
-  cidr_block                        = "10.0.2.0/24"
+  availability_zone                 = "us-east-1b"
+  cidr_block                        = "10.1.5.0/24"
   map_public_ip_on_launch           = true
 }
 
@@ -135,15 +135,11 @@ resource "aws_route" "route_private_to_nat_ipv4" {
   destination_cidr_block            = "0.0.0.0/0"
 }
 
-resource "aws_route" "route_public_to_igw_ipv4" {
-  gateway_id                        = aws_internet_gateway.igw.id
-  route_table_id                    = aws_route_table.public.id
+resource "aws_route" "route_rt_to_dest_ipv4" {
   destination_cidr_block            = "0.0.0.0/0"
 }
 
-resource "aws_route" "route_public_to_igw_ipv6" {
-  gateway_id                        = aws_internet_gateway.igw.id
-  route_table_id                    = aws_route_table.public.id
+resource "aws_route" "route_rt_to_dest_ipv6" {
   destination_ipv6_cidr_block       = "::/0"
 }
 
@@ -218,16 +214,6 @@ resource "aws_security_group_rule" "rule_wp_alb_sg_ingress_tcp_80" {
   from_port                         = 80
   protocol                          = "tcp"
   to_port                           = 80
-  type                              = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_wp_alb_sg_to_wp_web_sg_all_protocols" {
-  security_group_id                 = aws_security_group.wp-web-sg.id
-  source_security_group_id          = aws_security_group.wp-alb-sg.id
-  description                       = "Allow from wp-alb-sg (-1:0-0)"
-  from_port                         = 0
-  protocol                          = "-1"
-  to_port                           = 0
   type                              = "ingress"
 }
 
