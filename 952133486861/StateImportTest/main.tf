@@ -30,15 +30,16 @@ data "aws_region" "current" {}
 resource "aws_iam_instance_profile" "wp-ssm-profile" {
   name                              = "wp-ssm-profile"
   path                              = "/"
-  role                              = aws_iam_role.wp_asg_role.name
-  aws_iam_role {
-    name                            = "wp-ssm-role"
-    assume_role_policy              = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
-    force_detach_policies           = false
-    managed_policy_arns             = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
-    max_session_duration            = 3600
-    path                            = "/"
-  }
+  role                              = "${aws_iam_role.ssm_role.name}"
+}
+
+resource "aws_iam_role" "ssm_role" {
+  name                              = "wp-ssm-role"
+  assume_role_policy                = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  force_detach_policies             = false
+  managed_policy_arns               = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
+  max_session_duration              = 3600
+  path                              = "/"
 }
 
 resource "aws_iam_role" "wp_asg_role" {
@@ -315,7 +316,7 @@ resource "aws_lb_listener_rule" "cf_only" {
   condition {
     http_header {
       http_header_name              = "X-Origin-Verify"
-      values                        = ["random_password.cf_secret.result"]
+      values                        = [random_password.cf_secret.result]
     }
   }
   listener_arn                      = aws_lb_listener.http.arn
@@ -394,7 +395,7 @@ resource "aws_cloudfront_distribution" "wp_distribution" {
     origin_id                       = "origin_wp_distribution_org_0"
     custom_header {
       name                          = "X-Origin-Verify"
-      value                         = "random_password.cf_secret.result"
+      value                         = random_password.cf_secret.result
     }
     custom_origin_config {
       http_port                     = 80
@@ -432,7 +433,7 @@ resource "aws_cloudfront_origin_access_control" "oac_wp_media" {
 ### CATEGORY: STORAGE ###
 
 resource "aws_s3_bucket" "wp_media" {
-  bucket                            = "random_id.bucket_suffix.hex"
+  bucket                            = random_id.bucket_suffix.hex
   force_destroy                     = true
   object_lock_enabled               = false
 }
@@ -494,30 +495,18 @@ resource "aws_s3_bucket_versioning" "wp_media_versioning" {
 
 resource "aws_db_instance" "wordpress_db" {
   db_name                           = "wordpress"
-  db_subnet_group_name              = aws_db_subnet_group.subnet_group_wordpress_db.name
   allocated_storage                 = 20
-  availability_zone                 = aws_subnet.db_0.availability_zone
   backup_retention_period           = 0
   engine                            = "mysql"
   engine_version                    = "8.0"
   identifier                        = "wordpress_db"
   instance_class                    = "db.t3.micro"
-  password                          = "random_password.db_password.result"
+  password                          = random_password.db_password.result
   skip_final_snapshot               = true
   storage_encrypted                 = true
   storage_type                      = "gp3"
   username                          = "admin"
   vpc_security_group_ids            = [aws_security_group.wp-db-sg.id]
-}
-
-resource "aws_db_subnet_group" "subnet_group_wordpress_db" {
-  name                              = "wordpress_db-subnet-group"
-  subnet_ids                        = [aws_subnet.db_1.id, aws_subnet.db_0.id]
-  tags                              = {
-    Name = "subnet_group_wordpress_db"
-    State = "StateImportTest"
-    Struct8User = "rmay struct"
-  }
 }
 
 resource "aws_efs_file_system" "wp_efs" {
@@ -555,6 +544,7 @@ resource "aws_launch_template" "wp_lt" {
   image_id                          = data.aws_ami.AMI_Data_Source_wp_lt.id
   name                              = "wp_lt"
   default_version                   = 1
+  ebs_optimized                     = true
   instance_type                     = "t3.micro"
   user_data                         = base64encode(<<-EOFUData
 #!/bin/bash
@@ -614,6 +604,25 @@ resource "aws_autoscaling_policy" "cpu_scaling" {
       predefined_metric_type        = "ASGAverageCPUUtilization"
     }
   }
+}
+
+
+
+
+### CATEGORY: MISC ###
+
+resource "random_id" "bucket_suffix" {
+  byte_length                       = 8
+}
+
+resource "random_password" "cf_secret" {
+  length                            = 16
+  special                           = true
+}
+
+resource "random_password" "db_password" {
+  length                            = 16
+  special                           = true
 }
 
 
