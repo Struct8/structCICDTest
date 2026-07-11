@@ -1,0 +1,27 @@
+{
+  "external_repositories": [],
+  "action": "plan",
+  "trigger_id": "1783807928078",
+  "backend_global_config": {
+    "provider": "aws",
+    "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
+    "region": "us-east-1",
+    "bucket": "pro112-teste-cicd"
+  },
+  "pipeline_stages": [
+    {
+      "stage_name": "Manual Trigger: State2",
+      "parallel_execution": false,
+      "states": [
+        {
+          "path": "bf9638139fc9b9a92fa0334ae15ac3ac/State2",
+          "provider": "cloudflare",
+          "target_auth": {
+            "account_id": "bf9638139fc9b9a92fa0334ae15ac3ac",
+            "secret_name": "AUTH_CLOUDFLARE_BF9638139FC9B9A92FA0334AE15AC3AC"
+          }
+        }
+      ]
+    }
+  ]
+}
