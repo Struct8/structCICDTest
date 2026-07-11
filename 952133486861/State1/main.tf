@@ -7,14 +7,6 @@ terraform {
       version = ">= 5.0"
     }
   }
-
-  backend "s3" {
-    bucket         = "pro112-teste-cicd"
-    key            = "952133486861/State1/main.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "teste-cicd"
-    encrypt        = true
-  }
 }
 
 # --- Main Cloud Provider ---
@@ -513,7 +505,7 @@ resource "aws_db_instance" "wordpress_db" {
   backup_retention_period           = 0
   engine                            = "mysql"
   engine_version                    = "8.0"
-  identifier                        = "wordpress_db"
+  identifier                        = "wordpress-db"
   instance_class                    = "db.t3.micro"
   password                          = random_password.db_password.result
   skip_final_snapshot               = true
