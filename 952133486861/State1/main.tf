@@ -7,6 +7,14 @@ terraform {
       version = ">= 5.0"
     }
   }
+
+  backend "s3" {
+    bucket         = "pro112-teste-cicd"
+    key            = "952133486861/State1/main.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "teste-cicd"
+    encrypt        = true
+  }
 }
 
 # --- Main Cloud Provider ---
@@ -25,11 +33,25 @@ resource "aws_iam_instance_profile" "wp-ssm-profile" {
   role                              = "${aws_iam_role.ssm_role.name}"
 }
 
+data "aws_iam_policy_document" "autoscaling_group_wp_asg_wp_asg_role_st_State1_doc" {
+  statement {
+    sid                             = "AllowWpmedia"
+    effect                          = "Allow"
+    actions                         = ["s3:DeleteObject", "s3:GetBucketLocation", "s3:GetObject", "s3:ListBucket", "s3:PutObject"]
+    resources                       = ["${aws_s3_bucket.wp_media.arn}"]
+  }
+}
+
+resource "aws_iam_policy" "autoscaling_group_wp_asg_wp_asg_role_st_State1" {
+  name                              = "autoscaling_group_wp_asg_wp_asg_role_st_State1"
+  description                       = "Access Policy for wp_asg (Role: wp_asg_role)"
+  policy                            = data.aws_iam_policy_document.autoscaling_group_wp_asg_wp_asg_role_st_State1_doc.json
+}
+
 resource "aws_iam_role" "ssm_role" {
   name                              = "wp-ssm-role"
   assume_role_policy                = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies             = false
-  managed_policy_arns               = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
   max_session_duration              = 3600
   path                              = "/"
 }
@@ -56,6 +78,16 @@ resource "aws_iam_role" "wp_asg_role" {
     State = "State1"
     Struct8User = "rmay struct"
   }
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore_to_wp_asg_attach" {
+  policy_arn                        = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  role                              = aws_iam_role.wp_asg_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "autoscaling_group_wp_asg_wp_asg_role_st_State1_attach" {
+  policy_arn                        = aws_iam_policy.autoscaling_group_wp_asg_wp_asg_role_st_State1.arn
+  role                              = aws_iam_role.wp_asg_role.name
 }
 
 
@@ -501,7 +533,9 @@ resource "aws_s3_bucket_versioning" "wp_media_versioning" {
 
 resource "aws_db_instance" "wordpress_db" {
   db_name                           = "wordpress"
+  db_subnet_group_name              = aws_db_subnet_group.subnet_group_wordpress_db.name
   allocated_storage                 = 20
+  availability_zone                 = aws_subnet.db_0.availability_zone
   backup_retention_period           = 0
   engine                            = "mysql"
   engine_version                    = "8.0"
@@ -513,6 +547,16 @@ resource "aws_db_instance" "wordpress_db" {
   storage_type                      = "gp3"
   username                          = "admin"
   vpc_security_group_ids            = [aws_security_group.wp-db-sg.id]
+}
+
+resource "aws_db_subnet_group" "subnet_group_wordpress_db" {
+  name                              = "wordpress_db-subnet-group"
+  subnet_ids                        = [aws_subnet.db_0.id, aws_subnet.db_1.id]
+  tags                              = {
+    Name = "subnet_group_wordpress_db"
+    State = "State1"
+    Struct8User = "rmay struct"
+  }
 }
 
 resource "aws_efs_file_system" "wp_efs" {
@@ -559,6 +603,7 @@ cat << 'EOFENV' > /etc/struct8_env
 NAME="wp_asg"
 REGION="${data.aws_region.current.region}"
 ACCOUNT="${data.aws_caller_identity.current.account_id}"
+AWS_S3_BUCKET_NAME_0="wp_media"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
 sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
