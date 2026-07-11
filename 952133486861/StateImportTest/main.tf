@@ -136,6 +136,18 @@ resource "aws_route" "route_private_to_nat_ipv4" {
   destination_cidr_block            = "0.0.0.0/0"
 }
 
+resource "aws_route" "route_public_to_igw_ipv4" {
+  gateway_id                        = aws_internet_gateway.igw.id
+  route_table_id                    = aws_route_table.public.id
+  destination_cidr_block            = "0.0.0.0/0"
+}
+
+resource "aws_route" "route_public_to_igw_ipv6" {
+  gateway_id                        = aws_internet_gateway.igw.id
+  route_table_id                    = aws_route_table.public.id
+  destination_ipv6_cidr_block       = "::/0"
+}
+
 resource "aws_route" "route_rt_to_dest_ipv4" {
   destination_cidr_block            = "0.0.0.0/0"
 }
