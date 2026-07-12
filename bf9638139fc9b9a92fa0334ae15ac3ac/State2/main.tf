@@ -74,9 +74,6 @@ resource "cloudflare_workers_script" "cloudman_collab" {
       invocation_logs = false
     }
   }
-  placement                         = {
-    mode = "smart"
-  }
 }
 
 
