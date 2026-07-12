@@ -43,8 +43,8 @@ resource "cloudflare_workers_script" "cloudman_collab" {
   script_name                       = "cloudman-collab"
   compatibility_date                = "2024-09-23"
   compatibility_flags               = ["nodejs_compat"]
-  content_file                      = "${path.module}/.external_modules/CloudMan/Cloudflare/Workers/index.ts"
-  content_sha256                    = "${filesha256("${path.module}/.external_modules/CloudMan/Cloudflare/Workers/index.ts")}"
+  content_file                      = "${path.module}/.external_modules/CloudMan/Cloudflare/Workers/index.js"
+  content_sha256                    = "${filesha256("${path.module}/.external_modules/CloudMan/Cloudflare/Workers/index.js")}"
   main_module                       = "index.js"
   usage_model                       = "bundled"
   bindings                          = [
