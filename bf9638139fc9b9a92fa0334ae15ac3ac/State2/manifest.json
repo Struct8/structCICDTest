@@ -1,7 +1,17 @@
 {
-  "external_repositories": [],
+  "external_repositories": [
+    {
+      "repo_name": "CloudMan",
+      "org": "Struct8",
+      "branch": "main",
+      "target_dir": ".external_modules/CloudMan",
+      "folders": [
+        "Cloudflare/Workers/index.ts"
+      ]
+    }
+  ],
   "action": "apply",
-  "trigger_id": "1783859006427",
+  "trigger_id": "1783862715191",
   "backend_global_config": {
     "provider": "aws",
     "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
