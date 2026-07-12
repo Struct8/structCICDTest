@@ -32,7 +32,6 @@ resource "cloudflare_workers_script" "cloudman_collab" {
   compatibility_date                = "2024-09-23"
   compatibility_flags               = ["javascript"]
   content                           = "export default { async fetch() { return new Response(\"ok\"); } }"
-  main_module                       = "index.js"
   usage_model                       = "bundled"
   bindings                          = [
     {
