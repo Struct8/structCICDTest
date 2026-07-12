@@ -26,6 +26,9 @@ resource "cloudflare_d1_database" "METRICS_DB" {
   name                              = "METRICS_DB"
   jurisdiction                      = "eu"
   primary_location_hint             = "wnam"
+  read_replication                  = {
+    mode = "disabled"
+  }
 }
 
 resource "cloudflare_r2_bucket" "diagram_backup" {
