@@ -63,11 +63,9 @@ resource "cloudflare_workers_script" "cloudman_collab" {
       type = "d1"
     }
   ]
-  lifecycle                         = [
-    {
-      ignore_changes = ["content"]
-    }
-  ]
+  lifecycle {
+    ignore_changes                  = [content]
+  }
   placement                         = {
     mode = "smart"
   }
