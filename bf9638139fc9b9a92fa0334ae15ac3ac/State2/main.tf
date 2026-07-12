@@ -28,7 +28,7 @@ resource "cloudflare_r2_bucket" "diagram_backup" {
 
 resource "cloudflare_workers_script" "cloudman_collab" {
   account_id                        = "bf9638139fc9b9a92fa0334ae15ac3ac"
-  script_name                       = "cloudman_collab"
+  script_name                       = "cloudman-collab"
   compatibility_date                = "2024-09-23"
   compatibility_flags               = ["javascript"]
   content                           = "export default { async fetch() { return new Response(\"ok\"); } }"
