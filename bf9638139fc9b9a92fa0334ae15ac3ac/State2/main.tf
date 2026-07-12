@@ -41,20 +41,16 @@ resource "cloudflare_workers_script" "cloudman_collab" {
       type = "r2_bucket"
     }
   ]
-  observability                     = [
-    {
+  observability                     = {
+    enabled = true
+    logs = {
       enabled = true
-      logs = {
-        enabled = true
-        invocation_logs = false
-      }
+      invocation_logs = false
     }
-  ]
-  placement                         = [
-    {
-      mode = "smart"
-    }
-  ]
+  }
+  placement                         = {
+    mode = "smart"
+  }
 }
 
 
