@@ -23,7 +23,7 @@ provider "cloudflare" {}
 
 resource "cloudflare_r2_bucket" "diagram_backup" {
   account_id                        = "bf9638139fc9b9a92fa0334ae15ac3ac"
-  name                              = "diagram_backup"
+  name                              = "diagram-backup"
 }
 
 resource "cloudflare_workers_script" "cloudman_collab" {
