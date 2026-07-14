@@ -25,12 +25,25 @@ provider "aws" {
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-### CATEGORY: INTEGRATION ###
+### CATEGORY: NETWORK ###
 
-resource "aws_sns_topic" "Topic" {
-  name                              = "Topic"
+resource "aws_vpc" "VPC1" {
+  cidr_block                        = "10.10.0.0/16"
+  instance_tenancy                  = "default"
   tags                              = {
-    Name = "Topic"
+    Name = "VPC1"
+    State = "State3snsteste"
+    Struct8User = "rmay struct"
+  }
+}
+
+resource "aws_subnet" "Subnet2" {
+  vpc_id                            = aws_vpc.VPC1.id
+  availability_zone                 = "us-east-1a"
+  cidr_block                        = "10.10.0.0/24"
+  map_public_ip_on_launch           = false
+  tags                              = {
+    Name = "Subnet2"
     State = "State3snsteste"
     Struct8User = "rmay struct"
   }
