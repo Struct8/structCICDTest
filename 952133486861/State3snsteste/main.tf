@@ -25,20 +25,6 @@ provider "aws" {
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-### CATEGORY: IAM ###
-
-resource "aws_iam_instance_profile" "Instance1_profile" {
-  name                              = "Instance1_profile"
-  tags                              = {
-    Name = "Instance1_profile"
-    State = "State3snsteste"
-    Struct8User = "rmay struct"
-  }
-}
-
-
-
-
 ### CATEGORY: NETWORK ###
 
 resource "aws_vpc" "VPC1" {
@@ -63,19 +49,31 @@ resource "aws_subnet" "Subnet2" {
   }
 }
 
-resource "aws_security_group" "instance_Instance1_group" {
-  name                              = "instance_Instance1_group"
+resource "aws_subnet" "Subnet3" {
   vpc_id                            = aws_vpc.VPC1.id
-  revoke_rules_on_delete            = false
+  availability_zone                 = "us-east-1b"
+  cidr_block                        = "10.10.1.0/24"
+  map_public_ip_on_launch           = false
   tags                              = {
-    Name = "instance_Instance1_group"
+    Name = "Subnet3"
     State = "State3snsteste"
     Struct8User = "rmay struct"
   }
 }
 
-resource "aws_security_group_rule" "rule_instance_Instance1_group_egress_all_protocols" {
-  security_group_id                 = aws_security_group.instance_Instance1_group.id
+resource "aws_security_group" "db_instance_rdsdb1_group" {
+  name                              = "db_instance_rdsdb1_group"
+  vpc_id                            = aws_vpc.VPC1.id
+  revoke_rules_on_delete            = false
+  tags                              = {
+    Name = "db_instance_rdsdb1_group"
+    State = "State3snsteste"
+    Struct8User = "rmay struct"
+  }
+}
+
+resource "aws_security_group_rule" "rule_db_instance_rdsdb1_group_egress_all_protocols" {
+  security_group_id                 = aws_security_group.db_instance_rdsdb1_group.id
   cidr_blocks                       = ["0.0.0.0/0"]
   from_port                         = 0
   protocol                          = "-1"
@@ -86,37 +84,38 @@ resource "aws_security_group_rule" "rule_instance_Instance1_group_egress_all_pro
 
 
 
-### CATEGORY: COMPUTE ###
+### CATEGORY: STORAGE ###
 
-data "aws_ami" "AMI_Data_Source_Instance1" {
-  most_recent                       = true
-  owners                            = ["amazon"]
-  filter {
-    name                            = "name"
-    values                          = ["al2023-ami-2023.*-kernel-6.1-x86_64"]
+resource "aws_db_instance" "rdsdb1" {
+  db_subnet_group_name              = aws_db_subnet_group.subnet_group_rdsdb1.name
+  allocated_storage                 = 20
+  availability_zone                 = aws_subnet.Subnet2.availability_zone
+  backup_retention_period           = 0
+  copy_tags_to_snapshot             = true
+  delete_automated_backups          = false
+  engine                            = "mysql"
+  engine_version                    = "8.0"
+  identifier                        = "rdsdb1"
+  instance_class                    = "db.t3.micro"
+  max_allocated_storage             = 100
+  skip_final_snapshot               = true
+  storage_encrypted                 = true
+  storage_type                      = "gp3"
+  upgrade_storage_config            = false
+  username                          = "admin"
+  vpc_security_group_ids            = [aws_security_group.db_instance_rdsdb1_group.id]
+  tags                              = {
+    Name = "rdsdb1"
+    State = "State3snsteste"
+    Struct8User = "rmay struct"
   }
 }
 
-resource "aws_instance" "Instance1" {
-  subnet_id                         = aws_subnet.Subnet2.id
-  ami                               = data.aws_ami.AMI_Data_Source_Instance1.id
-  associate_public_ip_address       = false
-  iam_instance_profile              = aws_iam_instance_profile.Instance1_profile.name
-  instance_type                     = "t3.micro"
-  user_data_base64                  = base64encode(<<-EOFUData
-#!/bin/bash
-
-
-EOFUData
-)
-  user_data_replace_on_change       = false
-  vpc_security_group_ids            = [aws_security_group.instance_Instance1_group.id]
-  metadata_options {
-    http_endpoint                   = "enabled"
-    http_tokens                     = "required"
-  }
+resource "aws_db_subnet_group" "subnet_group_rdsdb1" {
+  name                              = "rdsdb1-subnet-group"
+  subnet_ids                        = [aws_subnet.Subnet2.id, aws_subnet.Subnet3.id]
   tags                              = {
-    Name = "Instance1"
+    Name = "subnet_group_rdsdb1"
     State = "State3snsteste"
     Struct8User = "rmay struct"
   }
