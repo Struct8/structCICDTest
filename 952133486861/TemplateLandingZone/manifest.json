@@ -1,0 +1,28 @@
+{
+  "external_repositories": [],
+  "action": "plan",
+  "trigger_id": "1784034647900",
+  "backend_global_config": {
+    "provider": "aws",
+    "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
+    "region": "us-east-1",
+    "bucket": "pro112-teste-cicd"
+  },
+  "pipeline_stages": [
+    {
+      "stage_name": "Manual Trigger: TemplateLandingZone",
+      "parallel_execution": false,
+      "states": [
+        {
+          "path": "952133486861/TemplateLandingZone",
+          "provider": "aws",
+          "target_auth": {
+            "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
+            "region": "us-east-1",
+            "secret_name": "AUTH_AWS_952133486861"
+          }
+        }
+      ]
+    }
+  ]
+}
