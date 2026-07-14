@@ -98,6 +98,7 @@ resource "aws_db_instance" "rdsdb1" {
   identifier                        = "rdsdb1"
   instance_class                    = "db.t3.micro"
   max_allocated_storage             = 100
+  password                          = "teste98098080"
   skip_final_snapshot               = true
   storage_encrypted                 = true
   storage_type                      = "gp3"
