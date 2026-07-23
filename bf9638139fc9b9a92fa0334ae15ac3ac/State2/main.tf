@@ -36,11 +36,6 @@ resource "cloudflare_r2_bucket" "diagram_backup" {
   name                              = "diagram-backup"
 }
 
-resource "cloudflare_workers_custom_domain" "cloudman_test_struct8_com" {
-  account_id                        = "bf9638139fc9b9a92fa0334ae15ac3ac"
-  hostname                          = "cloudman-test.struct8.com"
-}
-
 resource "cloudflare_workers_kv_namespace" "OAUTH_KV" {
   account_id                        = "bf9638139fc9b9a92fa0334ae15ac3ac"
   title                             = "OAUTH_KV"
@@ -57,11 +52,6 @@ resource "cloudflare_workers_script" "cloudman_collab" {
   usage_model                       = "bundled"
   bindings                          = [
     {
-      name = "OAUTH_KV"
-      namespace_id = cloudflare_workers_kv_namespace.OAUTH_KV.id
-      type = "kv_namespace"
-    },
-    {
       bucket_name = cloudflare_r2_bucket.diagram_backup.name
       name = "DIAGRAM_BACKUP"
       type = "r2_bucket"
@@ -70,6 +60,11 @@ resource "cloudflare_workers_script" "cloudman_collab" {
       id = cloudflare_d1_database.METRICS_DB.id
       name = "METRICS_DB"
       type = "d1"
+    },
+    {
+      name = "OAUTH_KV"
+      namespace_id = cloudflare_workers_kv_namespace.OAUTH_KV.id
+      type = "kv_namespace"
     }
   ]
   lifecycle {
