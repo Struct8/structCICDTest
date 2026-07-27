@@ -25,58 +25,62 @@ provider "aws" {
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
+### EXTERNAL REFERENCES ###
+
+data "aws_vpc" "VPC1" {
+  filter {
+    name                            = "tag:Name"
+    values                          = ["VPC1"]
+  }
+}
+
+data "aws_vpc" "VPC" {
+  filter {
+    name                            = "tag:Name"
+    values                          = ["VPC"]
+  }
+}
+
+data "aws_route_table" "RT" {
+  filter {
+    name                            = "tag:Name"
+    values                          = ["RT"]
+  }
+}
+
+data "aws_route_table" "RT1" {
+  filter {
+    name                            = "tag:Name"
+    values                          = ["RT1"]
+  }
+}
+
+
+
+
 ### CATEGORY: NETWORK ###
 
-resource "aws_vpc" "VPC" {
-  cidr_block                        = "10.10.0.0/16"
-  instance_tenancy                  = "default"
+resource "aws_vpc_peering_connection" "Peering" {
+  peer_vpc_id                       = data.aws_vpc.VPC1.id
+  vpc_id                            = data.aws_vpc.VPC.id
+  auto_accept                       = true
   tags                              = {
-    Name = "VPC"
+    Name = "Peering"
     State = "Statepeer"
     Struct8User = "rmay struct"
   }
 }
 
-resource "aws_subnet" "Subnet2" {
-  vpc_id                            = aws_vpc.VPC.id
-  availability_zone                 = "us-east-1a"
-  cidr_block                        = "10.10.0.0/24"
-  map_public_ip_on_launch           = true
-  tags                              = {
-    Name = "Subnet2"
-    State = "Statepeer"
-    Struct8User = "rmay struct"
-  }
+resource "aws_route" "route_RT1_to_Peering_10_10_0_0_16" {
+  route_table_id                    = data.aws_route_table.RT1.id
+  vpc_peering_connection_id         = aws_vpc_peering_connection.Peering.id
+  destination_cidr_block            = "10.10.0.0/16"
 }
 
-resource "aws_internet_gateway" "IGW" {
-  vpc_id                            = aws_vpc.VPC.id
-  tags                              = {
-    Name = "IGW"
-    State = "Statepeer"
-    Struct8User = "rmay struct"
-  }
-}
-
-resource "aws_route" "route_RT_to_IGW_ipv4" {
-  gateway_id                        = aws_internet_gateway.IGW.id
-  route_table_id                    = aws_route_table.RT.id
-  destination_cidr_block            = "0.0.0.0/0"
-}
-
-resource "aws_route" "route_RT_to_IGW_ipv6" {
-  gateway_id                        = aws_internet_gateway.IGW.id
-  route_table_id                    = aws_route_table.RT.id
-  destination_ipv6_cidr_block       = "::/0"
-}
-
-resource "aws_route_table" "RT" {
-  vpc_id                            = aws_vpc.VPC.id
-  tags                              = {
-    Name = "RT"
-    State = "Statepeer"
-    Struct8User = "rmay struct"
-  }
+resource "aws_route" "route_RT_to_Peering_10_11_0_0_16" {
+  route_table_id                    = data.aws_route_table.RT.id
+  vpc_peering_connection_id         = aws_vpc_peering_connection.Peering.id
+  destination_cidr_block            = "10.11.0.0/16"
 }
 
 
