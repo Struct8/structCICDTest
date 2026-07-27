@@ -28,7 +28,7 @@ data "aws_region" "current" {}
 ### CATEGORY: NETWORK ###
 
 resource "aws_vpc" "VPC" {
-  cidr_block                        = "10.0.10.0/16"
+  cidr_block                        = "10.10.0.0/16"
   instance_tenancy                  = "default"
   tags                              = {
     Name = "VPC"
