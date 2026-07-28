@@ -218,7 +218,7 @@ data "aws_ami" "AMI_Data_Source_Instance1" {
   owners                            = ["amazon"]
   filter {
     name                            = "name"
-    values                          = ["al2023-ami-2023.*-kernel-6.1-x86_64"]
+    values                          = ["al2023-ami-2023.*-kernel-6.1-arm64"]
   }
 }
 
