@@ -225,7 +225,7 @@ data "aws_ami" "AMI_Data_Source_Instance1" {
 resource "aws_instance" "Instance1" {
   subnet_id                         = aws_subnet.Subnet2.id
   ami                               = data.aws_ami.AMI_Data_Source_Instance1.id
-  associate_public_ip_address       = false
+  associate_public_ip_address       = true
   iam_instance_profile              = aws_iam_instance_profile.Instance1_profile.name
   instance_type                     = "t4g.nano"
   user_data_base64                  = base64encode(<<-EOFUData
