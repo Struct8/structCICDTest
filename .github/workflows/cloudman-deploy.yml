@@ -1,4 +1,4 @@
-name: Cloudman Pipeline
+name: Struct8 Pipeline
 
 on:
   push:
@@ -6,12 +6,18 @@ on:
       - '**/manifest.json'
 
 permissions:
-  id-token: write  
-  contents: write    
+  id-token: write
+  contents: write
+  # Needed by the engine's stale-lock backstop, which calls `gh run view`.
+  # A called workflow's permissions are CAPPED by the caller's, so without this
+  # line the `actions: read` the engine declares was never actually granted --
+  # and that backstop had been failing silently.
   actions: read
 
 jobs:
   infrastructure:
     name: Call GitOps Engine
-    uses: Struct8/cloudman-core/.github/workflows/engine.yml@main
+    uses: Struct8/cloudman-core/.github/workflows/engine.yml@dev
     secrets: inherit
+    with:
+      stage: dev
