@@ -210,22 +210,22 @@ resource "aws_iam_role" "role_lbc_albeks" {
   assume_role_policy                = data.aws_iam_policy_document.doc_trust_lbc_albeks.json
 }
 
-resource "aws_iam_role_policy_attachment" "attach_AmazonEC2ContainerRegistryReadOnly_to_NodeGroup" {
+resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly_to_NodeGroup_attach" {
   policy_arn                        = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role                              = aws_iam_role.role_eksng_NodeGroup.name
 }
 
-resource "aws_iam_role_policy_attachment" "attach_AmazonEKSClusterPolicy_to_ekstest1" {
+resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy_to_ekstest1_attach" {
   policy_arn                        = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role                              = aws_iam_role.role_eks_ekstest1.name
 }
 
-resource "aws_iam_role_policy_attachment" "attach_AmazonEKSWorkerNodePolicy_to_NodeGroup" {
+resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy_to_NodeGroup_attach" {
   policy_arn                        = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role                              = aws_iam_role.role_eksng_NodeGroup.name
 }
 
-resource "aws_iam_role_policy_attachment" "attach_AmazonEKS_CNI_Policy_to_NodeGroup" {
+resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy_to_NodeGroup_attach" {
   policy_arn                        = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role                              = aws_iam_role.role_eksng_NodeGroup.name
 }
@@ -252,7 +252,7 @@ resource "aws_acm_certificate" "k8s" {
     certificate_transparency_logging_preference = "ENABLED"
   }
   tags                              = {
-    "kubernetes.io/cluster/GAPI" = "shared"
+    "kubernetes.io/cluster/gapi" = "shared"
     Name = "k8s"
     State = "stateeks"
     Struct8User = "Ricardo"
@@ -269,18 +269,18 @@ resource "aws_acm_certificate_validation" "Validation_k8s" {
 
 ### CATEGORY: NETWORK ###
 
-resource "aws_vpc" "VPCeks" {
+resource "aws_vpc" "BasicEKS" {
   cidr_block                        = "10.4.0.0/16"
   instance_tenancy                  = "default"
   tags                              = {
-    Name = "VPCeks"
+    Name = "BasicEKS"
     State = "stateeks"
     Struct8User = "Ricardo"
   }
 }
 
 resource "aws_subnet" "Subnet15" {
-  vpc_id                            = aws_vpc.VPCeks.id
+  vpc_id                            = aws_vpc.BasicEKS.id
   availability_zone                 = "us-east-1a"
   cidr_block                        = "10.4.0.0/24"
   map_public_ip_on_launch           = true
@@ -294,7 +294,7 @@ resource "aws_subnet" "Subnet15" {
 }
 
 resource "aws_subnet" "Subnet16" {
-  vpc_id                            = aws_vpc.VPCeks.id
+  vpc_id                            = aws_vpc.BasicEKS.id
   availability_zone                 = "us-east-1b"
   cidr_block                        = "10.4.1.0/24"
   map_public_ip_on_launch           = true
@@ -308,7 +308,7 @@ resource "aws_subnet" "Subnet16" {
 }
 
 resource "aws_subnet" "Subnet17" {
-  vpc_id                            = aws_vpc.VPCeks.id
+  vpc_id                            = aws_vpc.BasicEKS.id
   availability_zone                 = "us-east-1a"
   cidr_block                        = "10.4.2.0/24"
   map_public_ip_on_launch           = true
@@ -322,7 +322,7 @@ resource "aws_subnet" "Subnet17" {
 }
 
 resource "aws_internet_gateway" "IGWeks" {
-  vpc_id                            = aws_vpc.VPCeks.id
+  vpc_id                            = aws_vpc.BasicEKS.id
   tags                              = {
     Name = "IGWeks"
     State = "stateeks"
@@ -330,23 +330,17 @@ resource "aws_internet_gateway" "IGWeks" {
   }
 }
 
-resource "aws_route" "aws_route_RTeks_IGWeks" {
-  gateway_id                        = aws_internet_gateway.IGWeks.id
-  route_table_id                    = aws_route_table.RTeks.id
-  destination_cidr_block            = "0.0.0.0/0"
-}
-
 resource "aws_route53_record" "Route53_Record_k8s_k8s_cloudman_pro" {
   for_each                          = {
     for dvo in aws_acm_certificate.k8s.domain_validation_options : dvo.domain_name => dvo
     if dvo.domain_name == "k8s.cloudman.pro"
   }
-  name                              = "${each.value.resource_record_name}"
+  name                              = each.value.resource_record_name
   zone_id                           = data.aws_route53_zone.Zone.zone_id
   allow_overwrite                   = true
-  records                           = ["${each.value.resource_record_value}"]
+  records                           = [each.value.resource_record_value]
   ttl                               = 300
-  type                              = "${each.value.resource_record_type}"
+  type                              = each.value.resource_record_type
 }
 
 resource "aws_route53_record" "alias_a_aws_lb_Xalb_ALBeks_k8s_cloudman_pro" {
@@ -372,7 +366,7 @@ resource "aws_route53_record" "alias_a_aws_lb_Xalb_ALBeks_wildcard_k8s_cloudman_
 }
 
 resource "aws_route_table" "RTeks" {
-  vpc_id                            = aws_vpc.VPCeks.id
+  vpc_id                            = aws_vpc.BasicEKS.id
   tags                              = {
     Name = "RTeks"
     State = "stateeks"
@@ -397,7 +391,7 @@ resource "aws_route_table_association" "aws_route_table_association_Subnet17_RTe
 
 resource "aws_security_group" "eks_node_group_NodeGroup_group" {
   name                              = "eks_node_group_NodeGroup_group"
-  vpc_id                            = aws_vpc.VPCeks.id
+  vpc_id                            = aws_vpc.BasicEKS.id
   revoke_rules_on_delete            = false
   tags                              = {
     Name = "eks_node_group_NodeGroup_group"
@@ -408,7 +402,7 @@ resource "aws_security_group" "eks_node_group_NodeGroup_group" {
 
 resource "aws_security_group" "lb_alb_ALBeks_group" {
   name                              = "lb_alb_ALBeks_group"
-  vpc_id                            = aws_vpc.VPCeks.id
+  vpc_id                            = aws_vpc.BasicEKS.id
   revoke_rules_on_delete            = false
   tags                              = {
     Name = "lb_alb_ALBeks_group"
@@ -524,6 +518,7 @@ resource "aws_lb_listener" "Listener" {
   port                              = 443
   protocol                          = "HTTPS"
   routing_http_response_server_enabled = true
+  ssl_policy                        = "ELBSecurityPolicy-2016-08"
   default_action {
     order                           = 1
     target_group_arn                = aws_lb_target_group.TG.arn
@@ -543,15 +538,13 @@ resource "aws_lb_listener" "Listener" {
 
 resource "aws_lb_target_group" "TG" {
   name                              = "TG"
-  vpc_id                            = aws_vpc.VPCeks.id
-  connection_termination            = false
+  vpc_id                            = aws_vpc.BasicEKS.id
   deregistration_delay              = "300"
   ip_address_type                   = "ipv4"
   load_balancing_algorithm_type     = "round_robin"
   port                              = 8000
   protocol                          = "HTTP"
   protocol_version                  = "HTTP1"
-  proxy_protocol_v2                 = false
   slow_start                        = 0
   target_type                       = "ip"
   health_check {
@@ -569,6 +562,53 @@ resource "aws_lb_target_group" "TG" {
     Name = "TG"
     State = "stateeks"
     Struct8User = "Ricardo"
+  }
+}
+
+
+
+
+### CATEGORY: STORAGE ###
+
+resource "aws_s3_bucket" "my-bucket1" {
+  bucket                            = "my-bucket"
+  force_destroy                     = false
+  object_lock_enabled               = false
+  tags                              = {
+    Name = "my-bucket1"
+    State = "stateeks"
+    Struct8User = "Ricardo"
+  }
+}
+
+resource "aws_s3_bucket_ownership_controls" "my-bucket1_controls" {
+  bucket                            = aws_s3_bucket.my-bucket1.id
+  rule {
+    object_ownership                = "BucketOwnerEnforced"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "my-bucket1_block" {
+  block_public_acls                 = true
+  block_public_policy               = true
+  bucket                            = aws_s3_bucket.my-bucket1.id
+  ignore_public_acls                = true
+  restrict_public_buckets           = true
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "my-bucket1_configuration" {
+  bucket                            = aws_s3_bucket.my-bucket1.id
+  expected_bucket_owner             = data.aws_caller_identity.current.account_id
+  rule {
+    bucket_key_enabled              = true
+  }
+}
+
+resource "aws_s3_bucket_versioning" "my-bucket1_versioning" {
+  bucket                            = aws_s3_bucket.my-bucket1.id
+  versioning_configuration {
+    mfa_delete                      = "Disabled"
+    status                          = "Suspended"
   }
 }
 
@@ -608,24 +648,19 @@ resource "aws_eks_addon" "kube_proxy_ekstest1" {
 resource "aws_eks_addon" "vpc_cni_ekstest1" {
   addon_name                        = "vpc-cni"
   cluster_name                      = aws_eks_cluster.ekstest1.name
-  configuration_values              = jsonencode({"env":{"ENABLE_PREFIX_DELEGATION":"true", "WARM_PREFIX_TARGET":"1"}})
+  configuration_values              = jsonencode({"env": {"ENABLE_PREFIX_DELEGATION": "true", "WARM_PREFIX_TARGET": "1"}, "enableNetworkPolicy": "true"})
   resolve_conflicts_on_create       = "OVERWRITE"
   resolve_conflicts_on_update       = "OVERWRITE"
   depends_on                        = [aws_eks_node_group.NodeGroup]
 }
 
 resource "aws_eks_cluster" "ekstest1" {
-  version                           = "1.33"
   name                              = "ekstest1"
   bootstrap_self_managed_addons     = true
   deletion_protection               = false
   enabled_cluster_log_types         = ["api"]
   force_update_version              = false
   role_arn                          = aws_iam_role.role_eks_ekstest1.arn
-  access_config {
-    authentication_mode             = "API_AND_CONFIG_MAP"
-    bootstrap_cluster_creator_admin_permissions = true
-  }
   tags                              = {
     Name = "ekstest1"
     State = "stateeks"
@@ -637,14 +672,14 @@ resource "aws_eks_cluster" "ekstest1" {
     public_access_cidrs             = ["0.0.0.0/0"]
     subnet_ids                      = [aws_subnet.Subnet15.id, aws_subnet.Subnet16.id]
   }
-  depends_on                        = [aws_iam_role_policy_attachment.attach_AmazonEKSClusterPolicy_to_ekstest1]
+  depends_on                        = [aws_iam_role_policy_attachment.AmazonEKSClusterPolicy_to_ekstest1_attach]
 }
 
 resource "aws_eks_node_group" "NodeGroup" {
   cluster_name                      = aws_eks_cluster.ekstest1.name
   node_group_name                   = "NodeGroup"
   capacity_type                     = "SPOT"
-  instance_types                    = ["t3.medium", "t3a.medium"]
+  instance_types                    = ["t3.medium"]
   node_role_arn                     = aws_iam_role.role_eksng_NodeGroup.arn
   subnet_ids                        = [aws_subnet.Subnet17.id, aws_subnet.Subnet16.id]
   launch_template {
@@ -654,14 +689,14 @@ resource "aws_eks_node_group" "NodeGroup" {
   scaling_config {
     desired_size                    = 2
     max_size                        = 2
-    min_size                        = 1
+    min_size                        = 2
   }
   tags                              = {
     Name = "NodeGroup"
     State = "stateeks"
     Struct8User = "Ricardo"
   }
-  depends_on                        = [aws_iam_role_policy_attachment.attach_AmazonEKSWorkerNodePolicy_to_NodeGroup, aws_iam_role_policy_attachment.attach_AmazonEKS_CNI_Policy_to_NodeGroup, aws_iam_role_policy_attachment.attach_AmazonEC2ContainerRegistryReadOnly_to_NodeGroup]
+  depends_on                        = [aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy_to_NodeGroup_attach, aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy_to_NodeGroup_attach, aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly_to_NodeGroup_attach]
 }
 
 
@@ -692,11 +727,11 @@ resource "helm_release" "aws_lbc_albeks" {
   }
   set {
     name                            = "region"
-    value                           = data.aws_region.current.name
+    value                           = data.aws_region.current.region
   }
   set {
     name                            = "vpcId"
-    value                           = aws_vpc.VPCeks.id
+    value                           = aws_vpc.BasicEKS.id
   }
   depends_on                        = [aws_iam_role_policy_attachment.role_lbc_albeks_attach, aws_eks_node_group.NodeGroup]
 }
