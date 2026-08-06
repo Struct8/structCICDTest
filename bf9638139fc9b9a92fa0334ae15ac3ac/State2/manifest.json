@@ -1,7 +1,19 @@
 {
-  "external_repositories": [],
+  "external_repositories": [
+    {
+      "repo_name": "CloudMan",
+      "org": "Struct8",
+      "branch": "main",
+      "target_dir": ".external_modules/CloudMan",
+      "folders": [
+        "Cloudflare/Workers"
+      ]
+    }
+  ],
   "action": "destroy",
-  "trigger_id": "1784813876168",
+  "trigger_id": "1786027199376",
+  "triggered_by": "rmay struct",
+  "engine_ref": "devlocal",
   "backend_global_config": {
     "provider": "aws",
     "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
