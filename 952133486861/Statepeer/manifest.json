@@ -1,7 +1,10 @@
 {
   "external_repositories": [],
-  "action": "apply",
-  "trigger_id": "1785191736113",
+  "action": "destroy",
+  "trigger_id": "1792322009416",
+  "triggered_by": "rmay struct",
+  "engine_ref": "dev",
+  "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
   "backend_global_config": {
     "provider": "aws",
     "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
