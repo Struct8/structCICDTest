@@ -1,8 +1,8 @@
 {
   "external_repositories": [],
-  "action": "destroy",
-  "trigger_id": "1792322142554",
-  "triggered_by": "rmay struct",
+  "action": "plan",
+  "trigger_id": "1793127200000",
+  "triggered_by": "Claude (test of section 8: repository IDs in the trust)",
   "engine_ref": "dev",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
   "backend_global_config": {
