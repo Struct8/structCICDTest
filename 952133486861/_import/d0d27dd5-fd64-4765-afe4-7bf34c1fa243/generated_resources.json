@@ -1,0 +1,2777 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.5.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_iam_policy.lambda_function_presign_st_s3-presigned-upload",
+          "mode": "managed",
+          "type": "aws_iam_policy",
+          "name": "lambda_function_presign_st_s3-presigned-upload",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload",
+            "attachment_count": 1,
+            "description": "Access Policy for presign",
+            "id": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload",
+            "name": "lambda_function_presign_st_s3-presigned-upload",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"s3:PutObject\",\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an/*\",\"Sid\":\"PresignedObjectAccess\"}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "ANPA53L4UBEGSBXHW4GAW",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.presign_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "presign_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/presign_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T13:06:59Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "presign_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload"
+            ],
+            "max_session_duration": 3600,
+            "name": "presign_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "presign_role",
+              "State": "s3-presigned-upload",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "presign_role",
+              "State": "s3-presigned-upload",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEG77NE3KUEG"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_lambda_function.presign",
+          "mode": "managed",
+          "type": "aws_lambda_function",
+          "name": "presign",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "architectures": [
+              "arm64"
+            ],
+            "arn": "arn:aws:lambda:us-west-2:952133486861:function:presign",
+            "code_sha256": "hvuf4V+bCFo6pDbojHM/HbjQ5GY+fl9irB056Dj4I/M=",
+            "code_signing_config_arn": "",
+            "dead_letter_config": [],
+            "description": "Presigned-URL generator. nodejs22.x arm64, 128MB",
+            "environment": [
+              {
+                "variables": {
+                  "ACCOUNT": "952133486861",
+                  "AWS_LAMBDA_FUNCTION_URL_NAME_0": "presign-url1",
+                  "AWS_S3_BUCKET_NAME_0": "s3-presign-uploads-952133486861-us-west-2-an",
+                  "BUCKET_NAME": "s3-presign-uploads-952133486861-us-west-2-an",
+                  "NAME": "presign",
+                  "REGION": "us-west-2"
+                }
+              }
+            ],
+            "ephemeral_storage": [
+              {
+                "size": 512
+              }
+            ],
+            "file_system_config": [],
+            "filename": null,
+            "function_name": "presign",
+            "handler": "index.handler",
+            "id": "presign",
+            "image_config": [],
+            "image_uri": "",
+            "invoke_arn": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:952133486861:function:presign/invocations",
+            "kms_key_arn": "",
+            "last_modified": "2026-10-29T13:07:09.292+0000",
+            "layers": [],
+            "logging_config": [
+              {
+                "application_log_level": "",
+                "log_format": "Text",
+                "log_group": "/aws/lambda/presign",
+                "system_log_level": ""
+              }
+            ],
+            "memory_size": 128,
+            "package_type": "Zip",
+            "publish": null,
+            "qualified_arn": "arn:aws:lambda:us-west-2:952133486861:function:presign:$LATEST",
+            "qualified_invoke_arn": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:952133486861:function:presign:$LATEST/invocations",
+            "replace_security_groups_on_destroy": null,
+            "replacement_security_group_ids": null,
+            "reserved_concurrent_executions": -1,
+            "role": "arn:aws:iam::952133486861:role/presign_role",
+            "runtime": "nodejs22.x",
+            "s3_bucket": null,
+            "s3_key": null,
+            "s3_object_version": null,
+            "signing_job_arn": "",
+            "signing_profile_version_arn": "",
+            "skip_destroy": false,
+            "snap_start": [],
+            "source_code_hash": "",
+            "source_code_size": 1231,
+            "tags": {
+              "Name": "presign",
+              "State": "s3-presigned-upload",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "presign",
+              "State": "s3-presigned-upload",
+              "Struct8Creator": "rmay struct"
+            },
+            "timeout": 10,
+            "timeouts": null,
+            "tracing_config": [
+              {
+                "mode": "PassThrough"
+              }
+            ],
+            "version": "$LATEST",
+            "vpc_config": []
+          },
+          "sensitive_values": {
+            "architectures": [
+              false
+            ],
+            "dead_letter_config": [],
+            "environment": [
+              {
+                "variables": {}
+              }
+            ],
+            "ephemeral_storage": [
+              {}
+            ],
+            "file_system_config": [],
+            "image_config": [],
+            "layers": [],
+            "logging_config": [
+              {}
+            ],
+            "snap_start": [],
+            "tags": {},
+            "tags_all": {},
+            "tracing_config": [
+              {}
+            ],
+            "vpc_config": []
+          }
+        },
+        {
+          "address": "aws_lambda_function_recursion_config.presign_recursion_config",
+          "mode": "managed",
+          "type": "aws_lambda_function_recursion_config",
+          "name": "presign_recursion_config",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "function_name": "presign",
+            "recursive_loop": "Terminate"
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_lambda_function_url.presign",
+          "mode": "managed",
+          "type": "aws_lambda_function_url",
+          "name": "presign",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "authorization_type": "NONE",
+            "cors": [
+              {
+                "allow_credentials": false,
+                "allow_headers": [
+                  "content-type"
+                ],
+                "allow_methods": [
+                  "GET",
+                  "POST"
+                ],
+                "allow_origins": [
+                  "*"
+                ],
+                "expose_headers": [],
+                "max_age": 300
+              }
+            ],
+            "function_arn": "arn:aws:lambda:us-west-2:952133486861:function:presign",
+            "function_name": "presign",
+            "function_url": "https://3bvlsgq3ztup4xfngk7ubptwxe0ahdii.lambda-url.us-west-2.on.aws/",
+            "id": "presign",
+            "invoke_mode": "BUFFERED",
+            "qualifier": "",
+            "timeouts": null,
+            "url_id": "3bvlsgq3ztup4xfngk7ubptwxe0ahdii"
+          },
+          "sensitive_values": {
+            "cors": [
+              {
+                "allow_headers": [
+                  false
+                ],
+                "allow_methods": [
+                  false,
+                  false
+                ],
+                "allow_origins": [
+                  false
+                ],
+                "expose_headers": []
+              }
+            ]
+          }
+        },
+        {
+          "address": "aws_lambda_permission.presign_perm_FunctionURLAllowInvokeAction",
+          "mode": "managed",
+          "type": "aws_lambda_permission",
+          "name": "presign_perm_FunctionURLAllowInvokeAction",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "action": "lambda:InvokeFunction",
+            "event_source_token": null,
+            "function_name": "presign",
+            "function_url_auth_type": null,
+            "id": "FunctionURLAllowInvokeAction",
+            "principal": "*",
+            "principal_org_id": null,
+            "qualifier": "",
+            "source_account": null,
+            "source_arn": null,
+            "statement_id": "FunctionURLAllowInvokeAction",
+            "statement_id_prefix": ""
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_lambda_permission.presign_perm_FunctionURLAllowPublicAccess",
+          "mode": "managed",
+          "type": "aws_lambda_permission",
+          "name": "presign_perm_FunctionURLAllowPublicAccess",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "action": "lambda:InvokeFunctionUrl",
+            "event_source_token": "",
+            "function_name": "presign",
+            "function_url_auth_type": "NONE",
+            "id": "FunctionURLAllowPublicAccess",
+            "principal": "*",
+            "principal_org_id": "",
+            "qualifier": "",
+            "source_account": "",
+            "source_arn": null,
+            "statement_id": "FunctionURLAllowPublicAccess",
+            "statement_id_prefix": ""
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_lambda_permission.presign_perm_perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+          "mode": "managed",
+          "type": "aws_lambda_permission",
+          "name": "presign_perm_perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "action": "lambda:InvokeFunction",
+            "event_source_token": null,
+            "function_name": "presign",
+            "function_url_auth_type": null,
+            "id": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+            "principal": "*",
+            "principal_org_id": null,
+            "qualifier": "",
+            "source_account": null,
+            "source_arn": null,
+            "statement_id": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+            "statement_id_prefix": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke"
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_lambda_permission.presign_perm_perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+          "mode": "managed",
+          "type": "aws_lambda_permission",
+          "name": "presign_perm_perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "action": "lambda:InvokeFunctionUrl",
+            "event_source_token": "",
+            "function_name": "presign",
+            "function_url_auth_type": "NONE",
+            "id": "perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+            "principal": "*",
+            "principal_org_id": "",
+            "qualifier": "",
+            "source_account": "",
+            "source_arn": null,
+            "statement_id": "perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+            "statement_id_prefix": "perm_aws_lambda_function_url_presign-url1_to_presign"
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_s3_bucket.uploads",
+          "mode": "managed",
+          "type": "aws_s3_bucket",
+          "name": "uploads",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "acceleration_status": "",
+            "acl": null,
+            "arn": "arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an",
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "bucket_domain_name": "s3-presign-uploads-952133486861-us-west-2-an.s3.amazonaws.com",
+            "bucket_prefix": "",
+            "bucket_regional_domain_name": "s3-presign-uploads-952133486861-us-west-2-an.s3.us-west-2.amazonaws.com",
+            "cors_rule": [
+              {
+                "allowed_headers": [
+                  "*"
+                ],
+                "allowed_methods": [
+                  "GET",
+                  "PUT"
+                ],
+                "allowed_origins": [
+                  "*"
+                ],
+                "expose_headers": [
+                  "ETag"
+                ],
+                "max_age_seconds": 300
+              }
+            ],
+            "force_destroy": null,
+            "grant": [
+              {
+                "id": "e8a9e96ab6e351440182fde73c2878d7e03a1a51200d3cab16f4451f9cafe25c",
+                "permissions": [
+                  "FULL_CONTROL"
+                ],
+                "type": "CanonicalUser",
+                "uri": ""
+              }
+            ],
+            "hosted_zone_id": "Z3BJ6K6RIION7M",
+            "id": "s3-presign-uploads-952133486861-us-west-2-an",
+            "lifecycle_rule": [],
+            "logging": [],
+            "object_lock_configuration": [],
+            "object_lock_enabled": false,
+            "policy": "",
+            "region": "us-west-2",
+            "replication_configuration": [],
+            "request_payer": "BucketOwner",
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {
+                        "kms_master_key_id": "",
+                        "sse_algorithm": "AES256"
+                      }
+                    ],
+                    "bucket_key_enabled": true
+                  }
+                ]
+              }
+            ],
+            "tags": {
+              "Name": "uploads",
+              "State": "s3-presigned-upload",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "uploads",
+              "State": "s3-presigned-upload",
+              "Struct8Creator": "rmay struct"
+            },
+            "timeouts": null,
+            "versioning": [
+              {
+                "enabled": true,
+                "mfa_delete": false
+              }
+            ],
+            "website": [],
+            "website_domain": null,
+            "website_endpoint": null
+          },
+          "sensitive_values": {
+            "cors_rule": [
+              {
+                "allowed_headers": [
+                  false
+                ],
+                "allowed_methods": [
+                  false,
+                  false
+                ],
+                "allowed_origins": [
+                  false
+                ],
+                "expose_headers": [
+                  false
+                ]
+              }
+            ],
+            "grant": [
+              {
+                "permissions": [
+                  false
+                ]
+              }
+            ],
+            "lifecycle_rule": [],
+            "logging": [],
+            "object_lock_configuration": [],
+            "replication_configuration": [],
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {}
+                    ]
+                  }
+                ]
+              }
+            ],
+            "tags": {},
+            "tags_all": {},
+            "versioning": [
+              {}
+            ],
+            "website": []
+          }
+        },
+        {
+          "address": "aws_s3_bucket_accelerate_configuration.uploads_accelerate_configuration",
+          "mode": "managed",
+          "type": "aws_s3_bucket_accelerate_configuration",
+          "name": "uploads_accelerate_configuration",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "s3-presign-uploads-952133486861-us-west-2-an",
+            "status": ""
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_s3_bucket_cors_configuration.uploads_cors_configuration",
+          "mode": "managed",
+          "type": "aws_s3_bucket_cors_configuration",
+          "name": "uploads_cors_configuration",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "cors_rule": [
+              {
+                "allowed_headers": [
+                  "*"
+                ],
+                "allowed_methods": [
+                  "GET",
+                  "PUT"
+                ],
+                "allowed_origins": [
+                  "*"
+                ],
+                "expose_headers": [
+                  "ETag"
+                ],
+                "id": "",
+                "max_age_seconds": 300
+              }
+            ],
+            "expected_bucket_owner": "",
+            "id": "s3-presign-uploads-952133486861-us-west-2-an"
+          },
+          "sensitive_values": {
+            "cors_rule": [
+              {
+                "allowed_headers": [
+                  false
+                ],
+                "allowed_methods": [
+                  false,
+                  false
+                ],
+                "allowed_origins": [
+                  false
+                ],
+                "expose_headers": [
+                  false
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "address": "aws_s3_bucket_notification.uploads_notification",
+          "mode": "managed",
+          "type": "aws_s3_bucket_notification",
+          "name": "uploads_notification",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "eventbridge": false,
+            "id": "s3-presign-uploads-952133486861-us-west-2-an",
+            "lambda_function": [],
+            "queue": [],
+            "topic": []
+          },
+          "sensitive_values": {
+            "lambda_function": [],
+            "queue": [],
+            "topic": []
+          }
+        },
+        {
+          "address": "aws_s3_bucket_ownership_controls.uploads_ownership_controls",
+          "mode": "managed",
+          "type": "aws_s3_bucket_ownership_controls",
+          "name": "uploads_ownership_controls",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "id": "s3-presign-uploads-952133486861-us-west-2-an",
+            "rule": [
+              {
+                "object_ownership": "BucketOwnerEnforced"
+              }
+            ]
+          },
+          "sensitive_values": {
+            "rule": [
+              {}
+            ]
+          }
+        },
+        {
+          "address": "aws_s3_bucket_public_access_block.uploads_public_access_block",
+          "mode": "managed",
+          "type": "aws_s3_bucket_public_access_block",
+          "name": "uploads_public_access_block",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "block_public_acls": true,
+            "block_public_policy": true,
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "id": "s3-presign-uploads-952133486861-us-west-2-an",
+            "ignore_public_acls": true,
+            "restrict_public_buckets": true
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_s3_bucket_request_payment_configuration.uploads_request_payment_configuration",
+          "mode": "managed",
+          "type": "aws_s3_bucket_request_payment_configuration",
+          "name": "uploads_request_payment_configuration",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "s3-presign-uploads-952133486861-us-west-2-an",
+            "payer": "BucketOwner"
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_s3_bucket_server_side_encryption_configuration.uploads_server_side_encryption_configuration",
+          "mode": "managed",
+          "type": "aws_s3_bucket_server_side_encryption_configuration",
+          "name": "uploads_server_side_encryption_configuration",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "s3-presign-uploads-952133486861-us-west-2-an",
+            "rule": [
+              {
+                "apply_server_side_encryption_by_default": [
+                  {
+                    "kms_master_key_id": "",
+                    "sse_algorithm": "AES256"
+                  }
+                ],
+                "bucket_key_enabled": true
+              }
+            ]
+          },
+          "sensitive_values": {
+            "rule": [
+              {
+                "apply_server_side_encryption_by_default": [
+                  {}
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "address": "aws_s3_bucket_versioning.uploads_versioning",
+          "mode": "managed",
+          "type": "aws_s3_bucket_versioning",
+          "name": "uploads_versioning",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "s3-presign-uploads-952133486861-us-west-2-an",
+            "mfa": null,
+            "versioning_configuration": [
+              {
+                "mfa_delete": "Disabled",
+                "status": "Enabled"
+              }
+            ]
+          },
+          "sensitive_values": {
+            "versioning_configuration": [
+              {}
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_iam_policy.lambda_function_presign_st_s3-presigned-upload",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "lambda_function_presign_st_s3-presigned-upload",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload",
+          "attachment_count": 1,
+          "description": "Access Policy for presign",
+          "id": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload",
+          "name": "lambda_function_presign_st_s3-presigned-upload",
+          "name_prefix": "",
+          "path": "/",
+          "policy": "{\"Statement\":[{\"Action\":[\"s3:PutObject\",\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an/*\",\"Sid\":\"PresignedObjectAccess\"}],\"Version\":\"2012-10-17\"}",
+          "policy_id": "ANPA53L4UBEGSBXHW4GAW",
+          "tags": {},
+          "tags_all": {}
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload",
+          "attachment_count": 1,
+          "description": "Access Policy for presign",
+          "id": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload",
+          "name": "lambda_function_presign_st_s3-presigned-upload",
+          "name_prefix": "",
+          "path": "/",
+          "policy": "{\"Statement\":[{\"Action\":[\"s3:PutObject\",\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an/*\",\"Sid\":\"PresignedObjectAccess\"}],\"Version\":\"2012-10-17\"}",
+          "policy_id": "ANPA53L4UBEGSBXHW4GAW",
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload"
+        },
+        "generated_config": "resource \"aws_iam_policy\" \"lambda_function_presign_st_s3-presigned-upload\" {\n  description = \"Access Policy for presign\"\n  name        = \"lambda_function_presign_st_s3-presigned-upload\"\n  name_prefix = null\n  path        = \"/\"\n  policy      = \"{\\\"Statement\\\":[{\\\"Action\\\":[\\\"s3:PutObject\\\",\\\"s3:GetObject\\\"],\\\"Effect\\\":\\\"Allow\\\",\\\"Resource\\\":\\\"arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an/*\\\",\\\"Sid\\\":\\\"PresignedObjectAccess\\\"}],\\\"Version\\\":\\\"2012-10-17\\\"}\"\n  tags        = {}\n  tags_all    = {}\n}"
+      }
+    },
+    {
+      "address": "aws_iam_role.presign_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "presign_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/presign_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T13:06:59Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "presign_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload"
+          ],
+          "max_session_duration": 3600,
+          "name": "presign_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "presign_role",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "presign_role",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEG77NE3KUEG"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/presign_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T13:06:59Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "presign_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload"
+          ],
+          "max_session_duration": 3600,
+          "name": "presign_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "presign_role",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "presign_role",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEG77NE3KUEG"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "presign_role"
+        },
+        "generated_config": "resource \"aws_iam_role\" \"presign_role\" {\n  assume_role_policy    = \"{\\\"Statement\\\":[{\\\"Action\\\":\\\"sts:AssumeRole\\\",\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":{\\\"Service\\\":\\\"lambda.amazonaws.com\\\"}}],\\\"Version\\\":\\\"2012-10-17\\\"}\"\n  description           = null\n  force_detach_policies = false\n  max_session_duration  = 3600\n  name                  = \"presign_role\"\n  name_prefix           = null\n  path                  = \"/\"\n  permissions_boundary  = null\n  tags = {\n    Name           = \"presign_role\"\n    State          = \"s3-presigned-upload\"\n    Struct8Creator = \"rmay struct\"\n  }\n  tags_all = {\n    Name           = \"presign_role\"\n    State          = \"s3-presigned-upload\"\n    Struct8Creator = \"rmay struct\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_lambda_function.presign",
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "presign",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "architectures": [
+            "arm64"
+          ],
+          "arn": "arn:aws:lambda:us-west-2:952133486861:function:presign",
+          "code_sha256": "hvuf4V+bCFo6pDbojHM/HbjQ5GY+fl9irB056Dj4I/M=",
+          "code_signing_config_arn": "",
+          "dead_letter_config": [],
+          "description": "Presigned-URL generator. nodejs22.x arm64, 128MB",
+          "environment": [
+            {
+              "variables": {
+                "ACCOUNT": "952133486861",
+                "AWS_LAMBDA_FUNCTION_URL_NAME_0": "presign-url1",
+                "AWS_S3_BUCKET_NAME_0": "s3-presign-uploads-952133486861-us-west-2-an",
+                "BUCKET_NAME": "s3-presign-uploads-952133486861-us-west-2-an",
+                "NAME": "presign",
+                "REGION": "us-west-2"
+              }
+            }
+          ],
+          "ephemeral_storage": [
+            {
+              "size": 512
+            }
+          ],
+          "file_system_config": [],
+          "filename": null,
+          "function_name": "presign",
+          "handler": "index.handler",
+          "id": "presign",
+          "image_config": [],
+          "image_uri": "",
+          "invoke_arn": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:952133486861:function:presign/invocations",
+          "kms_key_arn": "",
+          "last_modified": "2026-10-29T13:07:09.292+0000",
+          "layers": [],
+          "logging_config": [
+            {
+              "application_log_level": "",
+              "log_format": "Text",
+              "log_group": "/aws/lambda/presign",
+              "system_log_level": ""
+            }
+          ],
+          "memory_size": 128,
+          "package_type": "Zip",
+          "publish": null,
+          "qualified_arn": "arn:aws:lambda:us-west-2:952133486861:function:presign:$LATEST",
+          "qualified_invoke_arn": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:952133486861:function:presign:$LATEST/invocations",
+          "replace_security_groups_on_destroy": null,
+          "replacement_security_group_ids": null,
+          "reserved_concurrent_executions": -1,
+          "role": "arn:aws:iam::952133486861:role/presign_role",
+          "runtime": "nodejs22.x",
+          "s3_bucket": null,
+          "s3_key": null,
+          "s3_object_version": null,
+          "signing_job_arn": "",
+          "signing_profile_version_arn": "",
+          "skip_destroy": false,
+          "snap_start": [],
+          "source_code_hash": "",
+          "source_code_size": 1231,
+          "tags": {
+            "Name": "presign",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "presign",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeout": 10,
+          "timeouts": null,
+          "tracing_config": [
+            {
+              "mode": "PassThrough"
+            }
+          ],
+          "version": "$LATEST",
+          "vpc_config": []
+        },
+        "after": {
+          "architectures": [
+            "arm64"
+          ],
+          "arn": "arn:aws:lambda:us-west-2:952133486861:function:presign",
+          "code_sha256": "hvuf4V+bCFo6pDbojHM/HbjQ5GY+fl9irB056Dj4I/M=",
+          "code_signing_config_arn": "",
+          "dead_letter_config": [],
+          "description": "Presigned-URL generator. nodejs22.x arm64, 128MB",
+          "environment": [
+            {
+              "variables": {
+                "ACCOUNT": "952133486861",
+                "AWS_LAMBDA_FUNCTION_URL_NAME_0": "presign-url1",
+                "AWS_S3_BUCKET_NAME_0": "s3-presign-uploads-952133486861-us-west-2-an",
+                "BUCKET_NAME": "s3-presign-uploads-952133486861-us-west-2-an",
+                "NAME": "presign",
+                "REGION": "us-west-2"
+              }
+            }
+          ],
+          "ephemeral_storage": [
+            {
+              "size": 512
+            }
+          ],
+          "file_system_config": [],
+          "filename": null,
+          "function_name": "presign",
+          "handler": "index.handler",
+          "id": "presign",
+          "image_config": [],
+          "image_uri": "",
+          "invoke_arn": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:952133486861:function:presign/invocations",
+          "kms_key_arn": "",
+          "last_modified": "2026-10-29T13:07:09.292+0000",
+          "layers": [],
+          "logging_config": [
+            {
+              "application_log_level": "",
+              "log_format": "Text",
+              "log_group": "/aws/lambda/presign",
+              "system_log_level": ""
+            }
+          ],
+          "memory_size": 128,
+          "package_type": "Zip",
+          "publish": null,
+          "qualified_arn": "arn:aws:lambda:us-west-2:952133486861:function:presign:$LATEST",
+          "qualified_invoke_arn": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:952133486861:function:presign:$LATEST/invocations",
+          "replace_security_groups_on_destroy": null,
+          "replacement_security_group_ids": null,
+          "reserved_concurrent_executions": -1,
+          "role": "arn:aws:iam::952133486861:role/presign_role",
+          "runtime": "nodejs22.x",
+          "s3_bucket": null,
+          "s3_key": null,
+          "s3_object_version": null,
+          "signing_job_arn": "",
+          "signing_profile_version_arn": "",
+          "skip_destroy": false,
+          "snap_start": [],
+          "source_code_hash": "",
+          "source_code_size": 1231,
+          "tags": {
+            "Name": "presign",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "presign",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeout": 10,
+          "timeouts": null,
+          "tracing_config": [
+            {
+              "mode": "PassThrough"
+            }
+          ],
+          "version": "$LATEST",
+          "vpc_config": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "architectures": [
+            false
+          ],
+          "dead_letter_config": [],
+          "environment": [
+            {
+              "variables": {}
+            }
+          ],
+          "ephemeral_storage": [
+            {}
+          ],
+          "file_system_config": [],
+          "image_config": [],
+          "layers": [],
+          "logging_config": [
+            {}
+          ],
+          "snap_start": [],
+          "tags": {},
+          "tags_all": {},
+          "tracing_config": [
+            {}
+          ],
+          "vpc_config": []
+        },
+        "after_sensitive": {
+          "architectures": [
+            false
+          ],
+          "dead_letter_config": [],
+          "environment": [
+            {
+              "variables": {}
+            }
+          ],
+          "ephemeral_storage": [
+            {}
+          ],
+          "file_system_config": [],
+          "image_config": [],
+          "layers": [],
+          "logging_config": [
+            {}
+          ],
+          "snap_start": [],
+          "tags": {},
+          "tags_all": {},
+          "tracing_config": [
+            {}
+          ],
+          "vpc_config": []
+        },
+        "generated_config": "resource \"aws_lambda_function\" \"presign\" {\n  architectures                      = [\"arm64\"]\n  code_signing_config_arn            = null\n  description                        = \"Presigned-URL generator. nodejs22.x arm64, 128MB\"\n  filename                           = null\n  function_name                      = \"presign\"\n  handler                            = \"index.handler\"\n  image_uri                          = null\n  kms_key_arn                        = null\n  layers                             = []\n  memory_size                        = 128\n  package_type                       = \"Zip\"\n  publish                            = null\n  replace_security_groups_on_destroy = null\n  replacement_security_group_ids     = null\n  reserved_concurrent_executions     = -1\n  role                               = \"arn:aws:iam::952133486861:role/presign_role\"\n  runtime                            = \"nodejs22.x\"\n  s3_bucket                          = null\n  s3_key                             = null\n  s3_object_version                  = null\n  skip_destroy                       = false\n  source_code_hash                   = null\n  tags = {\n    Name           = \"presign\"\n    State          = \"s3-presigned-upload\"\n    Struct8Creator = \"rmay struct\"\n  }\n  tags_all = {\n    Name           = \"presign\"\n    State          = \"s3-presigned-upload\"\n    Struct8Creator = \"rmay struct\"\n  }\n  timeout = 10\n  environment {\n    variables = {\n      ACCOUNT                        = \"952133486861\"\n      AWS_LAMBDA_FUNCTION_URL_NAME_0 = \"presign-url1\"\n      AWS_S3_BUCKET_NAME_0           = \"s3-presign-uploads-952133486861-us-west-2-an\"\n      BUCKET_NAME                    = \"s3-presign-uploads-952133486861-us-west-2-an\"\n      NAME                           = \"presign\"\n      REGION                         = \"us-west-2\"\n    }\n  }\n  ephemeral_storage {\n    size = 512\n  }\n  logging_config {\n    application_log_level = null\n    log_format            = \"Text\"\n    log_group             = \"/aws/lambda/presign\"\n    system_log_level      = null\n  }\n  tracing_config {\n    mode = \"PassThrough\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_lambda_function_recursion_config.presign_recursion_config",
+      "mode": "managed",
+      "type": "aws_lambda_function_recursion_config",
+      "name": "presign_recursion_config",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "function_name": "presign",
+          "recursive_loop": "Terminate"
+        },
+        "after": {
+          "function_name": "presign",
+          "recursive_loop": "Terminate"
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "presign"
+        },
+        "generated_config": "resource \"aws_lambda_function_recursion_config\" \"presign_recursion_config\" {\n  function_name  = \"presign\"\n  recursive_loop = \"Terminate\"\n}"
+      }
+    },
+    {
+      "address": "aws_lambda_function_url.presign",
+      "mode": "managed",
+      "type": "aws_lambda_function_url",
+      "name": "presign",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "authorization_type": "NONE",
+          "cors": [
+            {
+              "allow_credentials": false,
+              "allow_headers": [
+                "content-type"
+              ],
+              "allow_methods": [
+                "GET",
+                "POST"
+              ],
+              "allow_origins": [
+                "*"
+              ],
+              "expose_headers": [],
+              "max_age": 300
+            }
+          ],
+          "function_arn": "arn:aws:lambda:us-west-2:952133486861:function:presign",
+          "function_name": "presign",
+          "function_url": "https://3bvlsgq3ztup4xfngk7ubptwxe0ahdii.lambda-url.us-west-2.on.aws/",
+          "id": "presign",
+          "invoke_mode": "BUFFERED",
+          "qualifier": "",
+          "timeouts": null,
+          "url_id": "3bvlsgq3ztup4xfngk7ubptwxe0ahdii"
+        },
+        "after": {
+          "authorization_type": "NONE",
+          "cors": [
+            {
+              "allow_credentials": false,
+              "allow_headers": [
+                "content-type"
+              ],
+              "allow_methods": [
+                "GET",
+                "POST"
+              ],
+              "allow_origins": [
+                "*"
+              ],
+              "expose_headers": [],
+              "max_age": 300
+            }
+          ],
+          "function_arn": "arn:aws:lambda:us-west-2:952133486861:function:presign",
+          "function_name": "presign",
+          "function_url": "https://3bvlsgq3ztup4xfngk7ubptwxe0ahdii.lambda-url.us-west-2.on.aws/",
+          "id": "presign",
+          "invoke_mode": "BUFFERED",
+          "qualifier": "",
+          "timeouts": null,
+          "url_id": "3bvlsgq3ztup4xfngk7ubptwxe0ahdii"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "cors": [
+            {
+              "allow_headers": [
+                false
+              ],
+              "allow_methods": [
+                false,
+                false
+              ],
+              "allow_origins": [
+                false
+              ],
+              "expose_headers": []
+            }
+          ]
+        },
+        "after_sensitive": {
+          "cors": [
+            {
+              "allow_headers": [
+                false
+              ],
+              "allow_methods": [
+                false,
+                false
+              ],
+              "allow_origins": [
+                false
+              ],
+              "expose_headers": []
+            }
+          ]
+        },
+        "importing": {
+          "id": "presign"
+        },
+        "generated_config": "resource \"aws_lambda_function_url\" \"presign\" {\n  authorization_type = \"NONE\"\n  function_name      = \"presign\"\n  invoke_mode        = \"BUFFERED\"\n  qualifier          = null\n  cors {\n    allow_credentials = false\n    allow_headers     = [\"content-type\"]\n    allow_methods     = [\"GET\", \"POST\"]\n    allow_origins     = [\"*\"]\n    expose_headers    = []\n    max_age           = 300\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_lambda_permission.presign_perm_FunctionURLAllowInvokeAction",
+      "mode": "managed",
+      "type": "aws_lambda_permission",
+      "name": "presign_perm_FunctionURLAllowInvokeAction",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "action": "lambda:InvokeFunction",
+          "event_source_token": null,
+          "function_name": "presign",
+          "function_url_auth_type": null,
+          "id": "FunctionURLAllowInvokeAction",
+          "principal": "*",
+          "principal_org_id": null,
+          "qualifier": "",
+          "source_account": null,
+          "source_arn": null,
+          "statement_id": "FunctionURLAllowInvokeAction",
+          "statement_id_prefix": ""
+        },
+        "after": {
+          "action": "lambda:InvokeFunction",
+          "event_source_token": null,
+          "function_name": "presign",
+          "function_url_auth_type": null,
+          "id": "FunctionURLAllowInvokeAction",
+          "principal": "*",
+          "principal_org_id": null,
+          "qualifier": "",
+          "source_account": null,
+          "source_arn": null,
+          "statement_id": "FunctionURLAllowInvokeAction",
+          "statement_id_prefix": ""
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "presign/FunctionURLAllowInvokeAction"
+        },
+        "generated_config": "resource \"aws_lambda_permission\" \"presign_perm_FunctionURLAllowInvokeAction\" {\n  action                 = \"lambda:InvokeFunction\"\n  event_source_token     = null\n  function_name          = \"presign\"\n  function_url_auth_type = null\n  principal              = \"*\"\n  principal_org_id       = null\n  qualifier              = null\n  source_account         = null\n  source_arn             = null\n  statement_id           = \"FunctionURLAllowInvokeAction\"\n  statement_id_prefix    = null\n}"
+      }
+    },
+    {
+      "address": "aws_lambda_permission.presign_perm_FunctionURLAllowPublicAccess",
+      "mode": "managed",
+      "type": "aws_lambda_permission",
+      "name": "presign_perm_FunctionURLAllowPublicAccess",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "action": "lambda:InvokeFunctionUrl",
+          "event_source_token": "",
+          "function_name": "presign",
+          "function_url_auth_type": "NONE",
+          "id": "FunctionURLAllowPublicAccess",
+          "principal": "*",
+          "principal_org_id": "",
+          "qualifier": "",
+          "source_account": "",
+          "source_arn": null,
+          "statement_id": "FunctionURLAllowPublicAccess",
+          "statement_id_prefix": ""
+        },
+        "after": {
+          "action": "lambda:InvokeFunctionUrl",
+          "event_source_token": "",
+          "function_name": "presign",
+          "function_url_auth_type": "NONE",
+          "id": "FunctionURLAllowPublicAccess",
+          "principal": "*",
+          "principal_org_id": "",
+          "qualifier": "",
+          "source_account": "",
+          "source_arn": null,
+          "statement_id": "FunctionURLAllowPublicAccess",
+          "statement_id_prefix": ""
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "presign/FunctionURLAllowPublicAccess"
+        },
+        "generated_config": "resource \"aws_lambda_permission\" \"presign_perm_FunctionURLAllowPublicAccess\" {\n  action                 = \"lambda:InvokeFunctionUrl\"\n  event_source_token     = null\n  function_name          = \"presign\"\n  function_url_auth_type = \"NONE\"\n  principal              = \"*\"\n  principal_org_id       = null\n  qualifier              = null\n  source_account         = null\n  source_arn             = null\n  statement_id           = \"FunctionURLAllowPublicAccess\"\n  statement_id_prefix    = null\n}"
+      }
+    },
+    {
+      "address": "aws_lambda_permission.presign_perm_perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+      "mode": "managed",
+      "type": "aws_lambda_permission",
+      "name": "presign_perm_perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "action": "lambda:InvokeFunction",
+          "event_source_token": null,
+          "function_name": "presign",
+          "function_url_auth_type": null,
+          "id": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+          "principal": "*",
+          "principal_org_id": null,
+          "qualifier": "",
+          "source_account": null,
+          "source_arn": null,
+          "statement_id": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+          "statement_id_prefix": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke"
+        },
+        "after": {
+          "action": "lambda:InvokeFunction",
+          "event_source_token": null,
+          "function_name": "presign",
+          "function_url_auth_type": null,
+          "id": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+          "principal": "*",
+          "principal_org_id": null,
+          "qualifier": "",
+          "source_account": null,
+          "source_arn": null,
+          "statement_id": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+          "statement_id_prefix": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke"
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "generated_config": "resource \"aws_lambda_permission\" \"presign_perm_perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff\" {\n  action                 = \"lambda:InvokeFunction\"\n  event_source_token     = null\n  function_name          = \"presign\"\n  function_url_auth_type = null\n  principal              = \"*\"\n  principal_org_id       = null\n  qualifier              = null\n  source_account         = null\n  source_arn             = null\n  statement_id           = \"perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff\"\n  statement_id_prefix    = \"perm_aws_lambda_function_url_presign-url1_to_presign_invoke\"\n}"
+      }
+    },
+    {
+      "address": "aws_lambda_permission.presign_perm_perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+      "mode": "managed",
+      "type": "aws_lambda_permission",
+      "name": "presign_perm_perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "action": "lambda:InvokeFunctionUrl",
+          "event_source_token": "",
+          "function_name": "presign",
+          "function_url_auth_type": "NONE",
+          "id": "perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+          "principal": "*",
+          "principal_org_id": "",
+          "qualifier": "",
+          "source_account": "",
+          "source_arn": null,
+          "statement_id": "perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+          "statement_id_prefix": "perm_aws_lambda_function_url_presign-url1_to_presign"
+        },
+        "after": {
+          "action": "lambda:InvokeFunctionUrl",
+          "event_source_token": "",
+          "function_name": "presign",
+          "function_url_auth_type": "NONE",
+          "id": "perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+          "principal": "*",
+          "principal_org_id": "",
+          "qualifier": "",
+          "source_account": "",
+          "source_arn": null,
+          "statement_id": "perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+          "statement_id_prefix": "perm_aws_lambda_function_url_presign-url1_to_presign"
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "generated_config": "resource \"aws_lambda_permission\" \"presign_perm_perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f\" {\n  action                 = \"lambda:InvokeFunctionUrl\"\n  event_source_token     = null\n  function_name          = \"presign\"\n  function_url_auth_type = \"NONE\"\n  principal              = \"*\"\n  principal_org_id       = null\n  qualifier              = null\n  source_account         = null\n  source_arn             = null\n  statement_id           = \"perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f\"\n  statement_id_prefix    = \"perm_aws_lambda_function_url_presign-url1_to_presign\"\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket.uploads",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "uploads",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "acceleration_status": "",
+          "acl": null,
+          "arn": "arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an",
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "bucket_domain_name": "s3-presign-uploads-952133486861-us-west-2-an.s3.amazonaws.com",
+          "bucket_prefix": "",
+          "bucket_regional_domain_name": "s3-presign-uploads-952133486861-us-west-2-an.s3.us-west-2.amazonaws.com",
+          "cors_rule": [
+            {
+              "allowed_headers": [
+                "*"
+              ],
+              "allowed_methods": [
+                "GET",
+                "PUT"
+              ],
+              "allowed_origins": [
+                "*"
+              ],
+              "expose_headers": [
+                "ETag"
+              ],
+              "max_age_seconds": 300
+            }
+          ],
+          "force_destroy": null,
+          "grant": [
+            {
+              "id": "e8a9e96ab6e351440182fde73c2878d7e03a1a51200d3cab16f4451f9cafe25c",
+              "permissions": [
+                "FULL_CONTROL"
+              ],
+              "type": "CanonicalUser",
+              "uri": ""
+            }
+          ],
+          "hosted_zone_id": "Z3BJ6K6RIION7M",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "object_lock_enabled": false,
+          "policy": "",
+          "region": "us-west-2",
+          "replication_configuration": [],
+          "request_payer": "BucketOwner",
+          "server_side_encryption_configuration": [
+            {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {
+                      "kms_master_key_id": "",
+                      "sse_algorithm": "AES256"
+                    }
+                  ],
+                  "bucket_key_enabled": true
+                }
+              ]
+            }
+          ],
+          "tags": {
+            "Name": "uploads",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "uploads",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "versioning": [
+            {
+              "enabled": true,
+              "mfa_delete": false
+            }
+          ],
+          "website": [],
+          "website_domain": null,
+          "website_endpoint": null
+        },
+        "after": {
+          "acceleration_status": "",
+          "acl": null,
+          "arn": "arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an",
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "bucket_domain_name": "s3-presign-uploads-952133486861-us-west-2-an.s3.amazonaws.com",
+          "bucket_prefix": "",
+          "bucket_regional_domain_name": "s3-presign-uploads-952133486861-us-west-2-an.s3.us-west-2.amazonaws.com",
+          "cors_rule": [
+            {
+              "allowed_headers": [
+                "*"
+              ],
+              "allowed_methods": [
+                "GET",
+                "PUT"
+              ],
+              "allowed_origins": [
+                "*"
+              ],
+              "expose_headers": [
+                "ETag"
+              ],
+              "max_age_seconds": 300
+            }
+          ],
+          "force_destroy": null,
+          "grant": [
+            {
+              "id": "e8a9e96ab6e351440182fde73c2878d7e03a1a51200d3cab16f4451f9cafe25c",
+              "permissions": [
+                "FULL_CONTROL"
+              ],
+              "type": "CanonicalUser",
+              "uri": ""
+            }
+          ],
+          "hosted_zone_id": "Z3BJ6K6RIION7M",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "object_lock_enabled": false,
+          "policy": "",
+          "region": "us-west-2",
+          "replication_configuration": [],
+          "request_payer": "BucketOwner",
+          "server_side_encryption_configuration": [
+            {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {
+                      "kms_master_key_id": "",
+                      "sse_algorithm": "AES256"
+                    }
+                  ],
+                  "bucket_key_enabled": true
+                }
+              ]
+            }
+          ],
+          "tags": {
+            "Name": "uploads",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "uploads",
+            "State": "s3-presigned-upload",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "versioning": [
+            {
+              "enabled": true,
+              "mfa_delete": false
+            }
+          ],
+          "website": [],
+          "website_domain": null,
+          "website_endpoint": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "cors_rule": [
+            {
+              "allowed_headers": [
+                false
+              ],
+              "allowed_methods": [
+                false,
+                false
+              ],
+              "allowed_origins": [
+                false
+              ],
+              "expose_headers": [
+                false
+              ]
+            }
+          ],
+          "grant": [
+            {
+              "permissions": [
+                false
+              ]
+            }
+          ],
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [
+            {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ]
+                }
+              ]
+            }
+          ],
+          "tags": {},
+          "tags_all": {},
+          "versioning": [
+            {}
+          ],
+          "website": []
+        },
+        "after_sensitive": {
+          "cors_rule": [
+            {
+              "allowed_headers": [
+                false
+              ],
+              "allowed_methods": [
+                false,
+                false
+              ],
+              "allowed_origins": [
+                false
+              ],
+              "expose_headers": [
+                false
+              ]
+            }
+          ],
+          "grant": [
+            {
+              "permissions": [
+                false
+              ]
+            }
+          ],
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [
+            {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ]
+                }
+              ]
+            }
+          ],
+          "tags": {},
+          "tags_all": {},
+          "versioning": [
+            {}
+          ],
+          "website": []
+        },
+        "importing": {
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket\" \"uploads\" {\n  bucket              = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  bucket_prefix       = null\n  force_destroy       = null\n  object_lock_enabled = false\n  tags = {\n    Name           = \"uploads\"\n    State          = \"s3-presigned-upload\"\n    Struct8Creator = \"rmay struct\"\n  }\n  tags_all = {\n    Name           = \"uploads\"\n    State          = \"s3-presigned-upload\"\n    Struct8Creator = \"rmay struct\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_accelerate_configuration.uploads_accelerate_configuration",
+      "mode": "managed",
+      "type": "aws_s3_bucket_accelerate_configuration",
+      "name": "uploads_accelerate_configuration",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "status": ""
+        },
+        "after": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "status": ""
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "generated_config": "resource \"aws_s3_bucket_accelerate_configuration\" \"uploads_accelerate_configuration\" {\n  bucket                = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  status                = \"\"\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_cors_configuration.uploads_cors_configuration",
+      "mode": "managed",
+      "type": "aws_s3_bucket_cors_configuration",
+      "name": "uploads_cors_configuration",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "cors_rule": [
+            {
+              "allowed_headers": [
+                "*"
+              ],
+              "allowed_methods": [
+                "GET",
+                "PUT"
+              ],
+              "allowed_origins": [
+                "*"
+              ],
+              "expose_headers": [
+                "ETag"
+              ],
+              "id": "",
+              "max_age_seconds": 300
+            }
+          ],
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "after": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "cors_rule": [
+            {
+              "allowed_headers": [
+                "*"
+              ],
+              "allowed_methods": [
+                "GET",
+                "PUT"
+              ],
+              "allowed_origins": [
+                "*"
+              ],
+              "expose_headers": [
+                "ETag"
+              ],
+              "id": "",
+              "max_age_seconds": 300
+            }
+          ],
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "cors_rule": [
+            {
+              "allowed_headers": [
+                false
+              ],
+              "allowed_methods": [
+                false,
+                false
+              ],
+              "allowed_origins": [
+                false
+              ],
+              "expose_headers": [
+                false
+              ]
+            }
+          ]
+        },
+        "after_sensitive": {
+          "cors_rule": [
+            {
+              "allowed_headers": [
+                false
+              ],
+              "allowed_methods": [
+                false,
+                false
+              ],
+              "allowed_origins": [
+                false
+              ],
+              "expose_headers": [
+                false
+              ]
+            }
+          ]
+        },
+        "importing": {
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_cors_configuration\" \"uploads_cors_configuration\" {\n  bucket                = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  cors_rule {\n    allowed_headers = [\"*\"]\n    allowed_methods = [\"GET\", \"PUT\"]\n    allowed_origins = [\"*\"]\n    expose_headers  = [\"ETag\"]\n    id              = null\n    max_age_seconds = 300\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_notification.uploads_notification",
+      "mode": "managed",
+      "type": "aws_s3_bucket_notification",
+      "name": "uploads_notification",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "eventbridge": false,
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "lambda_function": [],
+          "queue": [],
+          "topic": []
+        },
+        "after": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "eventbridge": false,
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "lambda_function": [],
+          "queue": [],
+          "topic": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "lambda_function": [],
+          "queue": [],
+          "topic": []
+        },
+        "after_sensitive": {
+          "lambda_function": [],
+          "queue": [],
+          "topic": []
+        },
+        "importing": {
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_notification\" \"uploads_notification\" {\n  bucket      = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  eventbridge = false\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_ownership_controls.uploads_ownership_controls",
+      "mode": "managed",
+      "type": "aws_s3_bucket_ownership_controls",
+      "name": "uploads_ownership_controls",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "object_ownership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "after": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "object_ownership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "rule": [
+            {}
+          ]
+        },
+        "after_sensitive": {
+          "rule": [
+            {}
+          ]
+        },
+        "importing": {
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_ownership_controls\" \"uploads_ownership_controls\" {\n  bucket = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  rule {\n    object_ownership = \"BucketOwnerEnforced\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_public_access_block.uploads_public_access_block",
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "uploads_public_access_block",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        },
+        "after": {
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_public_access_block\" \"uploads_public_access_block\" {\n  block_public_acls       = true\n  block_public_policy     = true\n  bucket                  = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  ignore_public_acls      = true\n  restrict_public_buckets = true\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_request_payment_configuration.uploads_request_payment_configuration",
+      "mode": "managed",
+      "type": "aws_s3_bucket_request_payment_configuration",
+      "name": "uploads_request_payment_configuration",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "payer": "BucketOwner"
+        },
+        "after": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "payer": "BucketOwner"
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_request_payment_configuration\" \"uploads_request_payment_configuration\" {\n  bucket                = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  payer                 = \"BucketOwner\"\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_server_side_encryption_configuration.uploads_server_side_encryption_configuration",
+      "mode": "managed",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "name": "uploads_server_side_encryption_configuration",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "kms_master_key_id": "",
+                  "sse_algorithm": "AES256"
+                }
+              ],
+              "bucket_key_enabled": true
+            }
+          ]
+        },
+        "after": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "kms_master_key_id": "",
+                  "sse_algorithm": "AES256"
+                }
+              ],
+              "bucket_key_enabled": true
+            }
+          ]
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {}
+              ]
+            }
+          ]
+        },
+        "after_sensitive": {
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {}
+              ]
+            }
+          ]
+        },
+        "importing": {
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_server_side_encryption_configuration\" \"uploads_server_side_encryption_configuration\" {\n  bucket                = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  rule {\n    bucket_key_enabled = true\n    apply_server_side_encryption_by_default {\n      kms_master_key_id = null\n      sse_algorithm     = \"AES256\"\n    }\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_versioning.uploads_versioning",
+      "mode": "managed",
+      "type": "aws_s3_bucket_versioning",
+      "name": "uploads_versioning",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "mfa": null,
+          "versioning_configuration": [
+            {
+              "mfa_delete": "Disabled",
+              "status": "Enabled"
+            }
+          ]
+        },
+        "after": {
+          "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "s3-presign-uploads-952133486861-us-west-2-an",
+          "mfa": null,
+          "versioning_configuration": [
+            {
+              "mfa_delete": "Disabled",
+              "status": "Enabled"
+            }
+          ]
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "versioning_configuration": [
+            {}
+          ]
+        },
+        "after_sensitive": {
+          "versioning_configuration": [
+            {}
+          ]
+        },
+        "importing": {
+          "id": "s3-presign-uploads-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_versioning\" \"uploads_versioning\" {\n  bucket                = \"s3-presign-uploads-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  mfa                   = null\n  versioning_configuration {\n    mfa_delete = \"Disabled\"\n    status     = \"Enabled\"\n  }\n}"
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.5.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_iam_policy.lambda_function_presign_st_s3-presigned-upload",
+            "mode": "managed",
+            "type": "aws_iam_policy",
+            "name": "lambda_function_presign_st_s3-presigned-upload",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload",
+              "attachment_count": 1,
+              "description": "Access Policy for presign",
+              "id": "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload",
+              "name": "lambda_function_presign_st_s3-presigned-upload",
+              "name_prefix": "",
+              "path": "/",
+              "policy": "{\"Statement\":[{\"Action\":[\"s3:PutObject\",\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an/*\",\"Sid\":\"PresignedObjectAccess\"}],\"Version\":\"2012-10-17\"}",
+              "policy_id": "ANPA53L4UBEGSBXHW4GAW",
+              "tags": {},
+              "tags_all": {}
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.presign_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "presign_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/presign_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T13:06:59Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "presign_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/lambda_function_presign_st_s3-presigned-upload"
+              ],
+              "max_session_duration": 3600,
+              "name": "presign_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "presign_role",
+                "State": "s3-presigned-upload",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "presign_role",
+                "State": "s3-presigned-upload",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEG77NE3KUEG"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_lambda_function.presign",
+            "mode": "managed",
+            "type": "aws_lambda_function",
+            "name": "presign",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "architectures": [
+                "arm64"
+              ],
+              "arn": "arn:aws:lambda:us-west-2:952133486861:function:presign",
+              "code_sha256": "hvuf4V+bCFo6pDbojHM/HbjQ5GY+fl9irB056Dj4I/M=",
+              "code_signing_config_arn": "",
+              "dead_letter_config": [],
+              "description": "Presigned-URL generator. nodejs22.x arm64, 128MB",
+              "environment": [
+                {
+                  "variables": {
+                    "ACCOUNT": "952133486861",
+                    "AWS_LAMBDA_FUNCTION_URL_NAME_0": "presign-url1",
+                    "AWS_S3_BUCKET_NAME_0": "s3-presign-uploads-952133486861-us-west-2-an",
+                    "BUCKET_NAME": "s3-presign-uploads-952133486861-us-west-2-an",
+                    "NAME": "presign",
+                    "REGION": "us-west-2"
+                  }
+                }
+              ],
+              "ephemeral_storage": [
+                {
+                  "size": 512
+                }
+              ],
+              "file_system_config": [],
+              "filename": null,
+              "function_name": "presign",
+              "handler": "index.handler",
+              "id": "presign",
+              "image_config": [],
+              "image_uri": "",
+              "invoke_arn": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:952133486861:function:presign/invocations",
+              "kms_key_arn": "",
+              "last_modified": "2026-10-29T13:07:09.292+0000",
+              "layers": [],
+              "logging_config": [
+                {
+                  "application_log_level": "",
+                  "log_format": "Text",
+                  "log_group": "/aws/lambda/presign",
+                  "system_log_level": ""
+                }
+              ],
+              "memory_size": 128,
+              "package_type": "Zip",
+              "publish": null,
+              "qualified_arn": "arn:aws:lambda:us-west-2:952133486861:function:presign:$LATEST",
+              "qualified_invoke_arn": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:952133486861:function:presign:$LATEST/invocations",
+              "replace_security_groups_on_destroy": null,
+              "replacement_security_group_ids": null,
+              "reserved_concurrent_executions": -1,
+              "role": "arn:aws:iam::952133486861:role/presign_role",
+              "runtime": "nodejs22.x",
+              "s3_bucket": null,
+              "s3_key": null,
+              "s3_object_version": null,
+              "signing_job_arn": "",
+              "signing_profile_version_arn": "",
+              "skip_destroy": false,
+              "snap_start": [],
+              "source_code_hash": "",
+              "source_code_size": 1231,
+              "tags": {
+                "Name": "presign",
+                "State": "s3-presigned-upload",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "presign",
+                "State": "s3-presigned-upload",
+                "Struct8Creator": "rmay struct"
+              },
+              "timeout": 10,
+              "timeouts": null,
+              "tracing_config": [
+                {
+                  "mode": "PassThrough"
+                }
+              ],
+              "version": "$LATEST",
+              "vpc_config": []
+            },
+            "sensitive_values": {
+              "architectures": [
+                false
+              ],
+              "dead_letter_config": [],
+              "environment": [
+                {
+                  "variables": {}
+                }
+              ],
+              "ephemeral_storage": [
+                {}
+              ],
+              "file_system_config": [],
+              "image_config": [],
+              "layers": [],
+              "logging_config": [
+                {}
+              ],
+              "snap_start": [],
+              "tags": {},
+              "tags_all": {},
+              "tracing_config": [
+                {}
+              ],
+              "vpc_config": []
+            }
+          },
+          {
+            "address": "aws_lambda_function_recursion_config.presign_recursion_config",
+            "mode": "managed",
+            "type": "aws_lambda_function_recursion_config",
+            "name": "presign_recursion_config",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "function_name": "presign",
+              "recursive_loop": "Terminate"
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_lambda_function_url.presign",
+            "mode": "managed",
+            "type": "aws_lambda_function_url",
+            "name": "presign",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "authorization_type": "NONE",
+              "cors": [
+                {
+                  "allow_credentials": false,
+                  "allow_headers": [
+                    "content-type"
+                  ],
+                  "allow_methods": [
+                    "GET",
+                    "POST"
+                  ],
+                  "allow_origins": [
+                    "*"
+                  ],
+                  "expose_headers": [],
+                  "max_age": 300
+                }
+              ],
+              "function_arn": "arn:aws:lambda:us-west-2:952133486861:function:presign",
+              "function_name": "presign",
+              "function_url": "https://3bvlsgq3ztup4xfngk7ubptwxe0ahdii.lambda-url.us-west-2.on.aws/",
+              "id": "presign",
+              "invoke_mode": "BUFFERED",
+              "qualifier": "",
+              "timeouts": null,
+              "url_id": "3bvlsgq3ztup4xfngk7ubptwxe0ahdii"
+            },
+            "sensitive_values": {
+              "cors": [
+                {
+                  "allow_headers": [
+                    false
+                  ],
+                  "allow_methods": [
+                    false,
+                    false
+                  ],
+                  "allow_origins": [
+                    false
+                  ],
+                  "expose_headers": []
+                }
+              ]
+            }
+          },
+          {
+            "address": "aws_lambda_permission.presign_perm_FunctionURLAllowInvokeAction",
+            "mode": "managed",
+            "type": "aws_lambda_permission",
+            "name": "presign_perm_FunctionURLAllowInvokeAction",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "action": "lambda:InvokeFunction",
+              "event_source_token": null,
+              "function_name": "presign",
+              "function_url_auth_type": null,
+              "id": "FunctionURLAllowInvokeAction",
+              "principal": "*",
+              "principal_org_id": null,
+              "qualifier": "",
+              "source_account": null,
+              "source_arn": null,
+              "statement_id": "FunctionURLAllowInvokeAction",
+              "statement_id_prefix": ""
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_lambda_permission.presign_perm_FunctionURLAllowPublicAccess",
+            "mode": "managed",
+            "type": "aws_lambda_permission",
+            "name": "presign_perm_FunctionURLAllowPublicAccess",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "action": "lambda:InvokeFunctionUrl",
+              "event_source_token": "",
+              "function_name": "presign",
+              "function_url_auth_type": "NONE",
+              "id": "FunctionURLAllowPublicAccess",
+              "principal": "*",
+              "principal_org_id": "",
+              "qualifier": "",
+              "source_account": "",
+              "source_arn": null,
+              "statement_id": "FunctionURLAllowPublicAccess",
+              "statement_id_prefix": ""
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_lambda_permission.presign_perm_perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+            "mode": "managed",
+            "type": "aws_lambda_permission",
+            "name": "presign_perm_perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "action": "lambda:InvokeFunction",
+              "event_source_token": null,
+              "function_name": "presign",
+              "function_url_auth_type": null,
+              "id": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+              "principal": "*",
+              "principal_org_id": null,
+              "qualifier": "",
+              "source_account": null,
+              "source_arn": null,
+              "statement_id": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke100b091cbcc3f324e2586cdbff",
+              "statement_id_prefix": "perm_aws_lambda_function_url_presign-url1_to_presign_invoke"
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_lambda_permission.presign_perm_perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+            "mode": "managed",
+            "type": "aws_lambda_permission",
+            "name": "presign_perm_perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "action": "lambda:InvokeFunctionUrl",
+              "event_source_token": "",
+              "function_name": "presign",
+              "function_url_auth_type": "NONE",
+              "id": "perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+              "principal": "*",
+              "principal_org_id": "",
+              "qualifier": "",
+              "source_account": "",
+              "source_arn": null,
+              "statement_id": "perm_aws_lambda_function_url_presign-url1_to_presigned56ce021a2fd37e41e4ef066f",
+              "statement_id_prefix": "perm_aws_lambda_function_url_presign-url1_to_presign"
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_s3_bucket.uploads",
+            "mode": "managed",
+            "type": "aws_s3_bucket",
+            "name": "uploads",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "acceleration_status": "",
+              "acl": null,
+              "arn": "arn:aws:s3:::s3-presign-uploads-952133486861-us-west-2-an",
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "bucket_domain_name": "s3-presign-uploads-952133486861-us-west-2-an.s3.amazonaws.com",
+              "bucket_prefix": "",
+              "bucket_regional_domain_name": "s3-presign-uploads-952133486861-us-west-2-an.s3.us-west-2.amazonaws.com",
+              "cors_rule": [
+                {
+                  "allowed_headers": [
+                    "*"
+                  ],
+                  "allowed_methods": [
+                    "GET",
+                    "PUT"
+                  ],
+                  "allowed_origins": [
+                    "*"
+                  ],
+                  "expose_headers": [
+                    "ETag"
+                  ],
+                  "max_age_seconds": 300
+                }
+              ],
+              "force_destroy": null,
+              "grant": [
+                {
+                  "id": "e8a9e96ab6e351440182fde73c2878d7e03a1a51200d3cab16f4451f9cafe25c",
+                  "permissions": [
+                    "FULL_CONTROL"
+                  ],
+                  "type": "CanonicalUser",
+                  "uri": ""
+                }
+              ],
+              "hosted_zone_id": "Z3BJ6K6RIION7M",
+              "id": "s3-presign-uploads-952133486861-us-west-2-an",
+              "lifecycle_rule": [],
+              "logging": [],
+              "object_lock_configuration": [],
+              "object_lock_enabled": false,
+              "policy": "",
+              "region": "us-west-2",
+              "replication_configuration": [],
+              "request_payer": "BucketOwner",
+              "server_side_encryption_configuration": [
+                {
+                  "rule": [
+                    {
+                      "apply_server_side_encryption_by_default": [
+                        {
+                          "kms_master_key_id": "",
+                          "sse_algorithm": "AES256"
+                        }
+                      ],
+                      "bucket_key_enabled": true
+                    }
+                  ]
+                }
+              ],
+              "tags": {
+                "Name": "uploads",
+                "State": "s3-presigned-upload",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "uploads",
+                "State": "s3-presigned-upload",
+                "Struct8Creator": "rmay struct"
+              },
+              "timeouts": null,
+              "versioning": [
+                {
+                  "enabled": true,
+                  "mfa_delete": false
+                }
+              ],
+              "website": [],
+              "website_domain": null,
+              "website_endpoint": null
+            },
+            "sensitive_values": {
+              "cors_rule": [
+                {
+                  "allowed_headers": [
+                    false
+                  ],
+                  "allowed_methods": [
+                    false,
+                    false
+                  ],
+                  "allowed_origins": [
+                    false
+                  ],
+                  "expose_headers": [
+                    false
+                  ]
+                }
+              ],
+              "grant": [
+                {
+                  "permissions": [
+                    false
+                  ]
+                }
+              ],
+              "lifecycle_rule": [],
+              "logging": [],
+              "object_lock_configuration": [],
+              "replication_configuration": [],
+              "server_side_encryption_configuration": [
+                {
+                  "rule": [
+                    {
+                      "apply_server_side_encryption_by_default": [
+                        {}
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "tags": {},
+              "tags_all": {},
+              "versioning": [
+                {}
+              ],
+              "website": []
+            }
+          },
+          {
+            "address": "aws_s3_bucket_accelerate_configuration.uploads_accelerate_configuration",
+            "mode": "managed",
+            "type": "aws_s3_bucket_accelerate_configuration",
+            "name": "uploads_accelerate_configuration",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "s3-presign-uploads-952133486861-us-west-2-an",
+              "status": ""
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_s3_bucket_cors_configuration.uploads_cors_configuration",
+            "mode": "managed",
+            "type": "aws_s3_bucket_cors_configuration",
+            "name": "uploads_cors_configuration",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "cors_rule": [
+                {
+                  "allowed_headers": [
+                    "*"
+                  ],
+                  "allowed_methods": [
+                    "GET",
+                    "PUT"
+                  ],
+                  "allowed_origins": [
+                    "*"
+                  ],
+                  "expose_headers": [
+                    "ETag"
+                  ],
+                  "id": "",
+                  "max_age_seconds": 300
+                }
+              ],
+              "expected_bucket_owner": "",
+              "id": "s3-presign-uploads-952133486861-us-west-2-an"
+            },
+            "sensitive_values": {
+              "cors_rule": [
+                {
+                  "allowed_headers": [
+                    false
+                  ],
+                  "allowed_methods": [
+                    false,
+                    false
+                  ],
+                  "allowed_origins": [
+                    false
+                  ],
+                  "expose_headers": [
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "address": "aws_s3_bucket_notification.uploads_notification",
+            "mode": "managed",
+            "type": "aws_s3_bucket_notification",
+            "name": "uploads_notification",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "eventbridge": false,
+              "id": "s3-presign-uploads-952133486861-us-west-2-an",
+              "lambda_function": [],
+              "queue": [],
+              "topic": []
+            },
+            "sensitive_values": {
+              "lambda_function": [],
+              "queue": [],
+              "topic": []
+            }
+          },
+          {
+            "address": "aws_s3_bucket_ownership_controls.uploads_ownership_controls",
+            "mode": "managed",
+            "type": "aws_s3_bucket_ownership_controls",
+            "name": "uploads_ownership_controls",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "id": "s3-presign-uploads-952133486861-us-west-2-an",
+              "rule": [
+                {
+                  "object_ownership": "BucketOwnerEnforced"
+                }
+              ]
+            },
+            "sensitive_values": {
+              "rule": [
+                {}
+              ]
+            }
+          },
+          {
+            "address": "aws_s3_bucket_public_access_block.uploads_public_access_block",
+            "mode": "managed",
+            "type": "aws_s3_bucket_public_access_block",
+            "name": "uploads_public_access_block",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "block_public_acls": true,
+              "block_public_policy": true,
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "id": "s3-presign-uploads-952133486861-us-west-2-an",
+              "ignore_public_acls": true,
+              "restrict_public_buckets": true
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_s3_bucket_request_payment_configuration.uploads_request_payment_configuration",
+            "mode": "managed",
+            "type": "aws_s3_bucket_request_payment_configuration",
+            "name": "uploads_request_payment_configuration",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "s3-presign-uploads-952133486861-us-west-2-an",
+              "payer": "BucketOwner"
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_s3_bucket_server_side_encryption_configuration.uploads_server_side_encryption_configuration",
+            "mode": "managed",
+            "type": "aws_s3_bucket_server_side_encryption_configuration",
+            "name": "uploads_server_side_encryption_configuration",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "s3-presign-uploads-952133486861-us-west-2-an",
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {
+                      "kms_master_key_id": "",
+                      "sse_algorithm": "AES256"
+                    }
+                  ],
+                  "bucket_key_enabled": true
+                }
+              ]
+            },
+            "sensitive_values": {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "address": "aws_s3_bucket_versioning.uploads_versioning",
+            "mode": "managed",
+            "type": "aws_s3_bucket_versioning",
+            "name": "uploads_versioning",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "s3-presign-uploads-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "s3-presign-uploads-952133486861-us-west-2-an",
+              "mfa": null,
+              "versioning_configuration": [
+                {
+                  "mfa_delete": "Disabled",
+                  "status": "Enabled"
+                }
+              ]
+            },
+            "sensitive_values": {
+              "versioning_configuration": [
+                {}
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "version_constraint": "~> 5.0",
+        "expressions": {
+          "region": {
+            "constant_value": "us-west-2"
+          }
+        }
+      }
+    },
+    "root_module": {}
+  },
+  "timestamp": "2026-10-29T17:48:42Z",
+  "redacted_attributes": []
+}
