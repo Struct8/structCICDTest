@@ -150,6 +150,46 @@ import {
 }
 
 import {
+  to = aws_iam_role.order-approval-inbox_role
+  id = "order-approval-inbox_role"
+}
+
+import {
+  to = aws_iam_role.order-charge_role
+  id = "order-charge_role"
+}
+
+import {
+  to = aws_iam_role.order-console_role
+  id = "order-console_role"
+}
+
+import {
+  to = aws_iam_role.order-pack-item_role
+  id = "order-pack-item_role"
+}
+
+import {
+  to = aws_iam_role.order-release_role
+  id = "order-release_role"
+}
+
+import {
+  to = aws_iam_role.order-reserve_role
+  id = "order-reserve_role"
+}
+
+import {
+  to = aws_iam_role.order-validate_role
+  id = "order-validate_role"
+}
+
+import {
+  to = aws_iam_role.order-workflow_role
+  id = "order-workflow_role"
+}
+
+import {
   to = aws_sns_topic_subscription.r_45f149f0-31f4-453f-b131-73e02562dfba
   id = "arn:aws:sns:us-west-2:952133486861:order-events:45f149f0-31f4-453f-b131-73e02562dfba"
 }
@@ -182,6 +222,11 @@ import {
 import {
   to = aws_lambda_function_url.order-console
   id = "order-console"
+}
+
+import {
+  to = aws_cloudwatch_event_target.order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf
+  id = "order-failure-alerts/terraform-4qecjpc4NYC9KKgAfw8ugn3TEf"
 }
 
 import {
