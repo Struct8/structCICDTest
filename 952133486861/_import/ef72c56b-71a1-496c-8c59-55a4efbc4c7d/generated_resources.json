@@ -41,6 +41,51 @@
           }
         },
         {
+          "address": "aws_cloudwatch_event_target.order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+          "mode": "managed",
+          "type": "aws_cloudwatch_event_target",
+          "name": "order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "appsync_target": [],
+            "arn": "arn:aws:sns:us-west-2:952133486861:order-events",
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "event_bus_name": "default",
+            "force_destroy": false,
+            "http_target": [],
+            "id": "order-failure-alerts-terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+            "input": "",
+            "input_path": "",
+            "input_transformer": [],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "role_arn": "",
+            "rule": "order-failure-alerts",
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": [],
+            "target_id": "terraform-4qecjpc4NYC9KKgAfw8ugn3TEf"
+          },
+          "sensitive_values": {
+            "appsync_target": [],
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "http_target": [],
+            "input_transformer": [],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": []
+          }
+        },
+        {
           "address": "aws_cloudwatch_log_group.order-approval-inbox-logs",
           "mode": "managed",
           "type": "aws_cloudwatch_log_group",
@@ -637,6 +682,358 @@
             "tags_all": {}
           },
           "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.order-approval-inbox_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-approval-inbox_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/order-approval-inbox_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T19:16:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "order-approval-inbox_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/lambda_function_order-approval-inbox_st_stepfunctions-order-lab"
+            ],
+            "max_session_duration": 3600,
+            "name": "order-approval-inbox_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "order-approval-inbox_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "order-approval-inbox_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEGSLOKRW2SP"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.order-charge_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-charge_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/order-charge_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T19:16:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "order-charge_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/lambda_function_order-charge_st_stepfunctions-order-lab"
+            ],
+            "max_session_duration": 3600,
+            "name": "order-charge_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "order-charge_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "order-charge_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEGVHOMKM56V"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.order-console_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-console_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/order-console_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T19:16:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "order-console_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/lambda_function_order-console_st_stepfunctions-order-lab"
+            ],
+            "max_session_duration": 3600,
+            "name": "order-console_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "order-console_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "order-console_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEGRGXRJB46F"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.order-pack-item_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-pack-item_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/order-pack-item_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T19:16:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "order-pack-item_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/lambda_function_order-pack-item_st_stepfunctions-order-lab"
+            ],
+            "max_session_duration": 3600,
+            "name": "order-pack-item_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "order-pack-item_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "order-pack-item_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEGTTB2SAJJY"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.order-release_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-release_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/order-release_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T19:16:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "order-release_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/lambda_function_order-release_st_stepfunctions-order-lab"
+            ],
+            "max_session_duration": 3600,
+            "name": "order-release_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "order-release_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "order-release_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEGXEZTKV3YI"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.order-reserve_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-reserve_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/order-reserve_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T19:16:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "order-reserve_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/lambda_function_order-reserve_st_stepfunctions-order-lab"
+            ],
+            "max_session_duration": 3600,
+            "name": "order-reserve_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "order-reserve_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "order-reserve_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEG7332PT6GI"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.order-validate_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-validate_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/order-validate_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T19:16:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "order-validate_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/lambda_function_order-validate_st_stepfunctions-order-lab"
+            ],
+            "max_session_duration": 3600,
+            "name": "order-validate_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "order-validate_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "order-validate_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEG3RIFA27N4"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.order-workflow_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-workflow_role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/order-workflow_role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"states.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-10-29T19:16:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "order-workflow_role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/sfn_state_machine_order-workflow_st_stepfunctions-order-lab"
+            ],
+            "max_session_duration": 3600,
+            "name": "order-workflow_role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Name": "order-workflow_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "order-workflow_role",
+              "State": "stepfunctions-order-lab",
+              "Struct8Creator": "rmay struct"
+            },
+            "unique_id": "AROA53L4UBEG7UTJJV5RO"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
             "tags": {},
             "tags_all": {}
           }
@@ -2102,6 +2499,96 @@
       }
     },
     {
+      "address": "aws_cloudwatch_event_target.order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_target",
+      "name": "order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "appsync_target": [],
+          "arn": "arn:aws:sns:us-west-2:952133486861:order-events",
+          "batch_target": [],
+          "dead_letter_config": [],
+          "ecs_target": [],
+          "event_bus_name": "default",
+          "force_destroy": false,
+          "http_target": [],
+          "id": "order-failure-alerts-terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+          "input": "",
+          "input_path": "",
+          "input_transformer": [],
+          "kinesis_target": [],
+          "redshift_target": [],
+          "retry_policy": [],
+          "role_arn": "",
+          "rule": "order-failure-alerts",
+          "run_command_targets": [],
+          "sagemaker_pipeline_target": [],
+          "sqs_target": [],
+          "target_id": "terraform-4qecjpc4NYC9KKgAfw8ugn3TEf"
+        },
+        "after": {
+          "appsync_target": [],
+          "arn": "arn:aws:sns:us-west-2:952133486861:order-events",
+          "batch_target": [],
+          "dead_letter_config": [],
+          "ecs_target": [],
+          "event_bus_name": "default",
+          "force_destroy": false,
+          "http_target": [],
+          "id": "order-failure-alerts-terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+          "input": "",
+          "input_path": "",
+          "input_transformer": [],
+          "kinesis_target": [],
+          "redshift_target": [],
+          "retry_policy": [],
+          "role_arn": "",
+          "rule": "order-failure-alerts",
+          "run_command_targets": [],
+          "sagemaker_pipeline_target": [],
+          "sqs_target": [],
+          "target_id": "terraform-4qecjpc4NYC9KKgAfw8ugn3TEf"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "appsync_target": [],
+          "batch_target": [],
+          "dead_letter_config": [],
+          "ecs_target": [],
+          "http_target": [],
+          "input_transformer": [],
+          "kinesis_target": [],
+          "redshift_target": [],
+          "retry_policy": [],
+          "run_command_targets": [],
+          "sagemaker_pipeline_target": [],
+          "sqs_target": []
+        },
+        "after_sensitive": {
+          "appsync_target": [],
+          "batch_target": [],
+          "dead_letter_config": [],
+          "ecs_target": [],
+          "http_target": [],
+          "input_transformer": [],
+          "kinesis_target": [],
+          "redshift_target": [],
+          "retry_policy": [],
+          "run_command_targets": [],
+          "sagemaker_pipeline_target": [],
+          "sqs_target": []
+        },
+        "importing": {
+          "id": "order-failure-alerts/terraform-4qecjpc4NYC9KKgAfw8ugn3TEf"
+        }
+      }
+    },
+    {
       "address": "aws_cloudwatch_log_group.order-approval-inbox-logs",
       "mode": "managed",
       "type": "aws_cloudwatch_log_group",
@@ -3300,6 +3787,710 @@
         },
         "importing": {
           "id": "arn:aws:iam::952133486861:policy/sfn_state_machine_order-workflow_st_stepfunctions-order-lab"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.order-approval-inbox_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "order-approval-inbox_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/order-approval-inbox_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-approval-inbox_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-approval-inbox_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-approval-inbox_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-approval-inbox_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-approval-inbox_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGSLOKRW2SP"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/order-approval-inbox_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-approval-inbox_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-approval-inbox_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-approval-inbox_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-approval-inbox_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-approval-inbox_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGSLOKRW2SP"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "order-approval-inbox_role"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.order-charge_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "order-charge_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/order-charge_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-charge_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-charge_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-charge_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-charge_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-charge_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGVHOMKM56V"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/order-charge_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-charge_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-charge_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-charge_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-charge_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-charge_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGVHOMKM56V"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "order-charge_role"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.order-console_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "order-console_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/order-console_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-console_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-console_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-console_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-console_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-console_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGRGXRJB46F"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/order-console_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-console_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-console_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-console_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-console_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-console_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGRGXRJB46F"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "order-console_role"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.order-pack-item_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "order-pack-item_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/order-pack-item_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-pack-item_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-pack-item_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-pack-item_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-pack-item_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-pack-item_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGTTB2SAJJY"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/order-pack-item_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-pack-item_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-pack-item_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-pack-item_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-pack-item_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-pack-item_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGTTB2SAJJY"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "order-pack-item_role"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.order-release_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "order-release_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/order-release_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-release_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-release_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-release_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-release_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-release_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGXEZTKV3YI"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/order-release_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-release_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-release_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-release_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-release_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-release_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEGXEZTKV3YI"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "order-release_role"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.order-reserve_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "order-reserve_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/order-reserve_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-reserve_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-reserve_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-reserve_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-reserve_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-reserve_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEG7332PT6GI"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/order-reserve_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-reserve_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-reserve_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-reserve_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-reserve_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-reserve_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEG7332PT6GI"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "order-reserve_role"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.order-validate_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "order-validate_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/order-validate_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-validate_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-validate_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-validate_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-validate_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-validate_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEG3RIFA27N4"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/order-validate_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-validate_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/lambda_function_order-validate_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-validate_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-validate_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-validate_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEG3RIFA27N4"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "order-validate_role"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.order-workflow_role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "order-workflow_role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/order-workflow_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"states.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-workflow_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/sfn_state_machine_order-workflow_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-workflow_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-workflow_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-workflow_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEG7UTJJV5RO"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/order-workflow_role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"states.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-10-29T19:16:38Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "order-workflow_role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/sfn_state_machine_order-workflow_st_stepfunctions-order-lab"
+          ],
+          "max_session_duration": 3600,
+          "name": "order-workflow_role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Name": "order-workflow_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "order-workflow_role",
+            "State": "stepfunctions-order-lab",
+            "Struct8Creator": "rmay struct"
+          },
+          "unique_id": "AROA53L4UBEG7UTJJV5RO"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "order-workflow_role"
         }
       }
     },
@@ -6115,6 +7306,51 @@
             }
           },
           {
+            "address": "aws_cloudwatch_event_target.order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+            "mode": "managed",
+            "type": "aws_cloudwatch_event_target",
+            "name": "order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "appsync_target": [],
+              "arn": "arn:aws:sns:us-west-2:952133486861:order-events",
+              "batch_target": [],
+              "dead_letter_config": [],
+              "ecs_target": [],
+              "event_bus_name": "default",
+              "force_destroy": false,
+              "http_target": [],
+              "id": "order-failure-alerts-terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+              "input": "",
+              "input_path": "",
+              "input_transformer": [],
+              "kinesis_target": [],
+              "redshift_target": [],
+              "retry_policy": [],
+              "role_arn": "",
+              "rule": "order-failure-alerts",
+              "run_command_targets": [],
+              "sagemaker_pipeline_target": [],
+              "sqs_target": [],
+              "target_id": "terraform-4qecjpc4NYC9KKgAfw8ugn3TEf"
+            },
+            "sensitive_values": {
+              "appsync_target": [],
+              "batch_target": [],
+              "dead_letter_config": [],
+              "ecs_target": [],
+              "http_target": [],
+              "input_transformer": [],
+              "kinesis_target": [],
+              "redshift_target": [],
+              "retry_policy": [],
+              "run_command_targets": [],
+              "sagemaker_pipeline_target": [],
+              "sqs_target": []
+            }
+          },
+          {
             "address": "aws_cloudwatch_log_group.order-approval-inbox-logs",
             "mode": "managed",
             "type": "aws_cloudwatch_log_group",
@@ -6711,6 +7947,358 @@
               "tags_all": {}
             },
             "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.order-approval-inbox_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "order-approval-inbox_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/order-approval-inbox_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T19:16:38Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "order-approval-inbox_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/lambda_function_order-approval-inbox_st_stepfunctions-order-lab"
+              ],
+              "max_session_duration": 3600,
+              "name": "order-approval-inbox_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "order-approval-inbox_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "order-approval-inbox_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEGSLOKRW2SP"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.order-charge_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "order-charge_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/order-charge_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T19:16:38Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "order-charge_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/lambda_function_order-charge_st_stepfunctions-order-lab"
+              ],
+              "max_session_duration": 3600,
+              "name": "order-charge_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "order-charge_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "order-charge_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEGVHOMKM56V"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.order-console_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "order-console_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/order-console_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T19:16:38Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "order-console_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/lambda_function_order-console_st_stepfunctions-order-lab"
+              ],
+              "max_session_duration": 3600,
+              "name": "order-console_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "order-console_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "order-console_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEGRGXRJB46F"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.order-pack-item_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "order-pack-item_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/order-pack-item_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T19:16:38Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "order-pack-item_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/lambda_function_order-pack-item_st_stepfunctions-order-lab"
+              ],
+              "max_session_duration": 3600,
+              "name": "order-pack-item_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "order-pack-item_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "order-pack-item_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEGTTB2SAJJY"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.order-release_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "order-release_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/order-release_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T19:16:38Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "order-release_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/lambda_function_order-release_st_stepfunctions-order-lab"
+              ],
+              "max_session_duration": 3600,
+              "name": "order-release_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "order-release_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "order-release_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEGXEZTKV3YI"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.order-reserve_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "order-reserve_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/order-reserve_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T19:16:38Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "order-reserve_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/lambda_function_order-reserve_st_stepfunctions-order-lab"
+              ],
+              "max_session_duration": 3600,
+              "name": "order-reserve_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "order-reserve_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "order-reserve_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEG7332PT6GI"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.order-validate_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "order-validate_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/order-validate_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T19:16:38Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "order-validate_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/lambda_function_order-validate_st_stepfunctions-order-lab"
+              ],
+              "max_session_duration": 3600,
+              "name": "order-validate_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "order-validate_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "order-validate_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEG3RIFA27N4"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.order-workflow_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "order-workflow_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/order-workflow_role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"states.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-10-29T19:16:38Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "order-workflow_role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/sfn_state_machine_order-workflow_st_stepfunctions-order-lab"
+              ],
+              "max_session_duration": 3600,
+              "name": "order-workflow_role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Name": "order-workflow_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "order-workflow_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              },
+              "unique_id": "AROA53L4UBEG7UTJJV5RO"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
               "tags": {},
               "tags_all": {}
             }
@@ -8170,6 +9758,40 @@
           "schema_version": 1
         },
         {
+          "address": "aws_cloudwatch_event_target.order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+          "mode": "managed",
+          "type": "aws_cloudwatch_event_target",
+          "name": "order-failure-alerts_terraform-4qecjpc4NYC9KKgAfw8ugn3TEf",
+          "provider_config_key": "aws",
+          "expressions": {
+            "arn": {
+              "constant_value": "arn:aws:sns:us-west-2:952133486861:order-events"
+            },
+            "event_bus_name": {
+              "constant_value": "default"
+            },
+            "force_destroy": {
+              "constant_value": false
+            },
+            "input": {
+              "constant_value": null
+            },
+            "input_path": {
+              "constant_value": null
+            },
+            "role_arn": {
+              "constant_value": null
+            },
+            "rule": {
+              "constant_value": "order-failure-alerts"
+            },
+            "target_id": {
+              "constant_value": "terraform-4qecjpc4NYC9KKgAfw8ugn3TEf"
+            }
+          },
+          "schema_version": 1
+        },
+        {
           "address": "aws_cloudwatch_log_group.order-approval-inbox-logs",
           "mode": "managed",
           "type": "aws_cloudwatch_log_group",
@@ -8881,6 +10503,390 @@
             },
             "policy": {
               "constant_value": "{\"Statement\":[{\"Action\":[\"logs:PutLogEvents\",\"logs:CreateLogStream\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:logs:us-west-2:952133486861:log-group:/aws/vendedlogs/states/order-workflow:*\",\"Sid\":\"AllowWriteLogs\"},{\"Action\":[\"dynamodb:UpdateItem\",\"dynamodb:PutItem\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:dynamodb:us-west-2:952133486861:table/order-lab-data\",\"Sid\":\"AllowDynamoDBWrite\"},{\"Action\":\"lambda:InvokeFunction\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:us-west-2:952133486861:function:order-charge\",\"Sid\":\"AllowLambdaInvoke\"},{\"Action\":\"lambda:InvokeFunction\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:us-west-2:952133486861:function:order-pack-item\",\"Sid\":\"AllowLambdaInvoke1\"},{\"Action\":\"lambda:InvokeFunction\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:us-west-2:952133486861:function:order-release\",\"Sid\":\"AllowLambdaInvoke2\"},{\"Action\":\"lambda:InvokeFunction\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:us-west-2:952133486861:function:order-reserve\",\"Sid\":\"AllowLambdaInvoke3\"},{\"Action\":\"lambda:InvokeFunction\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:us-west-2:952133486861:function:order-validate\",\"Sid\":\"AllowLambdaInvoke4\"},{\"Action\":\"sns:Publish\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:sns:us-west-2:952133486861:order-events\",\"Sid\":\"AllowSNSPublish\"},{\"Action\":\"sqs:SendMessage\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:sqs:us-west-2:952133486861:order-approvals\",\"Sid\":\"AllowSendApprovalRequest\"},{\"Action\":[\"xray:PutTraceSegments\",\"xray:PutTelemetryRecords\",\"xray:GetSamplingTargets\",\"xray:GetSamplingRules\",\"logs:UpdateLogDelivery\",\"logs:PutResourcePolicy\",\"logs:PutLogEvents\",\"logs:ListLogDeliveries\",\"logs:GetLogDelivery\",\"logs:DescribeResourcePolicies\",\"logs:DescribeLogGroups\",\"logs:DeleteLogDelivery\",\"logs:CreateLogStream\",\"logs:CreateLogDelivery\"],\"Effect\":\"Allow\",\"Resource\":\"*\",\"Sid\":\"DeliverExecutionLogs\"}],\"Version\":\"2012-10-17\"}"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.order-approval-inbox_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-approval-inbox_role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "order-approval-inbox_role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "order-approval-inbox_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "order-approval-inbox_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.order-charge_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-charge_role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "order-charge_role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "order-charge_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "order-charge_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.order-console_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-console_role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "order-console_role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "order-console_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "order-console_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.order-pack-item_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-pack-item_role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "order-pack-item_role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "order-pack-item_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "order-pack-item_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.order-release_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-release_role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "order-release_role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "order-release_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "order-release_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.order-reserve_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-reserve_role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "order-reserve_role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "order-reserve_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "order-reserve_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.order-validate_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-validate_role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "order-validate_role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "order-validate_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "order-validate_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.order-workflow_role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "order-workflow_role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"states.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "order-workflow_role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "order-workflow_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "order-workflow_role",
+                "State": "stepfunctions-order-lab",
+                "Struct8Creator": "rmay struct"
+              }
             }
           },
           "schema_version": 0
@@ -10557,6 +12563,6 @@
       ]
     }
   },
-  "timestamp": "2026-10-29T19:35:24Z",
+  "timestamp": "2026-10-29T19:39:47Z",
   "redacted_attributes": []
 }
