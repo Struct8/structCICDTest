@@ -1,0 +1,48 @@
+{
+  "external_repositories": [
+    {
+      "repo_name": "struct8-templates",
+      "org": "Struct8",
+      "branch": "main",
+      "target_dir": ".external_modules/struct8-templates",
+      "folders": [
+        "templates/stepfunctions-order-lab/v1/lambda/order-console",
+        "templates/stepfunctions-order-lab/v1/lambda/order-validate",
+        "templates/stepfunctions-order-lab/v1/lambda/order-reserve",
+        "templates/stepfunctions-order-lab/v1/lambda/order-charge",
+        "templates/stepfunctions-order-lab/v1/lambda/order-release",
+        "templates/stepfunctions-order-lab/v1/lambda/order-pack-item",
+        "templates/stepfunctions-order-lab/v1/lambda/order-approval-inbox",
+        "templates/stepfunctions-order-lab/v1/stepfunctions"
+      ]
+    }
+  ],
+  "action": "apply",
+  "trigger_id": "1793301348341",
+  "triggered_by": "assistant.rmay_struct",
+  "engine_ref": "devlocal",
+  "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
+  "backend_global_config": {
+    "provider": "aws",
+    "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
+    "region": "us-east-1",
+    "bucket": "pro112-teste-cicd"
+  },
+  "pipeline_stages": [
+    {
+      "stage_name": "Manual Trigger: stepfunctions-order-lab",
+      "parallel_execution": false,
+      "states": [
+        {
+          "path": "952133486861/stepfunctions-order-lab",
+          "provider": "aws",
+          "target_auth": {
+            "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
+            "region": "us-west-2",
+            "secret_name": "AUTH_AWS_952133486861"
+          }
+        }
+      ]
+    }
+  ]
+}
