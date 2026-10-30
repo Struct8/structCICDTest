@@ -1,0 +1,1425 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.5.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_route_table.RT-private-a",
+          "mode": "managed",
+          "type": "aws_route_table",
+          "name": "RT-private-a",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:ec2:us-east-1:952133486861:route-table/rtb-0bd9b282268fe8ec3",
+            "id": "rtb-0bd9b282268fe8ec3",
+            "owner_id": "952133486861",
+            "propagating_vgws": [],
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "10.1.0.0/16",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+              }
+            ],
+            "tags": {
+              "Name": "RT-private-a",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "RT-private-a",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+          },
+          "sensitive_values": {
+            "propagating_vgws": [],
+            "route": [
+              {}
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_route_table.RT-public-a",
+          "mode": "managed",
+          "type": "aws_route_table",
+          "name": "RT-public-a",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:ec2:us-east-1:952133486861:route-table/rtb-0ff820a57943a17e0",
+            "id": "rtb-0ff820a57943a17e0",
+            "owner_id": "952133486861",
+            "propagating_vgws": [],
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "10.1.0.0/24",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+              }
+            ],
+            "tags": {
+              "Name": "RT-public-a",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "RT-public-a",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+          },
+          "sensitive_values": {
+            "propagating_vgws": [],
+            "route": [
+              {}
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_route_table_association.subnet-055885dd9006bb542_rtb-0ff820a57943a17e0",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-055885dd9006bb542_rtb-0ff820a57943a17e0",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "gateway_id": "",
+            "id": "rtbassoc-057d6aab325cd8b09",
+            "route_table_id": "rtb-0ff820a57943a17e0",
+            "subnet_id": "subnet-055885dd9006bb542",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_route_table_association.subnet-076bada58a63f1aff_rtb-0bd9b282268fe8ec3",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-076bada58a63f1aff_rtb-0bd9b282268fe8ec3",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "gateway_id": "",
+            "id": "rtbassoc-07e17fa2497700a66",
+            "route_table_id": "rtb-0bd9b282268fe8ec3",
+            "subnet_id": "subnet-076bada58a63f1aff",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_subnet.subnet-private-a",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "subnet-private-a",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-east-1:952133486861:subnet/subnet-076bada58a63f1aff",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az4",
+            "cidr_block": "10.5.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-076bada58a63f1aff",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": false,
+            "outpost_arn": "",
+            "owner_id": "952133486861",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "tags": {
+              "Name": "subnet-private-a",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "subnet-private-a",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_subnet.subnet-public-a",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "subnet-public-a",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-east-1:952133486861:subnet/subnet-055885dd9006bb542",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az4",
+            "cidr_block": "10.5.0.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-055885dd9006bb542",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": false,
+            "outpost_arn": "",
+            "owner_id": "952133486861",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "tags": {
+              "Name": "subnet-public-a",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "subnet-public-a",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_vpc.VPC-Monitoring",
+          "mode": "managed",
+          "type": "aws_vpc",
+          "name": "VPC-Monitoring",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-east-1:952133486861:vpc/vpc-0f60f9fdd3e2a30f2",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.5.0.0/16",
+            "default_network_acl_id": "acl-0c665dc07c3ae782c",
+            "default_route_table_id": "rtb-0c3d68470475ddeda",
+            "default_security_group_id": "sg-0b7ce785c28c7c824",
+            "dhcp_options_id": "dopt-081d9fc7223db0c95",
+            "enable_dns_hostnames": false,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-0f60f9fdd3e2a30f2",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-0c3d68470475ddeda",
+            "owner_id": "952133486861",
+            "tags": {
+              "Name": "VPC-Monitoring",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "VPC-Monitoring",
+              "State": "State-VPC-Monitoring",
+              "Struct8Creator": "rmay struct"
+            }
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_route_table.RT-private-a",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "RT-private-a",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:route-table/rtb-0bd9b282268fe8ec3",
+          "id": "rtb-0bd9b282268fe8ec3",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "10.1.0.0/16",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+            }
+          ],
+          "tags": {
+            "Name": "RT-private-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "RT-private-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:route-table/rtb-0bd9b282268fe8ec3",
+          "id": "rtb-0bd9b282268fe8ec3",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "10.1.0.0/16",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+            }
+          ],
+          "tags": {
+            "Name": "RT-private-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "RT-private-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "rtb-0bd9b282268fe8ec3"
+        }
+      }
+    },
+    {
+      "address": "aws_route_table.RT-public-a",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "RT-public-a",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:route-table/rtb-0ff820a57943a17e0",
+          "id": "rtb-0ff820a57943a17e0",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "10.1.0.0/24",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+            }
+          ],
+          "tags": {
+            "Name": "RT-public-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "RT-public-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:route-table/rtb-0ff820a57943a17e0",
+          "id": "rtb-0ff820a57943a17e0",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "10.1.0.0/24",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+            }
+          ],
+          "tags": {
+            "Name": "RT-public-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "RT-public-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "rtb-0ff820a57943a17e0"
+        }
+      }
+    },
+    {
+      "address": "aws_route_table_association.subnet-055885dd9006bb542_rtb-0ff820a57943a17e0",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "subnet-055885dd9006bb542_rtb-0ff820a57943a17e0",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "gateway_id": "",
+          "id": "rtbassoc-057d6aab325cd8b09",
+          "route_table_id": "rtb-0ff820a57943a17e0",
+          "subnet_id": "subnet-055885dd9006bb542",
+          "timeouts": null
+        },
+        "after": {
+          "gateway_id": "",
+          "id": "rtbassoc-057d6aab325cd8b09",
+          "route_table_id": "rtb-0ff820a57943a17e0",
+          "subnet_id": "subnet-055885dd9006bb542",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "subnet-055885dd9006bb542/rtb-0ff820a57943a17e0"
+        }
+      }
+    },
+    {
+      "address": "aws_route_table_association.subnet-076bada58a63f1aff_rtb-0bd9b282268fe8ec3",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "subnet-076bada58a63f1aff_rtb-0bd9b282268fe8ec3",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "gateway_id": "",
+          "id": "rtbassoc-07e17fa2497700a66",
+          "route_table_id": "rtb-0bd9b282268fe8ec3",
+          "subnet_id": "subnet-076bada58a63f1aff",
+          "timeouts": null
+        },
+        "after": {
+          "gateway_id": "",
+          "id": "rtbassoc-07e17fa2497700a66",
+          "route_table_id": "rtb-0bd9b282268fe8ec3",
+          "subnet_id": "subnet-076bada58a63f1aff",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "subnet-076bada58a63f1aff/rtb-0bd9b282268fe8ec3"
+        }
+      }
+    },
+    {
+      "address": "aws_subnet.subnet-private-a",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "subnet-private-a",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:subnet/subnet-076bada58a63f1aff",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-east-1a",
+          "availability_zone_id": "use1-az4",
+          "cidr_block": "10.5.1.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-076bada58a63f1aff",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_native": false,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": false,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "tags": {
+            "Name": "subnet-private-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "subnet-private-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:subnet/subnet-076bada58a63f1aff",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-east-1a",
+          "availability_zone_id": "use1-az4",
+          "cidr_block": "10.5.1.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-076bada58a63f1aff",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_native": false,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": false,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "tags": {
+            "Name": "subnet-private-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "subnet-private-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "subnet-076bada58a63f1aff"
+        }
+      }
+    },
+    {
+      "address": "aws_subnet.subnet-public-a",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "subnet-public-a",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:subnet/subnet-055885dd9006bb542",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-east-1a",
+          "availability_zone_id": "use1-az4",
+          "cidr_block": "10.5.0.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-055885dd9006bb542",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_native": false,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": false,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "tags": {
+            "Name": "subnet-public-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "subnet-public-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:subnet/subnet-055885dd9006bb542",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-east-1a",
+          "availability_zone_id": "use1-az4",
+          "cidr_block": "10.5.0.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-055885dd9006bb542",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_native": false,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": false,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "tags": {
+            "Name": "subnet-public-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "subnet-public-a",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "subnet-055885dd9006bb542"
+        }
+      }
+    },
+    {
+      "address": "aws_vpc.VPC-Monitoring",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "VPC-Monitoring",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:vpc/vpc-0f60f9fdd3e2a30f2",
+          "assign_generated_ipv6_cidr_block": false,
+          "cidr_block": "10.5.0.0/16",
+          "default_network_acl_id": "acl-0c665dc07c3ae782c",
+          "default_route_table_id": "rtb-0c3d68470475ddeda",
+          "default_security_group_id": "sg-0b7ce785c28c7c824",
+          "dhcp_options_id": "dopt-081d9fc7223db0c95",
+          "enable_dns_hostnames": false,
+          "enable_dns_support": true,
+          "enable_network_address_usage_metrics": false,
+          "id": "vpc-0f60f9fdd3e2a30f2",
+          "instance_tenancy": "default",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_association_id": "",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_network_border_group": "",
+          "ipv6_ipam_pool_id": "",
+          "ipv6_netmask_length": 0,
+          "main_route_table_id": "rtb-0c3d68470475ddeda",
+          "owner_id": "952133486861",
+          "tags": {
+            "Name": "VPC-Monitoring",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "VPC-Monitoring",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          }
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-east-1:952133486861:vpc/vpc-0f60f9fdd3e2a30f2",
+          "assign_generated_ipv6_cidr_block": false,
+          "cidr_block": "10.5.0.0/16",
+          "default_network_acl_id": "acl-0c665dc07c3ae782c",
+          "default_route_table_id": "rtb-0c3d68470475ddeda",
+          "default_security_group_id": "sg-0b7ce785c28c7c824",
+          "dhcp_options_id": "dopt-081d9fc7223db0c95",
+          "enable_dns_hostnames": false,
+          "enable_dns_support": true,
+          "enable_network_address_usage_metrics": false,
+          "id": "vpc-0f60f9fdd3e2a30f2",
+          "instance_tenancy": "default",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_association_id": "",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_network_border_group": "",
+          "ipv6_ipam_pool_id": "",
+          "ipv6_netmask_length": 0,
+          "main_route_table_id": "rtb-0c3d68470475ddeda",
+          "owner_id": "952133486861",
+          "tags": {
+            "Name": "VPC-Monitoring",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "VPC-Monitoring",
+            "State": "State-VPC-Monitoring",
+            "Struct8Creator": "rmay struct"
+          }
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "vpc-0f60f9fdd3e2a30f2"
+        }
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.5.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_route_table.RT-private-a",
+            "mode": "managed",
+            "type": "aws_route_table",
+            "name": "RT-private-a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:ec2:us-east-1:952133486861:route-table/rtb-0bd9b282268fe8ec3",
+              "id": "rtb-0bd9b282268fe8ec3",
+              "owner_id": "952133486861",
+              "propagating_vgws": [],
+              "route": [
+                {
+                  "carrier_gateway_id": "",
+                  "cidr_block": "10.1.0.0/16",
+                  "core_network_arn": "",
+                  "destination_prefix_list_id": "",
+                  "egress_only_gateway_id": "",
+                  "gateway_id": "",
+                  "ipv6_cidr_block": "",
+                  "local_gateway_id": "",
+                  "nat_gateway_id": "",
+                  "network_interface_id": "",
+                  "transit_gateway_id": "",
+                  "vpc_endpoint_id": "",
+                  "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+                }
+              ],
+              "tags": {
+                "Name": "RT-private-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "RT-private-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+            },
+            "sensitive_values": {
+              "propagating_vgws": [],
+              "route": [
+                {}
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_route_table.RT-public-a",
+            "mode": "managed",
+            "type": "aws_route_table",
+            "name": "RT-public-a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:ec2:us-east-1:952133486861:route-table/rtb-0ff820a57943a17e0",
+              "id": "rtb-0ff820a57943a17e0",
+              "owner_id": "952133486861",
+              "propagating_vgws": [],
+              "route": [
+                {
+                  "carrier_gateway_id": "",
+                  "cidr_block": "10.1.0.0/24",
+                  "core_network_arn": "",
+                  "destination_prefix_list_id": "",
+                  "egress_only_gateway_id": "",
+                  "gateway_id": "",
+                  "ipv6_cidr_block": "",
+                  "local_gateway_id": "",
+                  "nat_gateway_id": "",
+                  "network_interface_id": "",
+                  "transit_gateway_id": "",
+                  "vpc_endpoint_id": "",
+                  "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+                }
+              ],
+              "tags": {
+                "Name": "RT-public-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "RT-public-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+            },
+            "sensitive_values": {
+              "propagating_vgws": [],
+              "route": [
+                {}
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_route_table_association.subnet-055885dd9006bb542_rtb-0ff820a57943a17e0",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "subnet-055885dd9006bb542_rtb-0ff820a57943a17e0",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "gateway_id": "",
+              "id": "rtbassoc-057d6aab325cd8b09",
+              "route_table_id": "rtb-0ff820a57943a17e0",
+              "subnet_id": "subnet-055885dd9006bb542",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_route_table_association.subnet-076bada58a63f1aff_rtb-0bd9b282268fe8ec3",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "subnet-076bada58a63f1aff_rtb-0bd9b282268fe8ec3",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "gateway_id": "",
+              "id": "rtbassoc-07e17fa2497700a66",
+              "route_table_id": "rtb-0bd9b282268fe8ec3",
+              "subnet_id": "subnet-076bada58a63f1aff",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_subnet.subnet-private-a",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "subnet-private-a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-east-1:952133486861:subnet/subnet-076bada58a63f1aff",
+              "assign_ipv6_address_on_creation": false,
+              "availability_zone": "us-east-1a",
+              "availability_zone_id": "use1-az4",
+              "cidr_block": "10.5.1.0/24",
+              "customer_owned_ipv4_pool": "",
+              "enable_dns64": false,
+              "enable_lni_at_device_index": 0,
+              "enable_resource_name_dns_a_record_on_launch": false,
+              "enable_resource_name_dns_aaaa_record_on_launch": false,
+              "id": "subnet-076bada58a63f1aff",
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_association_id": "",
+              "ipv6_native": false,
+              "map_customer_owned_ip_on_launch": false,
+              "map_public_ip_on_launch": false,
+              "outpost_arn": "",
+              "owner_id": "952133486861",
+              "private_dns_hostname_type_on_launch": "ip-name",
+              "tags": {
+                "Name": "subnet-private-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "subnet-private-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_subnet.subnet-public-a",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "subnet-public-a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-east-1:952133486861:subnet/subnet-055885dd9006bb542",
+              "assign_ipv6_address_on_creation": false,
+              "availability_zone": "us-east-1a",
+              "availability_zone_id": "use1-az4",
+              "cidr_block": "10.5.0.0/24",
+              "customer_owned_ipv4_pool": "",
+              "enable_dns64": false,
+              "enable_lni_at_device_index": 0,
+              "enable_resource_name_dns_a_record_on_launch": false,
+              "enable_resource_name_dns_aaaa_record_on_launch": false,
+              "id": "subnet-055885dd9006bb542",
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_association_id": "",
+              "ipv6_native": false,
+              "map_customer_owned_ip_on_launch": false,
+              "map_public_ip_on_launch": false,
+              "outpost_arn": "",
+              "owner_id": "952133486861",
+              "private_dns_hostname_type_on_launch": "ip-name",
+              "tags": {
+                "Name": "subnet-public-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "subnet-public-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0f60f9fdd3e2a30f2"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_vpc.VPC-Monitoring",
+            "mode": "managed",
+            "type": "aws_vpc",
+            "name": "VPC-Monitoring",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-east-1:952133486861:vpc/vpc-0f60f9fdd3e2a30f2",
+              "assign_generated_ipv6_cidr_block": false,
+              "cidr_block": "10.5.0.0/16",
+              "default_network_acl_id": "acl-0c665dc07c3ae782c",
+              "default_route_table_id": "rtb-0c3d68470475ddeda",
+              "default_security_group_id": "sg-0b7ce785c28c7c824",
+              "dhcp_options_id": "dopt-081d9fc7223db0c95",
+              "enable_dns_hostnames": false,
+              "enable_dns_support": true,
+              "enable_network_address_usage_metrics": false,
+              "id": "vpc-0f60f9fdd3e2a30f2",
+              "instance_tenancy": "default",
+              "ipv4_ipam_pool_id": null,
+              "ipv4_netmask_length": null,
+              "ipv6_association_id": "",
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_network_border_group": "",
+              "ipv6_ipam_pool_id": "",
+              "ipv6_netmask_length": 0,
+              "main_route_table_id": "rtb-0c3d68470475ddeda",
+              "owner_id": "952133486861",
+              "tags": {
+                "Name": "VPC-Monitoring",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "VPC-Monitoring",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "version_constraint": "~> 5.0",
+        "expressions": {
+          "region": {
+            "constant_value": "us-east-1"
+          }
+        }
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_route_table.RT-private-a",
+          "mode": "managed",
+          "type": "aws_route_table",
+          "name": "RT-private-a",
+          "provider_config_key": "aws",
+          "expressions": {
+            "route": {
+              "constant_value": [
+                {
+                  "carrier_gateway_id": null,
+                  "cidr_block": "10.1.0.0/16",
+                  "core_network_arn": null,
+                  "destination_prefix_list_id": null,
+                  "egress_only_gateway_id": null,
+                  "gateway_id": null,
+                  "ipv6_cidr_block": null,
+                  "local_gateway_id": null,
+                  "nat_gateway_id": null,
+                  "network_interface_id": null,
+                  "transit_gateway_id": null,
+                  "vpc_endpoint_id": null,
+                  "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+                }
+              ]
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "RT-private-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "RT-private-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0f60f9fdd3e2a30f2"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_route_table.RT-public-a",
+          "mode": "managed",
+          "type": "aws_route_table",
+          "name": "RT-public-a",
+          "provider_config_key": "aws",
+          "expressions": {
+            "route": {
+              "constant_value": [
+                {
+                  "carrier_gateway_id": null,
+                  "cidr_block": "10.1.0.0/24",
+                  "core_network_arn": null,
+                  "destination_prefix_list_id": null,
+                  "egress_only_gateway_id": null,
+                  "gateway_id": null,
+                  "ipv6_cidr_block": null,
+                  "local_gateway_id": null,
+                  "nat_gateway_id": null,
+                  "network_interface_id": null,
+                  "transit_gateway_id": null,
+                  "vpc_endpoint_id": null,
+                  "vpc_peering_connection_id": "pcx-0731dc6d99f813813"
+                }
+              ]
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "RT-public-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "RT-public-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0f60f9fdd3e2a30f2"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_route_table_association.subnet-055885dd9006bb542_rtb-0ff820a57943a17e0",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-055885dd9006bb542_rtb-0ff820a57943a17e0",
+          "provider_config_key": "aws",
+          "expressions": {
+            "gateway_id": {
+              "constant_value": null
+            },
+            "route_table_id": {
+              "constant_value": "rtb-0ff820a57943a17e0"
+            },
+            "subnet_id": {
+              "constant_value": "subnet-055885dd9006bb542"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_route_table_association.subnet-076bada58a63f1aff_rtb-0bd9b282268fe8ec3",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-076bada58a63f1aff_rtb-0bd9b282268fe8ec3",
+          "provider_config_key": "aws",
+          "expressions": {
+            "gateway_id": {
+              "constant_value": null
+            },
+            "route_table_id": {
+              "constant_value": "rtb-0bd9b282268fe8ec3"
+            },
+            "subnet_id": {
+              "constant_value": "subnet-076bada58a63f1aff"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_subnet.subnet-private-a",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "subnet-private-a",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assign_ipv6_address_on_creation": {
+              "constant_value": false
+            },
+            "cidr_block": {
+              "constant_value": "10.5.1.0/24"
+            },
+            "customer_owned_ipv4_pool": {
+              "constant_value": null
+            },
+            "enable_dns64": {
+              "constant_value": false
+            },
+            "enable_resource_name_dns_a_record_on_launch": {
+              "constant_value": false
+            },
+            "enable_resource_name_dns_aaaa_record_on_launch": {
+              "constant_value": false
+            },
+            "ipv6_cidr_block": {
+              "constant_value": null
+            },
+            "ipv6_native": {
+              "constant_value": false
+            },
+            "map_public_ip_on_launch": {
+              "constant_value": false
+            },
+            "outpost_arn": {
+              "constant_value": null
+            },
+            "private_dns_hostname_type_on_launch": {
+              "constant_value": "ip-name"
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "subnet-private-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "subnet-private-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0f60f9fdd3e2a30f2"
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "aws_subnet.subnet-public-a",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "subnet-public-a",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assign_ipv6_address_on_creation": {
+              "constant_value": false
+            },
+            "cidr_block": {
+              "constant_value": "10.5.0.0/24"
+            },
+            "customer_owned_ipv4_pool": {
+              "constant_value": null
+            },
+            "enable_dns64": {
+              "constant_value": false
+            },
+            "enable_resource_name_dns_a_record_on_launch": {
+              "constant_value": false
+            },
+            "enable_resource_name_dns_aaaa_record_on_launch": {
+              "constant_value": false
+            },
+            "ipv6_cidr_block": {
+              "constant_value": null
+            },
+            "ipv6_native": {
+              "constant_value": false
+            },
+            "map_public_ip_on_launch": {
+              "constant_value": false
+            },
+            "outpost_arn": {
+              "constant_value": null
+            },
+            "private_dns_hostname_type_on_launch": {
+              "constant_value": "ip-name"
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "subnet-public-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "subnet-public-a",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0f60f9fdd3e2a30f2"
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "aws_vpc.VPC-Monitoring",
+          "mode": "managed",
+          "type": "aws_vpc",
+          "name": "VPC-Monitoring",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assign_generated_ipv6_cidr_block": {
+              "constant_value": false
+            },
+            "cidr_block": {
+              "constant_value": "10.5.0.0/16"
+            },
+            "enable_dns_hostnames": {
+              "constant_value": false
+            },
+            "enable_dns_support": {
+              "constant_value": true
+            },
+            "enable_network_address_usage_metrics": {
+              "constant_value": false
+            },
+            "instance_tenancy": {
+              "constant_value": "default"
+            },
+            "ipv4_ipam_pool_id": {
+              "constant_value": null
+            },
+            "ipv4_netmask_length": {
+              "constant_value": null
+            },
+            "ipv6_cidr_block": {
+              "constant_value": null
+            },
+            "ipv6_cidr_block_network_border_group": {
+              "constant_value": null
+            },
+            "ipv6_ipam_pool_id": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "VPC-Monitoring",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "VPC-Monitoring",
+                "State": "State-VPC-Monitoring",
+                "Struct8Creator": "rmay struct"
+              }
+            }
+          },
+          "schema_version": 1
+        }
+      ]
+    }
+  },
+  "timestamp": "2026-10-30T21:45:30Z",
+  "redacted_attributes": []
+}
