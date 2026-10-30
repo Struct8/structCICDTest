@@ -17,11 +17,11 @@ import {
 }
 
 import {
-  to = aws_route.route_RT-public-a_to_Peering-Monitoring-to-Monitored_10_1_0_0_16
-  id = "rtb-030e6a27e226c9058_10.1.0.0/16"
+  to = aws_route.route_RT-public-a_to_Peering-Monitoring-to-Monitored_10_1_0_0_24
+  id = "rtb-030e6a27e226c9058_10.1.0.0/24"
 }
 
 import {
-  to = aws_route.route_RT-public-b_to_Peering-Monitoring-to-Monitored_10_5_0_0_16
-  id = "rtb-0377f59c058c237f6_10.5.0.0/16"
+  to = aws_route.route_RT-public-b_to_Peering-Monitoring-to-Monitored_10_5_0_0_24
+  id = "rtb-0377f59c058c237f6_10.5.0.0/24"
 }
