@@ -1,0 +1,1897 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.5.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_s3_bucket.secure-baseline-bucket",
+          "mode": "managed",
+          "type": "aws_s3_bucket",
+          "name": "secure-baseline-bucket",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "acceleration_status": "",
+            "acl": null,
+            "arn": "arn:aws:s3:::secure-baseline-bucket-952133486861-us-west-2-an",
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "bucket_domain_name": "secure-baseline-bucket-952133486861-us-west-2-an.s3.amazonaws.com",
+            "bucket_prefix": "",
+            "bucket_regional_domain_name": "secure-baseline-bucket-952133486861-us-west-2-an.s3.us-west-2.amazonaws.com",
+            "cors_rule": [],
+            "force_destroy": null,
+            "grant": [
+              {
+                "id": "e8a9e96ab6e351440182fde73c2878d7e03a1a51200d3cab16f4451f9cafe25c",
+                "permissions": [
+                  "FULL_CONTROL"
+                ],
+                "type": "CanonicalUser",
+                "uri": ""
+              }
+            ],
+            "hosted_zone_id": "Z3BJ6K6RIION7M",
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "lifecycle_rule": [
+              {
+                "abort_incomplete_multipart_upload_days": 7,
+                "enabled": true,
+                "expiration": [],
+                "id": "expire-noncurrent-versions",
+                "noncurrent_version_expiration": [
+                  {
+                    "days": 90
+                  }
+                ],
+                "noncurrent_version_transition": [],
+                "prefix": "",
+                "tags": {},
+                "transition": []
+              },
+              {
+                "abort_incomplete_multipart_upload_days": 0,
+                "enabled": true,
+                "expiration": [],
+                "id": "transition-to-cheaper-storage",
+                "noncurrent_version_expiration": [],
+                "noncurrent_version_transition": [],
+                "prefix": "",
+                "tags": {},
+                "transition": [
+                  {
+                    "date": "",
+                    "days": 30,
+                    "storage_class": "STANDARD_IA"
+                  },
+                  {
+                    "date": "",
+                    "days": 90,
+                    "storage_class": "GLACIER"
+                  }
+                ]
+              },
+              {
+                "abort_incomplete_multipart_upload_days": 0,
+                "enabled": true,
+                "expiration": [
+                  {
+                    "date": "",
+                    "days": 7,
+                    "expired_object_delete_marker": false
+                  }
+                ],
+                "id": "expire-temp-objects",
+                "noncurrent_version_expiration": [],
+                "noncurrent_version_transition": [],
+                "prefix": "tmp/",
+                "tags": {},
+                "transition": []
+              }
+            ],
+            "logging": [],
+            "object_lock_configuration": [],
+            "object_lock_enabled": false,
+            "policy": "",
+            "region": "us-west-2",
+            "replication_configuration": [],
+            "request_payer": "BucketOwner",
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {
+                        "kms_master_key_id": "",
+                        "sse_algorithm": "AES256"
+                      }
+                    ],
+                    "bucket_key_enabled": true
+                  }
+                ]
+              }
+            ],
+            "tags": {
+              "Name": "secure-baseline-bucket",
+              "State": "s3-secure-baseline",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "secure-baseline-bucket",
+              "State": "s3-secure-baseline",
+              "Struct8Creator": "rmay struct"
+            },
+            "timeouts": null,
+            "versioning": [
+              {
+                "enabled": true,
+                "mfa_delete": false
+              }
+            ],
+            "website": [],
+            "website_domain": null,
+            "website_endpoint": null
+          },
+          "sensitive_values": {
+            "cors_rule": [],
+            "grant": [
+              {
+                "permissions": [
+                  false
+                ]
+              }
+            ],
+            "lifecycle_rule": [
+              {
+                "expiration": [],
+                "noncurrent_version_expiration": [
+                  {}
+                ],
+                "noncurrent_version_transition": [],
+                "tags": {},
+                "transition": []
+              },
+              {
+                "expiration": [],
+                "noncurrent_version_expiration": [],
+                "noncurrent_version_transition": [],
+                "tags": {},
+                "transition": [
+                  {},
+                  {}
+                ]
+              },
+              {
+                "expiration": [
+                  {}
+                ],
+                "noncurrent_version_expiration": [],
+                "noncurrent_version_transition": [],
+                "tags": {},
+                "transition": []
+              }
+            ],
+            "logging": [],
+            "object_lock_configuration": [],
+            "replication_configuration": [],
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {}
+                    ]
+                  }
+                ]
+              }
+            ],
+            "tags": {},
+            "tags_all": {},
+            "versioning": [
+              {}
+            ],
+            "website": []
+          }
+        },
+        {
+          "address": "aws_s3_bucket_accelerate_configuration.secure-baseline-bucket_accelerate_configuration",
+          "mode": "managed",
+          "type": "aws_s3_bucket_accelerate_configuration",
+          "name": "secure-baseline-bucket_accelerate_configuration",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "status": ""
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_s3_bucket_lifecycle_configuration.secure-baseline-bucket_lifecycle_configuration",
+          "mode": "managed",
+          "type": "aws_s3_bucket_lifecycle_configuration",
+          "name": "secure-baseline-bucket_lifecycle_configuration",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "rule": [
+              {
+                "abort_incomplete_multipart_upload": [
+                  {
+                    "days_after_initiation": 7
+                  }
+                ],
+                "expiration": [],
+                "filter": [],
+                "id": "expire-noncurrent-versions",
+                "noncurrent_version_expiration": [
+                  {
+                    "newer_noncurrent_versions": null,
+                    "noncurrent_days": 90
+                  }
+                ],
+                "noncurrent_version_transition": [],
+                "prefix": "",
+                "status": "Enabled",
+                "transition": []
+              },
+              {
+                "abort_incomplete_multipart_upload": [],
+                "expiration": [],
+                "filter": [],
+                "id": "transition-to-cheaper-storage",
+                "noncurrent_version_expiration": [],
+                "noncurrent_version_transition": [],
+                "prefix": "",
+                "status": "Enabled",
+                "transition": [
+                  {
+                    "date": null,
+                    "days": 30,
+                    "storage_class": "STANDARD_IA"
+                  },
+                  {
+                    "date": null,
+                    "days": 90,
+                    "storage_class": "GLACIER"
+                  }
+                ]
+              },
+              {
+                "abort_incomplete_multipart_upload": [],
+                "expiration": [
+                  {
+                    "date": null,
+                    "days": 7,
+                    "expired_object_delete_marker": false
+                  }
+                ],
+                "filter": [
+                  {
+                    "and": [],
+                    "object_size_greater_than": null,
+                    "object_size_less_than": null,
+                    "prefix": "tmp/",
+                    "tag": []
+                  }
+                ],
+                "id": "expire-temp-objects",
+                "noncurrent_version_expiration": [],
+                "noncurrent_version_transition": [],
+                "prefix": "",
+                "status": "Enabled",
+                "transition": []
+              }
+            ],
+            "timeouts": null,
+            "transition_default_minimum_object_size": "all_storage_classes_128K"
+          },
+          "sensitive_values": {
+            "rule": [
+              {
+                "abort_incomplete_multipart_upload": [
+                  {}
+                ],
+                "expiration": [],
+                "filter": [],
+                "noncurrent_version_expiration": [
+                  {}
+                ],
+                "noncurrent_version_transition": [],
+                "transition": []
+              },
+              {
+                "abort_incomplete_multipart_upload": [],
+                "expiration": [],
+                "filter": [],
+                "noncurrent_version_expiration": [],
+                "noncurrent_version_transition": [],
+                "transition": [
+                  {},
+                  {}
+                ]
+              },
+              {
+                "abort_incomplete_multipart_upload": [],
+                "expiration": [
+                  {}
+                ],
+                "filter": [
+                  {
+                    "and": [],
+                    "tag": []
+                  }
+                ],
+                "noncurrent_version_expiration": [],
+                "noncurrent_version_transition": [],
+                "transition": []
+              }
+            ]
+          }
+        },
+        {
+          "address": "aws_s3_bucket_notification.secure-baseline-bucket_notification",
+          "mode": "managed",
+          "type": "aws_s3_bucket_notification",
+          "name": "secure-baseline-bucket_notification",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "eventbridge": false,
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "lambda_function": [],
+            "queue": [],
+            "topic": []
+          },
+          "sensitive_values": {
+            "lambda_function": [],
+            "queue": [],
+            "topic": []
+          }
+        },
+        {
+          "address": "aws_s3_bucket_ownership_controls.secure-baseline-bucket_ownership_controls",
+          "mode": "managed",
+          "type": "aws_s3_bucket_ownership_controls",
+          "name": "secure-baseline-bucket_ownership_controls",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "rule": [
+              {
+                "object_ownership": "BucketOwnerEnforced"
+              }
+            ]
+          },
+          "sensitive_values": {
+            "rule": [
+              {}
+            ]
+          }
+        },
+        {
+          "address": "aws_s3_bucket_public_access_block.secure-baseline-bucket_public_access_block",
+          "mode": "managed",
+          "type": "aws_s3_bucket_public_access_block",
+          "name": "secure-baseline-bucket_public_access_block",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "block_public_acls": true,
+            "block_public_policy": true,
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "ignore_public_acls": true,
+            "restrict_public_buckets": true
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_s3_bucket_request_payment_configuration.secure-baseline-bucket_request_payment_configuration",
+          "mode": "managed",
+          "type": "aws_s3_bucket_request_payment_configuration",
+          "name": "secure-baseline-bucket_request_payment_configuration",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "payer": "BucketOwner"
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_s3_bucket_server_side_encryption_configuration.secure-baseline-bucket_server_side_encryption_configuration",
+          "mode": "managed",
+          "type": "aws_s3_bucket_server_side_encryption_configuration",
+          "name": "secure-baseline-bucket_server_side_encryption_configuration",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "rule": [
+              {
+                "apply_server_side_encryption_by_default": [
+                  {
+                    "kms_master_key_id": "",
+                    "sse_algorithm": "AES256"
+                  }
+                ],
+                "bucket_key_enabled": true
+              }
+            ]
+          },
+          "sensitive_values": {
+            "rule": [
+              {
+                "apply_server_side_encryption_by_default": [
+                  {}
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "address": "aws_s3_bucket_versioning.secure-baseline-bucket_versioning",
+          "mode": "managed",
+          "type": "aws_s3_bucket_versioning",
+          "name": "secure-baseline-bucket_versioning",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "expected_bucket_owner": "",
+            "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+            "mfa": null,
+            "versioning_configuration": [
+              {
+                "mfa_delete": "Disabled",
+                "status": "Enabled"
+              }
+            ]
+          },
+          "sensitive_values": {
+            "versioning_configuration": [
+              {}
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_s3_bucket.secure-baseline-bucket",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "secure-baseline-bucket",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "acceleration_status": "",
+          "acl": null,
+          "arn": "arn:aws:s3:::secure-baseline-bucket-952133486861-us-west-2-an",
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "bucket_domain_name": "secure-baseline-bucket-952133486861-us-west-2-an.s3.amazonaws.com",
+          "bucket_prefix": "",
+          "bucket_regional_domain_name": "secure-baseline-bucket-952133486861-us-west-2-an.s3.us-west-2.amazonaws.com",
+          "cors_rule": [],
+          "force_destroy": null,
+          "grant": [
+            {
+              "id": "e8a9e96ab6e351440182fde73c2878d7e03a1a51200d3cab16f4451f9cafe25c",
+              "permissions": [
+                "FULL_CONTROL"
+              ],
+              "type": "CanonicalUser",
+              "uri": ""
+            }
+          ],
+          "hosted_zone_id": "Z3BJ6K6RIION7M",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "lifecycle_rule": [
+            {
+              "abort_incomplete_multipart_upload_days": 7,
+              "enabled": true,
+              "expiration": [],
+              "id": "expire-noncurrent-versions",
+              "noncurrent_version_expiration": [
+                {
+                  "days": 90
+                }
+              ],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "tags": {},
+              "transition": []
+            },
+            {
+              "abort_incomplete_multipart_upload_days": 0,
+              "enabled": true,
+              "expiration": [],
+              "id": "transition-to-cheaper-storage",
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "tags": {},
+              "transition": [
+                {
+                  "date": "",
+                  "days": 30,
+                  "storage_class": "STANDARD_IA"
+                },
+                {
+                  "date": "",
+                  "days": 90,
+                  "storage_class": "GLACIER"
+                }
+              ]
+            },
+            {
+              "abort_incomplete_multipart_upload_days": 0,
+              "enabled": true,
+              "expiration": [
+                {
+                  "date": "",
+                  "days": 7,
+                  "expired_object_delete_marker": false
+                }
+              ],
+              "id": "expire-temp-objects",
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "prefix": "tmp/",
+              "tags": {},
+              "transition": []
+            }
+          ],
+          "logging": [],
+          "object_lock_configuration": [],
+          "object_lock_enabled": false,
+          "policy": "",
+          "region": "us-west-2",
+          "replication_configuration": [],
+          "request_payer": "BucketOwner",
+          "server_side_encryption_configuration": [
+            {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {
+                      "kms_master_key_id": "",
+                      "sse_algorithm": "AES256"
+                    }
+                  ],
+                  "bucket_key_enabled": true
+                }
+              ]
+            }
+          ],
+          "tags": {
+            "Name": "secure-baseline-bucket",
+            "State": "s3-secure-baseline",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "secure-baseline-bucket",
+            "State": "s3-secure-baseline",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "versioning": [
+            {
+              "enabled": true,
+              "mfa_delete": false
+            }
+          ],
+          "website": [],
+          "website_domain": null,
+          "website_endpoint": null
+        },
+        "after": {
+          "acceleration_status": "",
+          "acl": null,
+          "arn": "arn:aws:s3:::secure-baseline-bucket-952133486861-us-west-2-an",
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "bucket_domain_name": "secure-baseline-bucket-952133486861-us-west-2-an.s3.amazonaws.com",
+          "bucket_prefix": "",
+          "bucket_regional_domain_name": "secure-baseline-bucket-952133486861-us-west-2-an.s3.us-west-2.amazonaws.com",
+          "cors_rule": [],
+          "force_destroy": null,
+          "grant": [
+            {
+              "id": "e8a9e96ab6e351440182fde73c2878d7e03a1a51200d3cab16f4451f9cafe25c",
+              "permissions": [
+                "FULL_CONTROL"
+              ],
+              "type": "CanonicalUser",
+              "uri": ""
+            }
+          ],
+          "hosted_zone_id": "Z3BJ6K6RIION7M",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "lifecycle_rule": [
+            {
+              "abort_incomplete_multipart_upload_days": 7,
+              "enabled": true,
+              "expiration": [],
+              "id": "expire-noncurrent-versions",
+              "noncurrent_version_expiration": [
+                {
+                  "days": 90
+                }
+              ],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "tags": {},
+              "transition": []
+            },
+            {
+              "abort_incomplete_multipart_upload_days": 0,
+              "enabled": true,
+              "expiration": [],
+              "id": "transition-to-cheaper-storage",
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "tags": {},
+              "transition": [
+                {
+                  "date": "",
+                  "days": 30,
+                  "storage_class": "STANDARD_IA"
+                },
+                {
+                  "date": "",
+                  "days": 90,
+                  "storage_class": "GLACIER"
+                }
+              ]
+            },
+            {
+              "abort_incomplete_multipart_upload_days": 0,
+              "enabled": true,
+              "expiration": [
+                {
+                  "date": "",
+                  "days": 7,
+                  "expired_object_delete_marker": false
+                }
+              ],
+              "id": "expire-temp-objects",
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "prefix": "tmp/",
+              "tags": {},
+              "transition": []
+            }
+          ],
+          "logging": [],
+          "object_lock_configuration": [],
+          "object_lock_enabled": false,
+          "policy": "",
+          "region": "us-west-2",
+          "replication_configuration": [],
+          "request_payer": "BucketOwner",
+          "server_side_encryption_configuration": [
+            {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {
+                      "kms_master_key_id": "",
+                      "sse_algorithm": "AES256"
+                    }
+                  ],
+                  "bucket_key_enabled": true
+                }
+              ]
+            }
+          ],
+          "tags": {
+            "Name": "secure-baseline-bucket",
+            "State": "s3-secure-baseline",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "secure-baseline-bucket",
+            "State": "s3-secure-baseline",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "versioning": [
+            {
+              "enabled": true,
+              "mfa_delete": false
+            }
+          ],
+          "website": [],
+          "website_domain": null,
+          "website_endpoint": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "cors_rule": [],
+          "grant": [
+            {
+              "permissions": [
+                false
+              ]
+            }
+          ],
+          "lifecycle_rule": [
+            {
+              "expiration": [],
+              "noncurrent_version_expiration": [
+                {}
+              ],
+              "noncurrent_version_transition": [],
+              "tags": {},
+              "transition": []
+            },
+            {
+              "expiration": [],
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "tags": {},
+              "transition": [
+                {},
+                {}
+              ]
+            },
+            {
+              "expiration": [
+                {}
+              ],
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "tags": {},
+              "transition": []
+            }
+          ],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [
+            {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ]
+                }
+              ]
+            }
+          ],
+          "tags": {},
+          "tags_all": {},
+          "versioning": [
+            {}
+          ],
+          "website": []
+        },
+        "after_sensitive": {
+          "cors_rule": [],
+          "grant": [
+            {
+              "permissions": [
+                false
+              ]
+            }
+          ],
+          "lifecycle_rule": [
+            {
+              "expiration": [],
+              "noncurrent_version_expiration": [
+                {}
+              ],
+              "noncurrent_version_transition": [],
+              "tags": {},
+              "transition": []
+            },
+            {
+              "expiration": [],
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "tags": {},
+              "transition": [
+                {},
+                {}
+              ]
+            },
+            {
+              "expiration": [
+                {}
+              ],
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "tags": {},
+              "transition": []
+            }
+          ],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [
+            {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ]
+                }
+              ]
+            }
+          ],
+          "tags": {},
+          "tags_all": {},
+          "versioning": [
+            {}
+          ],
+          "website": []
+        },
+        "importing": {
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket\" \"secure-baseline-bucket\" {\n  bucket              = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  bucket_prefix       = null\n  force_destroy       = null\n  object_lock_enabled = false\n  tags = {\n    Name           = \"secure-baseline-bucket\"\n    State          = \"s3-secure-baseline\"\n    Struct8Creator = \"rmay struct\"\n  }\n  tags_all = {\n    Name           = \"secure-baseline-bucket\"\n    State          = \"s3-secure-baseline\"\n    Struct8Creator = \"rmay struct\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_accelerate_configuration.secure-baseline-bucket_accelerate_configuration",
+      "mode": "managed",
+      "type": "aws_s3_bucket_accelerate_configuration",
+      "name": "secure-baseline-bucket_accelerate_configuration",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "status": ""
+        },
+        "after": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "status": ""
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "generated_config": "resource \"aws_s3_bucket_accelerate_configuration\" \"secure-baseline-bucket_accelerate_configuration\" {\n  bucket                = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  status                = \"\"\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_lifecycle_configuration.secure-baseline-bucket_lifecycle_configuration",
+      "mode": "managed",
+      "type": "aws_s3_bucket_lifecycle_configuration",
+      "name": "secure-baseline-bucket_lifecycle_configuration",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "abort_incomplete_multipart_upload": [
+                {
+                  "days_after_initiation": 7
+                }
+              ],
+              "expiration": [],
+              "filter": [],
+              "id": "expire-noncurrent-versions",
+              "noncurrent_version_expiration": [
+                {
+                  "newer_noncurrent_versions": null,
+                  "noncurrent_days": 90
+                }
+              ],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "status": "Enabled",
+              "transition": []
+            },
+            {
+              "abort_incomplete_multipart_upload": [],
+              "expiration": [],
+              "filter": [],
+              "id": "transition-to-cheaper-storage",
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "status": "Enabled",
+              "transition": [
+                {
+                  "date": null,
+                  "days": 30,
+                  "storage_class": "STANDARD_IA"
+                },
+                {
+                  "date": null,
+                  "days": 90,
+                  "storage_class": "GLACIER"
+                }
+              ]
+            },
+            {
+              "abort_incomplete_multipart_upload": [],
+              "expiration": [
+                {
+                  "date": null,
+                  "days": 7,
+                  "expired_object_delete_marker": false
+                }
+              ],
+              "filter": [
+                {
+                  "and": [],
+                  "object_size_greater_than": null,
+                  "object_size_less_than": null,
+                  "prefix": "tmp/",
+                  "tag": []
+                }
+              ],
+              "id": "expire-temp-objects",
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "status": "Enabled",
+              "transition": []
+            }
+          ],
+          "timeouts": null,
+          "transition_default_minimum_object_size": "all_storage_classes_128K"
+        },
+        "after": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "abort_incomplete_multipart_upload": [
+                {
+                  "days_after_initiation": 7
+                }
+              ],
+              "expiration": [],
+              "filter": [],
+              "id": "expire-noncurrent-versions",
+              "noncurrent_version_expiration": [
+                {
+                  "newer_noncurrent_versions": null,
+                  "noncurrent_days": 90
+                }
+              ],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "status": "Enabled",
+              "transition": []
+            },
+            {
+              "abort_incomplete_multipart_upload": [],
+              "expiration": [],
+              "filter": [],
+              "id": "transition-to-cheaper-storage",
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "status": "Enabled",
+              "transition": [
+                {
+                  "date": null,
+                  "days": 30,
+                  "storage_class": "STANDARD_IA"
+                },
+                {
+                  "date": null,
+                  "days": 90,
+                  "storage_class": "GLACIER"
+                }
+              ]
+            },
+            {
+              "abort_incomplete_multipart_upload": [],
+              "expiration": [
+                {
+                  "date": null,
+                  "days": 7,
+                  "expired_object_delete_marker": false
+                }
+              ],
+              "filter": [
+                {
+                  "and": [],
+                  "object_size_greater_than": null,
+                  "object_size_less_than": null,
+                  "prefix": "tmp/",
+                  "tag": []
+                }
+              ],
+              "id": "expire-temp-objects",
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "prefix": "",
+              "status": "Enabled",
+              "transition": []
+            }
+          ],
+          "timeouts": null,
+          "transition_default_minimum_object_size": "all_storage_classes_128K"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "rule": [
+            {
+              "abort_incomplete_multipart_upload": [
+                {}
+              ],
+              "expiration": [],
+              "filter": [],
+              "noncurrent_version_expiration": [
+                {}
+              ],
+              "noncurrent_version_transition": [],
+              "transition": []
+            },
+            {
+              "abort_incomplete_multipart_upload": [],
+              "expiration": [],
+              "filter": [],
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "transition": [
+                {},
+                {}
+              ]
+            },
+            {
+              "abort_incomplete_multipart_upload": [],
+              "expiration": [
+                {}
+              ],
+              "filter": [
+                {
+                  "and": [],
+                  "tag": []
+                }
+              ],
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "transition": []
+            }
+          ]
+        },
+        "after_sensitive": {
+          "rule": [
+            {
+              "abort_incomplete_multipart_upload": [
+                {}
+              ],
+              "expiration": [],
+              "filter": [],
+              "noncurrent_version_expiration": [
+                {}
+              ],
+              "noncurrent_version_transition": [],
+              "transition": []
+            },
+            {
+              "abort_incomplete_multipart_upload": [],
+              "expiration": [],
+              "filter": [],
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "transition": [
+                {},
+                {}
+              ]
+            },
+            {
+              "abort_incomplete_multipart_upload": [],
+              "expiration": [
+                {}
+              ],
+              "filter": [
+                {
+                  "and": [],
+                  "tag": []
+                }
+              ],
+              "noncurrent_version_expiration": [],
+              "noncurrent_version_transition": [],
+              "transition": []
+            }
+          ]
+        },
+        "importing": {
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_lifecycle_configuration\" \"secure-baseline-bucket_lifecycle_configuration\" {\n  bucket                                 = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  expected_bucket_owner                  = null\n  transition_default_minimum_object_size = \"all_storage_classes_128K\"\n  rule {\n    id     = \"expire-noncurrent-versions\"\n    status = \"Enabled\"\n    abort_incomplete_multipart_upload {\n      days_after_initiation = 7\n    }\n    noncurrent_version_expiration {\n      newer_noncurrent_versions = null\n      noncurrent_days           = 90\n    }\n  }\n  rule {\n    id     = \"transition-to-cheaper-storage\"\n    status = \"Enabled\"\n    transition {\n      date          = null\n      days          = 30\n      storage_class = \"STANDARD_IA\"\n    }\n    transition {\n      date          = null\n      days          = 90\n      storage_class = \"GLACIER\"\n    }\n  }\n  rule {\n    id     = \"expire-temp-objects\"\n    status = \"Enabled\"\n    expiration {\n      date                         = null\n      days                         = 7\n      expired_object_delete_marker = false\n    }\n    filter {\n      object_size_greater_than = null\n      object_size_less_than    = null\n      prefix                   = \"tmp/\"\n    }\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_notification.secure-baseline-bucket_notification",
+      "mode": "managed",
+      "type": "aws_s3_bucket_notification",
+      "name": "secure-baseline-bucket_notification",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "eventbridge": false,
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "lambda_function": [],
+          "queue": [],
+          "topic": []
+        },
+        "after": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "eventbridge": false,
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "lambda_function": [],
+          "queue": [],
+          "topic": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "lambda_function": [],
+          "queue": [],
+          "topic": []
+        },
+        "after_sensitive": {
+          "lambda_function": [],
+          "queue": [],
+          "topic": []
+        },
+        "importing": {
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_notification\" \"secure-baseline-bucket_notification\" {\n  bucket      = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  eventbridge = false\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_ownership_controls.secure-baseline-bucket_ownership_controls",
+      "mode": "managed",
+      "type": "aws_s3_bucket_ownership_controls",
+      "name": "secure-baseline-bucket_ownership_controls",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "object_ownership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "after": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "object_ownership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "rule": [
+            {}
+          ]
+        },
+        "after_sensitive": {
+          "rule": [
+            {}
+          ]
+        },
+        "importing": {
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_ownership_controls\" \"secure-baseline-bucket_ownership_controls\" {\n  bucket = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  rule {\n    object_ownership = \"BucketOwnerEnforced\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_public_access_block.secure-baseline-bucket_public_access_block",
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "secure-baseline-bucket_public_access_block",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        },
+        "after": {
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_public_access_block\" \"secure-baseline-bucket_public_access_block\" {\n  block_public_acls       = true\n  block_public_policy     = true\n  bucket                  = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  ignore_public_acls      = true\n  restrict_public_buckets = true\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_request_payment_configuration.secure-baseline-bucket_request_payment_configuration",
+      "mode": "managed",
+      "type": "aws_s3_bucket_request_payment_configuration",
+      "name": "secure-baseline-bucket_request_payment_configuration",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "payer": "BucketOwner"
+        },
+        "after": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "payer": "BucketOwner"
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_request_payment_configuration\" \"secure-baseline-bucket_request_payment_configuration\" {\n  bucket                = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  payer                 = \"BucketOwner\"\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_server_side_encryption_configuration.secure-baseline-bucket_server_side_encryption_configuration",
+      "mode": "managed",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "name": "secure-baseline-bucket_server_side_encryption_configuration",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "kms_master_key_id": "",
+                  "sse_algorithm": "AES256"
+                }
+              ],
+              "bucket_key_enabled": true
+            }
+          ]
+        },
+        "after": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "kms_master_key_id": "",
+                  "sse_algorithm": "AES256"
+                }
+              ],
+              "bucket_key_enabled": true
+            }
+          ]
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {}
+              ]
+            }
+          ]
+        },
+        "after_sensitive": {
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {}
+              ]
+            }
+          ]
+        },
+        "importing": {
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_server_side_encryption_configuration\" \"secure-baseline-bucket_server_side_encryption_configuration\" {\n  bucket                = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  rule {\n    bucket_key_enabled = true\n    apply_server_side_encryption_by_default {\n      kms_master_key_id = null\n      sse_algorithm     = \"AES256\"\n    }\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_s3_bucket_versioning.secure-baseline-bucket_versioning",
+      "mode": "managed",
+      "type": "aws_s3_bucket_versioning",
+      "name": "secure-baseline-bucket_versioning",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "mfa": null,
+          "versioning_configuration": [
+            {
+              "mfa_delete": "Disabled",
+              "status": "Enabled"
+            }
+          ]
+        },
+        "after": {
+          "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "expected_bucket_owner": "",
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+          "mfa": null,
+          "versioning_configuration": [
+            {
+              "mfa_delete": "Disabled",
+              "status": "Enabled"
+            }
+          ]
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "versioning_configuration": [
+            {}
+          ]
+        },
+        "after_sensitive": {
+          "versioning_configuration": [
+            {}
+          ]
+        },
+        "importing": {
+          "id": "secure-baseline-bucket-952133486861-us-west-2-an"
+        },
+        "generated_config": "resource \"aws_s3_bucket_versioning\" \"secure-baseline-bucket_versioning\" {\n  bucket                = \"secure-baseline-bucket-952133486861-us-west-2-an\"\n  expected_bucket_owner = null\n  mfa                   = null\n  versioning_configuration {\n    mfa_delete = \"Disabled\"\n    status     = \"Enabled\"\n  }\n}"
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.5.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_s3_bucket.secure-baseline-bucket",
+            "mode": "managed",
+            "type": "aws_s3_bucket",
+            "name": "secure-baseline-bucket",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "acceleration_status": "",
+              "acl": null,
+              "arn": "arn:aws:s3:::secure-baseline-bucket-952133486861-us-west-2-an",
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "bucket_domain_name": "secure-baseline-bucket-952133486861-us-west-2-an.s3.amazonaws.com",
+              "bucket_prefix": "",
+              "bucket_regional_domain_name": "secure-baseline-bucket-952133486861-us-west-2-an.s3.us-west-2.amazonaws.com",
+              "cors_rule": [],
+              "force_destroy": null,
+              "grant": [
+                {
+                  "id": "e8a9e96ab6e351440182fde73c2878d7e03a1a51200d3cab16f4451f9cafe25c",
+                  "permissions": [
+                    "FULL_CONTROL"
+                  ],
+                  "type": "CanonicalUser",
+                  "uri": ""
+                }
+              ],
+              "hosted_zone_id": "Z3BJ6K6RIION7M",
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "lifecycle_rule": [
+                {
+                  "abort_incomplete_multipart_upload_days": 7,
+                  "enabled": true,
+                  "expiration": [],
+                  "id": "expire-noncurrent-versions",
+                  "noncurrent_version_expiration": [
+                    {
+                      "days": 90
+                    }
+                  ],
+                  "noncurrent_version_transition": [],
+                  "prefix": "",
+                  "tags": {},
+                  "transition": []
+                },
+                {
+                  "abort_incomplete_multipart_upload_days": 0,
+                  "enabled": true,
+                  "expiration": [],
+                  "id": "transition-to-cheaper-storage",
+                  "noncurrent_version_expiration": [],
+                  "noncurrent_version_transition": [],
+                  "prefix": "",
+                  "tags": {},
+                  "transition": [
+                    {
+                      "date": "",
+                      "days": 30,
+                      "storage_class": "STANDARD_IA"
+                    },
+                    {
+                      "date": "",
+                      "days": 90,
+                      "storage_class": "GLACIER"
+                    }
+                  ]
+                },
+                {
+                  "abort_incomplete_multipart_upload_days": 0,
+                  "enabled": true,
+                  "expiration": [
+                    {
+                      "date": "",
+                      "days": 7,
+                      "expired_object_delete_marker": false
+                    }
+                  ],
+                  "id": "expire-temp-objects",
+                  "noncurrent_version_expiration": [],
+                  "noncurrent_version_transition": [],
+                  "prefix": "tmp/",
+                  "tags": {},
+                  "transition": []
+                }
+              ],
+              "logging": [],
+              "object_lock_configuration": [],
+              "object_lock_enabled": false,
+              "policy": "",
+              "region": "us-west-2",
+              "replication_configuration": [],
+              "request_payer": "BucketOwner",
+              "server_side_encryption_configuration": [
+                {
+                  "rule": [
+                    {
+                      "apply_server_side_encryption_by_default": [
+                        {
+                          "kms_master_key_id": "",
+                          "sse_algorithm": "AES256"
+                        }
+                      ],
+                      "bucket_key_enabled": true
+                    }
+                  ]
+                }
+              ],
+              "tags": {
+                "Name": "secure-baseline-bucket",
+                "State": "s3-secure-baseline",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "secure-baseline-bucket",
+                "State": "s3-secure-baseline",
+                "Struct8Creator": "rmay struct"
+              },
+              "timeouts": null,
+              "versioning": [
+                {
+                  "enabled": true,
+                  "mfa_delete": false
+                }
+              ],
+              "website": [],
+              "website_domain": null,
+              "website_endpoint": null
+            },
+            "sensitive_values": {
+              "cors_rule": [],
+              "grant": [
+                {
+                  "permissions": [
+                    false
+                  ]
+                }
+              ],
+              "lifecycle_rule": [
+                {
+                  "expiration": [],
+                  "noncurrent_version_expiration": [
+                    {}
+                  ],
+                  "noncurrent_version_transition": [],
+                  "tags": {},
+                  "transition": []
+                },
+                {
+                  "expiration": [],
+                  "noncurrent_version_expiration": [],
+                  "noncurrent_version_transition": [],
+                  "tags": {},
+                  "transition": [
+                    {},
+                    {}
+                  ]
+                },
+                {
+                  "expiration": [
+                    {}
+                  ],
+                  "noncurrent_version_expiration": [],
+                  "noncurrent_version_transition": [],
+                  "tags": {},
+                  "transition": []
+                }
+              ],
+              "logging": [],
+              "object_lock_configuration": [],
+              "replication_configuration": [],
+              "server_side_encryption_configuration": [
+                {
+                  "rule": [
+                    {
+                      "apply_server_side_encryption_by_default": [
+                        {}
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "tags": {},
+              "tags_all": {},
+              "versioning": [
+                {}
+              ],
+              "website": []
+            }
+          },
+          {
+            "address": "aws_s3_bucket_accelerate_configuration.secure-baseline-bucket_accelerate_configuration",
+            "mode": "managed",
+            "type": "aws_s3_bucket_accelerate_configuration",
+            "name": "secure-baseline-bucket_accelerate_configuration",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "status": ""
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_s3_bucket_lifecycle_configuration.secure-baseline-bucket_lifecycle_configuration",
+            "mode": "managed",
+            "type": "aws_s3_bucket_lifecycle_configuration",
+            "name": "secure-baseline-bucket_lifecycle_configuration",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "rule": [
+                {
+                  "abort_incomplete_multipart_upload": [
+                    {
+                      "days_after_initiation": 7
+                    }
+                  ],
+                  "expiration": [],
+                  "filter": [],
+                  "id": "expire-noncurrent-versions",
+                  "noncurrent_version_expiration": [
+                    {
+                      "newer_noncurrent_versions": null,
+                      "noncurrent_days": 90
+                    }
+                  ],
+                  "noncurrent_version_transition": [],
+                  "prefix": "",
+                  "status": "Enabled",
+                  "transition": []
+                },
+                {
+                  "abort_incomplete_multipart_upload": [],
+                  "expiration": [],
+                  "filter": [],
+                  "id": "transition-to-cheaper-storage",
+                  "noncurrent_version_expiration": [],
+                  "noncurrent_version_transition": [],
+                  "prefix": "",
+                  "status": "Enabled",
+                  "transition": [
+                    {
+                      "date": null,
+                      "days": 30,
+                      "storage_class": "STANDARD_IA"
+                    },
+                    {
+                      "date": null,
+                      "days": 90,
+                      "storage_class": "GLACIER"
+                    }
+                  ]
+                },
+                {
+                  "abort_incomplete_multipart_upload": [],
+                  "expiration": [
+                    {
+                      "date": null,
+                      "days": 7,
+                      "expired_object_delete_marker": false
+                    }
+                  ],
+                  "filter": [
+                    {
+                      "and": [],
+                      "object_size_greater_than": null,
+                      "object_size_less_than": null,
+                      "prefix": "tmp/",
+                      "tag": []
+                    }
+                  ],
+                  "id": "expire-temp-objects",
+                  "noncurrent_version_expiration": [],
+                  "noncurrent_version_transition": [],
+                  "prefix": "",
+                  "status": "Enabled",
+                  "transition": []
+                }
+              ],
+              "timeouts": null,
+              "transition_default_minimum_object_size": "all_storage_classes_128K"
+            },
+            "sensitive_values": {
+              "rule": [
+                {
+                  "abort_incomplete_multipart_upload": [
+                    {}
+                  ],
+                  "expiration": [],
+                  "filter": [],
+                  "noncurrent_version_expiration": [
+                    {}
+                  ],
+                  "noncurrent_version_transition": [],
+                  "transition": []
+                },
+                {
+                  "abort_incomplete_multipart_upload": [],
+                  "expiration": [],
+                  "filter": [],
+                  "noncurrent_version_expiration": [],
+                  "noncurrent_version_transition": [],
+                  "transition": [
+                    {},
+                    {}
+                  ]
+                },
+                {
+                  "abort_incomplete_multipart_upload": [],
+                  "expiration": [
+                    {}
+                  ],
+                  "filter": [
+                    {
+                      "and": [],
+                      "tag": []
+                    }
+                  ],
+                  "noncurrent_version_expiration": [],
+                  "noncurrent_version_transition": [],
+                  "transition": []
+                }
+              ]
+            }
+          },
+          {
+            "address": "aws_s3_bucket_notification.secure-baseline-bucket_notification",
+            "mode": "managed",
+            "type": "aws_s3_bucket_notification",
+            "name": "secure-baseline-bucket_notification",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "eventbridge": false,
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "lambda_function": [],
+              "queue": [],
+              "topic": []
+            },
+            "sensitive_values": {
+              "lambda_function": [],
+              "queue": [],
+              "topic": []
+            }
+          },
+          {
+            "address": "aws_s3_bucket_ownership_controls.secure-baseline-bucket_ownership_controls",
+            "mode": "managed",
+            "type": "aws_s3_bucket_ownership_controls",
+            "name": "secure-baseline-bucket_ownership_controls",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "rule": [
+                {
+                  "object_ownership": "BucketOwnerEnforced"
+                }
+              ]
+            },
+            "sensitive_values": {
+              "rule": [
+                {}
+              ]
+            }
+          },
+          {
+            "address": "aws_s3_bucket_public_access_block.secure-baseline-bucket_public_access_block",
+            "mode": "managed",
+            "type": "aws_s3_bucket_public_access_block",
+            "name": "secure-baseline-bucket_public_access_block",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "block_public_acls": true,
+              "block_public_policy": true,
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "ignore_public_acls": true,
+              "restrict_public_buckets": true
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_s3_bucket_request_payment_configuration.secure-baseline-bucket_request_payment_configuration",
+            "mode": "managed",
+            "type": "aws_s3_bucket_request_payment_configuration",
+            "name": "secure-baseline-bucket_request_payment_configuration",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "payer": "BucketOwner"
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_s3_bucket_server_side_encryption_configuration.secure-baseline-bucket_server_side_encryption_configuration",
+            "mode": "managed",
+            "type": "aws_s3_bucket_server_side_encryption_configuration",
+            "name": "secure-baseline-bucket_server_side_encryption_configuration",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {
+                      "kms_master_key_id": "",
+                      "sse_algorithm": "AES256"
+                    }
+                  ],
+                  "bucket_key_enabled": true
+                }
+              ]
+            },
+            "sensitive_values": {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "address": "aws_s3_bucket_versioning.secure-baseline-bucket_versioning",
+            "mode": "managed",
+            "type": "aws_s3_bucket_versioning",
+            "name": "secure-baseline-bucket_versioning",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "bucket": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "expected_bucket_owner": "",
+              "id": "secure-baseline-bucket-952133486861-us-west-2-an",
+              "mfa": null,
+              "versioning_configuration": [
+                {
+                  "mfa_delete": "Disabled",
+                  "status": "Enabled"
+                }
+              ]
+            },
+            "sensitive_values": {
+              "versioning_configuration": [
+                {}
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "version_constraint": "~> 5.0",
+        "expressions": {
+          "region": {
+            "constant_value": "us-west-2"
+          }
+        }
+      }
+    },
+    "root_module": {}
+  },
+  "timestamp": "2026-10-30T12:07:18Z",
+  "redacted_attributes": []
+}
