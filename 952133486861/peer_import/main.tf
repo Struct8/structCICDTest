@@ -99,16 +99,16 @@ resource "aws_route" "route_RT-private-b_to_Peering-Monitoring-to-Monitored_10_5
   destination_cidr_block    = "10.5.0.0/16"
 }
 
-resource "aws_route" "route_RT-public-a_to_Peering-Monitoring-to-Monitored_10_1_0_0_16" {
+resource "aws_route" "route_RT-public-a_to_Peering-Monitoring-to-Monitored_10_1_0_0_24" {
   route_table_id            = data.aws_route_table.RT-public-a.id
   vpc_peering_connection_id = aws_vpc_peering_connection.Peering-Monitoring-to-Monitored.id
-  destination_cidr_block    = "10.1.0.0/16"
+  destination_cidr_block    = "10.1.0.0/24"
 }
 
-resource "aws_route" "route_RT-public-b_to_Peering-Monitoring-to-Monitored_10_5_0_0_16" {
+resource "aws_route" "route_RT-public-b_to_Peering-Monitoring-to-Monitored_10_5_0_0_24" {
   route_table_id            = data.aws_route_table.RT-public-b.id
   vpc_peering_connection_id = aws_vpc_peering_connection.Peering-Monitoring-to-Monitored.id
-  destination_cidr_block    = "10.5.0.0/16"
+  destination_cidr_block    = "10.5.0.0/24"
 }
 
 
