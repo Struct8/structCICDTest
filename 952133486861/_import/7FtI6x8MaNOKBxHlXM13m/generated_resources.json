@@ -1,0 +1,232 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.5.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_vpc_peering_connection.Peering-Monitoring-to-Monitored",
+          "mode": "managed",
+          "type": "aws_vpc_peering_connection",
+          "name": "Peering-Monitoring-to-Monitored",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "accept_status": "active",
+            "accepter": [
+              {
+                "allow_remote_vpc_dns_resolution": false
+              }
+            ],
+            "auto_accept": null,
+            "id": "pcx-054adc9a0fb30fc6f",
+            "peer_owner_id": "952133486861",
+            "peer_region": "us-west-2",
+            "peer_vpc_id": "vpc-008fee4c9dc714d5f",
+            "requester": [
+              {
+                "allow_remote_vpc_dns_resolution": false
+              }
+            ],
+            "tags": {
+              "Name": "Peering-Monitoring-to-Monitored",
+              "State": "State-Peering",
+              "Struct8Creator": "rmay struct"
+            },
+            "tags_all": {
+              "Name": "Peering-Monitoring-to-Monitored",
+              "State": "State-Peering",
+              "Struct8Creator": "rmay struct"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0855088a39dd0e1e2"
+          },
+          "sensitive_values": {
+            "accepter": [
+              {}
+            ],
+            "requester": [
+              {}
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_vpc_peering_connection.Peering-Monitoring-to-Monitored",
+      "mode": "managed",
+      "type": "aws_vpc_peering_connection",
+      "name": "Peering-Monitoring-to-Monitored",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "accept_status": "active",
+          "accepter": [
+            {
+              "allow_remote_vpc_dns_resolution": false
+            }
+          ],
+          "auto_accept": null,
+          "id": "pcx-054adc9a0fb30fc6f",
+          "peer_owner_id": "952133486861",
+          "peer_region": "us-west-2",
+          "peer_vpc_id": "vpc-008fee4c9dc714d5f",
+          "requester": [
+            {
+              "allow_remote_vpc_dns_resolution": false
+            }
+          ],
+          "tags": {
+            "Name": "Peering-Monitoring-to-Monitored",
+            "State": "State-Peering",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "Peering-Monitoring-to-Monitored",
+            "State": "State-Peering",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0855088a39dd0e1e2"
+        },
+        "after": {
+          "accept_status": "active",
+          "accepter": [
+            {
+              "allow_remote_vpc_dns_resolution": false
+            }
+          ],
+          "auto_accept": null,
+          "id": "pcx-054adc9a0fb30fc6f",
+          "peer_owner_id": "952133486861",
+          "peer_region": "us-west-2",
+          "peer_vpc_id": "vpc-008fee4c9dc714d5f",
+          "requester": [
+            {
+              "allow_remote_vpc_dns_resolution": false
+            }
+          ],
+          "tags": {
+            "Name": "Peering-Monitoring-to-Monitored",
+            "State": "State-Peering",
+            "Struct8Creator": "rmay struct"
+          },
+          "tags_all": {
+            "Name": "Peering-Monitoring-to-Monitored",
+            "State": "State-Peering",
+            "Struct8Creator": "rmay struct"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0855088a39dd0e1e2"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "accepter": [
+            {}
+          ],
+          "requester": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "accepter": [
+            {}
+          ],
+          "requester": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "pcx-054adc9a0fb30fc6f"
+        },
+        "generated_config": "resource \"aws_vpc_peering_connection\" \"Peering-Monitoring-to-Monitored\" {\n  auto_accept   = null\n  peer_owner_id = \"952133486861\"\n  peer_region   = \"us-west-2\"\n  peer_vpc_id   = \"vpc-008fee4c9dc714d5f\"\n  tags = {\n    Name           = \"Peering-Monitoring-to-Monitored\"\n    State          = \"State-Peering\"\n    Struct8Creator = \"rmay struct\"\n  }\n  tags_all = {\n    Name           = \"Peering-Monitoring-to-Monitored\"\n    State          = \"State-Peering\"\n    Struct8Creator = \"rmay struct\"\n  }\n  vpc_id = \"vpc-0855088a39dd0e1e2\"\n  accepter {\n    allow_remote_vpc_dns_resolution = false\n  }\n  requester {\n    allow_remote_vpc_dns_resolution = false\n  }\n}"
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.5.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_vpc_peering_connection.Peering-Monitoring-to-Monitored",
+            "mode": "managed",
+            "type": "aws_vpc_peering_connection",
+            "name": "Peering-Monitoring-to-Monitored",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "accept_status": "active",
+              "accepter": [
+                {
+                  "allow_remote_vpc_dns_resolution": false
+                }
+              ],
+              "auto_accept": null,
+              "id": "pcx-054adc9a0fb30fc6f",
+              "peer_owner_id": "952133486861",
+              "peer_region": "us-west-2",
+              "peer_vpc_id": "vpc-008fee4c9dc714d5f",
+              "requester": [
+                {
+                  "allow_remote_vpc_dns_resolution": false
+                }
+              ],
+              "tags": {
+                "Name": "Peering-Monitoring-to-Monitored",
+                "State": "State-Peering",
+                "Struct8Creator": "rmay struct"
+              },
+              "tags_all": {
+                "Name": "Peering-Monitoring-to-Monitored",
+                "State": "State-Peering",
+                "Struct8Creator": "rmay struct"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0855088a39dd0e1e2"
+            },
+            "sensitive_values": {
+              "accepter": [
+                {}
+              ],
+              "requester": [
+                {}
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "version_constraint": "~> 5.0",
+        "expressions": {
+          "region": {
+            "constant_value": "us-west-2"
+          }
+        }
+      }
+    },
+    "root_module": {}
+  },
+  "timestamp": "2026-10-30T23:00:23Z",
+  "redacted_attributes": []
+}
