@@ -26,6 +26,7 @@ data "aws_region" "current" {}
 
 resource "aws_iam_instance_profile" "private-host_profile" {
   name = "private-host_profile"
+  path = "/"
   role = aws_iam_role.private-host_role.name
   tags = {
     Name           = "private-host_profile"
@@ -36,6 +37,7 @@ resource "aws_iam_instance_profile" "private-host_profile" {
 
 resource "aws_iam_instance_profile" "public-host_profile" {
   name = "public-host_profile"
+  path = "/"
   role = aws_iam_role.public-host_role.name
   tags = {
     Name           = "public-host_profile"
@@ -45,19 +47,8 @@ resource "aws_iam_instance_profile" "public-host_profile" {
 }
 
 resource "aws_iam_role" "private-host_role" {
-  name = "private-host_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "private-host_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -69,19 +60,8 @@ resource "aws_iam_role" "private-host_role" {
 }
 
 resource "aws_iam_role" "public-host_role" {
-  name = "public-host_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "public-host_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -98,11 +78,12 @@ resource "aws_iam_role" "public-host_role" {
 ### CATEGORY: NETWORK ###
 
 resource "aws_vpc" "vpc-dual-stack-lab" {
-  assign_generated_ipv6_cidr_block = true
-  cidr_block                       = "10.3.0.0/16"
-  enable_dns_hostnames             = true
-  enable_dns_support               = true
-  instance_tenancy                 = "default"
+  assign_generated_ipv6_cidr_block     = true
+  cidr_block                           = "10.3.0.0/16"
+  enable_dns_hostnames                 = true
+  enable_dns_support                   = true
+  instance_tenancy                     = "default"
+  ipv6_cidr_block_network_border_group = "us-west-2"
   tags = {
     Name           = "vpc-dual-stack-lab"
     State          = "vpc-dual-stack-lab"
@@ -111,12 +92,13 @@ resource "aws_vpc" "vpc-dual-stack-lab" {
 }
 
 resource "aws_subnet" "private-a" {
-  vpc_id                          = aws_vpc.vpc-dual-stack-lab.id
-  assign_ipv6_address_on_creation = true
-  availability_zone               = "us-west-2a"
-  cidr_block                      = "10.3.10.0/24"
-  ipv6_cidr_block                 = cidrsubnet(aws_vpc.vpc-dual-stack-lab.ipv6_cidr_block, 8, 0)
-  map_public_ip_on_launch         = false
+  vpc_id                              = aws_vpc.vpc-dual-stack-lab.id
+  assign_ipv6_address_on_creation     = true
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.3.10.0/24"
+  ipv6_cidr_block                     = "2600:1f14:25c7:db00::/64"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-a"
     State          = "vpc-dual-stack-lab"
@@ -125,12 +107,13 @@ resource "aws_subnet" "private-a" {
 }
 
 resource "aws_subnet" "private-b" {
-  vpc_id                          = aws_vpc.vpc-dual-stack-lab.id
-  assign_ipv6_address_on_creation = true
-  availability_zone               = "us-west-2b"
-  cidr_block                      = "10.3.11.0/24"
-  ipv6_cidr_block                 = cidrsubnet(aws_vpc.vpc-dual-stack-lab.ipv6_cidr_block, 8, 1)
-  map_public_ip_on_launch         = false
+  vpc_id                              = aws_vpc.vpc-dual-stack-lab.id
+  assign_ipv6_address_on_creation     = true
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.3.11.0/24"
+  ipv6_cidr_block                     = "2600:1f14:25c7:db01::/64"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-b"
     State          = "vpc-dual-stack-lab"
@@ -139,12 +122,13 @@ resource "aws_subnet" "private-b" {
 }
 
 resource "aws_subnet" "public-a" {
-  vpc_id                          = aws_vpc.vpc-dual-stack-lab.id
-  assign_ipv6_address_on_creation = true
-  availability_zone               = "us-west-2a"
-  cidr_block                      = "10.3.0.0/24"
-  ipv6_cidr_block                 = cidrsubnet(aws_vpc.vpc-dual-stack-lab.ipv6_cidr_block, 8, 2)
-  map_public_ip_on_launch         = true
+  vpc_id                              = aws_vpc.vpc-dual-stack-lab.id
+  assign_ipv6_address_on_creation     = true
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.3.0.0/24"
+  ipv6_cidr_block                     = "2600:1f14:25c7:db02::/64"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-a"
     State          = "vpc-dual-stack-lab"
@@ -153,12 +137,13 @@ resource "aws_subnet" "public-a" {
 }
 
 resource "aws_subnet" "public-b" {
-  vpc_id                          = aws_vpc.vpc-dual-stack-lab.id
-  assign_ipv6_address_on_creation = true
-  availability_zone               = "us-west-2b"
-  cidr_block                      = "10.3.1.0/24"
-  ipv6_cidr_block                 = cidrsubnet(aws_vpc.vpc-dual-stack-lab.ipv6_cidr_block, 8, 3)
-  map_public_ip_on_launch         = true
+  vpc_id                              = aws_vpc.vpc-dual-stack-lab.id
+  assign_ipv6_address_on_creation     = true
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.3.1.0/24"
+  ipv6_cidr_block                     = "2600:1f14:25c7:db03::/64"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-b"
     State          = "vpc-dual-stack-lab"
@@ -259,10 +244,12 @@ resource "aws_route_table_association" "aws_route_table_association_public_b_pub
 }
 
 resource "aws_security_group" "instance_private-host_group" {
-  name                   = "instance_private-host_group"
-  vpc_id                 = aws_vpc.vpc-dual-stack-lab.id
-  description            = "Dual-stack lab host in a private subnet"
-  revoke_rules_on_delete = false
+  name        = "instance_private-host_group"
+  vpc_id      = aws_vpc.vpc-dual-stack-lab.id
+  description = "Dual-stack lab host in a private subnet"
+  lifecycle {
+    ignore_changes = [revoke_rules_on_delete]
+  }
   tags = {
     Name           = "instance_private-host_group"
     State          = "vpc-dual-stack-lab"
@@ -271,10 +258,12 @@ resource "aws_security_group" "instance_private-host_group" {
 }
 
 resource "aws_security_group" "instance_public-host_group" {
-  name                   = "instance_public-host_group"
-  vpc_id                 = aws_vpc.vpc-dual-stack-lab.id
-  description            = "Dual-stack lab host in a public subnet"
-  revoke_rules_on_delete = false
+  name        = "instance_public-host_group"
+  vpc_id      = aws_vpc.vpc-dual-stack-lab.id
+  description = "Dual-stack lab host in a public subnet"
+  lifecycle {
+    ignore_changes = [revoke_rules_on_delete]
+  }
   tags = {
     Name           = "instance_public-host_group"
     State          = "vpc-dual-stack-lab"
@@ -307,7 +296,7 @@ resource "aws_security_group_rule" "rule_instance_private_host_group_ingress_icm
   security_group_id = aws_security_group.instance_private-host_group.id
   description       = "ICMP echo from inside the VPC over IPv6"
   from_port         = -1
-  ipv6_cidr_blocks  = [aws_vpc.vpc-dual-stack-lab.ipv6_cidr_block]
+  ipv6_cidr_blocks  = ["2600:1f14:25c7:db00::/56"]
   protocol          = "icmpv6"
   to_port           = -1
   type              = "ingress"
@@ -349,36 +338,50 @@ resource "aws_security_group_rule" "rule_instance_public_host_group_ingress_icmp
 
 ### CATEGORY: COMPUTE ###
 
-data "aws_ami" "AMI_Data_Source_private-host" {
-  most_recent = true
-  owners      = ["amazon"]
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-kernel-6.1-x86_64"]
-  }
-}
-
 resource "aws_instance" "private-host" {
   subnet_id                   = aws_subnet.private-a.id
-  ami                         = data.aws_ami.AMI_Data_Source_private-host.id
+  ami                         = "ami-07fefc5ac66cf774f"
   associate_public_ip_address = false
   iam_instance_profile        = aws_iam_instance_profile.private-host_profile.name
   instance_type               = "t3.nano"
+  ipv6_address_count          = 1
+  ipv6_addresses              = ["2600:1f14:25c7:db00:a225:8b0c:fc72:6a1f"]
+  private_ip                  = "10.3.10.69"
   vpc_security_group_ids      = [aws_security_group.instance_private-host_group.id]
+  cpu_options {
+    core_count       = 1
+    threads_per_core = 2
+  }
+  credit_specification {
+    cpu_credits = "unlimited"
+  }
+  enclave_options {
+    enabled = false
+  }
   lifecycle {
-    ignore_changes = [user_data]
+    ignore_changes = [user_data, user_data_replace_on_change]
   }
   metadata_options {
-    http_endpoint      = "enabled"
-    http_protocol_ipv6 = "enabled"
-    http_tokens        = "required"
+    http_endpoint               = "enabled"
+    http_protocol_ipv6          = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required"
+  }
+  private_dns_name_options {
+    enable_resource_name_dns_a_record    = false
+    enable_resource_name_dns_aaaa_record = false
+    hostname_type                        = "ip-name"
   }
   root_block_device {
+    kms_key_id  = "arn:aws:kms:us-west-2:952133486861:key/f019f965-2340-4c77-b976-182a1c3460ab"
     encrypted   = true
     iops        = 3000
     throughput  = 125
     volume_size = 8
     volume_type = "gp3"
+    tags = {
+    Name = "private-host"
+  }
   }
   tags = {
     Name           = "private-host"
@@ -387,36 +390,50 @@ resource "aws_instance" "private-host" {
   }
 }
 
-data "aws_ami" "AMI_Data_Source_public-host" {
-  most_recent = true
-  owners      = ["amazon"]
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-kernel-6.1-x86_64"]
-  }
-}
-
 resource "aws_instance" "public-host" {
   subnet_id                   = aws_subnet.public-a.id
-  ami                         = data.aws_ami.AMI_Data_Source_public-host.id
+  ami                         = "ami-07fefc5ac66cf774f"
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.public-host_profile.name
   instance_type               = "t3.nano"
+  ipv6_address_count          = 1
+  ipv6_addresses              = ["2600:1f14:25c7:db02:2cae:c6c4:3ecd:fbe6"]
+  private_ip                  = "10.3.0.47"
   vpc_security_group_ids      = [aws_security_group.instance_public-host_group.id]
+  cpu_options {
+    core_count       = 1
+    threads_per_core = 2
+  }
+  credit_specification {
+    cpu_credits = "unlimited"
+  }
+  enclave_options {
+    enabled = false
+  }
   lifecycle {
-    ignore_changes = [user_data]
+    ignore_changes = [user_data, user_data_replace_on_change]
   }
   metadata_options {
-    http_endpoint      = "enabled"
-    http_protocol_ipv6 = "enabled"
-    http_tokens        = "required"
+    http_endpoint               = "enabled"
+    http_protocol_ipv6          = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required"
+  }
+  private_dns_name_options {
+    enable_resource_name_dns_a_record    = false
+    enable_resource_name_dns_aaaa_record = false
+    hostname_type                        = "ip-name"
   }
   root_block_device {
+    kms_key_id  = "arn:aws:kms:us-west-2:952133486861:key/f019f965-2340-4c77-b976-182a1c3460ab"
     encrypted   = true
     iops        = 3000
     throughput  = 125
     volume_size = 8
     volume_type = "gp3"
+    tags = {
+    Name = "public-host"
+  }
   }
   tags = {
     Name           = "public-host"
