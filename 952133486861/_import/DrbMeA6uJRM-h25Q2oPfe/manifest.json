@@ -1,7 +1,7 @@
 {
   "external_repositories": [],
-  "action": "scan",
-  "trigger_id": "1793396331622",
+  "action": "read",
+  "trigger_id": "1793396680154",
   "triggered_by": "rmay struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
@@ -13,7 +13,7 @@
   },
   "pipeline_stages": [
     {
-      "stage_name": "Import: scan us-east-1",
+      "stage_name": "Import: read us-east-1",
       "parallel_execution": false,
       "states": [
         {
