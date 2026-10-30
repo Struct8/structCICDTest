@@ -22,18 +22,6 @@ provider "aws" {
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-### EXTERNAL REFERENCES ###
-
-data "aws_vpc_peering_connection" "Peering-Monitoring-to-Monitored" {
-  filter {
-    name   = "tag:Name"
-    values = ["Peering-Monitoring-to-Monitored"]
-  }
-}
-
-
-
-
 ### CATEGORY: NETWORK ###
 
 resource "aws_vpc" "VPC-Monitored" {
@@ -71,18 +59,6 @@ resource "aws_subnet" "subnet-public-b" {
     State          = "VPC-Monitored"
     Struct8Creator = "rmay struct"
   }
-}
-
-resource "aws_route" "route_RT-private-b_to_Peering-Monitoring-to-Monitored_ipv4" {
-  route_table_id            = aws_route_table.RT-private-b.id
-  vpc_peering_connection_id = data.aws_vpc_peering_connection.Peering-Monitoring-to-Monitored.id
-  destination_cidr_block    = "10.5.0.0/16"
-}
-
-resource "aws_route" "route_RT-public-b_to_Peering-Monitoring-to-Monitored_ipv4" {
-  route_table_id            = aws_route_table.RT-public-b.id
-  vpc_peering_connection_id = data.aws_vpc_peering_connection.Peering-Monitoring-to-Monitored.id
-  destination_cidr_block    = "10.5.0.0/24"
 }
 
 resource "aws_route_table" "RT-private-b" {
