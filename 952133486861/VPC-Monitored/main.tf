@@ -30,7 +30,7 @@ resource "aws_vpc" "VPC-Monitored" {
   instance_tenancy   = "default"
   tags = {
     Name           = "VPC-Monitored"
-    State          = "State-VPC-Monitored"
+    State          = "VPC-Monitored"
     Struct8Creator = "rmay struct"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "subnet-private-b" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "subnet-private-b"
-    State          = "State-VPC-Monitored"
+    State          = "VPC-Monitored"
     Struct8Creator = "rmay struct"
   }
 }
@@ -56,7 +56,7 @@ resource "aws_subnet" "subnet-public-b" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "subnet-public-b"
-    State          = "State-VPC-Monitored"
+    State          = "VPC-Monitored"
     Struct8Creator = "rmay struct"
   }
 }
@@ -65,7 +65,7 @@ resource "aws_route_table" "RT-private-b" {
   vpc_id = aws_vpc.VPC-Monitored.id
   tags = {
     Name           = "RT-private-b"
-    State          = "State-VPC-Monitored"
+    State          = "VPC-Monitored"
     Struct8Creator = "rmay struct"
   }
 }
@@ -74,7 +74,7 @@ resource "aws_route_table" "RT-public-b" {
   vpc_id = aws_vpc.VPC-Monitored.id
   tags = {
     Name           = "RT-public-b"
-    State          = "State-VPC-Monitored"
+    State          = "VPC-Monitored"
     Struct8Creator = "rmay struct"
   }
 }
