@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "secure-baseline-bucket" {
   object_lock_enabled = false
   tags = {
     Name           = "secure-baseline-bucket"
-    State          = "s3-secure-baseline"
+    State          = "s3sb_b_import"
     Struct8Creator = "rmay struct"
   }
 }
