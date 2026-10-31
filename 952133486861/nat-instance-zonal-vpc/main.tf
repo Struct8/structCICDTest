@@ -195,7 +195,7 @@ resource "aws_instance" "Instance" {
   instance_type               = "t3.nano"
   private_ip                  = "10.105.1.243"
   source_dest_check           = false
-  user_data_base64 = base64encode(<<-EOFUData
+  user_data = <<-EOFUData
 #!/bin/bash
 
 #!/bin/bash
@@ -288,7 +288,7 @@ systemctl enable nat-restore.service
 echo "Done."
 
 EOFUData
-)
+
   vpc_security_group_ids = [aws_security_group.instance_Instance_group.id]
   cpu_options {
     core_count       = 1
