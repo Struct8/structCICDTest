@@ -30,7 +30,7 @@ resource "aws_vpc" "zonal-2-addresses-vpc" {
   instance_tenancy   = "default"
   tags = {
     Name           = "zonal-2-addresses-vpc"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "zonal-2-addresses-private-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "zonal-2-addresses-private-a"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -56,7 +56,7 @@ resource "aws_subnet" "zonal-2-addresses-public-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "zonal-2-addresses-public-a"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -65,7 +65,7 @@ resource "aws_internet_gateway" "zonal-2-addresses-igw" {
   vpc_id = aws_vpc.zonal-2-addresses-vpc.id
   tags = {
     Name           = "zonal-2-addresses-igw"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -78,7 +78,7 @@ resource "aws_nat_gateway" "zonal-2-addresses-nat" {
   secondary_allocation_ids = [aws_eip.zonal-2-addresses-eip-secondary.id]
   tags = {
     Name           = "zonal-2-addresses-nat"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_internet_gateway.zonal-2-addresses-igw]
@@ -100,7 +100,7 @@ resource "aws_route_table" "zonal-2-addresses-rt-private" {
   vpc_id = aws_vpc.zonal-2-addresses-vpc.id
   tags = {
     Name           = "zonal-2-addresses-rt-private"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -109,7 +109,7 @@ resource "aws_route_table" "zonal-2-addresses-rt-public" {
   vpc_id = aws_vpc.zonal-2-addresses-vpc.id
   tags = {
     Name           = "zonal-2-addresses-rt-public"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -129,7 +129,7 @@ resource "aws_eip" "zonal-2-addresses-eip-primary" {
   public_ipv4_pool     = "amazon"
   tags = {
     Name           = "zonal-2-addresses-eip-primary"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -139,7 +139,7 @@ resource "aws_eip" "zonal-2-addresses-eip-secondary" {
   public_ipv4_pool     = "amazon"
   tags = {
     Name           = "zonal-2-addresses-eip-secondary"
-    State          = "zonal-2-addresses-state"
+    State          = "zonal-2-addresses-vpc"
     Struct8Creator = "rmay struct"
   }
 }
