@@ -30,7 +30,7 @@ resource "aws_vpc" "private-nat-vpc" {
   instance_tenancy   = "default"
   tags = {
     Name           = "private-nat-vpc"
-    State          = "private-nat-state"
+    State          = "private-nat-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "private-nat-app-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-nat-app-a"
-    State          = "private-nat-state"
+    State          = "private-nat-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -56,7 +56,7 @@ resource "aws_subnet" "private-nat-subnet-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-nat-subnet-a"
-    State          = "private-nat-state"
+    State          = "private-nat-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -68,7 +68,7 @@ resource "aws_nat_gateway" "private-nat" {
   private_ip        = "10.104.0.13"
   tags = {
     Name           = "private-nat"
-    State          = "private-nat-state"
+    State          = "private-nat-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -83,7 +83,7 @@ resource "aws_route_table" "private-nat-rt" {
   vpc_id = aws_vpc.private-nat-vpc.id
   tags = {
     Name           = "private-nat-rt"
-    State          = "private-nat-state"
+    State          = "private-nat-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -92,7 +92,7 @@ resource "aws_route_table" "private-nat-rt-app" {
   vpc_id = aws_vpc.private-nat-vpc.id
   tags = {
     Name           = "private-nat-rt-app"
-    State          = "private-nat-state"
+    State          = "private-nat-vpc"
     Struct8Creator = "rmay struct"
   }
 }
