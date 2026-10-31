@@ -290,7 +290,7 @@ resource "aws_flow_log" "flowlog-to-s3" {
 resource "aws_s3_bucket" "flowlogs-bucket" {
   bucket              = "flowlogs-bucket-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
-  force_destroy       = true
+  force_destroy       = false
   object_lock_enabled = false
   tags = {
     Name           = "flowlogs-bucket"
