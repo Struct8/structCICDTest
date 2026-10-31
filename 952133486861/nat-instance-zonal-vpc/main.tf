@@ -30,7 +30,7 @@ resource "aws_iam_instance_profile" "Instance_profile" {
   role = aws_iam_role.Instance_role.name
   tags = {
     Name           = "Instance_profile"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_iam_role" "Instance_role" {
   path                  = "/"
   tags = {
     Name           = "Instance_role"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -59,7 +59,7 @@ resource "aws_vpc" "nat-instance-zonal-vpc" {
   instance_tenancy   = "default"
   tags = {
     Name           = "nat-instance-zonal-vpc"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -72,7 +72,7 @@ resource "aws_subnet" "zonal-private-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "zonal-private-a"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -85,7 +85,7 @@ resource "aws_subnet" "zonal-public-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "zonal-public-a"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -94,7 +94,7 @@ resource "aws_internet_gateway" "zonal-igw" {
   vpc_id = aws_vpc.nat-instance-zonal-vpc.id
   tags = {
     Name           = "zonal-igw"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -115,7 +115,7 @@ resource "aws_route_table" "zonal-rt-private" {
   vpc_id = aws_vpc.nat-instance-zonal-vpc.id
   tags = {
     Name           = "zonal-rt-private"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -124,7 +124,7 @@ resource "aws_route_table" "zonal-rt-public" {
   vpc_id = aws_vpc.nat-instance-zonal-vpc.id
   tags = {
     Name           = "zonal-rt-public"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -146,7 +146,7 @@ resource "aws_security_group" "instance_Instance_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_Instance_group"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -176,7 +176,7 @@ resource "aws_eip" "EIP" {
   public_ipv4_pool     = "amazon"
   tags = {
     Name           = "EIP"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_internet_gateway.zonal-igw]
@@ -300,9 +300,6 @@ EOFUData
   enclave_options {
     enabled = false
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
@@ -326,7 +323,7 @@ EOFUData
   }
   tags = {
     Name           = "Instance"
-    State          = "zonal-state"
+    State          = "nat-instance-zonal-vpc"
     Struct8Creator = "rmay struct"
   }
 }
