@@ -23,7 +23,7 @@ import {
 
 import {
   to = aws_kinesis_firehose_delivery_stream.flowlogs-firehose
-  id = "flowlogs-firehose"
+  id = "arn:aws:firehose:us-west-2:952133486861:deliverystream/flowlogs-firehose"
 }
 
 import {
