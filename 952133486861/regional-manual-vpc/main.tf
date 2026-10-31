@@ -30,7 +30,7 @@ resource "aws_vpc" "regional-manual-vpc" {
   instance_tenancy   = "default"
   tags = {
     Name           = "regional-manual-vpc"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "regional-manual-private-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "regional-manual-private-a"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -56,7 +56,7 @@ resource "aws_subnet" "regional-manual-private-b" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "regional-manual-private-b"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -69,7 +69,7 @@ resource "aws_subnet" "regional-manual-public-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "regional-manual-public-a"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -82,7 +82,7 @@ resource "aws_subnet" "regional-manual-public-b" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "regional-manual-public-b"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -91,7 +91,7 @@ resource "aws_internet_gateway" "regional-manual-igw" {
   vpc_id = aws_vpc.regional-manual-vpc.id
   tags = {
     Name           = "regional-manual-igw"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -110,7 +110,7 @@ resource "aws_nat_gateway" "regional-manual-nat" {
   }
   tags = {
     Name           = "regional-manual-nat"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_internet_gateway.regional-manual-igw]
@@ -132,7 +132,7 @@ resource "aws_route_table" "regional-manual-rt-private" {
   vpc_id = aws_vpc.regional-manual-vpc.id
   tags = {
     Name           = "regional-manual-rt-private"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -141,7 +141,7 @@ resource "aws_route_table" "regional-manual-rt-public" {
   vpc_id = aws_vpc.regional-manual-vpc.id
   tags = {
     Name           = "regional-manual-rt-public"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -171,7 +171,7 @@ resource "aws_eip" "regional-manual-eip-az-a" {
   public_ipv4_pool     = "amazon"
   tags = {
     Name           = "regional-manual-eip-az-a"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -181,7 +181,7 @@ resource "aws_eip" "regional-manual-eip-az-a-extra" {
   public_ipv4_pool     = "amazon"
   tags = {
     Name           = "regional-manual-eip-az-a-extra"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -191,7 +191,7 @@ resource "aws_eip" "regional-manual-eip-az-b" {
   public_ipv4_pool     = "amazon"
   tags = {
     Name           = "regional-manual-eip-az-b"
-    State          = "regional-manual-state"
+    State          = "regional-manual-vpc"
     Struct8Creator = "rmay struct"
   }
 }
