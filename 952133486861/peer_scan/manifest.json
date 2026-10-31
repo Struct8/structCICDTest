@@ -1,8 +1,8 @@
 {
   "external_repositories": [],
   "action": "plan",
-  "trigger_id": "1793410464953",
-  "triggered_by": "assistant.rmay_struct",
+  "trigger_id": "1793447455635",
+  "triggered_by": "rmay struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
   "backend_global_config": {
@@ -13,7 +13,7 @@
   },
   "pipeline_stages": [
     {
-      "stage_name": "Manual Trigger: peer_scan",
+      "stage_name": "Import: plan us-west-2",
       "parallel_execution": false,
       "states": [
         {
@@ -21,11 +21,14 @@
           "provider": "aws",
           "target_auth": {
             "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
-            "region": "us-west-2",
-            "secret_name": "AUTH_AWS_952133486861"
+            "region": "us-west-2"
           }
         }
       ]
     }
-  ]
+  ],
+  "import_scope": {
+    "region": "us-west-2",
+    "accountId": "952133486861"
+  }
 }
