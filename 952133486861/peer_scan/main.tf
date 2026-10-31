@@ -74,6 +74,7 @@ data "aws_route_table" "RT-public-b" {
 resource "aws_vpc_peering_connection" "Peering-Monitoring-to-Monitored" {
   peer_vpc_id = data.aws_vpc.VPC-Monitored.id
   vpc_id      = data.aws_vpc.VPC-Monitoring.id
+  auto_accept = true
   accepter {
     allow_remote_vpc_dns_resolution = false
   }
@@ -82,7 +83,7 @@ resource "aws_vpc_peering_connection" "Peering-Monitoring-to-Monitored" {
   }
   tags = {
     Name           = "Peering-Monitoring-to-Monitored"
-    State          = "State-Peering"
+    State          = "peer_scan"
     Struct8Creator = "rmay struct"
   }
 }
