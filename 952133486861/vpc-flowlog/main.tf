@@ -30,65 +30,45 @@ resource "aws_iam_instance_profile" "Instance_flow_logs_profile" {
   role = aws_iam_role.Instance_flow_logs_role.name
   tags = {
     Name           = "Instance_flow_logs_profile"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
+  }
+}
+
+data "aws_iam_policy_document" "flow_log_flowlog-to-cw_st_VPC-FlowLogs-Setup_doc" {
+  statement {
+    sid       = "AllowFlowLogDelivery"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:DescribeLogStreams", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.flowlogs-cw.arn}:*"]
   }
 }
 
 resource "aws_iam_policy" "flow_log_flowlog-to-cw_st_VPC-FlowLogs-Setup" {
   name        = "flow_log_flowlog-to-cw_st_VPC-FlowLogs-Setup"
   description = "Access Policy for flowlog-to-cw"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:DescribeLogStreams",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "${aws_cloudwatch_log_group.flowlogs-cw.arn}:*"
-      ],
-      "Sid": "AllowFlowLogDelivery"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.flow_log_flowlog-to-cw_st_VPC-FlowLogs-Setup_doc.json
+}
+
+data "aws_iam_policy_document" "kinesis_firehose_delivery_stream_flowlogs-firehose_st_VPC-FlowLogs-Setup_doc" {
+  statement {
+    sid       = "AllowBucketLevelActions"
+    effect    = "Allow"
+    actions   = ["s3:GetBucketLocation", "s3:ListBucket", "s3:ListBucketMultipartUploads"]
+    resources = [aws_s3_bucket.flowlogs-bucket.arn]
+  }
+  statement {
+    sid       = "AllowObjectDelivery"
+    effect    = "Allow"
+    actions   = ["s3:AbortMultipartUpload", "s3:GetObject", "s3:PutObject"]
+    resources = ["${aws_s3_bucket.flowlogs-bucket.arn}/*"]
+  }
 }
 
 resource "aws_iam_policy" "kinesis_firehose_delivery_stream_flowlogs-firehose_st_VPC-FlowLogs-Setup" {
   name        = "kinesis_firehose_delivery_stream_flowlogs-firehose_st_VPC-FlowLogs-Setup"
   description = "Access Policy for flowlogs-firehose"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetBucketLocation",
-        "s3:ListBucket",
-        "s3:ListBucketMultipartUploads"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.flowlogs-bucket.arn}"
-      ],
-      "Sid": "AllowBucketLevelActions"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:AbortMultipartUpload",
-        "s3:GetObject",
-        "s3:PutObject"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.flowlogs-bucket.arn}/*"
-      ],
-      "Sid": "AllowObjectDelivery"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.kinesis_firehose_delivery_stream_flowlogs-firehose_st_VPC-FlowLogs-Setup_doc.json
 }
 
 resource "aws_iam_role" "Instance_flow_logs_role" {
@@ -99,7 +79,7 @@ resource "aws_iam_role" "Instance_flow_logs_role" {
   path                  = "/"
   tags = {
     Name           = "Instance_flow_logs_role"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -112,7 +92,7 @@ resource "aws_iam_role" "flowlogs-firehose_role" {
   path                  = "/"
   tags = {
     Name           = "flowlogs-firehose_role"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -125,7 +105,7 @@ resource "aws_iam_role" "role_flow_log_flowlog-to-cw" {
   path                  = "/"
   tags = {
     Name           = "role_flow_log_flowlog-to-cw"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -154,7 +134,7 @@ resource "aws_vpc" "vpc-flowlog" {
   ipv6_cidr_block_network_border_group = "us-west-2"
   tags = {
     Name           = "vpc-flowlog"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -169,7 +149,7 @@ resource "aws_subnet" "private-subnet" {
   private_dns_hostname_type_on_launch            = "resource-name"
   tags = {
     Name           = "private-subnet"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -184,7 +164,7 @@ resource "aws_subnet" "public-subnet" {
   private_dns_hostname_type_on_launch            = "resource-name"
   tags = {
     Name           = "public-subnet"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -193,7 +173,7 @@ resource "aws_internet_gateway" "flowlog-igw" {
   vpc_id = aws_vpc.vpc-flowlog.id
   tags = {
     Name           = "flowlog-igw"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -208,7 +188,7 @@ resource "aws_route_table" "public-rt" {
   vpc_id = aws_vpc.vpc-flowlog.id
   tags = {
     Name           = "public-rt"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -225,7 +205,7 @@ resource "aws_security_group" "instance_Instance_flow_logs_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_Instance_flow_logs_group"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -249,7 +229,7 @@ resource "aws_flow_log" "flowlog-to-cw" {
   traffic_type         = "ALL"
   tags = {
     Name           = "flowlog-to-cw"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_iam_role_policy_attachment.flow_log_flowlog-to-cw_st_VPC-FlowLogs-Setup_attach_role_flow_log_flowlog-to-cw]
@@ -263,7 +243,7 @@ resource "aws_flow_log" "flowlog-to-firehose" {
   traffic_type         = "ALL"
   tags = {
     Name           = "flowlog-to-firehose"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -276,7 +256,7 @@ resource "aws_flow_log" "flowlog-to-s3" {
   traffic_type         = "ALL"
   tags = {
     Name           = "flowlog-to-s3"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_s3_bucket_policy.aws_s3_bucket_policy_flowlogs-bucket_st_vpc-flowlog]
@@ -294,7 +274,7 @@ resource "aws_s3_bucket" "flowlogs-bucket" {
   object_lock_enabled = false
   tags = {
     Name           = "flowlogs-bucket"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -408,7 +388,7 @@ resource "aws_instance" "Instance_flow_logs" {
     enabled = false
   }
   lifecycle {
-    ignore_changes = [user_data, user_data_replace_on_change]
+    ignore_changes = [user_data]
   }
   metadata_options {
     http_endpoint               = "enabled"
@@ -434,7 +414,7 @@ resource "aws_instance" "Instance_flow_logs" {
   }
   tags = {
     Name           = "Instance_flow_logs"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
@@ -460,10 +440,10 @@ resource "aws_kinesis_firehose_delivery_stream" "flowlogs-firehose" {
     }
   }
   tags = {
-    Name               = "flowlogs-firehose"
-    State              = "VPC-FlowLogs-Setup"
-    Struct8Creator     = "rmay struct"
     LogDeliveryEnabled = true
+    Name               = "flowlogs-firehose"
+    State              = "vpc-flowlog"
+    Struct8Creator     = "rmay struct"
   }
   depends_on = [aws_iam_role_policy_attachment.kinesis_firehose_delivery_stream_flowlogs-firehose_st_VPC-FlowLogs-Setup_attach_flowlogs-firehose_role]
 }
@@ -479,7 +459,7 @@ resource "aws_cloudwatch_log_group" "flowlogs-cw" {
   retention_in_days = 1
   tags = {
     Name           = "flowlogs-cw"
-    State          = "VPC-FlowLogs-Setup"
+    State          = "vpc-flowlog"
     Struct8Creator = "rmay struct"
   }
 }
