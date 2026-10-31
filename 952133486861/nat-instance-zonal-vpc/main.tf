@@ -189,6 +189,7 @@ resource "aws_eip" "EIP" {
 
 resource "aws_instance" "Instance" {
   subnet_id                   = aws_subnet.zonal-public-a.id
+  ami                         = "ami-0cc098d14c47f965b"
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.Instance_profile.name
   instance_type               = "t3.nano"
