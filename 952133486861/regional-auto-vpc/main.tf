@@ -30,7 +30,7 @@ resource "aws_vpc" "regional-auto-vpc" {
   instance_tenancy   = "default"
   tags = {
     Name           = "regional-auto-vpc"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "regional-auto-private-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "regional-auto-private-a"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -56,7 +56,7 @@ resource "aws_subnet" "regional-auto-private-b" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "regional-auto-private-b"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -69,7 +69,7 @@ resource "aws_subnet" "regional-auto-public-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "regional-auto-public-a"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -82,7 +82,7 @@ resource "aws_subnet" "regional-auto-public-b" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "regional-auto-public-b"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -91,7 +91,7 @@ resource "aws_internet_gateway" "regional-auto-igw" {
   vpc_id = aws_vpc.regional-auto-vpc.id
   tags = {
     Name           = "regional-auto-igw"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -102,7 +102,7 @@ resource "aws_nat_gateway" "regional-auto-nat" {
   connectivity_type = "public"
   tags = {
     Name           = "regional-auto-nat"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_internet_gateway.regional-auto-igw]
@@ -124,7 +124,7 @@ resource "aws_route_table" "regional-auto-rt-private" {
   vpc_id = aws_vpc.regional-auto-vpc.id
   tags = {
     Name           = "regional-auto-rt-private"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
 }
@@ -133,7 +133,7 @@ resource "aws_route_table" "regional-auto-rt-public" {
   vpc_id = aws_vpc.regional-auto-vpc.id
   tags = {
     Name           = "regional-auto-rt-public"
-    State          = "regional-auto-state"
+    State          = "regional-auto-vpc"
     Struct8Creator = "rmay struct"
   }
 }
