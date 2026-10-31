@@ -245,7 +245,7 @@ resource "aws_flow_log" "flowlog-to-cw" {
   iam_role_arn         = aws_iam_role.role_flow_log_flowlog-to-cw.arn
   log_destination      = aws_cloudwatch_log_group.flowlogs-cw.arn
   log_destination_type = "cloud-watch-logs"
-  log_format           = "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}"
+  log_format           = "$${version} $${account-id} $${interface-id} $${srcaddr} $${dstaddr} $${srcport} $${dstport} $${protocol} $${packets} $${bytes} $${start} $${end} $${action} $${log-status}"
   traffic_type         = "ALL"
   tags = {
     Name           = "flowlog-to-cw"
@@ -259,7 +259,7 @@ resource "aws_flow_log" "flowlog-to-firehose" {
   vpc_id               = aws_vpc.vpc-flowlog.id
   log_destination      = aws_kinesis_firehose_delivery_stream.flowlogs-firehose.arn
   log_destination_type = "kinesis-data-firehose"
-  log_format           = "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}"
+  log_format           = "$${version} $${account-id} $${interface-id} $${srcaddr} $${dstaddr} $${srcport} $${dstport} $${protocol} $${packets} $${bytes} $${start} $${end} $${action} $${log-status}"
   traffic_type         = "ALL"
   tags = {
     Name           = "flowlog-to-firehose"
@@ -272,7 +272,7 @@ resource "aws_flow_log" "flowlog-to-s3" {
   subnet_id            = aws_subnet.public-subnet.id
   log_destination      = aws_s3_bucket.flowlogs-bucket.arn
   log_destination_type = "s3"
-  log_format           = "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}"
+  log_format           = "$${version} $${account-id} $${interface-id} $${srcaddr} $${dstaddr} $${srcport} $${dstport} $${protocol} $${packets} $${bytes} $${start} $${end} $${action} $${log-status}"
   traffic_type         = "ALL"
   tags = {
     Name           = "flowlog-to-s3"
