@@ -1,7 +1,7 @@
 {
   "external_repositories": [],
-  "action": "plan",
-  "trigger_id": "1793447690265",
+  "action": "destroy",
+  "trigger_id": "1793448778507",
   "triggered_by": "assistant.rmay_struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
