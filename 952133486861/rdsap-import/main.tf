@@ -567,19 +567,6 @@ resource "aws_security_group" "instance_demo-pgweb_group" {
 }
 
 resource "aws_security_group" "sg_vpce_ep-cloudwatch" {
-  name                   = "vpce-sg-ep-cloudwatch"
-  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
-  description            = "Auto-generated SG for ep-cloudwatch"
-  revoke_rules_on_delete = false
-  tags = {
-    Name           = "sg_vpce_ep-cloudwatch"
-    State          = "demo-postgres-state"
-    Struct8Creator = "rmay struct"
-    DifName        = "ep-cloudwatch"
-  }
-}
-
-resource "aws_security_group" "sg_vpce_ep-cloudwatch" {
   name        = "vpce-sg-ep-cloudwatch"
   vpc_id      = aws_vpc.rds-access-patterns-lab.id
   description = "Auto-generated SG for ep-cloudwatch"
@@ -591,19 +578,6 @@ resource "aws_security_group" "sg_vpce_ep-cloudwatch" {
     DifName        = "sg_vpce_ep-cloudwatch"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
-  }
-}
-
-resource "aws_security_group" "sg_vpce_ep-secret-manager" {
-  name                   = "vpce-sg-ep-secret-manager"
-  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
-  description            = "Auto-generated SG for ep-secret-manager"
-  revoke_rules_on_delete = false
-  tags = {
-    Name           = "sg_vpce_ep-secret-manager"
-    State          = "demo-postgres-state"
-    Struct8Creator = "rmay struct"
-    DifName        = "ep-secret-manager"
   }
 }
 
@@ -745,27 +719,7 @@ resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_egress_all_protoc
   type              = "egress"
 }
 
-resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_egress_all_protocols_2" {
-  security_group_id = aws_security_group.sg_vpce_ep-cloudwatch.id
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "Allow all outbound traffic"
-  from_port         = 0
-  protocol          = "-1"
-  to_port           = 0
-  type              = "egress"
-}
-
 resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_ingress_tcp_443" {
-  security_group_id = aws_security_group.sg_vpce_ep-cloudwatch.id
-  cidr_blocks       = ["10.8.0.0/16"]
-  description       = "Allow HTTPS from VPC"
-  from_port         = 443
-  protocol          = "tcp"
-  to_port           = 443
-  type              = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_ingress_tcp_443_2" {
   security_group_id = aws_security_group.sg_vpce_ep-cloudwatch.id
   cidr_blocks       = ["10.8.0.0/16"]
   description       = "Allow HTTPS from VPC"
@@ -785,27 +739,7 @@ resource "aws_security_group_rule" "rule_sg_vpce_ep_secret_manager_egress_all_pr
   type              = "egress"
 }
 
-resource "aws_security_group_rule" "rule_sg_vpce_ep_secret_manager_egress_all_protocols_2" {
-  security_group_id = aws_security_group.sg_vpce_ep-secret-manager.id
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "Allow all outbound traffic"
-  from_port         = 0
-  protocol          = "-1"
-  to_port           = 0
-  type              = "egress"
-}
-
 resource "aws_security_group_rule" "rule_sg_vpce_ep_secret_manager_ingress_tcp_443" {
-  security_group_id = aws_security_group.sg_vpce_ep-secret-manager.id
-  cidr_blocks       = ["10.8.0.0/16"]
-  description       = "Allow HTTPS from VPC"
-  from_port         = 443
-  protocol          = "tcp"
-  to_port           = 443
-  type              = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_sg_vpce_ep_secret_manager_ingress_tcp_443_2" {
   security_group_id = aws_security_group.sg_vpce_ep-secret-manager.id
   cidr_blocks       = ["10.8.0.0/16"]
   description       = "Allow HTTPS from VPC"
