@@ -24,26 +24,19 @@ data "aws_region" "current" {}
 
 ### CATEGORY: IAM ###
 
+data "aws_iam_policy_document" "lambda_function_processor_st_s3-notify-three-destinations_doc" {
+  statement {
+    sid       = "AllowWriteLogs"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.processor-logs.arn}:*"]
+  }
+}
+
 resource "aws_iam_policy" "lambda_function_processor_st_s3-notify-three-destinations" {
   name        = "lambda_function_processor_st_s3-notify-three-destinations"
   description = "Access Policy for processor"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "${aws_cloudwatch_log_group.processor-logs.arn}:*"
-      ],
-      "Sid": "AllowWriteLogs"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.lambda_function_processor_st_s3-notify-three-destinations_doc.json
 }
 
 resource "aws_iam_role" "processor_role" {
@@ -54,7 +47,7 @@ resource "aws_iam_role" "processor_role" {
   path                  = "/"
   tags = {
     Name           = "processor_role"
-    State          = "s3-notify-three-destinations"
+    State          = "s3n_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -76,7 +69,7 @@ resource "aws_s3_bucket" "source" {
   object_lock_enabled = false
   tags = {
     Name           = "source"
-    State          = "s3-notify-three-destinations"
+    State          = "s3n_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -155,9 +148,9 @@ resource "aws_lambda_function" "processor" {
   timeout                        = 30
   environment {
     variables = {
-    ACCOUNT = "952133486861"
+    ACCOUNT = data.aws_caller_identity.current.account_id
     NAME    = "processor"
-    REGION  = "us-west-2"
+    REGION  = data.aws_region.current.region
   }
   }
   ephemeral_storage {
@@ -171,18 +164,18 @@ resource "aws_lambda_function" "processor" {
   }
   tags = {
     Name           = "processor"
-    State          = "s3-notify-three-destinations"
+    State          = "s3n_import"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_iam_role_policy_attachment.lambda_function_processor_st_s3-notify-three-destinations_attach_processor_role]
 }
 
 resource "aws_lambda_permission" "perm_aws_s3_bucket_source_to_processor" {
-  function_name = aws_lambda_function.processor.function_name
-  statement_id  = "perm_aws_s3_bucket_source_to_processor096a739ed64841444939c25ee7"
-  principal     = "s3.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_s3_bucket.source.arn
+  function_name       = aws_lambda_function.processor.function_name
+  principal           = "s3.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_s3_bucket.source.arn
+  statement_id_prefix = "perm_aws_s3_bucket_source_to_processor"
 }
 
 
@@ -202,7 +195,7 @@ resource "aws_sqs_queue" "archive" {
   visibility_timeout_seconds        = 60
   tags = {
     Name           = "archive"
-    State          = "s3-notify-three-destinations"
+    State          = "s3n_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -234,7 +227,7 @@ resource "aws_sns_topic" "alerts" {
   name = "alerts"
   tags = {
     Name           = "alerts"
-    State          = "s3-notify-three-destinations"
+    State          = "s3n_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -279,7 +272,7 @@ resource "aws_cloudwatch_log_group" "processor-logs" {
   retention_in_days = 7
   tags = {
     Name           = "processor-logs"
-    State          = "s3-notify-three-destinations"
+    State          = "s3n_import"
     Struct8Creator = "rmay struct"
   }
 }
