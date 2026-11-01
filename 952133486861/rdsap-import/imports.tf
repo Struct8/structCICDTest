@@ -97,16 +97,6 @@ import {
 }
 
 import {
-  to = aws_security_group.sg_vpce_ep-cloudwatch
-  id = "sg-06fd4f6e61adfc736"
-}
-
-import {
-  to = aws_security_group.sg_vpce_ep-secret-manager
-  id = "sg-0f1122bed1e7851ce"
-}
-
-import {
   to = aws_subnet.demo-postgres-private-a
   id = "subnet-0212ffac5c5b90dff"
 }
@@ -209,6 +199,16 @@ import {
 import {
   to = aws_db_proxy_target.demo-postgres-proxy_target
   id = "demo-postgres-proxy/default/RDS_INSTANCE/demo-postgres"
+}
+
+import {
+  to = aws_security_group.sg_vpce_ep-cloudwatch
+  id = "sg-06fd4f6e61adfc736"
+}
+
+import {
+  to = aws_security_group.sg_vpce_ep-secret-manager
+  id = "sg-0f1122bed1e7851ce"
 }
 
 import {
@@ -327,17 +327,7 @@ import {
 }
 
 import {
-  to = aws_security_group_rule.rule_sg_vpce_ep_cloudwatch_egress_all_protocols_2
-  id = "sg-06fd4f6e61adfc736_egress_all_0_0_0.0.0.0/0"
-}
-
-import {
   to = aws_security_group_rule.rule_sg_vpce_ep_cloudwatch_ingress_tcp_443
-  id = "sg-06fd4f6e61adfc736_ingress_tcp_443_443_10.8.0.0/16"
-}
-
-import {
-  to = aws_security_group_rule.rule_sg_vpce_ep_cloudwatch_ingress_tcp_443_2
   id = "sg-06fd4f6e61adfc736_ingress_tcp_443_443_10.8.0.0/16"
 }
 
@@ -347,17 +337,7 @@ import {
 }
 
 import {
-  to = aws_security_group_rule.rule_sg_vpce_ep_secret_manager_egress_all_protocols_2
-  id = "sg-0f1122bed1e7851ce_egress_all_0_0_0.0.0.0/0"
-}
-
-import {
   to = aws_security_group_rule.rule_sg_vpce_ep_secret_manager_ingress_tcp_443
-  id = "sg-0f1122bed1e7851ce_ingress_tcp_443_443_10.8.0.0/16"
-}
-
-import {
-  to = aws_security_group_rule.rule_sg_vpce_ep_secret_manager_ingress_tcp_443_2
   id = "sg-0f1122bed1e7851ce_ingress_tcp_443_443_10.8.0.0/16"
 }
 
