@@ -292,6 +292,9 @@ resource "aws_s3_bucket" "flowlogs-bucket" {
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   tags = {
     Name           = "flowlogs-bucket"
     State          = "VPC-FlowLogs-Setup"
@@ -302,6 +305,9 @@ resource "aws_s3_bucket" "flowlogs-bucket" {
 resource "aws_s3_bucket_lifecycle_configuration" "flowlogs-bucket_lifecycle" {
   bucket                                 = aws_s3_bucket.flowlogs-bucket.id
   transition_default_minimum_object_size = "all_storage_classes_128K"
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   rule {
     id     = "expire-logs"
     status = "Enabled"
@@ -314,6 +320,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "flowlogs-bucket_lifecycle" {
 
 resource "aws_s3_bucket_ownership_controls" "flowlogs-bucket_controls" {
   bucket = aws_s3_bucket.flowlogs-bucket.id
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   rule {
     object_ownership = "BucketOwnerEnforced"
   }
@@ -363,10 +372,16 @@ resource "aws_s3_bucket_public_access_block" "flowlogs-bucket_block" {
   bucket                  = aws_s3_bucket.flowlogs-bucket.id
   ignore_public_acls      = true
   restrict_public_buckets = true
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "flowlogs-bucket_configuration" {
   bucket = aws_s3_bucket.flowlogs-bucket.id
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   rule {
     blocked_encryption_types = ["SSE-C"]
     bucket_key_enabled       = true
@@ -378,6 +393,9 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "flowlogs-bucket_c
 
 resource "aws_s3_bucket_versioning" "flowlogs-bucket_versioning" {
   bucket = aws_s3_bucket.flowlogs-bucket.id
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   versioning_configuration {
     mfa_delete = "Disabled"
     status     = "Suspended"
