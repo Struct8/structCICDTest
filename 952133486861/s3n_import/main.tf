@@ -145,7 +145,7 @@ resource "aws_lambda_function" "processor" {
   function_name                  = "processor"
   architectures                  = ["arm64"]
   description                    = "Runs on every .csv uploaded under 'uploads/'. Code is the prebuilt Hub artifact from the connected GitHub node (Struct8/struct8-hub, folder 'prebuilt', handler index.handler). Writes to the connected CloudWatch log group, where you confirm it ran."
-  filename                       = "./struct8-hub_processor.zip"
+  filename                       = "imported_lambda_placeholder.zip"
   handler                        = "index.handler"
   memory_size                    = 128
   publish                        = false
@@ -162,6 +162,9 @@ resource "aws_lambda_function" "processor" {
   }
   ephemeral_storage {
     size = 512
+  }
+  lifecycle {
+    ignore_changes = [filename, source_code_hash]
   }
   logging_config {
     log_format = "Text"
