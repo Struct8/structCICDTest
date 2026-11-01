@@ -22,26 +22,6 @@ provider "aws" {
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-### RENAMES ###
-
-moved {
-  from = aws_security_group_rule.rule_demo_postgres_api_1_to_db_proxy_demo_postgres_proxy_group_tcp_5432
-  to   = aws_security_group_rule.rule_demo_postgres_api_to_db_proxy_demo_postgres_proxy_group_tcp_5432
-}
-
-moved {
-  from = aws_security_group_rule.rule_demo_postgres_direct_1_to_db_instance_demo_postgres_group_tcp_5432
-  to   = aws_security_group_rule.rule_demo_postgres_direct_to_db_instance_demo_postgres_group_tcp_5432
-}
-
-moved {
-  from = aws_security_group_rule.rule_demo_postgres_iam_1_to_db_instance_demo_postgres_group_tcp_5432
-  to   = aws_security_group_rule.rule_demo_postgres_iam_to_db_instance_demo_postgres_group_tcp_5432
-}
-
-
-
-
 ### CATEGORY: IAM ###
 
 resource "aws_iam_instance_profile" "demo-pgweb_profile" {
@@ -322,34 +302,34 @@ resource "aws_vpc" "rds-access-patterns-lab" {
   }
 }
 
-resource "aws_vpc_endpoint" "ep-cloudwatch_LOGS_EC2" {
-  service_name        = "com.amazonaws.${data.aws_region.current.region}.ec2"
+resource "aws_vpc_endpoint" "ep-cloudwatch_LOGS" {
+  service_name        = "com.amazonaws.${data.aws_region.current.region}.logs"
   vpc_id              = aws_vpc.rds-access-patterns-lab.id
   ip_address_type     = "ipv4"
   policy              = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}]}"
   private_dns_enabled = true
-  security_group_ids  = [aws_security_group.sg_vpce_ep-cloudwatch_LOGS.id]
+  security_group_ids  = [aws_security_group.sg_vpce_ep-cloudwatch.id]
   subnet_ids          = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   vpc_endpoint_type   = "Interface"
   tags = {
-    Name           = "ep-cloudwatch_LOGS"
+    Name           = "ep-cloudwatch"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
     DifName        = "ep-cloudwatch"
   }
 }
 
-resource "aws_vpc_endpoint" "ep-secret-manager_SECRETSMANAGER_EC2" {
-  service_name        = "com.amazonaws.${data.aws_region.current.region}.ec2"
+resource "aws_vpc_endpoint" "ep-secret-manager_SECRETSMANAGER" {
+  service_name        = "com.amazonaws.${data.aws_region.current.region}.secretsmanager"
   vpc_id              = aws_vpc.rds-access-patterns-lab.id
   ip_address_type     = "ipv4"
   policy              = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}]}"
   private_dns_enabled = true
-  security_group_ids  = [aws_security_group.sg_vpce_ep-secret-manager_SECRETSMANAGER.id]
+  security_group_ids  = [aws_security_group.sg_vpce_ep-secret-manager.id]
   subnet_ids          = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   vpc_endpoint_type   = "Interface"
   tags = {
-    Name           = "ep-secret-manager_SECRETSMANAGER"
+    Name           = "ep-secret-manager"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
     DifName        = "ep-secret-manager"
@@ -448,7 +428,7 @@ resource "aws_security_group" "db_proxy_demo-postgres-proxy_group" {
   }
 }
 
-resource "aws_security_group" "demo-postgres-api_1" {
+resource "aws_security_group" "demo-postgres-api" {
   name                   = "demo-postgres-api"
   vpc_id                 = aws_vpc.rds-access-patterns-lab.id
   description            = "Managed by Terraform"
@@ -460,7 +440,7 @@ resource "aws_security_group" "demo-postgres-api_1" {
   }
 }
 
-resource "aws_security_group" "demo-postgres-direct_1" {
+resource "aws_security_group" "demo-postgres-direct" {
   name                   = "demo-postgres-direct"
   vpc_id                 = aws_vpc.rds-access-patterns-lab.id
   description            = "Managed by Terraform"
@@ -472,7 +452,7 @@ resource "aws_security_group" "demo-postgres-direct_1" {
   }
 }
 
-resource "aws_security_group" "demo-postgres-iam_1" {
+resource "aws_security_group" "demo-postgres-iam" {
   name                   = "demo-postgres-iam"
   vpc_id                 = aws_vpc.rds-access-patterns-lab.id
   description            = "Managed by Terraform"
@@ -492,56 +472,30 @@ resource "aws_security_group" "instance_demo-pgweb_group" {
 }
 
 resource "aws_security_group" "sg_vpce_ep-cloudwatch" {
-  name                   = "vpce-sg-ep-cloudwatch"
-  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
-  description            = "Auto-generated SG for ep-cloudwatch"
-  revoke_rules_on_delete = false
-  tags = {
-    Name           = "sg_vpce_ep-cloudwatch"
-    State          = "demo-postgres-state"
-    Struct8Creator = "rmay struct"
-    DifName        = "ep-cloudwatch"
-  }
-}
-
-resource "aws_security_group" "sg_vpce_ep-cloudwatch_LOGS" {
-  name        = "vpce-sg-ep-cloudwatch_logs"
+  name        = "vpce-sg-ep-cloudwatch"
   vpc_id      = aws_vpc.rds-access-patterns-lab.id
-  description = "Auto-generated SG for ep-cloudwatch_LOGS"
+  description = "Auto-generated SG for ep-cloudwatch"
   lifecycle {
     ignore_changes = [revoke_rules_on_delete]
   }
   tags = {
-    Name           = "ep-cloudwatch_LOGS"
-    DifName        = "sg_vpce_ep-cloudwatch_LOGS"
+    Name           = "ep-cloudwatch"
+    DifName        = "sg_vpce_ep-cloudwatch"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
   }
 }
 
 resource "aws_security_group" "sg_vpce_ep-secret-manager" {
-  name                   = "vpce-sg-ep-secret-manager"
-  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
-  description            = "Auto-generated SG for ep-secret-manager"
-  revoke_rules_on_delete = false
-  tags = {
-    Name           = "sg_vpce_ep-secret-manager"
-    State          = "demo-postgres-state"
-    Struct8Creator = "rmay struct"
-    DifName        = "ep-secret-manager"
-  }
-}
-
-resource "aws_security_group" "sg_vpce_ep-secret-manager_SECRETSMANAGER" {
-  name        = "vpce-sg-ep-secret-manager_secretsmanager"
+  name        = "vpce-sg-ep-secret-manager"
   vpc_id      = aws_vpc.rds-access-patterns-lab.id
-  description = "Auto-generated SG for ep-secret-manager_SECRETSMANAGER"
+  description = "Auto-generated SG for ep-secret-manager"
   lifecycle {
     ignore_changes = [revoke_rules_on_delete]
   }
   tags = {
-    Name           = "ep-secret-manager_SECRETSMANAGER"
-    DifName        = "sg_vpce_ep-secret-manager_SECRETSMANAGER"
+    Name           = "ep-secret-manager"
+    DifName        = "sg_vpce_ep-secret-manager"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
   }
@@ -575,8 +529,8 @@ resource "aws_security_group_rule" "rule_db_proxy_demo_postgres_proxy_group_to_d
   type                     = "ingress"
 }
 
-resource "aws_security_group_rule" "rule_demo_postgres_api_1_egress_all_protocols" {
-  security_group_id = aws_security_group.demo-postgres-api_1.id
+resource "aws_security_group_rule" "rule_demo_postgres_api_egress_all_protocols" {
+  security_group_id = aws_security_group.demo-postgres-api.id
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 0
   protocol          = "-1"
@@ -586,7 +540,7 @@ resource "aws_security_group_rule" "rule_demo_postgres_api_1_egress_all_protocol
 
 resource "aws_security_group_rule" "rule_demo_postgres_api_to_db_proxy_demo_postgres_proxy_group_tcp_5432" {
   security_group_id        = aws_security_group.db_proxy_demo-postgres-proxy_group.id
-  source_security_group_id = aws_security_group.demo-postgres-api_1.id
+  source_security_group_id = aws_security_group.demo-postgres-api.id
   description              = "Allow from demo-postgres-api (tcp:5432-5432)"
   from_port                = 5432
   protocol                 = "tcp"
@@ -594,8 +548,8 @@ resource "aws_security_group_rule" "rule_demo_postgres_api_to_db_proxy_demo_post
   type                     = "ingress"
 }
 
-resource "aws_security_group_rule" "rule_demo_postgres_direct_1_egress_all_protocols" {
-  security_group_id = aws_security_group.demo-postgres-direct_1.id
+resource "aws_security_group_rule" "rule_demo_postgres_direct_egress_all_protocols" {
+  security_group_id = aws_security_group.demo-postgres-direct.id
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 0
   protocol          = "-1"
@@ -605,7 +559,7 @@ resource "aws_security_group_rule" "rule_demo_postgres_direct_1_egress_all_proto
 
 resource "aws_security_group_rule" "rule_demo_postgres_direct_to_db_instance_demo_postgres_group_tcp_5432" {
   security_group_id        = aws_security_group.db_instance_demo-postgres_group.id
-  source_security_group_id = aws_security_group.demo-postgres-direct_1.id
+  source_security_group_id = aws_security_group.demo-postgres-direct.id
   description              = "Allow from demo-postgres-direct (tcp:5432-5432)"
   from_port                = 5432
   protocol                 = "tcp"
@@ -613,8 +567,8 @@ resource "aws_security_group_rule" "rule_demo_postgres_direct_to_db_instance_dem
   type                     = "ingress"
 }
 
-resource "aws_security_group_rule" "rule_demo_postgres_iam_1_egress_all_protocols" {
-  security_group_id = aws_security_group.demo-postgres-iam_1.id
+resource "aws_security_group_rule" "rule_demo_postgres_iam_egress_all_protocols" {
+  security_group_id = aws_security_group.demo-postgres-iam.id
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 0
   protocol          = "-1"
@@ -624,7 +578,7 @@ resource "aws_security_group_rule" "rule_demo_postgres_iam_1_egress_all_protocol
 
 resource "aws_security_group_rule" "rule_demo_postgres_iam_to_db_instance_demo_postgres_group_tcp_5432" {
   security_group_id        = aws_security_group.db_instance_demo-postgres_group.id
-  source_security_group_id = aws_security_group.demo-postgres-iam_1.id
+  source_security_group_id = aws_security_group.demo-postgres-iam.id
   description              = "Allow from demo-postgres-iam (tcp:5432-5432)"
   from_port                = 5432
   protocol                 = "tcp"
@@ -660,26 +614,6 @@ resource "aws_security_group_rule" "rule_instance_demo_pgweb_group_to_db_instanc
   type                     = "ingress"
 }
 
-resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_LOGS_egress_all_protocols" {
-  security_group_id = aws_security_group.sg_vpce_ep-cloudwatch_LOGS.id
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "Allow all outbound traffic"
-  from_port         = 0
-  protocol          = "-1"
-  to_port           = 0
-  type              = "egress"
-}
-
-resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_LOGS_ingress_tcp_443" {
-  security_group_id = aws_security_group.sg_vpce_ep-cloudwatch_LOGS.id
-  cidr_blocks       = ["10.8.0.0/16"]
-  description       = "Allow HTTPS from VPC"
-  from_port         = 443
-  protocol          = "tcp"
-  to_port           = 443
-  type              = "ingress"
-}
-
 resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_egress_all_protocols" {
   security_group_id = aws_security_group.sg_vpce_ep-cloudwatch.id
   cidr_blocks       = ["0.0.0.0/0"]
@@ -692,26 +626,6 @@ resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_egress_all_protoc
 
 resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_ingress_tcp_443" {
   security_group_id = aws_security_group.sg_vpce_ep-cloudwatch.id
-  cidr_blocks       = ["10.8.0.0/16"]
-  description       = "Allow HTTPS from VPC"
-  from_port         = 443
-  protocol          = "tcp"
-  to_port           = 443
-  type              = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_sg_vpce_ep_secret_manager_SECRETSMANAGER_egress_all_protocols" {
-  security_group_id = aws_security_group.sg_vpce_ep-secret-manager_SECRETSMANAGER.id
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "Allow all outbound traffic"
-  from_port         = 0
-  protocol          = "-1"
-  to_port           = 0
-  type              = "egress"
-}
-
-resource "aws_security_group_rule" "rule_sg_vpce_ep_secret_manager_SECRETSMANAGER_ingress_tcp_443" {
-  security_group_id = aws_security_group.sg_vpce_ep-secret-manager_SECRETSMANAGER.id
   cidr_blocks       = ["10.8.0.0/16"]
   description       = "Allow HTTPS from VPC"
   from_port         = 443
@@ -1141,7 +1055,7 @@ resource "aws_lambda_function" "demo-postgres-api" {
     Struct8Creator = "rmay struct"
   }
   vpc_config {
-    security_group_ids = [aws_security_group.demo-postgres-api_1.id]
+    security_group_ids = [aws_security_group.demo-postgres-api.id]
     subnet_ids         = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   }
   depends_on = [aws_iam_role_policy_attachment.lambda_function_demo-postgres-api_st_demo-postgres-state_attach]
@@ -1187,7 +1101,7 @@ resource "aws_lambda_function" "demo-postgres-direct" {
     Struct8Creator = "rmay struct"
   }
   vpc_config {
-    security_group_ids = [aws_security_group.demo-postgres-direct_1.id]
+    security_group_ids = [aws_security_group.demo-postgres-direct.id]
     subnet_ids         = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   }
   depends_on = [aws_iam_role_policy_attachment.lambda_function_demo-postgres-direct_st_demo-postgres-state_attach]
@@ -1234,7 +1148,7 @@ resource "aws_lambda_function" "demo-postgres-iam" {
     Struct8Creator = "rmay struct"
   }
   vpc_config {
-    security_group_ids = [aws_security_group.demo-postgres-iam_1.id]
+    security_group_ids = [aws_security_group.demo-postgres-iam.id]
     subnet_ids         = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   }
   depends_on = [aws_iam_role_policy_attachment.lambda_function_demo-postgres-iam_st_demo-postgres-state_attach]
@@ -1249,19 +1163,19 @@ resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct" {
-  function_name       = aws_lambda_function.demo-postgres-direct.function_name
-  principal           = "events.amazonaws.com"
-  action              = "lambda:InvokeFunction"
-  source_arn          = aws_cloudwatch_event_rule.every-1-minute.arn
-  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct"
+  function_name = aws_lambda_function.demo-postgres-direct.function_name
+  statement_id  = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct88b0b1da8d123f8c056513ecec"
+  principal     = "events.amazonaws.com"
+  action        = "lambda:InvokeFunction"
+  source_arn    = aws_cloudwatch_event_rule.every-1-minute.arn
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam" {
-  function_name       = aws_lambda_function.demo-postgres-iam.function_name
-  principal           = "events.amazonaws.com"
-  action              = "lambda:InvokeFunction"
-  source_arn          = aws_cloudwatch_event_rule.every-1-minute.arn
-  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam"
+  function_name = aws_lambda_function.demo-postgres-iam.function_name
+  statement_id  = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam708c765ff46605fb0e1864b70b"
+  principal     = "events.amazonaws.com"
+  action        = "lambda:InvokeFunction"
+  source_arn    = aws_cloudwatch_event_rule.every-1-minute.arn
 }
 
 
