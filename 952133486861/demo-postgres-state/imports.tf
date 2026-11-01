@@ -2,11 +2,6 @@
 # Every block below points at a resource that ALREADY exists.
 
 import {
-  to = aws_cloudwatch_log_group.LogGroup
-  id = "/aws/rds/proxy/demo-postgres-proxy"
-}
-
-import {
   to = aws_cloudwatch_log_group.demo-postgres-log1
   id = "RDSOSMetrics"
 }
@@ -24,6 +19,11 @@ import {
 import {
   to = aws_cloudwatch_event_rule.every-1-minute
   id = "every-1-minute"
+}
+
+import {
+  to = aws_cloudwatch_log_group.LogGroup
+  id = "/aws/rds/proxy/demo-postgres-proxy"
 }
 
 import {
