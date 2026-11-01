@@ -315,7 +315,7 @@ resource "aws_vpc_endpoint" "ep-cloudwatch_LOGS" {
     Name           = "ep-cloudwatch"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
-    DifName        = "ep-cloudwatch"
+    DifName        = "ep-cloudwatch_LOGS"
   }
 }
 
@@ -332,7 +332,7 @@ resource "aws_vpc_endpoint" "ep-secret-manager_SECRETSMANAGER" {
     Name           = "ep-secret-manager"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
-    DifName        = "ep-secret-manager"
+    DifName        = "ep-secret-manager_SECRETSMANAGER"
   }
 }
 
@@ -734,7 +734,7 @@ resource "aws_db_proxy" "demo-postgres-proxy" {
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
   }
-  depends_on = [aws_iam_role_policy_attachment.db_proxy_demo-postgres-proxy_st_demo-postgres-state_attach]
+  depends_on = [aws_cloudwatch_log_group.LogGroup, aws_iam_role_policy_attachment.db_proxy_demo-postgres-proxy_st_demo-postgres-state_attach]
 }
 
 resource "aws_db_proxy_target" "demo-postgres-proxy_target" {
