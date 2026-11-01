@@ -212,6 +212,16 @@ import {
 }
 
 import {
+  to = aws_vpc_endpoint.ep-cloudwatch_LOGS
+  id = "vpce-0e76b30a507453f54"
+}
+
+import {
+  to = aws_vpc_endpoint.ep-secret-manager_SECRETSMANAGER
+  id = "vpce-0bad00cf914689ca5"
+}
+
+import {
   to = aws_iam_role_policy_attachment.AmazonSSMManagedInstanceCore_to_demo-pgweb_attach
   id = "demo-pgweb_role/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
