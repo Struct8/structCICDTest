@@ -30,7 +30,7 @@ resource "aws_iam_instance_profile" "kuma_profile" {
   role = aws_iam_role.kuma_role.name
   tags = {
     Name           = "kuma_profile"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -41,7 +41,7 @@ resource "aws_iam_instance_profile" "nat_profile" {
   role = aws_iam_role.nat_role.name
   tags = {
     Name           = "nat_profile"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -54,7 +54,7 @@ resource "aws_iam_role" "kuma_role" {
   path                  = "/"
   tags = {
     Name           = "kuma_role"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -67,7 +67,7 @@ resource "aws_iam_role" "nat_role" {
   path                  = "/"
   tags = {
     Name           = "nat_role"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -83,7 +83,7 @@ resource "aws_vpc" "ec2-nat-private" {
   instance_tenancy   = "default"
   tags = {
     Name           = "ec2-nat-private"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -96,7 +96,7 @@ resource "aws_subnet" "private" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -109,7 +109,7 @@ resource "aws_subnet" "public" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -118,7 +118,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.ec2-nat-private.id
   tags = {
     Name           = "igw"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -139,7 +139,7 @@ resource "aws_route_table" "private-rt" {
   vpc_id = aws_vpc.ec2-nat-private.id
   tags = {
     Name           = "private-rt"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -148,7 +148,7 @@ resource "aws_route_table" "public-rt" {
   vpc_id = aws_vpc.ec2-nat-private.id
   tags = {
     Name           = "public-rt"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -170,7 +170,7 @@ resource "aws_security_group" "instance_kuma_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_kuma_group"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -182,7 +182,7 @@ resource "aws_security_group" "instance_nat_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_nat_group"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -334,9 +334,6 @@ EOFUData
   enclave_options {
     enabled = false
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
@@ -360,7 +357,7 @@ EOFUData
   }
   tags = {
     Name           = "kuma"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -492,9 +489,6 @@ EOFUData
   enclave_options {
     enabled = false
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
@@ -518,7 +512,7 @@ EOFUData
   }
   tags = {
     Name           = "nat"
-    State          = "ec2-nat-private"
+    State          = "natpriv_import"
     Struct8Creator = "rmay struct"
   }
 }
