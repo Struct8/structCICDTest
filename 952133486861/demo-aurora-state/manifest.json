@@ -1,27 +1,8 @@
 {
-  "external_repositories": [
-    {
-      "repo_name": "struct8-hub",
-      "org": "Struct8",
-      "branch": "main",
-      "target_dir": ".external_modules/struct8-hub",
-      "folders": [
-        "prebuilt"
-      ]
-    },
-    {
-      "repo_name": "struct8-templates",
-      "org": "Struct8",
-      "branch": "main",
-      "target_dir": ".external_modules/struct8-templates",
-      "folders": [
-        "templates/ec2-pgweb/v1/user_data"
-      ]
-    }
-  ],
-  "action": "apply",
-  "trigger_id": "1793572156677",
-  "triggered_by": "assistant.rmay_struct",
+  "external_repositories": [],
+  "action": "plan",
+  "trigger_id": "1793573821393",
+  "triggered_by": "rmay struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
   "backend_global_config": {
@@ -32,7 +13,7 @@
   },
   "pipeline_stages": [
     {
-      "stage_name": "Manual Trigger: demo-aurora-state",
+      "stage_name": "Import: plan us-west-2",
       "parallel_execution": false,
       "states": [
         {
@@ -40,11 +21,14 @@
           "provider": "aws",
           "target_auth": {
             "role_arn": "arn:aws:iam::952133486861:role/Struct8-Gitops-Struct8-structCICDTest",
-            "region": "us-west-2",
-            "secret_name": "AUTH_AWS_952133486861"
+            "region": "us-west-2"
           }
         }
       ]
     }
-  ]
+  ],
+  "import_scope": {
+    "region": "us-west-2",
+    "accountId": "952133486861"
+  }
 }
