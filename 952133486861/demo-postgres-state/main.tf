@@ -1,0 +1,1214 @@
+terraform {
+  required_providers {
+    archive = {
+      source = "hashicorp/archive"
+    }
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+
+  backend "s3" {
+    bucket         = "pro112-teste-cicd"
+    key            = "952133486861/demo-postgres-state/main.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "teste-cicd"
+    encrypt        = true
+  }
+}
+
+# --- Main Cloud Provider ---
+provider "aws" {
+  region = "us-west-2"
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
+### CATEGORY: IAM ###
+
+resource "aws_iam_instance_profile" "demo-pgweb_profile" {
+  name = "demo-pgweb_profile"
+  role = aws_iam_role.demo-pgweb_role.name
+  tags = {
+    Name           = "demo-pgweb_profile"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+data "aws_iam_policy_document" "db_proxy_demo-postgres-proxy_st_demo-postgres-state_doc" {
+  statement {
+    sid       = "ReadDatabaseCredentials"
+    effect    = "Allow"
+    actions   = ["secretsmanager:GetSecretValue"]
+    resources = [one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)]
+  }
+}
+
+resource "aws_iam_policy" "db_proxy_demo-postgres-proxy_st_demo-postgres-state" {
+  name        = "db_proxy_demo-postgres-proxy_st_demo-postgres-state"
+  description = "Access Policy for demo-postgres-proxy"
+  policy      = data.aws_iam_policy_document.db_proxy_demo-postgres-proxy_st_demo-postgres-state_doc.json
+}
+
+data "aws_iam_policy_document" "instance_demo-pgweb_st_demo-postgres-state_doc" {
+  statement {
+    sid       = "AllowRDSSecretAccessdemopostgres"
+    effect    = "Allow"
+    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
+    resources = [aws_db_instance.demo-postgres.master_user_secret[0].secret_arn]
+  }
+}
+
+resource "aws_iam_policy" "instance_demo-pgweb_st_demo-postgres-state" {
+  name        = "instance_demo-pgweb_st_demo-postgres-state"
+  description = "Access Policy for demo-pgweb"
+  policy      = data.aws_iam_policy_document.instance_demo-pgweb_st_demo-postgres-state_doc.json
+}
+
+data "aws_iam_policy_document" "lambda_function_demo-postgres-api_st_demo-postgres-state_doc" {
+  statement {
+    sid       = "AllowWriteLogs"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.demo-postgres-api-logs.arn}:*"]
+  }
+  statement {
+    sid       = "ReadDatabaseCredentials"
+    effect    = "Allow"
+    actions   = ["secretsmanager:GetSecretValue"]
+    resources = [one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)]
+  }
+  statement {
+    sid       = "AllowAllResources"
+    effect    = "Allow"
+    actions   = ["ec2:AssignPrivateIpAddresses", "ec2:CreateNetworkInterface", "ec2:DeleteNetworkInterface", "ec2:DescribeNetworkInterfaces", "ec2:UnassignPrivateIpAddresses"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "lambda_function_demo-postgres-api_st_demo-postgres-state" {
+  name        = "lambda_function_demo-postgres-api_st_demo-postgres-state"
+  description = "Access Policy for demo-postgres-api"
+  policy      = data.aws_iam_policy_document.lambda_function_demo-postgres-api_st_demo-postgres-state_doc.json
+}
+
+data "aws_iam_policy_document" "lambda_function_demo-postgres-direct_st_demo-postgres-state_doc" {
+  statement {
+    sid       = "AllowWriteLogs"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.demo-postgres-direct-logs.arn}:*"]
+  }
+  statement {
+    sid       = "AllowRDSSecretAccessdemopostgres"
+    effect    = "Allow"
+    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
+    resources = [aws_db_instance.demo-postgres.master_user_secret[0].secret_arn]
+  }
+  statement {
+    sid       = "AllowAllResources"
+    effect    = "Allow"
+    actions   = ["ec2:AssignPrivateIpAddresses", "ec2:CreateNetworkInterface", "ec2:DeleteNetworkInterface", "ec2:DescribeNetworkInterfaces", "ec2:UnassignPrivateIpAddresses"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "lambda_function_demo-postgres-direct_st_demo-postgres-state" {
+  name        = "lambda_function_demo-postgres-direct_st_demo-postgres-state"
+  description = "Access Policy for demo-postgres-direct"
+  policy      = data.aws_iam_policy_document.lambda_function_demo-postgres-direct_st_demo-postgres-state_doc.json
+}
+
+data "aws_iam_policy_document" "lambda_function_demo-postgres-iam_st_demo-postgres-state_doc" {
+  statement {
+    sid       = "AllowWriteLogs"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.demo-postgres-iam-logs.arn}:*"]
+  }
+  statement {
+    sid       = "AllowRDSSecretAccessdemopostgres"
+    effect    = "Allow"
+    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
+    resources = [aws_db_instance.demo-postgres.master_user_secret[0].secret_arn]
+  }
+  statement {
+    sid       = "AllowAllResources"
+    effect    = "Allow"
+    actions   = ["ec2:AssignPrivateIpAddresses", "ec2:CreateNetworkInterface", "ec2:DeleteNetworkInterface", "ec2:DescribeNetworkInterfaces", "ec2:UnassignPrivateIpAddresses"]
+    resources = ["*"]
+  }
+  statement {
+    sid       = "RdsIamConnect"
+    effect    = "Allow"
+    actions   = ["rds-db:connect"]
+    resources = ["arn:aws:rds-db:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:dbuser:${aws_db_instance.demo-postgres.resource_id}/lambda_iam"]
+  }
+}
+
+resource "aws_iam_policy" "lambda_function_demo-postgres-iam_st_demo-postgres-state" {
+  name        = "lambda_function_demo-postgres-iam_st_demo-postgres-state"
+  description = "Access Policy for demo-postgres-iam"
+  policy      = data.aws_iam_policy_document.lambda_function_demo-postgres-iam_st_demo-postgres-state_doc.json
+}
+
+data "aws_iam_policy_document" "Debug_debug_permissions" {
+  statement {
+    sid       = "SendToTaggedInstancesOnly"
+    effect    = "Allow"
+    actions   = ["ssm:SendCommand"]
+    resources = ["arn:aws:ec2:*:*:instance/*"]
+    condition {
+      test     = "StringEquals"
+      values   = ["Yhne4-LuxV602c2KaZmjp"]
+      variable = "aws:ResourceTag/Struct8Debug"
+    }
+  }
+  statement {
+    sid       = "PinnedDocumentOnly"
+    effect    = "Allow"
+    actions   = ["ssm:SendCommand"]
+    resources = ["arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:document/Struct8Probe-Yhne4-LuxV602c2KaZmjp"]
+  }
+  statement {
+    sid       = "ReadOwnResults"
+    effect    = "Allow"
+    actions   = ["ssm:GetCommandInvocation", "ssm:DescribeInstanceInformation"]
+    resources = ["*"]
+  }
+  statement {
+    sid       = "CancelOnTaggedInstancesOnly"
+    effect    = "Allow"
+    actions   = ["ssm:CancelCommand"]
+    resources = ["arn:aws:ec2:*:*:instance/*"]
+    condition {
+      test     = "StringEquals"
+      values   = ["Yhne4-LuxV602c2KaZmjp"]
+      variable = "aws:ResourceTag/Struct8Debug"
+    }
+  }
+}
+
+data "aws_iam_policy_document" "Debug_debug_trust" {
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/CrossAccountStruct8"]
+      type        = "AWS"
+    }
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+resource "aws_iam_role" "Struct8Debug-Debug" {
+  name                 = "Struct8Debug-Yhne4-LuxV602c2KaZmjp"
+  assume_role_policy   = data.aws_iam_policy_document.Debug_debug_trust.json
+  max_session_duration = 3600
+}
+
+resource "aws_iam_role" "demo-pgweb_role" {
+  name = "demo-pgweb_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      }
+    }
+  ]
+})
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
+  tags = {
+    Name           = "demo-pgweb_role"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_iam_role" "demo-postgres-api_role" {
+  name = "demo-postgres-api_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
+  tags = {
+    Name           = "demo-postgres-api_role"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_iam_role" "demo-postgres-direct_role" {
+  name = "demo-postgres-direct_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
+  tags = {
+    Name           = "demo-postgres-direct_role"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_iam_role" "demo-postgres-iam_role" {
+  name = "demo-postgres-iam_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
+  tags = {
+    Name           = "demo-postgres-iam_role"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_iam_role" "role_monitoring_demo-postgres" {
+  name = "role_monitoring_demo-postgres"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "monitoring.rds.amazonaws.com"
+      }
+    }
+  ]
+})
+  tags = {
+    Name           = "role_monitoring_demo-postgres"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_iam_role" "role_rds_proxy_demo-postgres-proxy" {
+  name = "role_rds_proxy_demo-postgres-proxy"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "rds.amazonaws.com"
+      }
+    }
+  ]
+})
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
+  tags = {
+    Name           = "role_rds_proxy_demo-postgres-proxy"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_iam_role_policy" "Struct8Debug-Debug_policy" {
+  name   = "Struct8Debug-Yhne4-LuxV602c2KaZmjp-policy"
+  policy = data.aws_iam_policy_document.Debug_debug_permissions.json
+  role   = aws_iam_role.Struct8Debug-Debug.id
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore_to_demo-pgweb_attach" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  role       = aws_iam_role.demo-pgweb_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "db_proxy_demo-postgres-proxy_st_demo-postgres-state_attach" {
+  policy_arn = aws_iam_policy.db_proxy_demo-postgres-proxy_st_demo-postgres-state.arn
+  role       = aws_iam_role.role_rds_proxy_demo-postgres-proxy.name
+}
+
+resource "aws_iam_role_policy_attachment" "instance_demo-pgweb_st_demo-postgres-state_attach" {
+  policy_arn = aws_iam_policy.instance_demo-pgweb_st_demo-postgres-state.arn
+  role       = aws_iam_role.demo-pgweb_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_function_demo-postgres-api_st_demo-postgres-state_attach" {
+  policy_arn = aws_iam_policy.lambda_function_demo-postgres-api_st_demo-postgres-state.arn
+  role       = aws_iam_role.demo-postgres-api_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_function_demo-postgres-direct_st_demo-postgres-state_attach" {
+  policy_arn = aws_iam_policy.lambda_function_demo-postgres-direct_st_demo-postgres-state.arn
+  role       = aws_iam_role.demo-postgres-direct_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_function_demo-postgres-iam_st_demo-postgres-state_attach" {
+  policy_arn = aws_iam_policy.lambda_function_demo-postgres-iam_st_demo-postgres-state.arn
+  role       = aws_iam_role.demo-postgres-iam_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "service_role_AmazonRDSEnhancedMonitoringRole_to_demo-postgres_attach" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
+  role       = aws_iam_role.role_monitoring_demo-postgres.name
+}
+
+
+
+
+### CATEGORY: NETWORK ###
+
+resource "aws_vpc" "rds-access-patterns-lab" {
+  cidr_block           = "10.8.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  instance_tenancy     = "default"
+  tags = {
+    Name           = "rds-access-patterns-lab"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_vpc_endpoint" "ep-cloudwatch_LOGS" {
+  service_name        = "com.amazonaws.${data.aws_region.current.region}.logs"
+  vpc_id              = aws_vpc.rds-access-patterns-lab.id
+  ip_address_type     = "ipv4"
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.sg_vpce_ep-cloudwatch.id]
+  subnet_ids          = [aws_subnet.demo-postgres-private-b.id, aws_subnet.demo-postgres-private-a.id]
+  vpc_endpoint_type   = "Interface"
+  tags = {
+    Name           = "ep-cloudwatch"
+    DifName        = "ep-cloudwatch_LOGS"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_vpc_endpoint" "ep-secret-manager_SECRETSMANAGER" {
+  service_name        = "com.amazonaws.${data.aws_region.current.region}.secretsmanager"
+  vpc_id              = aws_vpc.rds-access-patterns-lab.id
+  ip_address_type     = "ipv4"
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.sg_vpce_ep-secret-manager.id]
+  subnet_ids          = [aws_subnet.demo-postgres-private-b.id, aws_subnet.demo-postgres-private-a.id]
+  vpc_endpoint_type   = "Interface"
+  tags = {
+    Name           = "ep-secret-manager"
+    DifName        = "ep-secret-manager_SECRETSMANAGER"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_subnet" "demo-postgres-private-a" {
+  vpc_id                  = aws_vpc.rds-access-patterns-lab.id
+  availability_zone       = "us-west-2a"
+  cidr_block              = "10.8.0.0/24"
+  map_public_ip_on_launch = false
+  tags = {
+    Name           = "demo-postgres-private-a"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_subnet" "demo-postgres-private-b" {
+  vpc_id                  = aws_vpc.rds-access-patterns-lab.id
+  availability_zone       = "us-west-2b"
+  cidr_block              = "10.8.1.0/24"
+  map_public_ip_on_launch = false
+  tags = {
+    Name           = "demo-postgres-private-b"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_subnet" "demo-public-a" {
+  vpc_id                  = aws_vpc.rds-access-patterns-lab.id
+  availability_zone       = "us-west-2a"
+  cidr_block              = "10.8.10.0/24"
+  map_public_ip_on_launch = true
+  tags = {
+    Name           = "demo-public-a"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_internet_gateway" "demo-igw" {
+  vpc_id = aws_vpc.rds-access-patterns-lab.id
+  tags = {
+    Name           = "demo-igw"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_route" "route_demo-public-rt_to_demo-igw_ipv4" {
+  gateway_id             = aws_internet_gateway.demo-igw.id
+  route_table_id         = aws_route_table.demo-public-rt.id
+  destination_cidr_block = "0.0.0.0/0"
+}
+
+resource "aws_route_table" "demo-public-rt" {
+  vpc_id = aws_vpc.rds-access-patterns-lab.id
+  tags = {
+    Name           = "demo-public-rt"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_route_table_association" "aws_route_table_association_demo_public_a_demo_public_rt" {
+  route_table_id = aws_route_table.demo-public-rt.id
+  subnet_id      = aws_subnet.demo-public-a.id
+}
+
+resource "aws_security_group" "db_instance_demo-postgres_group" {
+  name                   = "db_instance_demo-postgres_group"
+  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  revoke_rules_on_delete = false
+  tags = {
+    Name           = "db_instance_demo-postgres_group"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_security_group" "db_proxy_demo-postgres-proxy_group" {
+  name                   = "db_proxy_demo-postgres-proxy_group"
+  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  revoke_rules_on_delete = false
+  tags = {
+    Name           = "db_proxy_demo-postgres-proxy_group"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_security_group" "demo-postgres-api" {
+  name                   = "demo-postgres-api"
+  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  revoke_rules_on_delete = false
+  tags = {
+    Name           = "demo-postgres-api"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_security_group" "demo-postgres-direct" {
+  name                   = "demo-postgres-direct"
+  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  revoke_rules_on_delete = false
+  tags = {
+    Name           = "demo-postgres-direct"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_security_group" "demo-postgres-iam" {
+  name                   = "demo-postgres-iam"
+  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  revoke_rules_on_delete = false
+  tags = {
+    Name           = "demo-postgres-iam"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_security_group" "instance_demo-pgweb_group" {
+  name                   = "instance_demo-pgweb_group"
+  vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  description            = "pgweb web UI"
+  revoke_rules_on_delete = false
+}
+
+resource "aws_security_group" "sg_vpce_ep-cloudwatch" {
+  name        = "vpce-sg-ep-cloudwatch"
+  vpc_id      = aws_vpc.rds-access-patterns-lab.id
+  description = "Auto-generated SG for ep-cloudwatch"
+  tags = {
+    Name           = "ep-cloudwatch"
+    DifName        = "sg_vpce_ep-cloudwatch"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_security_group" "sg_vpce_ep-secret-manager" {
+  name        = "vpce-sg-ep-secret-manager"
+  vpc_id      = aws_vpc.rds-access-patterns-lab.id
+  description = "Auto-generated SG for ep-secret-manager"
+  tags = {
+    Name           = "ep-secret-manager"
+    DifName        = "sg_vpce_ep-secret-manager"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_security_group_rule" "rule_db_instance_demo_postgres_group_egress_all_protocols" {
+  security_group_id = aws_security_group.db_instance_demo-postgres_group.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_db_proxy_demo_postgres_proxy_group_egress_all_protocols" {
+  security_group_id = aws_security_group.db_proxy_demo-postgres-proxy_group.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_db_proxy_demo_postgres_proxy_group_to_db_instance_demo_postgres_group_tcp_5432" {
+  security_group_id        = aws_security_group.db_instance_demo-postgres_group.id
+  source_security_group_id = aws_security_group.db_proxy_demo-postgres-proxy_group.id
+  description              = "Allow from RDS Proxy demo-postgres-proxy"
+  from_port                = 5432
+  protocol                 = "tcp"
+  to_port                  = 5432
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_demo_postgres_api_egress_all_protocols" {
+  security_group_id = aws_security_group.demo-postgres-api.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_demo_postgres_api_to_db_proxy_demo_postgres_proxy_group_tcp_5432" {
+  security_group_id        = aws_security_group.db_proxy_demo-postgres-proxy_group.id
+  source_security_group_id = aws_security_group.demo-postgres-api.id
+  description              = "Allow from demo-postgres-api (tcp:5432-5432)"
+  from_port                = 5432
+  protocol                 = "tcp"
+  to_port                  = 5432
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_demo_postgres_direct_egress_all_protocols" {
+  security_group_id = aws_security_group.demo-postgres-direct.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_demo_postgres_direct_to_db_instance_demo_postgres_group_tcp_5432" {
+  security_group_id        = aws_security_group.db_instance_demo-postgres_group.id
+  source_security_group_id = aws_security_group.demo-postgres-direct.id
+  description              = "Allow from demo-postgres-direct (tcp:5432-5432)"
+  from_port                = 5432
+  protocol                 = "tcp"
+  to_port                  = 5432
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_demo_postgres_iam_egress_all_protocols" {
+  security_group_id = aws_security_group.demo-postgres-iam.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_demo_postgres_iam_to_db_instance_demo_postgres_group_tcp_5432" {
+  security_group_id        = aws_security_group.db_instance_demo-postgres_group.id
+  source_security_group_id = aws_security_group.demo-postgres-iam.id
+  description              = "Allow from demo-postgres-iam (tcp:5432-5432)"
+  from_port                = 5432
+  protocol                 = "tcp"
+  to_port                  = 5432
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_instance_demo_pgweb_group_egress_all_protocols" {
+  security_group_id = aws_security_group.instance_demo-pgweb_group.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_instance_demo_pgweb_group_ingress_tcp_8081" {
+  security_group_id = aws_security_group.instance_demo-pgweb_group.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 8081
+  protocol          = "tcp"
+  to_port           = 8081
+  type              = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_instance_demo_pgweb_group_to_db_instance_demo_postgres_group_tcp_5432" {
+  security_group_id        = aws_security_group.db_instance_demo-postgres_group.id
+  source_security_group_id = aws_security_group.instance_demo-pgweb_group.id
+  description              = "Allow from instance_demo-pgweb_group (tcp:5432-5432)"
+  from_port                = 5432
+  protocol                 = "tcp"
+  to_port                  = 5432
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_egress_all_protocols" {
+  security_group_id = aws_security_group.sg_vpce_ep-cloudwatch.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "Allow all outbound traffic"
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_sg_vpce_ep_cloudwatch_ingress_tcp_443" {
+  security_group_id = aws_security_group.sg_vpce_ep-cloudwatch.id
+  cidr_blocks       = ["10.8.0.0/16"]
+  description       = "Allow HTTPS from VPC"
+  from_port         = 443
+  protocol          = "tcp"
+  to_port           = 443
+  type              = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_sg_vpce_ep_secret_manager_egress_all_protocols" {
+  security_group_id = aws_security_group.sg_vpce_ep-secret-manager.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "Allow all outbound traffic"
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_sg_vpce_ep_secret_manager_ingress_tcp_443" {
+  security_group_id = aws_security_group.sg_vpce_ep-secret-manager.id
+  cidr_blocks       = ["10.8.0.0/16"]
+  description       = "Allow HTTPS from VPC"
+  from_port         = 443
+  protocol          = "tcp"
+  to_port           = 443
+  type              = "ingress"
+}
+
+
+
+
+### CATEGORY: DATABASE ###
+
+resource "aws_db_instance" "demo-postgres" {
+  db_name                             = "appdb"
+  db_subnet_group_name                = aws_db_subnet_group.subnet_group_demo-postgres.name
+  parameter_group_name                = aws_db_parameter_group.demo-postgres-params1.name
+  allocated_storage                   = 20
+  availability_zone                   = aws_subnet.demo-postgres-private-a.availability_zone
+  backup_retention_period             = 7
+  backup_window                       = "03:00-04:00"
+  copy_tags_to_snapshot               = true
+  delete_automated_backups            = false
+  engine                              = "postgres"
+  engine_lifecycle_support            = "open-source-rds-extended-support-disabled"
+  engine_version                      = "18"
+  iam_database_authentication_enabled = true
+  identifier                          = "demo-postgres"
+  instance_class                      = "db.t3.micro"
+  maintenance_window                  = "mon:04:30-mon:05:30"
+  manage_master_user_password         = true
+  max_allocated_storage               = 100
+  monitoring_interval                 = 60
+  monitoring_role_arn                 = aws_iam_role.role_monitoring_demo-postgres.arn
+  port                                = 5432
+  skip_final_snapshot                 = true
+  storage_encrypted                   = true
+  storage_type                        = "gp3"
+  upgrade_storage_config              = false
+  username                            = "dbadmin"
+  vpc_security_group_ids              = [aws_security_group.db_instance_demo-postgres_group.id]
+  tags = {
+    Name           = "demo-postgres"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+  depends_on = [aws_cloudwatch_log_group.demo-postgres-log1, aws_iam_role_policy_attachment.service_role_AmazonRDSEnhancedMonitoringRole_to_demo-postgres_attach]
+}
+
+resource "aws_db_parameter_group" "demo-postgres-params1" {
+  description  = "Parametros PostgreSQL 18 para a demo"
+  family       = "postgres18"
+  name_prefix  = "demo-postgres-params1"
+  skip_destroy = false
+  lifecycle {
+    create_before_destroy = true
+  }
+  tags = {
+    Name           = "demo-postgres-params1"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_db_proxy" "demo-postgres-proxy" {
+  name                   = "demo-postgres-proxy"
+  engine_family          = "POSTGRESQL"
+  require_tls            = true
+  role_arn               = aws_iam_role.role_rds_proxy_demo-postgres-proxy.arn
+  vpc_security_group_ids = [aws_security_group.db_proxy_demo-postgres-proxy_group.id]
+  vpc_subnet_ids         = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
+  auth {
+    auth_scheme               = "SECRETS"
+    client_password_auth_type = "POSTGRES_SCRAM_SHA_256"
+    iam_auth                  = "DISABLED"
+    secret_arn                = one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)
+  }
+  tags = {
+    Name           = "demo-postgres-proxy"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+  depends_on = [aws_cloudwatch_log_group.LogGroup, aws_iam_role_policy_attachment.db_proxy_demo-postgres-proxy_st_demo-postgres-state_attach]
+}
+
+resource "aws_db_proxy_target" "demo-postgres-proxy_target" {
+  db_proxy_name          = aws_db_proxy.demo-postgres-proxy.name
+  target_group_name      = "default"
+  db_instance_identifier = aws_db_instance.demo-postgres.identifier
+}
+
+resource "aws_db_subnet_group" "subnet_group_demo-postgres" {
+  name       = "demo-postgres-subnet-group"
+  subnet_ids = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
+  tags = {
+    Name           = "subnet_group_demo-postgres"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+
+
+
+### CATEGORY: COMPUTE ###
+
+data "local_file" "UserData_demo-pgweb" {
+  filename = "${path.module}/.external_modules/struct8-templates/templates/ec2-pgweb/v1/user_data/pgweb.sh"
+}
+
+data "aws_ami" "AMI_Data_Source_demo-pgweb" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*-kernel-6.1-x86_64"]
+  }
+}
+
+resource "aws_instance" "demo-pgweb" {
+  subnet_id                   = aws_subnet.demo-public-a.id
+  ami                         = data.aws_ami.AMI_Data_Source_demo-pgweb.id
+  associate_public_ip_address = true
+  iam_instance_profile        = aws_iam_instance_profile.demo-pgweb_profile.name
+  instance_type               = "t3.small"
+  user_data_base64 = base64encode(<<-EOFUData
+#!/bin/bash
+
+# --- BEGIN STRUCT8 VARIABLES ---
+cat << 'EOFENV' > /etc/struct8_env
+NAME="demo-pgweb"
+REGION="${data.aws_region.current.region}"
+ACCOUNT="${data.aws_caller_identity.current.account_id}"
+AWS_DB_INSTANCE_NAME_0="${aws_db_instance.demo-postgres.identifier}"
+AWS_DB_INSTANCE_ENGINE_0="${aws_db_instance.demo-postgres.engine}"
+AWS_DB_INSTANCE_ENDPOINT_0="${aws_db_instance.demo-postgres.endpoint}"
+AWS_DB_INSTANCE_DB_NAME_0="${aws_db_instance.demo-postgres.db_name}"
+AWS_DB_INSTANCE_SECRET_ARN_0="${one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)}"
+AWS_DB_INSTANCE_USER_NAME_0="${one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)}:username::"
+EOFENV
+cat /etc/struct8_env >> /etc/environment
+sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
+chmod +x /etc/profile.d/struct8_vars.sh
+chmod 644 /etc/struct8_env
+# --- END STRUCT8 VARIABLES ---
+
+${data.local_file.UserData_demo-pgweb.content}
+EOFUData
+)
+  vpc_security_group_ids = [aws_security_group.instance_demo-pgweb_group.id]
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"
+  }
+  root_block_device {
+    encrypted   = true
+    iops        = 3000
+    throughput  = 125
+    volume_size = 8
+    volume_type = "gp3"
+  }
+  tags = {
+    Struct8Debug   = "Yhne4-LuxV602c2KaZmjp"
+    Name           = "demo-pgweb"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+data "archive_file" "archive_struct8-hub_demo-postgres-api" {
+  output_path = "${path.module}/struct8-hub_demo-postgres-api.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-hub/prebuilt"
+  type        = "zip"
+}
+
+resource "aws_lambda_function" "demo-postgres-api" {
+  function_name                  = "demo-postgres-api"
+  architectures                  = ["arm64"]
+  description                    = "API Lambda que consome o banco demo-postgres"
+  filename                       = data.archive_file.archive_struct8-hub_demo-postgres-api.output_path
+  handler                        = "index.handler"
+  memory_size                    = 2000
+  publish                        = false
+  reserved_concurrent_executions = -1
+  role                           = aws_iam_role.demo-postgres-api_role.arn
+  runtime                        = "nodejs22.x"
+  source_code_hash               = data.archive_file.archive_struct8-hub_demo-postgres-api.output_base64sha256
+  timeout                        = 30
+  environment {
+    variables = {
+    NAME                         = "demo-postgres-api"
+    REGION                       = data.aws_region.current.region
+    ACCOUNT                      = data.aws_caller_identity.current.account_id
+    AWS_DB_PROXY_NAME_0          = aws_db_proxy.demo-postgres-proxy.name
+    AWS_DB_PROXY_ENDPOINT_0      = aws_db_proxy.demo-postgres-proxy.endpoint
+    AWS_DB_PROXY_PORT_0          = "5432"
+    AWS_DB_PROXY_ENGINE_FAMILY_0 = "POSTGRESQL"
+    AWS_DB_PROXY_SECRET_ARN_0    = tolist(aws_db_proxy.demo-postgres-proxy.auth)[0].secret_arn
+    AWS_DB_PROXY_DB_NAME_0       = "appdb"
+  }
+  }
+  tags = {
+    Name           = "demo-postgres-api"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+  vpc_config {
+    security_group_ids = [aws_security_group.demo-postgres-api.id]
+    subnet_ids         = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
+  }
+  depends_on = [aws_iam_role_policy_attachment.lambda_function_demo-postgres-api_st_demo-postgres-state_attach]
+}
+
+data "archive_file" "archive_struct8-hub_demo-postgres-direct" {
+  output_path = "${path.module}/struct8-hub_demo-postgres-direct.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-hub/prebuilt"
+  type        = "zip"
+}
+
+resource "aws_lambda_function" "demo-postgres-direct" {
+  function_name                  = "demo-postgres-direct"
+  architectures                  = ["arm64"]
+  description                    = "Lambda que acessa o RDS DIRETO (sem proxy), rodando o Struct8 Hub"
+  filename                       = data.archive_file.archive_struct8-hub_demo-postgres-direct.output_path
+  handler                        = "index.handler"
+  memory_size                    = 2000
+  publish                        = false
+  reserved_concurrent_executions = -1
+  role                           = aws_iam_role.demo-postgres-direct_role.arn
+  runtime                        = "nodejs22.x"
+  source_code_hash               = data.archive_file.archive_struct8-hub_demo-postgres-direct.output_base64sha256
+  timeout                        = 30
+  environment {
+    variables = {
+    NAME                         = "demo-postgres-direct"
+    REGION                       = data.aws_region.current.region
+    ACCOUNT                      = data.aws_caller_identity.current.account_id
+    AWS_DB_INSTANCE_NAME_0       = aws_db_instance.demo-postgres.identifier
+    AWS_DB_INSTANCE_ENGINE_0     = aws_db_instance.demo-postgres.engine
+    AWS_DB_INSTANCE_ENDPOINT_0   = aws_db_instance.demo-postgres.endpoint
+    AWS_DB_INSTANCE_DB_NAME_0    = aws_db_instance.demo-postgres.db_name
+    AWS_DB_INSTANCE_SECRET_ARN_0 = one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)
+    AWS_DB_INSTANCE_USER_NAME_0  = "${one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)}:username::"
+  }
+  }
+  tags = {
+    Name           = "demo-postgres-direct"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+  vpc_config {
+    security_group_ids = [aws_security_group.demo-postgres-direct.id]
+    subnet_ids         = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
+  }
+  depends_on = [aws_iam_role_policy_attachment.lambda_function_demo-postgres-direct_st_demo-postgres-state_attach]
+}
+
+data "archive_file" "archive_struct8-hub_demo-postgres-iam" {
+  output_path = "${path.module}/struct8-hub_demo-postgres-iam.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-hub/prebuilt"
+  type        = "zip"
+}
+
+resource "aws_lambda_function" "demo-postgres-iam" {
+  function_name                  = "demo-postgres-iam"
+  architectures                  = ["arm64"]
+  description                    = "Lambda que acessa o RDS via IAM database authentication (token, sem senha)"
+  filename                       = data.archive_file.archive_struct8-hub_demo-postgres-iam.output_path
+  handler                        = "index.handler"
+  memory_size                    = 2000
+  publish                        = false
+  reserved_concurrent_executions = -1
+  role                           = aws_iam_role.demo-postgres-iam_role.arn
+  runtime                        = "nodejs22.x"
+  source_code_hash               = data.archive_file.archive_struct8-hub_demo-postgres-iam.output_base64sha256
+  timeout                        = 30
+  environment {
+    variables = {
+    NAME                         = "demo-postgres-iam"
+    REGION                       = data.aws_region.current.region
+    ACCOUNT                      = data.aws_caller_identity.current.account_id
+    AWS_DB_INSTANCE_NAME_0       = aws_db_instance.demo-postgres.identifier
+    AWS_DB_INSTANCE_ENGINE_0     = aws_db_instance.demo-postgres.engine
+    AWS_DB_INSTANCE_ENDPOINT_0   = aws_db_instance.demo-postgres.endpoint
+    AWS_DB_INSTANCE_DB_NAME_0    = aws_db_instance.demo-postgres.db_name
+    AWS_DB_INSTANCE_SECRET_ARN_0 = one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)
+    AWS_DB_INSTANCE_USER_NAME_0  = "${one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)}:username::"
+    AWS_DB_INSTANCE_IAM_USER_0   = "lambda_iam"
+  }
+  }
+  tags = {
+    Name           = "demo-postgres-iam"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+  vpc_config {
+    security_group_ids = [aws_security_group.demo-postgres-iam.id]
+    subnet_ids         = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
+  }
+  depends_on = [aws_iam_role_policy_attachment.lambda_function_demo-postgres-iam_st_demo-postgres-state_attach]
+}
+
+resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api" {
+  function_name       = aws_lambda_function.demo-postgres-api.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.every-1-minute.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api"
+}
+
+resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct" {
+  function_name       = aws_lambda_function.demo-postgres-direct.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.every-1-minute.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct"
+}
+
+resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam" {
+  function_name       = aws_lambda_function.demo-postgres-iam.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.every-1-minute.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam"
+}
+
+
+
+
+### CATEGORY: INTEGRATION ###
+
+resource "aws_cloudwatch_event_rule" "every-1-minute" {
+  name                = "every-1-minute"
+  schedule_expression = "rate(1 minute)"
+  state               = "ENABLED"
+  tags = {
+    Name           = "every-1-minute"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_cloudwatch_event_target" "Target" {
+  arn        = aws_lambda_function.demo-postgres-direct.arn
+  rule       = aws_cloudwatch_event_rule.every-1-minute.name
+  depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct]
+}
+
+resource "aws_cloudwatch_event_target" "Target1" {
+  arn        = aws_lambda_function.demo-postgres-api.arn
+  rule       = aws_cloudwatch_event_rule.every-1-minute.name
+  depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api]
+}
+
+resource "aws_cloudwatch_event_target" "Target2" {
+  arn        = aws_lambda_function.demo-postgres-iam.arn
+  rule       = aws_cloudwatch_event_rule.every-1-minute.name
+  depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam]
+}
+
+
+
+
+### CATEGORY: MONITORING ###
+
+resource "aws_cloudwatch_log_group" "LogGroup" {
+  name              = "/aws/rds/proxy/demo-postgres-proxy"
+  log_group_class   = "STANDARD"
+  retention_in_days = 1
+  skip_destroy      = false
+  tags = {
+    Name           = "LogGroup"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "demo-postgres-api-logs" {
+  name              = "/aws/lambda/demo-postgres-api"
+  log_group_class   = "STANDARD"
+  retention_in_days = 1
+  skip_destroy      = false
+  tags = {
+    Name           = "demo-postgres-api-logs"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "demo-postgres-direct-logs" {
+  name              = "/aws/lambda/demo-postgres-direct"
+  log_group_class   = "STANDARD"
+  retention_in_days = 1
+  skip_destroy      = false
+  tags = {
+    Name           = "demo-postgres-direct-logs"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "demo-postgres-iam-logs" {
+  name              = "/aws/lambda/demo-postgres-iam"
+  log_group_class   = "STANDARD"
+  retention_in_days = 30
+  skip_destroy      = false
+  tags = {
+    Name           = "demo-postgres-iam-logs"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "demo-postgres-log1" {
+  name              = "RDSOSMetrics"
+  log_group_class   = "STANDARD"
+  retention_in_days = 30
+  skip_destroy      = false
+  tags = {
+    Name           = "demo-postgres-log1"
+    State          = "demo-postgres-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+
+
+
+### CATEGORY: CONFIG ###
+
+resource "aws_ssm_document" "Struct8Probe-Debug" {
+  name = "Struct8Probe-Yhne4-LuxV602c2KaZmjp"
+  content = <<EOF
+{
+  "schemaVersion": "2.2",
+  "description": "Struct8 network probe. The command text is fixed here; the caller supplies only a target and a port.",
+  "parameters": {
+    "target": {
+      "type": "String",
+      "description": "Hostname or IP address to probe.",
+      "interpolationType": "ENV_VAR",
+      "allowedPattern": "^[A-Za-z0-9._-]{1,253}$"
+    },
+    "port": {
+      "type": "String",
+      "description": "TCP port to test.",
+      "default": "443",
+      "interpolationType": "ENV_VAR",
+      "allowedPattern": "^[0-9]{1,5}$"
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "struct8Probe",
+      "inputs": {
+        "timeoutSeconds": "60",
+        "runCommand": [
+          "if [ -z \"$SSM_target\" ]; then export SSM_target=\"{{target}}\"; fi",
+          "if [ -z \"$SSM_port\" ]; then export SSM_port=\"{{port}}\"; fi",
+          "echo '--- resolve ---'",
+          "getent hosts \"$SSM_target\" || echo \"no DNS answer\"",
+          "echo '--- icmp ---'",
+          "ping -c 3 -W 2 \"$SSM_target\" || echo \"no ICMP reply (often filtered, not conclusive)\"",
+          "echo '--- tcp ---'",
+          "if timeout 5 bash -c 'exec 3<>/dev/tcp/\"$1\"/\"$2\"' _ \"$SSM_target\" \"$SSM_port\" 2>/dev/null; then echo \"port $SSM_port open\"; else echo \"port $SSM_port closed or filtered\"; fi"
+        ]
+      }
+    }
+  ]
+}
+  EOF
+  document_format = "JSON"
+  document_type   = "Command"
+}
+
+
