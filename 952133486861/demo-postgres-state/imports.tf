@@ -72,16 +72,6 @@ import {
 }
 
 import {
-  to = aws_security_group.sg_vpce_ep-cloudwatch
-  id = "sg-06fd4f6e61adfc736"
-}
-
-import {
-  to = aws_security_group.sg_vpce_ep-secret-manager
-  id = "sg-0f1122bed1e7851ce"
-}
-
-import {
   to = aws_subnet.demo-postgres-private-a
   id = "subnet-0212ffac5c5b90dff"
 }
@@ -117,13 +107,28 @@ import {
 }
 
 import {
+  to = aws_security_group.demo-postgres-api
+  id = "sg-00bd651a470c8c15c"
+}
+
+import {
   to = aws_iam_role.demo-postgres-direct_role
   id = "demo-postgres-direct_role"
 }
 
 import {
+  to = aws_security_group.demo-postgres-direct
+  id = "sg-0d6a3eec717c5633a"
+}
+
+import {
   to = aws_iam_role.demo-postgres-iam_role
   id = "demo-postgres-iam_role"
+}
+
+import {
+  to = aws_security_group.demo-postgres-iam
+  id = "sg-03526cdaf01492cb4"
 }
 
 import {
@@ -172,13 +177,33 @@ import {
 }
 
 import {
+  to = aws_db_subnet_group.subnet_group_demo-postgres
+  id = "demo-postgres-subnet-group"
+}
+
+import {
   to = aws_iam_role.role_monitoring_demo-postgres
   id = "role_monitoring_demo-postgres"
 }
 
 import {
+  to = aws_db_proxy_target.demo-postgres-proxy_target
+  id = "demo-postgres-proxy/default/RDS_INSTANCE/demo-postgres"
+}
+
+import {
   to = aws_iam_policy.db_proxy_demo-postgres-proxy_st_demo-postgres-state
   id = "arn:aws:iam::952133486861:policy/db_proxy_demo-postgres-proxy_st_demo-postgres-state"
+}
+
+import {
+  to = aws_security_group.sg_vpce_ep-cloudwatch
+  id = "sg-06fd4f6e61adfc736"
+}
+
+import {
+  to = aws_security_group.sg_vpce_ep-secret-manager
+  id = "sg-0f1122bed1e7851ce"
 }
 
 import {
@@ -252,6 +277,36 @@ import {
 }
 
 import {
+  to = aws_security_group_rule.rule_demo_postgres_api_egress_all_protocols
+  id = "sg-00bd651a470c8c15c_egress_all_0_0_0.0.0.0/0"
+}
+
+import {
+  to = aws_security_group_rule.rule_demo_postgres_api_to_db_proxy_demo_postgres_proxy_group_tcp_5432
+  id = "sg-0d9549b8fc0a32acd_ingress_tcp_5432_5432_sg-00bd651a470c8c15c"
+}
+
+import {
+  to = aws_security_group_rule.rule_demo_postgres_direct_egress_all_protocols
+  id = "sg-0d6a3eec717c5633a_egress_all_0_0_0.0.0.0/0"
+}
+
+import {
+  to = aws_security_group_rule.rule_demo_postgres_direct_to_db_instance_demo_postgres_group_tcp_5432
+  id = "sg-0b3777b58d072946e_ingress_tcp_5432_5432_sg-0d6a3eec717c5633a"
+}
+
+import {
+  to = aws_security_group_rule.rule_demo_postgres_iam_egress_all_protocols
+  id = "sg-03526cdaf01492cb4_egress_all_0_0_0.0.0.0/0"
+}
+
+import {
+  to = aws_security_group_rule.rule_demo_postgres_iam_to_db_instance_demo_postgres_group_tcp_5432
+  id = "sg-0b3777b58d072946e_ingress_tcp_5432_5432_sg-03526cdaf01492cb4"
+}
+
+import {
   to = aws_security_group_rule.rule_instance_demo_pgweb_group_egress_all_protocols
   id = "sg-04b1260a454a15ca5_egress_all_0_0_0.0.0.0/0"
 }
@@ -287,13 +342,18 @@ import {
 }
 
 import {
-  to = aws_db_proxy_target.demo-postgres-proxy_target
-  id = "prx-06a79821b6a51e2a1/default/RDS_INSTANCE/demo-postgres"
+  to = aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api
+  id = "demo-postgres-api/perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api6569805376e9b1107c94c4039f"
 }
 
 import {
-  to = aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api
-  id = "demo-postgres-api/perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api6569805376e9b1107c94c4039f"
+  to = aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct
+  id = "demo-postgres-direct/perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct88b0b1da8d123f8c056513ecec"
+}
+
+import {
+  to = aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam
+  id = "demo-postgres-iam/perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam708c765ff46605fb0e1864b70b"
 }
 
 import {
