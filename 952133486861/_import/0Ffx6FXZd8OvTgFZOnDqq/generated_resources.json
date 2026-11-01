@@ -1,0 +1,136 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.5.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_cloudwatch_log_group.aws-glue_crawlers",
+          "mode": "managed",
+          "type": "aws_cloudwatch_log_group",
+          "name": "aws-glue_crawlers",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:logs:us-west-2:952133486861:log-group:/aws-glue/crawlers",
+            "id": "/aws-glue/crawlers",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws-glue/crawlers",
+            "name_prefix": "",
+            "retention_in_days": 0,
+            "skip_destroy": false,
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_cloudwatch_log_group.aws-glue_crawlers",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "aws-glue_crawlers",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:logs:us-west-2:952133486861:log-group:/aws-glue/crawlers",
+          "id": "/aws-glue/crawlers",
+          "kms_key_id": "",
+          "log_group_class": "STANDARD",
+          "name": "/aws-glue/crawlers",
+          "name_prefix": "",
+          "retention_in_days": 0,
+          "skip_destroy": false,
+          "tags": {},
+          "tags_all": {}
+        },
+        "after": {
+          "arn": "arn:aws:logs:us-west-2:952133486861:log-group:/aws-glue/crawlers",
+          "id": "/aws-glue/crawlers",
+          "kms_key_id": "",
+          "log_group_class": "STANDARD",
+          "name": "/aws-glue/crawlers",
+          "name_prefix": "",
+          "retention_in_days": 0,
+          "skip_destroy": false,
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "/aws-glue/crawlers"
+        },
+        "generated_config": "resource \"aws_cloudwatch_log_group\" \"aws-glue_crawlers\" {\n  kms_key_id        = null\n  log_group_class   = \"STANDARD\"\n  name              = \"/aws-glue/crawlers\"\n  name_prefix       = null\n  retention_in_days = 0\n  skip_destroy      = false\n  tags              = {}\n  tags_all          = {}\n}"
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.5.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_cloudwatch_log_group.aws-glue_crawlers",
+            "mode": "managed",
+            "type": "aws_cloudwatch_log_group",
+            "name": "aws-glue_crawlers",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:logs:us-west-2:952133486861:log-group:/aws-glue/crawlers",
+              "id": "/aws-glue/crawlers",
+              "kms_key_id": "",
+              "log_group_class": "STANDARD",
+              "name": "/aws-glue/crawlers",
+              "name_prefix": "",
+              "retention_in_days": 0,
+              "skip_destroy": false,
+              "tags": {},
+              "tags_all": {}
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "version_constraint": "~> 5.0",
+        "expressions": {
+          "region": {
+            "constant_value": "us-west-2"
+          }
+        }
+      }
+    },
+    "root_module": {}
+  },
+  "timestamp": "2026-11-01T11:16:02Z",
+  "redacted_attributes": []
+}
