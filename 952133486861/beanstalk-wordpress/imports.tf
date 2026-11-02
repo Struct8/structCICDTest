@@ -7,6 +7,11 @@ import {
 }
 
 import {
+  to = aws_iam_policy.elastic_beanstalk_environment_beanstalk-wordpress-web_st_beanstalk-wordpress
+  id = "arn:aws:iam::952133486861:policy/elastic_beanstalk_environment_beanstalk-wordpress-web_st_beanstalk-wordpress"
+}
+
+import {
   to = aws_internet_gateway.igw-beanstalk-wordpress
   id = "igw-0c36f84e0a82c9cd3"
 }
@@ -117,11 +122,6 @@ import {
 }
 
 import {
-  to = aws_elastic_beanstalk_application_version.beanstalk-wordpress-web_version
-  id = "beanstalk-wordpress-web-97b698ec64eab4b1"
-}
-
-import {
   to = aws_s3_bucket_ownership_controls.beanstalk-wordpress-versions_controls
   id = "beanstalk-wordpress-versions-952133486861-us-west-2-an"
 }
@@ -144,16 +144,6 @@ import {
 import {
   to = aws_route_table_association.aws_route_table_association_wp_app_a_rt_private_wp
   id = "subnet-02f2bee98ce37d9f3/rtb-01f9caade63dedcd3"
-}
-
-import {
-  to = aws_iam_policy.elastic_beanstalk_environment_beanstalk-wordpress-web_st_beanstalk-wordpress
-  id = "arn:aws:iam::952133486861:policy/elastic_beanstalk_environment_beanstalk-wordpress-web_st_beanstalk-wordpress"
-}
-
-import {
-  to = aws_s3_object.beanstalk-wordpress-web_bundle
-  id = "beanstalk-wordpress-versions-952133486861-us-west-2-an/beanstalk/beanstalk-wordpress-web/97b698ec64eab4b1.zip"
 }
 
 import {
