@@ -237,6 +237,16 @@ import {
 }
 
 import {
+  to = aws_iam_role_policy.Struct8Debug-Debug_policy
+  id = "Struct8Debug-PSH0iot7vZkT3iq-O7LSR:Struct8Debug-PSH0iot7vZkT3iq-O7LSR-policy"
+}
+
+import {
+  to = aws_ssm_document.Struct8Probe-Debug
+  id = "Struct8Probe-PSH0iot7vZkT3iq-O7LSR"
+}
+
+import {
   to = aws_vpc_endpoint.ep-cloudwatch_LOGS
   id = "vpce-0999ebcd811ec1f6a"
 }
