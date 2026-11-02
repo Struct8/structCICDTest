@@ -78,6 +78,18 @@ data "aws_iam_policy_document" "lambda_function_demo-aurora-dataapi_st_demo-auro
     actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["${aws_cloudwatch_log_group.demo-aurora-dataapi-logs.arn}:*"]
   }
+  statement {
+    sid       = "AllowRDSDataApi"
+    effect    = "Allow"
+    actions   = ["rds-data:BatchExecuteStatement", "rds-data:BeginTransaction", "rds-data:CommitTransaction", "rds-data:ExecuteStatement", "rds-data:RollbackTransaction"]
+    resources = [aws_rds_cluster.demo-aurora.arn]
+  }
+  statement {
+    sid       = "AllowRDSSecretAccessdemoaurora"
+    effect    = "Allow"
+    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
+    resources = ["arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-4fc39f33-b4c0-460a-b820-d5dac14539a0-Wc3lQY"]
+  }
 }
 
 resource "aws_iam_policy" "lambda_function_demo-aurora-dataapi_st_demo-aurora-state" {
@@ -100,16 +112,16 @@ data "aws_iam_policy_document" "lambda_function_demo-aurora-direct_st_demo-auror
     resources = [aws_rds_cluster.demo-aurora.arn]
   }
   statement {
-    sid       = "AllowRDSSecretAccessdemoaurora"
-    effect    = "Allow"
-    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
-    resources = [aws_rds_cluster.demo-aurora.master_user_secret[0].secret_arn]
-  }
-  statement {
     sid       = "AllowAllResources"
     effect    = "Allow"
     actions   = ["ec2:AssignPrivateIpAddresses", "ec2:CreateNetworkInterface", "ec2:DeleteNetworkInterface", "ec2:DescribeNetworkInterfaces", "ec2:UnassignPrivateIpAddresses"]
     resources = ["*"]
+  }
+  statement {
+    sid       = "AllowRDSSecretAccessdemoaurora"
+    effect    = "Allow"
+    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
+    resources = ["arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-4fc39f33-b4c0-460a-b820-d5dac14539a0-Wc3lQY"]
   }
 }
 
@@ -133,16 +145,22 @@ data "aws_iam_policy_document" "lambda_function_demo-aurora-iam_st_demo-aurora-s
     resources = [aws_rds_cluster.demo-aurora.arn]
   }
   statement {
-    sid       = "AllowRDSSecretAccessdemoaurora"
-    effect    = "Allow"
-    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
-    resources = [aws_rds_cluster.demo-aurora.master_user_secret[0].secret_arn]
-  }
-  statement {
     sid       = "AllowAllResources"
     effect    = "Allow"
     actions   = ["ec2:AssignPrivateIpAddresses", "ec2:CreateNetworkInterface", "ec2:DeleteNetworkInterface", "ec2:DescribeNetworkInterfaces", "ec2:UnassignPrivateIpAddresses"]
     resources = ["*"]
+  }
+  statement {
+    sid       = "RdsIamConnect"
+    effect    = "Allow"
+    actions   = ["rds-db:connect"]
+    resources = ["arn:aws:rds-db:us-west-2:952133486861:dbuser:cluster-WHX7LR2KVC2VIN2V2CHKPYI5WQ/lambda_iam"]
+  }
+  statement {
+    sid       = "AllowRDSSecretAccessdemoaurora"
+    effect    = "Allow"
+    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
+    resources = ["arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-4fc39f33-b4c0-460a-b820-d5dac14539a0-Wc3lQY"]
   }
 }
 
@@ -1352,10 +1370,9 @@ resource "aws_cloudwatch_event_rule" "every-1-minute" {
 }
 
 resource "aws_cloudwatch_event_target" "Target" {
-  target_id  = "terraform-nNC7dphP0WECsUTbo2bHZzvyVK"
-  arn        = aws_lambda_function.demo-aurora-direct.arn
-  rule       = aws_cloudwatch_event_rule.every-1-minute.name
-  depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-aurora-direct]
+  target_id = "terraform-nNC7dphP0WECsUTbo2bHZzvyVK"
+  arn       = aws_lambda_function.demo-aurora-direct.arn
+  rule      = aws_cloudwatch_event_rule.every-1-minute.name
 }
 
 resource "aws_cloudwatch_event_target" "Target1" {
@@ -1366,17 +1383,15 @@ resource "aws_cloudwatch_event_target" "Target1" {
 }
 
 resource "aws_cloudwatch_event_target" "Target2" {
-  target_id  = "terraform-gn4y9YIB10thyM4AZdHzUomyVE"
-  arn        = aws_lambda_function.demo-aurora-iam.arn
-  rule       = aws_cloudwatch_event_rule.every-1-minute.name
-  depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-aurora-iam]
+  target_id = "terraform-gn4y9YIB10thyM4AZdHzUomyVE"
+  arn       = aws_lambda_function.demo-aurora-iam.arn
+  rule      = aws_cloudwatch_event_rule.every-1-minute.name
 }
 
 resource "aws_cloudwatch_event_target" "Target3" {
-  target_id  = "terraform-64X9bpNCiIAiTI42yTZUfk3nGb"
-  arn        = aws_lambda_function.demo-aurora-dataapi.arn
-  rule       = aws_cloudwatch_event_rule.every-1-minute.name
-  depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-aurora-dataapi]
+  target_id = "terraform-64X9bpNCiIAiTI42yTZUfk3nGb"
+  arn       = aws_lambda_function.demo-aurora-dataapi.arn
+  rule      = aws_cloudwatch_event_rule.every-1-minute.name
 }
 
 
