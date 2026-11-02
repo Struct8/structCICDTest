@@ -6,12 +6,12 @@
       "branch": "feat/beanstalk-wordpress-access-point",
       "target_dir": ".external_modules/struct8-templates",
       "folders": [
-        "templates/beanstalk-wordpress/v2/app"
+        "templates/beanstalk-wordpress/v1/app"
       ]
     }
   ],
   "action": "plan",
-  "trigger_id": "1793631456697",
+  "trigger_id": "1793631594357",
   "triggered_by": "assistant.rmay_struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
