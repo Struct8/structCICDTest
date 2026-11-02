@@ -25,9 +25,10 @@ resource "aws_api_gateway_integration" "orders-lambda-integ" {
 }
 
 resource "aws_api_gateway_method" "orders-post" {
-  resource_id = aws_api_gateway_resource.orders.id
-  rest_api_id = aws_api_gateway_rest_api.xray-demo-api.id
-  http_method = "POST"
+  resource_id   = aws_api_gateway_resource.orders.id
+  rest_api_id   = aws_api_gateway_rest_api.xray-demo-api.id
+  authorization = "NONE"
+  http_method   = "POST"
 }
 
 resource "aws_api_gateway_resource" "orders" {
