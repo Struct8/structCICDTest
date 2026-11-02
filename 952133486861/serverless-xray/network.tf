@@ -33,6 +33,7 @@ resource "aws_api_gateway_method" "orders-post" {
 resource "aws_api_gateway_resource" "orders" {
   parent_id   = aws_api_gateway_rest_api.xray-demo-api.root_resource_id
   rest_api_id = aws_api_gateway_rest_api.xray-demo-api.id
+  path_part   = "orders"
 }
 
 resource "aws_api_gateway_rest_api" "xray-demo-api" {
