@@ -322,16 +322,6 @@ resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore_to_demo-
   role       = aws_iam_role.demo-pgweb_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore_to_demo-pgweb_attach" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  role       = aws_iam_role.demo-pgweb_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore_to_demo-pgweb_profile_attach" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  role       = aws_iam_role.demo-pgweb_role.name
-}
-
 resource "aws_iam_role_policy_attachment" "db_proxy_demo-aurora-rds-proxy_st_demo-aurora-state_attach" {
   policy_arn = aws_iam_policy.db_proxy_demo-aurora-rds-proxy_st_demo-aurora-state.arn
   role       = aws_iam_role.role_rds_proxy_demo-aurora-rds-proxy.name
