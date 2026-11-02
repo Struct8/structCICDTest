@@ -485,7 +485,7 @@ resource "aws_s3_object" "beanstalk-wordpress-web_bundle" {
   bucket       = aws_s3_bucket.beanstalk-wordpress-versions.id
   content_type = "application/zip"
   etag         = filemd5("${data.archive_file.eb_struct8-templates_beanstalk-wordpress-web.output_path}")
-  key          = "beanstalk/beanstalk-wordpress-web/${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v1/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v1/app/${f}")}"])), 0, 16)}.zip"
+  key          = "beanstalk/beanstalk-wordpress-web/${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app/${f}")}"])), 0, 16)}${"beanstalk-wordpress-web-${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app/${f}")}"])), 0, 16)}" == "beanstalk-wordpress-web-97b698ec64eab4b1" ? "-2" : ""}.zip"
   lifecycle {
     create_before_destroy = true
   }
@@ -602,7 +602,7 @@ resource "aws_elastic_beanstalk_application" "beanstalk-wordpress" {
 }
 
 resource "aws_elastic_beanstalk_application_version" "beanstalk-wordpress-web_version" {
-  name        = "beanstalk-wordpress-web-${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v1/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v1/app/${f}")}"])), 0, 16)}"
+  name        = "beanstalk-wordpress-web-${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app/${f}")}"])), 0, 16)}${"beanstalk-wordpress-web-${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app/${f}")}"])), 0, 16)}" == "beanstalk-wordpress-web-97b698ec64eab4b1" ? "-2" : ""}"
   application = aws_elastic_beanstalk_application.beanstalk-wordpress.name
   bucket      = aws_s3_bucket.beanstalk-wordpress-versions.id
   key         = aws_s3_object.beanstalk-wordpress-web_bundle.key
@@ -612,8 +612,8 @@ resource "aws_elastic_beanstalk_application_version" "beanstalk-wordpress-web_ve
 }
 
 data "archive_file" "eb_struct8-templates_beanstalk-wordpress-web" {
-  output_path = "${path.module}/eb_struct8-templates_beanstalk-wordpress-web_${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v1/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v1/app/${f}")}"])), 0, 16)}.zip"
-  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v1/app"
+  output_path = "${path.module}/eb_struct8-templates_beanstalk-wordpress-web_${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app/${f}")}"])), 0, 16)}.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app"
   type        = "zip"
 }
 
