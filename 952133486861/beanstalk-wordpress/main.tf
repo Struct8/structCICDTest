@@ -6,9 +6,6 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
-    random = {
-      source = "hashicorp/random"
-    }
   }
 
   backend "s3" {
@@ -32,11 +29,12 @@ data "aws_region" "current" {}
 
 resource "aws_iam_instance_profile" "beanstalk-wordpress-web_profile" {
   name = "beanstalk-wordpress-web_profile"
+  path = "/"
   role = aws_iam_role.beanstalk-wordpress-web_role.name
   tags = {
-    Name           = "beanstalk-wordpress-web_profile"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "beanstalk-wordpress-web_profile"
   }
 }
 
@@ -139,26 +137,15 @@ resource "aws_iam_role" "Struct8Debug-wp-eb-debug" {
 }
 
 resource "aws_iam_role" "beanstalk-wordpress-web_role" {
-  name = "beanstalk-wordpress-web_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "beanstalk-wordpress-web_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
   tags = {
-    Name           = "beanstalk-wordpress-web_role"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "beanstalk-wordpress-web_role"
   }
 }
 
@@ -211,10 +198,11 @@ resource "aws_vpc" "vpc-beanstalk-wordpress" {
 }
 
 resource "aws_subnet" "wp-app-a" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.41.10.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.41.10.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-app-a"
     State          = "beanstalk-wordpress"
@@ -223,10 +211,11 @@ resource "aws_subnet" "wp-app-a" {
 }
 
 resource "aws_subnet" "wp-app-b" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.41.11.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.41.11.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-app-b"
     State          = "beanstalk-wordpress"
@@ -235,10 +224,11 @@ resource "aws_subnet" "wp-app-b" {
 }
 
 resource "aws_subnet" "wp-data-a" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.41.20.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.41.20.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-data-a"
     State          = "beanstalk-wordpress"
@@ -247,10 +237,11 @@ resource "aws_subnet" "wp-data-a" {
 }
 
 resource "aws_subnet" "wp-data-b" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.41.21.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.41.21.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-data-b"
     State          = "beanstalk-wordpress"
@@ -259,10 +250,11 @@ resource "aws_subnet" "wp-data-b" {
 }
 
 resource "aws_subnet" "wp-public-a" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.41.0.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.41.0.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-public-a"
     State          = "beanstalk-wordpress"
@@ -271,10 +263,11 @@ resource "aws_subnet" "wp-public-a" {
 }
 
 resource "aws_subnet" "wp-public-b" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.41.1.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.41.1.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-public-b"
     State          = "beanstalk-wordpress"
@@ -356,6 +349,7 @@ resource "aws_route_table_association" "aws_route_table_association_wp_public_b_
 resource "aws_security_group" "db_instance_wp-eb-db_group" {
   name                   = "db_instance_wp-eb-db_group"
   vpc_id                 = aws_vpc.vpc-beanstalk-wordpress.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "db_instance_wp-eb-db_group"
@@ -367,6 +361,7 @@ resource "aws_security_group" "db_instance_wp-eb-db_group" {
 resource "aws_security_group" "efs_file_system_wp-eb-files_group" {
   name                   = "efs_file_system_wp-eb-files_group"
   vpc_id                 = aws_vpc.vpc-beanstalk-wordpress.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "efs_file_system_wp-eb-files_group"
@@ -378,11 +373,12 @@ resource "aws_security_group" "efs_file_system_wp-eb-files_group" {
 resource "aws_security_group" "elastic_beanstalk_environment_beanstalk-wordpress-web_group" {
   name                   = "elastic_beanstalk_environment_beanstalk-wordpress-web_group"
   vpc_id                 = aws_vpc.vpc-beanstalk-wordpress.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
-    Name           = "elastic_beanstalk_environment_beanstalk-wordpress-web_group"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "elastic_beanstalk_environment_beanstalk-wordpress-web_group"
   }
 }
 
@@ -439,7 +435,7 @@ resource "aws_security_group_rule" "rule_elastic_beanstalk_environment_beanstalk
 ### CATEGORY: STORAGE ###
 
 resource "aws_s3_bucket" "beanstalk-wordpress-versions" {
-  bucket              = "beanstalk-wordpress-versions-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "beanstalk-wordpress-versions-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -468,7 +464,8 @@ resource "aws_s3_bucket_public_access_block" "beanstalk-wordpress-versions_block
 resource "aws_s3_bucket_server_side_encryption_configuration" "beanstalk-wordpress-versions_configuration" {
   bucket = aws_s3_bucket.beanstalk-wordpress-versions.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -516,8 +513,13 @@ resource "aws_efs_access_point" "ap_beanstalk-wordpress-web_wp-eb-files" {
 }
 
 resource "aws_efs_file_system" "wp-eb-files" {
+  kms_key_id      = "arn:aws:kms:us-west-2:952133486861:key/081d3c6c-ad92-4c90-93bf-5939d005aeb1"
+  creation_token  = "terraform-SHfTXjsgiInCXgwadcniAR7DZ2"
   encrypted       = true
-  throughput_mode = "elastic"
+  throughput_mode = "provisioned"
+  protection {
+    replication_overwrite = "ENABLED"
+  }
   tags = {
     Name           = "wp-eb-files"
     State          = "beanstalk-wordpress"
@@ -545,15 +547,22 @@ resource "aws_efs_mount_target" "mt_wp-eb-files_wp-data-b" {
 resource "aws_db_instance" "wp-eb-db" {
   db_name                     = "wordpress"
   db_subnet_group_name        = aws_db_subnet_group.subnet_group_wp-eb-db.name
+  kms_key_id                  = "arn:aws:kms:us-west-2:952133486861:key/e401bcbe-b1b2-4a12-ac7d-cb374176b6fb"
+  option_group_name           = "default:mysql-8-4"
+  parameter_group_name        = "default.mysql8.4"
   allocated_storage           = 20
   availability_zone           = aws_subnet.wp-data-a.availability_zone
   backup_retention_period     = 0
+  backup_window               = "09:20-09:50"
+  ca_cert_identifier          = "rds-ca-rsa2048-g1"
   copy_tags_to_snapshot       = true
+  database_insights_mode      = "standard"
   engine                      = "mysql"
   engine_lifecycle_support    = "open-source-rds-extended-support-disabled"
   engine_version              = "8.4"
   identifier                  = "wp-eb-db"
   instance_class              = "db.t4g.micro"
+  maintenance_window          = "thu:07:44-thu:08:14"
   manage_master_user_password = true
   max_allocated_storage       = 100
   skip_final_snapshot         = true
@@ -615,19 +624,49 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
   version_label          = aws_elastic_beanstalk_application_version.beanstalk-wordpress-web_version.name
   wait_for_ready_timeout = "20m"
   setting {
-    name      = "NAME"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "beanstalk-wordpress-web"
-  }
-  setting {
-    name      = "REGION"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${data.aws_region.current.region}"
-  }
-  setting {
     name      = "ACCOUNT"
     namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${data.aws_caller_identity.current.account_id}"
+    value     = "952133486861"
+  }
+  setting {
+    name      = "AWS_DB_INSTANCE_DB_NAME_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "wordpress"
+  }
+  setting {
+    name      = "AWS_DB_INSTANCE_ENDPOINT_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "wp-eb-db.c9g6oy6oylb0.us-west-2.rds.amazonaws.com:3306"
+  }
+  setting {
+    name      = "AWS_DB_INSTANCE_ENGINE_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "mysql"
+  }
+  setting {
+    name      = "AWS_DB_INSTANCE_NAME_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "wp-eb-db"
+  }
+  setting {
+    name      = "AWS_DB_INSTANCE_SECRET_ARN_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!db-a6d6da46-d51d-4f2f-a22e-79cacc7b5185-f9IKZt"
+  }
+  setting {
+    name      = "AWS_DB_INSTANCE_USER_NAME_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!db-a6d6da46-d51d-4f2f-a22e-79cacc7b5185-f9IKZt:username::"
+  }
+  setting {
+    name      = "AWS_EFS_ACCESS_POINT_ID_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "fsap-0d2e63bc587e5c410"
+  }
+  setting {
+    name      = "AWS_EFS_FILE_SYSTEM_ID_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "fs-032e70bbe47a58ff0"
   }
   setting {
     name      = "AWS_ELASTIC_BEANSTALK_APPLICATION_NAME_0"
@@ -635,49 +674,54 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
     value     = "beanstalk-wordpress"
   }
   setting {
-    name      = "AWS_DB_INSTANCE_NAME_0"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${aws_db_instance.wp-eb-db.identifier}"
-  }
-  setting {
-    name      = "AWS_DB_INSTANCE_ENGINE_0"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${aws_db_instance.wp-eb-db.engine}"
-  }
-  setting {
-    name      = "AWS_DB_INSTANCE_ENDPOINT_0"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${aws_db_instance.wp-eb-db.endpoint}"
-  }
-  setting {
-    name      = "AWS_DB_INSTANCE_DB_NAME_0"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${aws_db_instance.wp-eb-db.db_name}"
-  }
-  setting {
-    name      = "AWS_DB_INSTANCE_SECRET_ARN_0"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${one(aws_db_instance.wp-eb-db.master_user_secret[*].secret_arn)}"
-  }
-  setting {
-    name      = "AWS_DB_INSTANCE_USER_NAME_0"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${one(aws_db_instance.wp-eb-db.master_user_secret[*].secret_arn)}:username::"
-  }
-  setting {
     name      = "AWS_SSM_PARAMETER_NAME_ADMIN"
     namespace = "aws:elasticbeanstalk:application:environment"
     value     = "ebWpAdminPassword"
   }
   setting {
-    name      = "AWS_EFS_FILE_SYSTEM_ID_0"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${aws_efs_file_system.wp-eb-files.id}"
+    name      = "EnvironmentType"
+    namespace = "aws:elasticbeanstalk:environment"
+    value     = "LoadBalanced"
   }
   setting {
-    name      = "AWS_EFS_ACCESS_POINT_ID_0"
+    name      = "InstanceTypes"
+    namespace = "aws:ec2:instances"
+    value     = "t4g.small"
+  }
+  setting {
+    name      = "LoadBalancerType"
+    namespace = "aws:elasticbeanstalk:environment"
+    value     = "application"
+  }
+  setting {
+    name      = "MaxSize"
+    namespace = "aws:autoscaling:asg"
+    value     = "4"
+  }
+  setting {
+    name      = "MinSize"
+    namespace = "aws:autoscaling:asg"
+    value     = "2"
+  }
+  setting {
+    name      = "NAME"
     namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "${aws_efs_access_point.ap_beanstalk-wordpress-web_wp-eb-files.id}"
+    value     = "beanstalk-wordpress-web"
+  }
+  setting {
+    name      = "REGION"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "us-west-2"
+  }
+  setting {
+    name      = "SecurityGroups"
+    namespace = "aws:autoscaling:launchconfiguration"
+    value     = "sg-0be3c5974b974dd1e"
+  }
+  setting {
+    name      = "SupportedArchitectures"
+    namespace = "aws:ec2:instances"
+    value     = "arm64"
   }
   setting {
     name      = "VPCId"
@@ -695,49 +739,14 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
     value     = "${aws_subnet.wp-public-a.id},${aws_subnet.wp-public-b.id}"
   }
   setting {
-    name      = "EnvironmentType"
-    namespace = "aws:elasticbeanstalk:environment"
-    value     = "LoadBalanced"
-  }
-  setting {
-    name      = "InstanceTypes"
-    namespace = "aws:ec2:instances"
-    value     = "t4g.small"
-  }
-  setting {
-    name      = "SupportedArchitectures"
-    namespace = "aws:ec2:instances"
-    value     = "arm64"
-  }
-  setting {
-    name      = "LoadBalancerType"
-    namespace = "aws:elasticbeanstalk:environment"
-    value     = "application"
-  }
-  setting {
-    name      = "MinSize"
-    namespace = "aws:autoscaling:asg"
-    value     = "2"
-  }
-  setting {
-    name      = "MaxSize"
-    namespace = "aws:autoscaling:asg"
-    value     = "4"
-  }
-  setting {
-    name      = "SecurityGroups"
-    namespace = "aws:autoscaling:launchconfiguration"
-    value     = aws_security_group.elastic_beanstalk_environment_beanstalk-wordpress-web_group.id
-  }
-  setting {
     name      = "IamInstanceProfile"
     namespace = "aws:autoscaling:launchconfiguration"
     value     = aws_iam_instance_profile.beanstalk-wordpress-web_profile.name
   }
   tags = {
-    Struct8Debug   = "-_lph4zcMnpHNJxCwYZbI"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Struct8Debug   = "-_lph4zcMnpHNJxCwYZbI"
   }
 }
 
@@ -793,31 +802,19 @@ resource "aws_ssm_document" "Struct8Probe-wp-eb-debug" {
 }
 
 resource "aws_ssm_parameter" "ebWpAdminPassword" {
+  key_id      = "alias/aws/ssm"
   name        = "ebWpAdminPassword"
   data_type   = "text"
   description = "Password of the WordPress administrator created by the first start of the site. Terraform generates it."
   overwrite   = false
   tier        = "Standard"
   type        = "SecureString"
-  value       = random_password.ebWpAdminPassword.result
-  lifecycle {
-    ignore_changes = [value]
-  }
+  value       = ")qTt6ng-Mz)fAt@2"
   tags = {
     Name           = "ebWpAdminPassword"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
   }
-}
-
-
-
-
-### CATEGORY: MISC ###
-
-resource "random_password" "ebWpAdminPassword" {
-  length  = 16
-  special = true
 }
 
 
