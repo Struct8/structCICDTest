@@ -179,17 +179,58 @@ resource "aws_iam_policy" "lambda_function_demo-aurora-proxy_st_demo-aurora-stat
   policy      = data.aws_iam_policy_document.lambda_function_demo-aurora-proxy_st_demo-aurora-state_doc.json
 }
 
-resource "aws_iam_role" "Struct8Debug-Debug" {
-  name                  = "Struct8Debug-PSH0iot7vZkT3iq-O7LSR"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::952133486861:role/CrossAccountStruct8\"}}],\"Version\":\"2012-10-17\"}"
-  force_detach_policies = false
-  max_session_duration  = 3600
-  path                  = "/"
-  tags = {
-    Name           = "Struct8Debug-Debug"
-    State          = "demo-aurora-state"
-    Struct8Creator = "rmay struct"
+data "aws_iam_policy_document" "Debug_debug_permissions" {
+  statement {
+    sid       = "SendToTaggedInstancesOnly"
+    effect    = "Allow"
+    actions   = ["ssm:SendCommand"]
+    resources = ["arn:aws:ec2:*:*:instance/*"]
+    condition {
+      test     = "StringEquals"
+      values   = ["PSH0iot7vZkT3iq-O7LSR"]
+      variable = "aws:ResourceTag/Struct8Debug"
+    }
   }
+  statement {
+    sid       = "PinnedDocumentOnly"
+    effect    = "Allow"
+    actions   = ["ssm:SendCommand"]
+    resources = ["arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:document/Struct8Probe-PSH0iot7vZkT3iq-O7LSR"]
+  }
+  statement {
+    sid       = "ReadOwnResults"
+    effect    = "Allow"
+    actions   = ["ssm:GetCommandInvocation", "ssm:DescribeInstanceInformation"]
+    resources = ["*"]
+  }
+  statement {
+    sid       = "CancelOnTaggedInstancesOnly"
+    effect    = "Allow"
+    actions   = ["ssm:CancelCommand"]
+    resources = ["arn:aws:ec2:*:*:instance/*"]
+    condition {
+      test     = "StringEquals"
+      values   = ["PSH0iot7vZkT3iq-O7LSR"]
+      variable = "aws:ResourceTag/Struct8Debug"
+    }
+  }
+}
+
+data "aws_iam_policy_document" "Debug_debug_trust" {
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/CrossAccountStruct8"]
+      type        = "AWS"
+    }
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+resource "aws_iam_role" "Struct8Debug-Debug" {
+  name                 = "Struct8Debug-PSH0iot7vZkT3iq-O7LSR"
+  assume_role_policy   = data.aws_iam_policy_document.Debug_debug_trust.json
+  max_session_duration = 3600
 }
 
 resource "aws_iam_role" "demo-aurora-dataapi_role" {
@@ -268,6 +309,17 @@ resource "aws_iam_role" "role_rds_proxy_demo-aurora-rds-proxy" {
     State          = "demo-aurora-state"
     Struct8Creator = "rmay struct"
   }
+}
+
+resource "aws_iam_role_policy" "Struct8Debug-Debug_policy" {
+  name   = "Struct8Debug-PSH0iot7vZkT3iq-O7LSR-policy"
+  policy = data.aws_iam_policy_document.Debug_debug_permissions.json
+  role   = aws_iam_role.Struct8Debug-Debug.id
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore_to_demo-pgweb_attach" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  role       = aws_iam_role.demo-pgweb_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore_to_demo-pgweb_attach" {
@@ -718,9 +770,27 @@ resource "aws_db_subnet_group" "subnet_group_demo-aurora" {
   }
 }
 
+data "aws_resourcegroupstaggingapi_resources" "cluster_parameter_group_demo-aurora-cluster-params" {
+  resource_type_filters = ["rds:cluster-pg"]
+  lifecycle {
+    postcondition {
+      condition     = length(self.resource_tag_mapping_list) > 0
+      error_message = "No RDS DB cluster parameter group tagged Name=demo-aurora-cluster-params exists in this region. Apply the state that creates it before this one."
+    }
+    postcondition {
+      condition     = length(self.resource_tag_mapping_list) < 2
+      error_message = "More than one RDS DB cluster parameter group is tagged Name=demo-aurora-cluster-params in this region, and this state cannot tell which one to use. Leave one group with that name."
+    }
+  }
+  tag_filter {
+    key    = "Name"
+    values = ["demo-aurora-cluster-params"]
+  }
+}
+
 resource "aws_rds_cluster" "demo-aurora" {
   database_name                       = "appdb"
-  db_cluster_parameter_group_name     = "demo-aurora-cluster-paramsda0c91c9e10d6508f68cee28ee"
+  db_cluster_parameter_group_name     = element(split(":", data.aws_resourcegroupstaggingapi_resources.cluster_parameter_group_demo-aurora-cluster-params.resource_tag_mapping_list[0].resource_arn), 6)
   db_subnet_group_name                = aws_db_subnet_group.subnet_group_demo-aurora.name
   kms_key_id                          = "arn:aws:kms:us-west-2:952133486861:key/e401bcbe-b1b2-4a12-ac7d-cb374176b6fb"
   apply_immediately                   = true
@@ -753,10 +823,29 @@ resource "aws_rds_cluster" "demo-aurora" {
     State          = "demo-aurora-state"
     Struct8Creator = "rmay struct"
   }
+  depends_on = [aws_cloudwatch_log_group.demo-aurora-auth, aws_cloudwatch_log_group.demo-aurora-instance, aws_cloudwatch_log_group.demo-aurora-postgres]
+}
+
+data "aws_resourcegroupstaggingapi_resources" "parameter_group_demo-aurora-instance-params" {
+  resource_type_filters = ["rds:pg"]
+  lifecycle {
+    postcondition {
+      condition     = length(self.resource_tag_mapping_list) > 0
+      error_message = "No RDS DB parameter group tagged Name=demo-aurora-instance-params exists in this region. Apply the state that creates it before this one."
+    }
+    postcondition {
+      condition     = length(self.resource_tag_mapping_list) < 2
+      error_message = "More than one RDS DB parameter group is tagged Name=demo-aurora-instance-params in this region, and this state cannot tell which one to use. Leave one group with that name."
+    }
+  }
+  tag_filter {
+    key    = "Name"
+    values = ["demo-aurora-instance-params"]
+  }
 }
 
 resource "aws_rds_cluster_instance" "demo-aurora" {
-  db_parameter_group_name               = "demo-aurora-instance-params8b1fb8eeb198b9da921eb85107"
+  db_parameter_group_name               = element(split(":", data.aws_resourcegroupstaggingapi_resources.parameter_group_demo-aurora-instance-params.resource_tag_mapping_list[0].resource_arn), 6)
   performance_insights_kms_key_id       = "arn:aws:kms:us-west-2:952133486861:key/e401bcbe-b1b2-4a12-ac7d-cb374176b6fb"
   ca_cert_identifier                    = "rds-ca-rsa2048-g1"
   cluster_identifier                    = aws_rds_cluster.demo-aurora.id
@@ -1391,6 +1480,57 @@ resource "aws_cloudwatch_log_group" "demo-aurora-proxy-logs" {
     State          = "demo-aurora-state"
     Struct8Creator = "rmay struct"
   }
+}
+
+
+
+
+### CATEGORY: CONFIG ###
+
+resource "aws_ssm_document" "Struct8Probe-Debug" {
+  name = "Struct8Probe-PSH0iot7vZkT3iq-O7LSR"
+  content = <<EOF
+{
+  "schemaVersion": "2.2",
+  "description": "Struct8 network probe. The command text is fixed here; the caller supplies only a target and a port.",
+  "parameters": {
+    "target": {
+      "type": "String",
+      "description": "Hostname or IP address to probe.",
+      "interpolationType": "ENV_VAR",
+      "allowedPattern": "^[A-Za-z0-9._-]{1,253}$"
+    },
+    "port": {
+      "type": "String",
+      "description": "TCP port to test.",
+      "default": "443",
+      "interpolationType": "ENV_VAR",
+      "allowedPattern": "^[0-9]{1,5}$"
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "struct8Probe",
+      "inputs": {
+        "timeoutSeconds": "60",
+        "runCommand": [
+          "if [ -z \"$SSM_target\" ]; then export SSM_target=\"{{target}}\"; fi",
+          "if [ -z \"$SSM_port\" ]; then export SSM_port=\"{{port}}\"; fi",
+          "echo '--- resolve ---'",
+          "getent hosts \"$SSM_target\" || echo \"no DNS answer\"",
+          "echo '--- icmp ---'",
+          "ping -c 3 -W 2 \"$SSM_target\" || echo \"no ICMP reply (often filtered, not conclusive)\"",
+          "echo '--- tcp ---'",
+          "if timeout 5 bash -c 'exec 3<>/dev/tcp/\"$1\"/\"$2\"' _ \"$SSM_target\" \"$SSM_port\" 2>/dev/null; then echo \"port $SSM_port open\"; else echo \"port $SSM_port closed or filtered\"; fi"
+        ]
+      }
+    }
+  ]
+}
+  EOF
+  document_format = "JSON"
+  document_type   = "Command"
 }
 
 
