@@ -2,26 +2,6 @@
 # Every block below points at a resource that ALREADY exists.
 
 import {
-  to = aws_cloudwatch_log_group.demo-aurora-auth
-  id = "/aws/rds/cluster/demo-aurora/iam-db-auth-error"
-}
-
-import {
-  to = aws_cloudwatch_log_group.demo-aurora-instance
-  id = "/aws/rds/cluster/demo-aurora/instance"
-}
-
-import {
-  to = aws_cloudwatch_log_group.demo-aurora-postgres
-  id = "/aws/rds/cluster/demo-aurora/postgresql"
-}
-
-import {
-  to = aws_iam_role.Struct8Debug-Debug
-  id = "Struct8Debug-PSH0iot7vZkT3iq-O7LSR"
-}
-
-import {
   to = aws_rds_cluster_instance.demo-aurora
   id = "demo-aurora"
 }
@@ -42,6 +22,11 @@ import {
 }
 
 import {
+  to = aws_cloudwatch_log_group.demo-aurora-auth
+  id = "/aws/rds/cluster/demo-aurora/iam-db-auth-error"
+}
+
+import {
   to = aws_cloudwatch_log_group.demo-aurora-dataapi-logs
   id = "/aws/lambda/demo-aurora-dataapi"
 }
@@ -54,6 +39,16 @@ import {
 import {
   to = aws_cloudwatch_log_group.demo-aurora-iam-logs
   id = "/aws/lambda/demo-aurora-iam"
+}
+
+import {
+  to = aws_cloudwatch_log_group.demo-aurora-instance
+  id = "/aws/rds/cluster/demo-aurora/instance"
+}
+
+import {
+  to = aws_cloudwatch_log_group.demo-aurora-postgres
+  id = "/aws/rds/cluster/demo-aurora/postgresql"
 }
 
 import {
@@ -237,6 +232,11 @@ import {
 }
 
 import {
+  to = aws_iam_role.Struct8Debug-Debug
+  id = "Struct8Debug-PSH0iot7vZkT3iq-O7LSR"
+}
+
+import {
   to = aws_vpc_endpoint.ep-cloudwatch_LOGS
   id = "vpce-0999ebcd811ec1f6a"
 }
@@ -244,6 +244,11 @@ import {
 import {
   to = aws_vpc_endpoint.ep-secret-manager_SECRETSMANAGER
   id = "vpce-06100dad3e50ab085"
+}
+
+import {
+  to = aws_iam_role_policy_attachment.AmazonSSMManagedInstanceCore_to_demo-pgweb_attach
+  id = "demo-pgweb_role/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 import {
