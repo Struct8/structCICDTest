@@ -57,6 +57,21 @@ import {
 }
 
 import {
+  to = aws_iam_policy.lambda_function_demo-aurora-dataapi_st_demo-aurora-state
+  id = "arn:aws:iam::952133486861:policy/lambda_function_demo-aurora-dataapi_st_demo-aurora-state"
+}
+
+import {
+  to = aws_iam_policy.lambda_function_demo-aurora-direct_st_demo-aurora-state
+  id = "arn:aws:iam::952133486861:policy/lambda_function_demo-aurora-direct_st_demo-aurora-state"
+}
+
+import {
+  to = aws_iam_policy.lambda_function_demo-aurora-iam_st_demo-aurora-state
+  id = "arn:aws:iam::952133486861:policy/lambda_function_demo-aurora-iam_st_demo-aurora-state"
+}
+
+import {
   to = aws_internet_gateway.demo-igw
   id = "igw-029dc9c30f66f7512"
 }
@@ -179,21 +194,6 @@ import {
 import {
   to = aws_iam_instance_profile.demo-pgweb_profile
   id = "demo-pgweb_profile"
-}
-
-import {
-  to = aws_iam_policy.lambda_function_demo-aurora-dataapi_st_demo-aurora-state
-  id = "arn:aws:iam::952133486861:policy/lambda_function_demo-aurora-dataapi_st_demo-aurora-state"
-}
-
-import {
-  to = aws_iam_policy.lambda_function_demo-aurora-direct_st_demo-aurora-state
-  id = "arn:aws:iam::952133486861:policy/lambda_function_demo-aurora-direct_st_demo-aurora-state"
-}
-
-import {
-  to = aws_iam_policy.lambda_function_demo-aurora-iam_st_demo-aurora-state
-  id = "arn:aws:iam::952133486861:policy/lambda_function_demo-aurora-iam_st_demo-aurora-state"
 }
 
 import {
