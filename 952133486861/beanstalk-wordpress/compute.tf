@@ -13,7 +13,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
   version_label          = "beanstalk-wordpress-web-97b698ec64eab4b1"
   wait_for_ready_timeout = "20m"
   lifecycle {
-    ignore_changes = [version_label]
+    ignore_changes = [version_label, wait_for_ready_timeout, setting]
   }
   setting {
     name      = "ACCOUNT"

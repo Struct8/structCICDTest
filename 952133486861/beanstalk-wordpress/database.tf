@@ -25,6 +25,9 @@ resource "aws_db_instance" "wp-eb-db" {
   upgrade_storage_config      = false
   username                    = "admin"
   vpc_security_group_ids      = [aws_security_group.db_instance_wp-eb-db_group.id]
+  lifecycle {
+    ignore_changes = [apply_immediately, upgrade_storage_config, manage_master_user_password, engine_version]
+  }
   tags = {
     Name           = "wp-eb-db"
     State          = "beanstalk-wordpress"
