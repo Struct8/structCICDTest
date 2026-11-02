@@ -189,9 +189,9 @@ resource "aws_security_group" "elastic_beanstalk_environment_beanstalk-wordpress
   description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
+    Name           = "elastic_beanstalk_environment_beanstalk-wordpress-web_group"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
-    Name           = "elastic_beanstalk_environment_beanstalk-wordpress-web_group"
   }
 }
 

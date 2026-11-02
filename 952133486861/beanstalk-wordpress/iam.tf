@@ -3,9 +3,9 @@ resource "aws_iam_instance_profile" "beanstalk-wordpress-web_profile" {
   path = "/"
   role = aws_iam_role.beanstalk-wordpress-web_role.name
   tags = {
+    Name           = "beanstalk-wordpress-web_profile"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
-    Name           = "beanstalk-wordpress-web_profile"
   }
 }
 
@@ -114,9 +114,9 @@ resource "aws_iam_role" "beanstalk-wordpress-web_role" {
   max_session_duration  = 3600
   path                  = "/"
   tags = {
+    Name           = "beanstalk-wordpress-web_role"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
-    Name           = "beanstalk-wordpress-web_role"
   }
 }
 

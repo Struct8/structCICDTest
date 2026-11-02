@@ -13,7 +13,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
   version_label          = "beanstalk-wordpress-web-97b698ec64eab4b1"
   wait_for_ready_timeout = "20m"
   lifecycle {
-    ignore_changes = [version_label, wait_for_ready_timeout, setting]
+    ignore_changes = [version_label]
   }
   setting {
     name      = "ACCOUNT"
@@ -116,6 +116,11 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
     value     = "arm64"
   }
   setting {
+    name      = "AWS_SSM_PARAMETER_NAME_0"
+    namespace = "aws:elasticbeanstalk:application:environment"
+    value     = "ebWpAdminPassword"
+  }
+  setting {
     name      = "VPCId"
     namespace = "aws:ec2:vpc"
     value     = aws_vpc.vpc-beanstalk-wordpress.id
@@ -136,8 +141,8 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
     value     = aws_iam_instance_profile.beanstalk-wordpress-web_profile.name
   }
   tags = {
+    Struct8Debug   = "-_lph4zcMnpHNJxCwYZbI"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
-    Struct8Debug   = "-_lph4zcMnpHNJxCwYZbI"
   }
 }
