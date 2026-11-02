@@ -1,5 +1,8 @@
 terraform {
   required_providers {
+    archive = {
+      source = "hashicorp/archive"
+    }
     aws = {
       source = "hashicorp/aws"
     }
@@ -477,6 +480,17 @@ resource "aws_s3_bucket_versioning" "beanstalk-wordpress-versions_versioning" {
   }
 }
 
+resource "aws_s3_object" "beanstalk-wordpress-web_bundle" {
+  source       = data.archive_file.eb_struct8-templates_beanstalk-wordpress-web.output_path
+  bucket       = aws_s3_bucket.beanstalk-wordpress-versions.id
+  content_type = "application/zip"
+  etag         = filemd5("${data.archive_file.eb_struct8-templates_beanstalk-wordpress-web.output_path}")
+  key          = "beanstalk/beanstalk-wordpress-web/${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app/${f}")}"])), 0, 16)}.zip"
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 resource "aws_efs_access_point" "ap_beanstalk-wordpress-web_wp-eb-files" {
   file_system_id = aws_efs_file_system.wp-eb-files.id
   posix_user {
@@ -587,15 +601,28 @@ resource "aws_elastic_beanstalk_application" "beanstalk-wordpress" {
   }
 }
 
+resource "aws_elastic_beanstalk_application_version" "beanstalk-wordpress-web_version" {
+  name        = "beanstalk-wordpress-web-${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app/${f}")}"])), 0, 16)}"
+  application = aws_elastic_beanstalk_application.beanstalk-wordpress.name
+  bucket      = aws_s3_bucket.beanstalk-wordpress-versions.id
+  key         = aws_s3_object.beanstalk-wordpress-web_bundle.key
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+data "archive_file" "eb_struct8-templates_beanstalk-wordpress-web" {
+  output_path = "${path.module}/eb_struct8-templates_beanstalk-wordpress-web_${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app/${f}")}"])), 0, 16)}.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v2/app"
+  type        = "zip"
+}
+
 resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
   name                   = "beanstalk-wordpress-web"
   solution_stack_name    = "64bit Amazon Linux 2023 v4.14.0 running Docker"
   application            = aws_elastic_beanstalk_application.beanstalk-wordpress.name
-  version_label          = "beanstalk-wordpress-web-97b698ec64eab4b1"
+  version_label          = aws_elastic_beanstalk_application_version.beanstalk-wordpress-web_version.name
   wait_for_ready_timeout = "20m"
-  lifecycle {
-    ignore_changes = [version_label]
-  }
   setting {
     name      = "ACCOUNT"
     namespace = "aws:elasticbeanstalk:application:environment"
