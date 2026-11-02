@@ -502,7 +502,7 @@ resource "aws_efs_file_system" "wp-eb-files" {
   kms_key_id      = "arn:aws:kms:us-west-2:952133486861:key/081d3c6c-ad92-4c90-93bf-5939d005aeb1"
   creation_token  = "terraform-SHfTXjsgiInCXgwadcniAR7DZ2"
   encrypted       = true
-  throughput_mode = "provisioned"
+  throughput_mode = "elastic"
   protection {
     replication_overwrite = "ENABLED"
   }
