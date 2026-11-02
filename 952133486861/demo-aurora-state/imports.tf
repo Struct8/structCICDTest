@@ -252,16 +252,6 @@ import {
 }
 
 import {
-  to = aws_iam_role_policy_attachment.AmazonSSMManagedInstanceCore_to_demo-pgweb_attach
-  id = "demo-pgweb_role/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-}
-
-import {
-  to = aws_iam_role_policy_attachment.AmazonSSMManagedInstanceCore_to_demo-pgweb_profile_attach
-  id = "demo-pgweb_role/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-}
-
-import {
   to = aws_iam_role_policy_attachment.db_proxy_demo-aurora-rds-proxy_st_demo-aurora-state_attach
   id = "role_rds_proxy_demo-aurora-rds-proxy/arn:aws:iam::952133486861:policy/db_proxy_demo-aurora-rds-proxy_st_demo-aurora-state"
 }
