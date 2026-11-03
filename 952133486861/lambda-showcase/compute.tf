@@ -33,7 +33,7 @@ resource "aws_lambda_function" "worker" {
     size = 512
   }
   lifecycle {
-    ignore_changes = [filename, source_code_hash]
+    ignore_changes = [filename, source_code_hash, publish]
   }
   logging_config {
     log_format = "Text"
