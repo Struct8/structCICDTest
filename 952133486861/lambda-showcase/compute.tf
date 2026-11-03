@@ -19,21 +19,23 @@ resource "aws_lambda_function" "worker" {
   timeout                        = 15
   environment {
     variables = {
-      ACCOUNT                                        = "952133486861"
-      AWS_LAMBDA_ALIAS_NAME_0                        = "prod"
-      AWS_LAMBDA_FUNCTION_EVENT_INVOKE_CONFIG_NAME_0 = "async-retries"
-      AWS_SNS_TOPIC_NAME_0                           = "alerts"
-      LOG_LEVEL                                      = "info"
-      NAME                                           = "worker"
-      REGION                                         = "us-east-1"
-      TOPIC_ARN                                      = "arn:aws:sns:us-east-1:952133486861:alerts"
+      ACCOUNT                                          = data.aws_caller_identity.current.account_id
+      AWS_LAMBDA_ALIAS_NAME_0                          = "prod"
+      AWS_LAMBDA_FUNCTION_EVENT_INVOKE_CONFIG_NAME_0   = "async-retries"
+      AWS_SNS_TOPIC_NAME_0                             = "alerts"
+      LOG_LEVEL                                        = "info"
+      NAME                                             = "worker"
+      REGION                                           = data.aws_region.current.region
+      TOPIC_ARN                                        = "arn:aws:sns:us-east-1:952133486861:alerts"
+      AWS_LAMBDA_PROVISIONED_CONCURRENCY_CONFIG_NAME_0 = "prewarm"
+      AWS_LAMBDA_RUNTIME_MANAGEMENT_CONFIG_NAME_0      = "runtime-pin"
     }
   }
   ephemeral_storage {
     size = 512
   }
   lifecycle {
-    ignore_changes = [filename, source_code_hash, publish]
+    ignore_changes = [filename, source_code_hash]
   }
   logging_config {
     log_format = "Text"
@@ -58,11 +60,11 @@ resource "aws_lambda_function_event_invoke_config" "async-retries" {
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-5-min_to_worker" {
-  function_name = aws_lambda_function.worker.function_name
-  statement_id  = "perm_aws_cloudwatch_event_rule_every-5-min_to_worker195a7faf24985ca523d1af349f"
-  principal     = "events.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_cloudwatch_event_rule.every-5-min.arn
+  function_name       = aws_lambda_function.worker.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.every-5-min.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-5-min_to_worker"
 }
 
 resource "aws_lambda_provisioned_concurrency_config" "prewarm" {
