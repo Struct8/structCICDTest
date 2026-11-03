@@ -30,6 +30,9 @@ resource "aws_db_instance" "demo-postgres" {
   upgrade_storage_config              = false
   username                            = "dbadmin"
   vpc_security_group_ids              = [aws_security_group.db_instance_demo-postgres_group.id]
+  lifecycle {
+    ignore_changes = [apply_immediately, delete_automated_backups, upgrade_storage_config, manage_master_user_password, engine_version]
+  }
   tags = {
     Name           = "demo-postgres"
     State          = "demo-postgres-state"
