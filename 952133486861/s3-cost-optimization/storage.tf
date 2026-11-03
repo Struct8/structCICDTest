@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "data" {
-  bucket              = "s3-cost-opt-data-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "s3-cost-opt-data-952133486861-us-east-1-an"
   bucket_namespace    = "account-regional"
   force_destroy       = false
   object_lock_enabled = false
@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "data" {
 }
 
 resource "aws_s3_bucket" "reports" {
-  bucket              = "s3-cost-opt-reports-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "s3-cost-opt-reports-952133486861-us-east-1-an"
   bucket_namespace    = "account-regional"
   force_destroy       = false
   object_lock_enabled = false
@@ -69,10 +69,15 @@ resource "aws_s3_bucket_inventory" "data-inventory" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "data_lifecycle" {
-  bucket = aws_s3_bucket.data.id
+  bucket                                 = aws_s3_bucket.data.id
+  transition_default_minimum_object_size = "all_storage_classes_128K"
   rule {
     id     = "tier-down-by-age"
     status = "Enabled"
+    transition {
+      days          = 180
+      storage_class = "DEEP_ARCHIVE"
+    }
     transition {
       days          = 30
       storage_class = "STANDARD_IA"
@@ -80,10 +85,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "data_lifecycle" {
     transition {
       days          = 90
       storage_class = "GLACIER"
-    }
-    transition {
-      days          = 180
-      storage_class = "DEEP_ARCHIVE"
     }
   }
   rule {
@@ -100,7 +101,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "data_lifecycle" {
     id     = "expire-temp"
     status = "Enabled"
     expiration {
-      days = 7
+      days                         = 7
+      expired_object_delete_marker = false
     }
     filter {
       prefix = "tmp/"
@@ -146,7 +148,8 @@ resource "aws_s3_bucket_public_access_block" "reports_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "data_configuration" {
   bucket = aws_s3_bucket.data.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -156,7 +159,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "data_configuratio
 resource "aws_s3_bucket_server_side_encryption_configuration" "reports_configuration" {
   bucket = aws_s3_bucket.reports.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
