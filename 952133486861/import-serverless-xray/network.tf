@@ -2,6 +2,7 @@ resource "aws_api_gateway_deployment" "xray-demo-deploy" {
   rest_api_id = aws_api_gateway_rest_api.xray-demo-api.id
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [triggers]
   }
   triggers = {
     redeployment = sha1(join(",", [jsonencode([
