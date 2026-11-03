@@ -3,22 +3,22 @@
 
 import {
   to = aws_api_gateway_deployment.xray-demo-deploy
-  id = "7dgdm2"
+  id = "1zp5piq8xd/7dgdm2"
 }
 
 import {
   to = aws_api_gateway_integration.orders-lambda-integ
-  id = "agi-1zp5piq8xd-ul5r4s-POST"
+  id = "1zp5piq8xd/ul5r4s/POST"
 }
 
 import {
   to = aws_api_gateway_method.orders-post
-  id = "agm-1zp5piq8xd-ul5r4s-POST"
+  id = "1zp5piq8xd/ul5r4s/POST"
 }
 
 import {
   to = aws_api_gateway_resource.orders
-  id = "ul5r4s"
+  id = "1zp5piq8xd/ul5r4s"
 }
 
 import {
