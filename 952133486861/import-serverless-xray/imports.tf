@@ -28,7 +28,7 @@ import {
 
 import {
   to = aws_api_gateway_stage.prod2
-  id = "ags-1zp5piq8xd-prod"
+  id = "1zp5piq8xd/prod"
 }
 
 import {
