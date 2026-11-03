@@ -20,10 +20,10 @@ resource "aws_vpc_endpoint" "ep-cloudwatch_LOGS" {
   subnet_ids          = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   vpc_endpoint_type   = "Interface"
   tags = {
+    DifName        = "ep-cloudwatch_LOGS"
     Name           = "ep-cloudwatch"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
-    DifName        = "ep-cloudwatch_LOGS"
   }
 }
 
@@ -37,10 +37,10 @@ resource "aws_vpc_endpoint" "ep-secret-manager_SECRETSMANAGER" {
   subnet_ids          = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   vpc_endpoint_type   = "Interface"
   tags = {
+    DifName        = "ep-secret-manager_SECRETSMANAGER"
     Name           = "ep-secret-manager"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
-    DifName        = "ep-secret-manager_SECRETSMANAGER"
   }
 }
 
@@ -183,9 +183,6 @@ resource "aws_security_group" "sg_vpce_ep-cloudwatch" {
   name        = "vpce-sg-ep-cloudwatch"
   vpc_id      = aws_vpc.rds-access-patterns-lab.id
   description = "Auto-generated SG for ep-cloudwatch"
-  lifecycle {
-    ignore_changes = [revoke_rules_on_delete]
-  }
   tags = {
     Name           = "ep-cloudwatch"
     DifName        = "sg_vpce_ep-cloudwatch"
@@ -198,9 +195,6 @@ resource "aws_security_group" "sg_vpce_ep-secret-manager" {
   name        = "vpce-sg-ep-secret-manager"
   vpc_id      = aws_vpc.rds-access-patterns-lab.id
   description = "Auto-generated SG for ep-secret-manager"
-  lifecycle {
-    ignore_changes = [revoke_rules_on_delete]
-  }
   tags = {
     Name           = "ep-secret-manager"
     DifName        = "sg_vpce_ep-secret-manager"

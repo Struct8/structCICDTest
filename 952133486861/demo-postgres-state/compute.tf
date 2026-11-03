@@ -223,9 +223,6 @@ EOFUData
   enclave_options {
     enabled = false
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
@@ -248,10 +245,10 @@ EOFUData
     }
   }
   tags = {
+    Struct8Debug   = "LWOdB7cr7ocaaK7CXIwEL"
     Name           = "demo-pgweb"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
-    Struct8Debug   = "LWOdB7cr7ocaaK7CXIwEL"
   }
 }
 
@@ -269,15 +266,15 @@ resource "aws_lambda_function" "demo-postgres-api" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT                      = "952133486861"
+      ACCOUNT                      = data.aws_caller_identity.current.account_id
       AWS_DB_PROXY_DB_NAME_0       = "appdb"
-      AWS_DB_PROXY_ENDPOINT_0      = "demo-postgres-proxy.proxy-chka200mcp0m.us-east-1.rds.amazonaws.com"
+      AWS_DB_PROXY_ENDPOINT_0      = aws_db_proxy.demo-postgres-proxy.endpoint
       AWS_DB_PROXY_ENGINE_FAMILY_0 = "POSTGRESQL"
-      AWS_DB_PROXY_NAME_0          = "demo-postgres-proxy"
+      AWS_DB_PROXY_NAME_0          = aws_db_proxy.demo-postgres-proxy.name
       AWS_DB_PROXY_PORT_0          = "5432"
-      AWS_DB_PROXY_SECRET_ARN_0    = "arn:aws:secretsmanager:us-east-1:952133486861:secret:rds!db-adc6ba91-46d0-4b10-8666-59a8d723e51f-Lb8Jr4"
+      AWS_DB_PROXY_SECRET_ARN_0    = tolist(aws_db_proxy.demo-postgres-proxy.auth)[0].secret_arn
       NAME                         = "demo-postgres-api"
-      REGION                       = "us-east-1"
+      REGION                       = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -315,15 +312,15 @@ resource "aws_lambda_function" "demo-postgres-direct" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT                      = "952133486861"
-      AWS_DB_INSTANCE_DB_NAME_0    = "appdb"
-      AWS_DB_INSTANCE_ENDPOINT_0   = "demo-postgres.chka200mcp0m.us-east-1.rds.amazonaws.com:5432"
-      AWS_DB_INSTANCE_ENGINE_0     = "postgres"
-      AWS_DB_INSTANCE_NAME_0       = "demo-postgres"
-      AWS_DB_INSTANCE_SECRET_ARN_0 = "arn:aws:secretsmanager:us-east-1:952133486861:secret:rds!db-adc6ba91-46d0-4b10-8666-59a8d723e51f-Lb8Jr4"
-      AWS_DB_INSTANCE_USER_NAME_0  = "arn:aws:secretsmanager:us-east-1:952133486861:secret:rds!db-adc6ba91-46d0-4b10-8666-59a8d723e51f-Lb8Jr4:username::"
+      ACCOUNT                      = data.aws_caller_identity.current.account_id
+      AWS_DB_INSTANCE_DB_NAME_0    = aws_db_instance.demo-postgres.db_name
+      AWS_DB_INSTANCE_ENDPOINT_0   = aws_db_instance.demo-postgres.endpoint
+      AWS_DB_INSTANCE_ENGINE_0     = aws_db_instance.demo-postgres.engine
+      AWS_DB_INSTANCE_NAME_0       = aws_db_instance.demo-postgres.identifier
+      AWS_DB_INSTANCE_SECRET_ARN_0 = one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)
+      AWS_DB_INSTANCE_USER_NAME_0  = "${one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)}:username::"
       NAME                         = "demo-postgres-direct"
-      REGION                       = "us-east-1"
+      REGION                       = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -361,16 +358,16 @@ resource "aws_lambda_function" "demo-postgres-iam" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT                      = "952133486861"
-      AWS_DB_INSTANCE_DB_NAME_0    = "appdb"
-      AWS_DB_INSTANCE_ENDPOINT_0   = "demo-postgres.chka200mcp0m.us-east-1.rds.amazonaws.com:5432"
-      AWS_DB_INSTANCE_ENGINE_0     = "postgres"
+      ACCOUNT                      = data.aws_caller_identity.current.account_id
+      AWS_DB_INSTANCE_DB_NAME_0    = aws_db_instance.demo-postgres.db_name
+      AWS_DB_INSTANCE_ENDPOINT_0   = aws_db_instance.demo-postgres.endpoint
+      AWS_DB_INSTANCE_ENGINE_0     = aws_db_instance.demo-postgres.engine
       AWS_DB_INSTANCE_IAM_USER_0   = "lambda_iam"
-      AWS_DB_INSTANCE_NAME_0       = "demo-postgres"
-      AWS_DB_INSTANCE_SECRET_ARN_0 = "arn:aws:secretsmanager:us-east-1:952133486861:secret:rds!db-adc6ba91-46d0-4b10-8666-59a8d723e51f-Lb8Jr4"
-      AWS_DB_INSTANCE_USER_NAME_0  = "arn:aws:secretsmanager:us-east-1:952133486861:secret:rds!db-adc6ba91-46d0-4b10-8666-59a8d723e51f-Lb8Jr4:username::"
+      AWS_DB_INSTANCE_NAME_0       = aws_db_instance.demo-postgres.identifier
+      AWS_DB_INSTANCE_SECRET_ARN_0 = one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)
+      AWS_DB_INSTANCE_USER_NAME_0  = "${one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)}:username::"
       NAME                         = "demo-postgres-iam"
-      REGION                       = "us-east-1"
+      REGION                       = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -395,25 +392,25 @@ resource "aws_lambda_function" "demo-postgres-iam" {
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api" {
-  function_name = aws_lambda_function.demo-postgres-api.function_name
-  statement_id  = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-apiec4d441d5c721e6e6a2b15e263"
-  principal     = "events.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_cloudwatch_event_rule.every-1-minute.arn
+  function_name       = aws_lambda_function.demo-postgres-api.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.every-1-minute.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-api"
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct" {
-  function_name = aws_lambda_function.demo-postgres-direct.function_name
-  statement_id  = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-directcd6f655316a6cf66eaa72dc7ed"
-  principal     = "events.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_cloudwatch_event_rule.every-1-minute.arn
+  function_name       = aws_lambda_function.demo-postgres-direct.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.every-1-minute.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-direct"
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam" {
-  function_name = aws_lambda_function.demo-postgres-iam.function_name
-  statement_id  = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam0045d0f5f898bdc953daa07c08"
-  principal     = "events.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_cloudwatch_event_rule.every-1-minute.arn
+  function_name       = aws_lambda_function.demo-postgres-iam.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.every-1-minute.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_every-1-minute_to_demo-postgres-iam"
 }
