@@ -20,6 +20,7 @@ resource "aws_cloudwatch_event_rule" "every-5-min" {
 }
 
 resource "aws_cloudwatch_event_target" "Target" {
+  target_id  = "terraform-PamdYI57sma88bIrbAfZlKqSfh"
   arn        = aws_lambda_function.worker.arn
   rule       = aws_cloudwatch_event_rule.every-5-min.name
   depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_every-5-min_to_worker]

@@ -20,19 +20,8 @@ resource "aws_iam_policy" "lambda_function_worker_st_lambda-showcase" {
 }
 
 resource "aws_iam_role" "worker_role" {
-  name = "worker_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "worker_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
