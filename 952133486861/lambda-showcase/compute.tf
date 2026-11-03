@@ -19,16 +19,14 @@ resource "aws_lambda_function" "worker" {
   timeout                        = 15
   environment {
     variables = {
-      ACCOUNT                                          = data.aws_caller_identity.current.account_id
-      AWS_LAMBDA_ALIAS_NAME_0                          = "prod"
-      AWS_LAMBDA_FUNCTION_EVENT_INVOKE_CONFIG_NAME_0   = "async-retries"
-      AWS_SNS_TOPIC_NAME_0                             = "alerts"
-      LOG_LEVEL                                        = "info"
-      NAME                                             = "worker"
-      REGION                                           = data.aws_region.current.region
-      TOPIC_ARN                                        = "arn:aws:sns:us-east-1:952133486861:alerts"
-      AWS_LAMBDA_PROVISIONED_CONCURRENCY_CONFIG_NAME_0 = "prewarm"
-      AWS_LAMBDA_RUNTIME_MANAGEMENT_CONFIG_NAME_0      = "runtime-pin"
+      ACCOUNT                                        = data.aws_caller_identity.current.account_id
+      AWS_LAMBDA_ALIAS_NAME_0                        = "prod"
+      AWS_LAMBDA_FUNCTION_EVENT_INVOKE_CONFIG_NAME_0 = "async-retries"
+      AWS_SNS_TOPIC_NAME_0                           = "alerts"
+      LOG_LEVEL                                      = "info"
+      NAME                                           = "worker"
+      REGION                                         = data.aws_region.current.region
+      TOPIC_ARN                                      = "arn:aws:sns:us-east-1:952133486861:alerts"
     }
   }
   ephemeral_storage {
@@ -68,14 +66,14 @@ resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_every-5-min_to_
 }
 
 resource "aws_lambda_provisioned_concurrency_config" "prewarm" {
-  function_name                     = aws_lambda_function.worker.function_name
+  function_name                     = aws_lambda_alias.prod.function_name
   provisioned_concurrent_executions = 2
   qualifier                         = aws_lambda_alias.prod.name
   skip_destroy                      = false
 }
 
 resource "aws_lambda_runtime_management_config" "runtime-pin" {
-  function_name     = aws_lambda_function.worker.function_name
+  function_name     = aws_lambda_alias.prod.function_name
   qualifier         = aws_lambda_alias.prod.function_version
   update_runtime_on = "Auto"
 }
