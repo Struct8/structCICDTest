@@ -1,5 +1,6 @@
 resource "aws_iam_instance_profile" "demo-pgweb_profile" {
   name = "demo-pgweb_profile"
+  path = "/"
   role = aws_iam_role.demo-pgweb_role.name
   tags = {
     Name           = "demo-pgweb_profile"
@@ -13,7 +14,7 @@ data "aws_iam_policy_document" "db_proxy_demo-postgres-proxy_st_demo-postgres-st
     sid       = "ReadDatabaseCredentials"
     effect    = "Allow"
     actions   = ["secretsmanager:GetSecretValue"]
-    resources = [one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)]
+    resources = ["arn:aws:secretsmanager:us-east-1:952133486861:secret:rds!db-adc6ba91-46d0-4b10-8666-59a8d723e51f-Lb8Jr4"]
   }
 }
 
@@ -46,16 +47,16 @@ data "aws_iam_policy_document" "lambda_function_demo-postgres-api_st_demo-postgr
     resources = ["${aws_cloudwatch_log_group.demo-postgres-api-logs.arn}:*"]
   }
   statement {
-    sid       = "ReadDatabaseCredentials"
-    effect    = "Allow"
-    actions   = ["secretsmanager:GetSecretValue"]
-    resources = [one(aws_db_instance.demo-postgres.master_user_secret[*].secret_arn)]
-  }
-  statement {
     sid       = "AllowAllResources"
     effect    = "Allow"
     actions   = ["ec2:AssignPrivateIpAddresses", "ec2:CreateNetworkInterface", "ec2:DeleteNetworkInterface", "ec2:DescribeNetworkInterfaces", "ec2:UnassignPrivateIpAddresses"]
     resources = ["*"]
+  }
+  statement {
+    sid       = "ReadDatabaseCredentials"
+    effect    = "Allow"
+    actions   = ["secretsmanager:GetSecretValue"]
+    resources = ["arn:aws:secretsmanager:us-east-1:952133486861:secret:rds!db-adc6ba91-46d0-4b10-8666-59a8d723e51f-Lb8Jr4"]
   }
 }
 
@@ -115,7 +116,7 @@ data "aws_iam_policy_document" "lambda_function_demo-postgres-iam_st_demo-postgr
     sid       = "RdsIamConnect"
     effect    = "Allow"
     actions   = ["rds-db:connect"]
-    resources = ["arn:aws:rds-db:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:dbuser:${aws_db_instance.demo-postgres.resource_id}/lambda_iam"]
+    resources = ["arn:aws:rds-db:us-east-1:952133486861:dbuser:db-467KCAUBUK3DZ2UTPPNVYSQRHQ/lambda_iam"]
   }
 }
 
@@ -180,19 +181,8 @@ resource "aws_iam_role" "Struct8Debug-Debug" {
 }
 
 resource "aws_iam_role" "demo-pgweb_role" {
-  name = "demo-pgweb_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "demo-pgweb_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -204,19 +194,8 @@ resource "aws_iam_role" "demo-pgweb_role" {
 }
 
 resource "aws_iam_role" "demo-postgres-api_role" {
-  name = "demo-postgres-api_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "demo-postgres-api_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -228,19 +207,8 @@ resource "aws_iam_role" "demo-postgres-api_role" {
 }
 
 resource "aws_iam_role" "demo-postgres-direct_role" {
-  name = "demo-postgres-direct_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "demo-postgres-direct_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -252,19 +220,8 @@ resource "aws_iam_role" "demo-postgres-direct_role" {
 }
 
 resource "aws_iam_role" "demo-postgres-iam_role" {
-  name = "demo-postgres-iam_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "demo-postgres-iam_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -276,19 +233,11 @@ resource "aws_iam_role" "demo-postgres-iam_role" {
 }
 
 resource "aws_iam_role" "role_monitoring_demo-postgres" {
-  name = "role_monitoring_demo-postgres"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "monitoring.rds.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "role_monitoring_demo-postgres"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"monitoring.rds.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
   tags = {
     Name           = "role_monitoring_demo-postgres"
     State          = "demo-postgres-state"
@@ -297,19 +246,8 @@ resource "aws_iam_role" "role_monitoring_demo-postgres" {
 }
 
 resource "aws_iam_role" "role_rds_proxy_demo-postgres-proxy" {
-  name = "role_rds_proxy_demo-postgres-proxy"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "rds.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "role_rds_proxy_demo-postgres-proxy"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"rds.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"

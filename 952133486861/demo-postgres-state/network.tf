@@ -14,15 +14,16 @@ resource "aws_vpc_endpoint" "ep-cloudwatch_LOGS" {
   service_name        = "com.amazonaws.${data.aws_region.current.region}.logs"
   vpc_id              = aws_vpc.rds-access-patterns-lab.id
   ip_address_type     = "ipv4"
+  policy              = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}]}"
   private_dns_enabled = true
   security_group_ids  = [aws_security_group.sg_vpce_ep-cloudwatch.id]
-  subnet_ids          = [aws_subnet.demo-postgres-private-b.id, aws_subnet.demo-postgres-private-a.id]
+  subnet_ids          = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   vpc_endpoint_type   = "Interface"
   tags = {
     Name           = "ep-cloudwatch"
-    DifName        = "ep-cloudwatch_LOGS"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
+    DifName        = "ep-cloudwatch_LOGS"
   }
 }
 
@@ -30,23 +31,25 @@ resource "aws_vpc_endpoint" "ep-secret-manager_SECRETSMANAGER" {
   service_name        = "com.amazonaws.${data.aws_region.current.region}.secretsmanager"
   vpc_id              = aws_vpc.rds-access-patterns-lab.id
   ip_address_type     = "ipv4"
+  policy              = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}]}"
   private_dns_enabled = true
   security_group_ids  = [aws_security_group.sg_vpce_ep-secret-manager.id]
-  subnet_ids          = [aws_subnet.demo-postgres-private-b.id, aws_subnet.demo-postgres-private-a.id]
+  subnet_ids          = [aws_subnet.demo-postgres-private-a.id, aws_subnet.demo-postgres-private-b.id]
   vpc_endpoint_type   = "Interface"
   tags = {
     Name           = "ep-secret-manager"
-    DifName        = "ep-secret-manager_SECRETSMANAGER"
     State          = "demo-postgres-state"
     Struct8Creator = "rmay struct"
+    DifName        = "ep-secret-manager_SECRETSMANAGER"
   }
 }
 
 resource "aws_subnet" "demo-postgres-private-a" {
-  vpc_id                  = aws_vpc.rds-access-patterns-lab.id
-  availability_zone       = "us-east-1a"
-  cidr_block              = "10.8.0.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.rds-access-patterns-lab.id
+  availability_zone                   = "us-east-1a"
+  cidr_block                          = "10.8.0.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "demo-postgres-private-a"
     State          = "demo-postgres-state"
@@ -55,10 +58,11 @@ resource "aws_subnet" "demo-postgres-private-a" {
 }
 
 resource "aws_subnet" "demo-postgres-private-b" {
-  vpc_id                  = aws_vpc.rds-access-patterns-lab.id
-  availability_zone       = "us-east-1b"
-  cidr_block              = "10.8.1.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.rds-access-patterns-lab.id
+  availability_zone                   = "us-east-1b"
+  cidr_block                          = "10.8.1.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "demo-postgres-private-b"
     State          = "demo-postgres-state"
@@ -67,10 +71,11 @@ resource "aws_subnet" "demo-postgres-private-b" {
 }
 
 resource "aws_subnet" "demo-public-a" {
-  vpc_id                  = aws_vpc.rds-access-patterns-lab.id
-  availability_zone       = "us-east-1a"
-  cidr_block              = "10.8.10.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.rds-access-patterns-lab.id
+  availability_zone                   = "us-east-1a"
+  cidr_block                          = "10.8.10.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "demo-public-a"
     State          = "demo-postgres-state"
@@ -110,6 +115,7 @@ resource "aws_route_table_association" "aws_route_table_association_demo_public_
 resource "aws_security_group" "db_instance_demo-postgres_group" {
   name                   = "db_instance_demo-postgres_group"
   vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "db_instance_demo-postgres_group"
@@ -121,6 +127,7 @@ resource "aws_security_group" "db_instance_demo-postgres_group" {
 resource "aws_security_group" "db_proxy_demo-postgres-proxy_group" {
   name                   = "db_proxy_demo-postgres-proxy_group"
   vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "db_proxy_demo-postgres-proxy_group"
@@ -132,6 +139,7 @@ resource "aws_security_group" "db_proxy_demo-postgres-proxy_group" {
 resource "aws_security_group" "demo-postgres-api" {
   name                   = "demo-postgres-api"
   vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "demo-postgres-api"
@@ -143,6 +151,7 @@ resource "aws_security_group" "demo-postgres-api" {
 resource "aws_security_group" "demo-postgres-direct" {
   name                   = "demo-postgres-direct"
   vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "demo-postgres-direct"
@@ -154,6 +163,7 @@ resource "aws_security_group" "demo-postgres-direct" {
 resource "aws_security_group" "demo-postgres-iam" {
   name                   = "demo-postgres-iam"
   vpc_id                 = aws_vpc.rds-access-patterns-lab.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "demo-postgres-iam"
@@ -173,6 +183,9 @@ resource "aws_security_group" "sg_vpce_ep-cloudwatch" {
   name        = "vpce-sg-ep-cloudwatch"
   vpc_id      = aws_vpc.rds-access-patterns-lab.id
   description = "Auto-generated SG for ep-cloudwatch"
+  lifecycle {
+    ignore_changes = [revoke_rules_on_delete]
+  }
   tags = {
     Name           = "ep-cloudwatch"
     DifName        = "sg_vpce_ep-cloudwatch"
@@ -185,6 +198,9 @@ resource "aws_security_group" "sg_vpce_ep-secret-manager" {
   name        = "vpce-sg-ep-secret-manager"
   vpc_id      = aws_vpc.rds-access-patterns-lab.id
   description = "Auto-generated SG for ep-secret-manager"
+  lifecycle {
+    ignore_changes = [revoke_rules_on_delete]
+  }
   tags = {
     Name           = "ep-secret-manager"
     DifName        = "sg_vpce_ep-secret-manager"
