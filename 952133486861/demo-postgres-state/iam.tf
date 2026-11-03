@@ -233,11 +233,19 @@ resource "aws_iam_role" "demo-postgres-iam_role" {
 }
 
 resource "aws_iam_role" "role_monitoring_demo-postgres" {
-  name                  = "role_monitoring_demo-postgres"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"monitoring.rds.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
-  force_detach_policies = false
-  max_session_duration  = 3600
-  path                  = "/"
+  name = "role_monitoring_demo-postgres"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "monitoring.rds.amazonaws.com"
+      }
+    }
+  ]
+})
   tags = {
     Name           = "role_monitoring_demo-postgres"
     State          = "demo-postgres-state"

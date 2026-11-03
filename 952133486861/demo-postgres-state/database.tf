@@ -1,7 +1,6 @@
 resource "aws_db_instance" "demo-postgres" {
   db_name                             = "appdb"
   db_subnet_group_name                = aws_db_subnet_group.subnet_group_demo-postgres.name
-  domain_iam_role_name                = aws_iam_role.role_monitoring_demo-postgres.name
   kms_key_id                          = "arn:aws:kms:us-east-1:952133486861:key/e7e0addd-41d3-4784-adce-43cbd5e882b6"
   option_group_name                   = "default:postgres-18"
   parameter_group_name                = aws_db_parameter_group.demo-postgres-params1.name

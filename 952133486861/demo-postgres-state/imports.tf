@@ -47,11 +47,6 @@ import {
 }
 
 import {
-  to = aws_iam_role.role_monitoring_demo-postgres
-  id = "role_monitoring_demo-postgres"
-}
-
-import {
   to = aws_internet_gateway.demo-igw
   id = "igw-0662d8d6238650337"
 }
@@ -209,6 +204,11 @@ import {
 import {
   to = aws_db_subnet_group.subnet_group_demo-postgres
   id = "demo-postgres-subnet-group"
+}
+
+import {
+  to = aws_iam_role.role_monitoring_demo-postgres
+  id = "role_monitoring_demo-postgres"
 }
 
 import {
