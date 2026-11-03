@@ -13,7 +13,7 @@ import {
 
 import {
   to = aws_lambda_alias.prod
-  id = "arn:aws:lambda:us-east-1:952133486861:function:worker:prod"
+  id = "worker/prod"
 }
 
 import {
@@ -29,6 +29,11 @@ import {
 import {
   to = aws_lambda_provisioned_concurrency_config.prewarm
   id = "worker,prod"
+}
+
+import {
+  to = aws_lambda_runtime_management_config.runtime-pin
+  id = "worker,1"
 }
 
 import {
