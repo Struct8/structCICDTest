@@ -128,12 +128,12 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-uptime-kuma" {
   setting {
     name      = "SecurityGroups"
     namespace = "aws:elbv2:loadbalancer"
-    value     = "sg-0df91418b720e72ac"
+    value     = join(",", aws_lb.wp-shared-alb.security_groups)
   }
   setting {
     name      = "SharedLoadBalancer"
     namespace = "aws:elbv2:loadbalancer"
-    value     = "arn:aws:elasticloadbalancing:us-east-1:952133486861:loadbalancer/app/wp-shared-alb/b0933ac6b4fb7b37"
+    value     = aws_lb.wp-shared-alb.arn
   }
   setting {
     name      = "SupportedArchitectures"
@@ -284,12 +284,12 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
   setting {
     name      = "SecurityGroups"
     namespace = "aws:elbv2:loadbalancer"
-    value     = "sg-0df91418b720e72ac"
+    value     = join(",", aws_lb.wp-shared-alb.security_groups)
   }
   setting {
     name      = "SharedLoadBalancer"
     namespace = "aws:elbv2:loadbalancer"
-    value     = "arn:aws:elasticloadbalancing:us-east-1:952133486861:loadbalancer/app/wp-shared-alb/b0933ac6b4fb7b37"
+    value     = aws_lb.wp-shared-alb.arn
   }
   setting {
     name      = "SupportedArchitectures"
