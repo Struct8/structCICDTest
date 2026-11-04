@@ -13,7 +13,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-uptime-kuma" {
   version_label          = "beanstalk-uptime-kuma-ee0e2fbd65c7589a"
   wait_for_ready_timeout = "20m"
   lifecycle {
-    ignore_changes = [version_label, wait_for_ready_timeout, setting]
+    ignore_changes = [version_label]
   }
   setting {
     name      = "ACCOUNT"
@@ -169,7 +169,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
   version_label          = "beanstalk-wordpress-web-7011d11521aba401"
   wait_for_ready_timeout = "20m"
   lifecycle {
-    ignore_changes = [version_label, wait_for_ready_timeout, setting]
+    ignore_changes = [version_label]
   }
   setting {
     name      = "ACCOUNT"

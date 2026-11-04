@@ -40,18 +40,6 @@ data "aws_iam_policy_document" "elastic_beanstalk_environment_beanstalk-uptime-k
     resources = ["${aws_efs_file_system.wp-eb-files.arn}:*"]
   }
   statement {
-    sid       = "AllowBucketLevelActions"
-    effect    = "Allow"
-    actions   = ["s3:GetBucketLocation", "s3:ListBucket"]
-    resources = [aws_s3_bucket.beanstalk-wordpress-versions.arn]
-  }
-  statement {
-    sid       = "AllowObjectCRUD"
-    effect    = "Allow"
-    actions   = ["s3:DeleteObject", "s3:GetObject", "s3:PutObject"]
-    resources = ["${aws_s3_bucket.beanstalk-wordpress-versions.arn}/*"]
-  }
-  statement {
     sid       = "BeanstalkSourceBundle"
     effect    = "Allow"
     actions   = ["s3:GetObject"]
@@ -89,18 +77,6 @@ data "aws_iam_policy_document" "elastic_beanstalk_environment_beanstalk-wordpres
     effect    = "Allow"
     actions   = ["elasticfilesystem:ClientMount", "elasticfilesystem:ClientRootAccess", "elasticfilesystem:ClientWrite"]
     resources = ["${aws_efs_file_system.wp-eb-files.arn}:*"]
-  }
-  statement {
-    sid       = "AllowBucketLevelActions"
-    effect    = "Allow"
-    actions   = ["s3:GetBucketLocation", "s3:ListBucket"]
-    resources = [aws_s3_bucket.beanstalk-wordpress-versions.arn]
-  }
-  statement {
-    sid       = "AllowObjectCRUD"
-    effect    = "Allow"
-    actions   = ["s3:DeleteObject", "s3:GetObject", "s3:PutObject"]
-    resources = ["${aws_s3_bucket.beanstalk-wordpress-versions.arn}/*"]
   }
   statement {
     sid       = "BeanstalkSourceBundle"
