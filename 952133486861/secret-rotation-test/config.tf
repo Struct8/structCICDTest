@@ -4,7 +4,7 @@ resource "aws_ssm_parameter" "ssm-ignored" {
   overwrite = true
   tier      = "Standard"
   type      = "SecureString"
-  value     = "dummy-initial-ssm-ignored"
+  value     = "dummy-edited-ssm-ignored"
   lifecycle {
     ignore_changes = [value]
   }

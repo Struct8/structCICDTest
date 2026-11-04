@@ -33,7 +33,7 @@ resource "aws_secretsmanager_secret" "rotation-test-secret-plain" {
 
 resource "aws_secretsmanager_secret_version" "rotation-test-secret-ignored_version" {
   secret_id     = aws_secretsmanager_secret.rotation-test-secret-ignored.id
-  secret_string = "dummy-initial-secret-ignored"
+  secret_string = "dummy-edited-secret-ignored"
   lifecycle {
     ignore_changes = [secret_string]
   }
@@ -41,5 +41,5 @@ resource "aws_secretsmanager_secret_version" "rotation-test-secret-ignored_versi
 
 resource "aws_secretsmanager_secret_version" "rotation-test-secret-plain_version" {
   secret_id     = aws_secretsmanager_secret.rotation-test-secret-plain.id
-  secret_string = "dummy-initial-secret-plain"
+  secret_string = "dummy-edited-secret-plain"
 }

@@ -11,7 +11,7 @@ resource "aws_db_instance" "rotation-db-ignored" {
   identifier               = "rotation-db-ignored"
   instance_class           = "db.t3.micro"
   max_allocated_storage    = 100
-  password                 = "DummyInitialDbIgnored1"
+  password                 = "DummyEditedDbIgnored1"
   skip_final_snapshot      = true
   storage_encrypted        = true
   storage_type             = "gp3"
@@ -41,7 +41,7 @@ resource "aws_db_instance" "rotation-db-plain" {
   identifier               = "rotation-db-plain"
   instance_class           = "db.t3.micro"
   max_allocated_storage    = 100
-  password                 = "DummyInitialDbPlain1"
+  password                 = "DummyEditedDbPlain1"
   skip_final_snapshot      = true
   storage_encrypted        = true
   storage_type             = "gp3"
