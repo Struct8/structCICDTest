@@ -1,5 +1,5 @@
 resource "aws_ssm_parameter" "ssm-ignored" {
-  name      = "/rotation-test/ssm-ignored"
+  name      = "/rotation-test/ssm-ignored-recreated"
   data_type = "text"
   overwrite = true
   tier      = "Standard"
