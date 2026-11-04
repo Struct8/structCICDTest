@@ -11,10 +11,11 @@ resource "aws_vpc" "vpc-beanstalk-wordpress" {
 }
 
 resource "aws_subnet" "wp-app-a" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-east-1a"
-  cidr_block              = "10.41.10.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-east-1a"
+  cidr_block                          = "10.41.10.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-app-a"
     State          = "beanstalk-wordpress"
@@ -23,10 +24,11 @@ resource "aws_subnet" "wp-app-a" {
 }
 
 resource "aws_subnet" "wp-app-b" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-east-1b"
-  cidr_block              = "10.41.11.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-east-1b"
+  cidr_block                          = "10.41.11.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-app-b"
     State          = "beanstalk-wordpress"
@@ -35,10 +37,11 @@ resource "aws_subnet" "wp-app-b" {
 }
 
 resource "aws_subnet" "wp-data-a" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-east-1a"
-  cidr_block              = "10.41.20.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-east-1a"
+  cidr_block                          = "10.41.20.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-data-a"
     State          = "beanstalk-wordpress"
@@ -47,10 +50,11 @@ resource "aws_subnet" "wp-data-a" {
 }
 
 resource "aws_subnet" "wp-data-b" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-east-1b"
-  cidr_block              = "10.41.21.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-east-1b"
+  cidr_block                          = "10.41.21.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-data-b"
     State          = "beanstalk-wordpress"
@@ -59,10 +63,11 @@ resource "aws_subnet" "wp-data-b" {
 }
 
 resource "aws_subnet" "wp-public-a" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-east-1a"
-  cidr_block              = "10.41.0.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-east-1a"
+  cidr_block                          = "10.41.0.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-public-a"
     State          = "beanstalk-wordpress"
@@ -71,10 +76,11 @@ resource "aws_subnet" "wp-public-a" {
 }
 
 resource "aws_subnet" "wp-public-b" {
-  vpc_id                  = aws_vpc.vpc-beanstalk-wordpress.id
-  availability_zone       = "us-east-1b"
-  cidr_block              = "10.41.1.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.vpc-beanstalk-wordpress.id
+  availability_zone                   = "us-east-1b"
+  cidr_block                          = "10.41.1.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "wp-public-b"
     State          = "beanstalk-wordpress"
@@ -156,6 +162,7 @@ resource "aws_route_table_association" "aws_route_table_association_wp_public_b_
 resource "aws_security_group" "db_instance_wp-eb-db_group" {
   name                   = "db_instance_wp-eb-db_group"
   vpc_id                 = aws_vpc.vpc-beanstalk-wordpress.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "db_instance_wp-eb-db_group"
@@ -167,6 +174,7 @@ resource "aws_security_group" "db_instance_wp-eb-db_group" {
 resource "aws_security_group" "efs_file_system_wp-eb-files_group" {
   name                   = "efs_file_system_wp-eb-files_group"
   vpc_id                 = aws_vpc.vpc-beanstalk-wordpress.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "efs_file_system_wp-eb-files_group"
@@ -178,22 +186,24 @@ resource "aws_security_group" "efs_file_system_wp-eb-files_group" {
 resource "aws_security_group" "elastic_beanstalk_environment_beanstalk-uptime-kuma_group" {
   name                   = "elastic_beanstalk_environment_beanstalk-uptime-kuma_group"
   vpc_id                 = aws_vpc.vpc-beanstalk-wordpress.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
-    Name           = "elastic_beanstalk_environment_beanstalk-uptime-kuma_group"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "elastic_beanstalk_environment_beanstalk-uptime-kuma_group"
   }
 }
 
 resource "aws_security_group" "elastic_beanstalk_environment_beanstalk-wordpress-web_group" {
   name                   = "elastic_beanstalk_environment_beanstalk-wordpress-web_group"
   vpc_id                 = aws_vpc.vpc-beanstalk-wordpress.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
-    Name           = "elastic_beanstalk_environment_beanstalk-wordpress-web_group"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "elastic_beanstalk_environment_beanstalk-wordpress-web_group"
   }
 }
 
@@ -300,11 +310,12 @@ resource "aws_security_group_rule" "rule_lb_wp_shared_alb_group_ingress_tcp_80" 
 }
 
 resource "aws_lb" "wp-shared-alb" {
-  name               = "wp-shared-alb"
-  idle_timeout       = 60
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb_wp-shared-alb_group.id]
-  subnets            = [aws_subnet.wp-public-a.id, aws_subnet.wp-public-b.id]
+  name                             = "wp-shared-alb"
+  enable_cross_zone_load_balancing = true
+  idle_timeout                     = 60
+  load_balancer_type               = "application"
+  security_groups                  = [aws_security_group.lb_wp-shared-alb_group.id]
+  subnets                          = [aws_subnet.wp-public-a.id, aws_subnet.wp-public-b.id]
   tags = {
     Name           = "wp-shared-alb"
     State          = "beanstalk-wordpress"

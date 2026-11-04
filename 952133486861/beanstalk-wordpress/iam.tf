@@ -1,20 +1,22 @@
 resource "aws_iam_instance_profile" "beanstalk-uptime-kuma_profile" {
   name = "beanstalk-uptime-kuma_profile"
+  path = "/"
   role = aws_iam_role.beanstalk-uptime-kuma_role.name
   tags = {
-    Name           = "beanstalk-uptime-kuma_profile"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "beanstalk-uptime-kuma_profile"
   }
 }
 
 resource "aws_iam_instance_profile" "beanstalk-wordpress-web_profile" {
   name = "beanstalk-wordpress-web_profile"
+  path = "/"
   role = aws_iam_role.beanstalk-wordpress-web_role.name
   tags = {
-    Name           = "beanstalk-wordpress-web_profile"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "beanstalk-wordpress-web_profile"
   }
 }
 
@@ -36,6 +38,18 @@ data "aws_iam_policy_document" "elastic_beanstalk_environment_beanstalk-uptime-k
     effect    = "Allow"
     actions   = ["elasticfilesystem:ClientMount", "elasticfilesystem:ClientRootAccess", "elasticfilesystem:ClientWrite"]
     resources = ["${aws_efs_file_system.wp-eb-files.arn}:*"]
+  }
+  statement {
+    sid       = "AllowBucketLevelActions"
+    effect    = "Allow"
+    actions   = ["s3:GetBucketLocation", "s3:ListBucket"]
+    resources = [aws_s3_bucket.beanstalk-wordpress-versions.arn]
+  }
+  statement {
+    sid       = "AllowObjectCRUD"
+    effect    = "Allow"
+    actions   = ["s3:DeleteObject", "s3:GetObject", "s3:PutObject"]
+    resources = ["${aws_s3_bucket.beanstalk-wordpress-versions.arn}/*"]
   }
   statement {
     sid       = "BeanstalkSourceBundle"
@@ -77,6 +91,18 @@ data "aws_iam_policy_document" "elastic_beanstalk_environment_beanstalk-wordpres
     resources = ["${aws_efs_file_system.wp-eb-files.arn}:*"]
   }
   statement {
+    sid       = "AllowBucketLevelActions"
+    effect    = "Allow"
+    actions   = ["s3:GetBucketLocation", "s3:ListBucket"]
+    resources = [aws_s3_bucket.beanstalk-wordpress-versions.arn]
+  }
+  statement {
+    sid       = "AllowObjectCRUD"
+    effect    = "Allow"
+    actions   = ["s3:DeleteObject", "s3:GetObject", "s3:PutObject"]
+    resources = ["${aws_s3_bucket.beanstalk-wordpress-versions.arn}/*"]
+  }
+  statement {
     sid       = "BeanstalkSourceBundle"
     effect    = "Allow"
     actions   = ["s3:GetObject"]
@@ -114,50 +140,28 @@ resource "aws_iam_policy" "elastic_beanstalk_environment_beanstalk-wordpress-web
 }
 
 resource "aws_iam_role" "beanstalk-uptime-kuma_role" {
-  name = "beanstalk-uptime-kuma_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "beanstalk-uptime-kuma_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
   tags = {
-    Name           = "beanstalk-uptime-kuma_role"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "beanstalk-uptime-kuma_role"
   }
 }
 
 resource "aws_iam_role" "beanstalk-wordpress-web_role" {
-  name = "beanstalk-wordpress-web_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "beanstalk-wordpress-web_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
   tags = {
-    Name           = "beanstalk-wordpress-web_role"
     State          = "beanstalk-wordpress"
     Struct8Creator = "rmay struct"
+    Name           = "beanstalk-wordpress-web_role"
   }
 }
 
