@@ -116,7 +116,6 @@ resource "aws_lambda_function" "dlq-lab-notifier" {
       HUB_FAULTS                                     = "on"
       NAME                                           = "dlq-lab-notifier"
       REGION                                         = data.aws_region.current.region
-      AWS_SQS_QUEUE_NAME_0                           = "dlq-lab-notifier-failed"
     }
   }
   ephemeral_storage {
