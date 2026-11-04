@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "beanstalk-wordpress-versions" {
-  bucket              = "beanstalk-wordpress-versions-952133486861-us-west-2-an"
+  bucket              = "beanstalk-wordpress-versions-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -28,8 +28,7 @@ resource "aws_s3_bucket_public_access_block" "beanstalk-wordpress-versions_block
 resource "aws_s3_bucket_server_side_encryption_configuration" "beanstalk-wordpress-versions_configuration" {
   bucket = aws_s3_bucket.beanstalk-wordpress-versions.id
   rule {
-    blocked_encryption_types = ["SSE-C"]
-    bucket_key_enabled       = true
+    bucket_key_enabled = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -41,6 +40,49 @@ resource "aws_s3_bucket_versioning" "beanstalk-wordpress-versions_versioning" {
   versioning_configuration {
     mfa_delete = "Disabled"
     status     = "Suspended"
+  }
+}
+
+resource "aws_s3_object" "beanstalk-uptime-kuma_bundle" {
+  source       = data.archive_file.eb_struct8-templates_beanstalk-uptime-kuma.output_path
+  bucket       = aws_s3_bucket.beanstalk-wordpress-versions.id
+  content_type = "application/zip"
+  etag         = filemd5("${data.archive_file.eb_struct8-templates_beanstalk-uptime-kuma.output_path}")
+  key          = "beanstalk/beanstalk-uptime-kuma/${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v3/kuma/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v3/kuma/app/${f}")}"])), 0, 16)}.zip"
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_s3_object" "beanstalk-wordpress-web_bundle" {
+  source       = data.archive_file.eb_struct8-templates_beanstalk-wordpress-web.output_path
+  bucket       = aws_s3_bucket.beanstalk-wordpress-versions.id
+  content_type = "application/zip"
+  etag         = filemd5("${data.archive_file.eb_struct8-templates_beanstalk-wordpress-web.output_path}")
+  key          = "beanstalk/beanstalk-wordpress-web/${substr(sha1(join(",", [for f in sort(fileset("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v3/wordpress/app", "**")) : "${f}:${filesha1("${path.module}/.external_modules/struct8-templates/templates/beanstalk-wordpress/v3/wordpress/app/${f}")}"])), 0, 16)}.zip"
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_efs_access_point" "ap_beanstalk-uptime-kuma_wp-eb-files" {
+  file_system_id = aws_efs_file_system.wp-eb-files.id
+  posix_user {
+    gid = 33
+    uid = 33
+  }
+  root_directory {
+    path = "/beanstalk-wordpress-blog"
+    creation_info {
+      owner_gid   = 33
+      owner_uid   = 33
+      permissions = "0755"
+    }
+  }
+  tags = {
+    Name           = "ap_beanstalk-uptime-kuma_wp-eb-files"
+    State          = "beanstalk-wordpress"
+    Struct8Creator = "rmay struct"
   }
 }
 
@@ -66,13 +108,8 @@ resource "aws_efs_access_point" "ap_beanstalk-wordpress-web_wp-eb-files" {
 }
 
 resource "aws_efs_file_system" "wp-eb-files" {
-  kms_key_id      = "arn:aws:kms:us-west-2:952133486861:key/081d3c6c-ad92-4c90-93bf-5939d005aeb1"
-  creation_token  = "terraform-SHfTXjsgiInCXgwadcniAR7DZ2"
   encrypted       = true
   throughput_mode = "elastic"
-  protection {
-    replication_overwrite = "ENABLED"
-  }
   tags = {
     Name           = "wp-eb-files"
     State          = "beanstalk-wordpress"
