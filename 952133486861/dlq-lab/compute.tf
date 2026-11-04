@@ -27,11 +27,11 @@ resource "aws_lambda_function" "dlq-lab-consumer" {
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT               = "952133486861"
+      ACCOUNT               = data.aws_caller_identity.current.account_id
       AWS_XRAY_GROUP_NAME_0 = "dlq-lab-traces"
       HUB_FAULTS            = "on"
       NAME                  = "dlq-lab-consumer"
-      REGION                = "us-east-1"
+      REGION                = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -70,11 +70,11 @@ resource "aws_lambda_function" "dlq-lab-legacy-notifier" {
   }
   environment {
     variables = {
-      ACCOUNT               = "952133486861"
+      ACCOUNT               = data.aws_caller_identity.current.account_id
       AWS_XRAY_GROUP_NAME_0 = "dlq-lab-traces"
       HUB_FAULTS            = "on"
       NAME                  = "dlq-lab-legacy-notifier"
-      REGION                = "us-east-1"
+      REGION                = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -110,12 +110,13 @@ resource "aws_lambda_function" "dlq-lab-notifier" {
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT                                        = "952133486861"
+      ACCOUNT                                        = data.aws_caller_identity.current.account_id
       AWS_LAMBDA_FUNCTION_EVENT_INVOKE_CONFIG_NAME_0 = "dlq-lab-notifier-async"
       AWS_XRAY_GROUP_NAME_0                          = "dlq-lab-traces"
       HUB_FAULTS                                     = "on"
       NAME                                           = "dlq-lab-notifier"
-      REGION                                         = "us-east-1"
+      REGION                                         = data.aws_region.current.region
+      AWS_SQS_QUEUE_NAME_0                           = "dlq-lab-notifier-failed"
     }
   }
   ephemeral_storage {
@@ -151,12 +152,12 @@ resource "aws_lambda_function" "dlq-lab-producer" {
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT                        = "952133486861"
+      ACCOUNT                        = data.aws_caller_identity.current.account_id
       AWS_LAMBDA_FUNCTION_URL_NAME_0 = "dlq-lab-producer-url"
       AWS_SNS_TOPIC_NAME_0           = "dlq-lab-orders"
       AWS_XRAY_GROUP_NAME_0          = "dlq-lab-traces"
       NAME                           = "dlq-lab-producer"
-      REGION                         = "us-east-1"
+      REGION                         = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -197,34 +198,34 @@ resource "aws_lambda_function_url" "dlq-lab-producer-url" {
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_dlq-lab-producer-url_to_dlq-lab-producer" {
   function_name          = aws_lambda_function.dlq-lab-producer.function_name
-  statement_id           = "perm_aws_lambda_function_url_dlq-lab-producer-url_to_dlq-lab-producerf61d022b993e3173ec41714e8e"
   principal              = "*"
   action                 = "lambda:InvokeFunctionUrl"
   function_url_auth_type = "NONE"
+  statement_id_prefix    = "perm_aws_lambda_function_url_dlq-lab-producer-url_to_dlq-lab-producer"
   depends_on             = [aws_lambda_function_url.dlq-lab-producer-url]
 }
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_dlq-lab-producer-url_to_dlq-lab-producer_invoke" {
   function_name            = aws_lambda_function.dlq-lab-producer.function_name
-  statement_id             = "perm_aws_lambda_function_url_dlq-lab-producer-url_to_dlq-lab-produ6917ff89b573b7d5c376433fc1028476e6"
   principal                = "*"
   action                   = "lambda:InvokeFunction"
   invoked_via_function_url = true
+  statement_id_prefix      = "perm_aws_lambda_function_url_dlq-lab-producer-url_to_dlq-lab-produ6917ff89"
   depends_on               = [aws_lambda_function_url.dlq-lab-producer-url, aws_lambda_permission.perm_aws_lambda_function_url_dlq-lab-producer-url_to_dlq-lab-producer]
 }
 
 resource "aws_lambda_permission" "perm_aws_sns_topic_dlq-lab-orders_to_dlq-lab-legacy-notifier" {
-  function_name = aws_lambda_function.dlq-lab-legacy-notifier.function_name
-  statement_id  = "perm_aws_sns_topic_dlq-lab-orders_to_dlq-lab-legacy-notifier43b66413d3f4079f59d1923436"
-  principal     = "sns.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_sns_topic.dlq-lab-orders.arn
+  function_name       = aws_lambda_function.dlq-lab-legacy-notifier.function_name
+  principal           = "sns.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_sns_topic.dlq-lab-orders.arn
+  statement_id_prefix = "perm_aws_sns_topic_dlq-lab-orders_to_dlq-lab-legacy-notifier"
 }
 
 resource "aws_lambda_permission" "perm_aws_sns_topic_dlq-lab-orders_to_dlq-lab-notifier" {
-  function_name = aws_lambda_function.dlq-lab-notifier.function_name
-  statement_id  = "perm_aws_sns_topic_dlq-lab-orders_to_dlq-lab-notifier2489df3782222d1212a740b3c9"
-  principal     = "sns.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_sns_topic.dlq-lab-orders.arn
+  function_name       = aws_lambda_function.dlq-lab-notifier.function_name
+  principal           = "sns.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_sns_topic.dlq-lab-orders.arn
+  statement_id_prefix = "perm_aws_sns_topic_dlq-lab-orders_to_dlq-lab-notifier"
 }
