@@ -1,7 +1,7 @@
 resource "aws_ssm_parameter" "ssm-ignored" {
   name      = "/rotation-test/ssm-ignored"
   data_type = "text"
-  overwrite = false
+  overwrite = true
   tier      = "Standard"
   type      = "SecureString"
   value     = "dummy-initial-ssm-ignored"
@@ -18,7 +18,7 @@ resource "aws_ssm_parameter" "ssm-ignored" {
 resource "aws_ssm_parameter" "ssm-plain" {
   name      = "/rotation-test/ssm-plain"
   data_type = "text"
-  overwrite = false
+  overwrite = true
   tier      = "Standard"
   type      = "SecureString"
   value     = "dummy-initial-ssm-plain"
