@@ -2,7 +2,6 @@ resource "aws_cloudwatch_log_group" "dlq-lab-consumer-logs" {
   name              = "/aws/lambda/dlq-lab-consumer"
   log_group_class   = "STANDARD"
   retention_in_days = 7
-  skip_destroy      = false
   tags = {
     Name           = "dlq-lab-consumer-logs"
     State          = "dlq-lab"
@@ -14,7 +13,6 @@ resource "aws_cloudwatch_log_group" "dlq-lab-legacy-notifier-logs" {
   name              = "/aws/lambda/dlq-lab-legacy-notifier"
   log_group_class   = "STANDARD"
   retention_in_days = 7
-  skip_destroy      = false
   tags = {
     Name           = "dlq-lab-legacy-notifier-logs"
     State          = "dlq-lab"
@@ -26,7 +24,6 @@ resource "aws_cloudwatch_log_group" "dlq-lab-notifier-logs" {
   name              = "/aws/lambda/dlq-lab-notifier"
   log_group_class   = "STANDARD"
   retention_in_days = 7
-  skip_destroy      = false
   tags = {
     Name           = "dlq-lab-notifier-logs"
     State          = "dlq-lab"
@@ -38,7 +35,6 @@ resource "aws_cloudwatch_log_group" "dlq-lab-producer-logs" {
   name              = "/aws/lambda/dlq-lab-producer"
   log_group_class   = "STANDARD"
   retention_in_days = 7
-  skip_destroy      = false
   tags = {
     Name           = "dlq-lab-producer-logs"
     State          = "dlq-lab"
@@ -49,7 +45,7 @@ resource "aws_cloudwatch_log_group" "dlq-lab-producer-logs" {
 resource "aws_cloudwatch_metric_alarm" "dlq-lab-orders-dlq-not-empty" {
   alarm_name          = "dlq-lab-orders-dlq-not-empty"
   metric_name         = "ApproximateNumberOfMessagesVisible"
-  alarm_actions       = [aws_sns_topic.dlq-lab-alerts.arn]
+  alarm_actions       = ["arn:aws:sns:us-east-1:952133486861:dlq-lab-alerts"]
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   namespace           = "AWS/SQS"
@@ -70,6 +66,10 @@ resource "aws_cloudwatch_metric_alarm" "dlq-lab-orders-dlq-not-empty" {
 resource "aws_xray_group" "dlq-lab-traces" {
   group_name        = "dlq-lab-traces"
   filter_expression = "service(\"dlq-lab-alerts\") OR service(\"dlq-lab-consumer\") OR service(\"dlq-lab-legacy-notifier\") OR service(\"dlq-lab-notifier\") OR service(\"dlq-lab-orders\") OR service(\"dlq-lab-producer\")"
+  insights_configuration {
+    insights_enabled      = false
+    notifications_enabled = false
+  }
   tags = {
     Name           = "dlq-lab-traces"
     State          = "dlq-lab"
