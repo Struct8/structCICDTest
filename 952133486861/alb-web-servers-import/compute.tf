@@ -362,6 +362,9 @@ EOFUData
   iam_instance_profile {
     name = aws_iam_instance_profile.web-server-asg_profile.name
   }
+  lifecycle {
+    ignore_changes = [update_default_version]
+  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 1
@@ -402,6 +405,9 @@ resource "aws_autoscaling_group" "web-server-asg" {
   launch_template {
     version = "2"
     id      = aws_launch_template.web-server-launch-template.id
+  }
+  lifecycle {
+    ignore_changes = [termination_policies]
   }
   tag {
     key                 = "Name"
