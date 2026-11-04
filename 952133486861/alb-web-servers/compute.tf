@@ -59,7 +59,7 @@ data "aws_ami" "AMI_Data_Source_web-server-launch-template" {
 resource "aws_launch_template" "web-server-launch-template" {
   image_id               = data.aws_ami.AMI_Data_Source_web-server-launch-template.id
   name                   = "web-server-launch-template"
-  description            = "Web server launch template: Graviton t4g.micro Spot, AL2023 arm64, IMDSv2 required. user_data installs Apache (with swap to avoid OOM) and serves a live IMDSv2 instance-info page at /."
+  description            = "Web server launch template: Graviton t4g.micro On-Demand, AL2023 arm64, IMDSv2 required. user_data installs Apache (with swap to avoid OOM) and serves a live IMDSv2 instance-info page at /."
   instance_type          = "t4g.micro"
   update_default_version = true
   user_data = base64encode(<<-EOFUData

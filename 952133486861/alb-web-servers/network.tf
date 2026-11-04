@@ -220,11 +220,11 @@ resource "aws_security_group_rule" "rule_lb_application_load_balancer_group_egre
   type              = "egress"
 }
 
-resource "aws_security_group_rule" "rule_lb_application_load_balancer_group_ingress_all_protocols" {
+resource "aws_security_group_rule" "rule_lb_application_load_balancer_group_ingress_tcp_80" {
   security_group_id = aws_security_group.lb_application-load-balancer_group.id
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 80
-  protocol          = "-1"
+  protocol          = "tcp"
   to_port           = 80
   type              = "ingress"
 }
