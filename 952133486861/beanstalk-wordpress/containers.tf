@@ -8,6 +8,9 @@ resource "aws_ecr_repository" "kuma-image" {
   image_scanning_configuration {
     scan_on_push = false
   }
+  lifecycle {
+    ignore_changes = [force_delete]
+  }
   tags = {
     Name           = "kuma-image"
     State          = "beanstalk-wordpress"
@@ -24,6 +27,9 @@ resource "aws_ecr_repository" "wp-image" {
   }
   image_scanning_configuration {
     scan_on_push = false
+  }
+  lifecycle {
+    ignore_changes = [force_delete]
   }
   tags = {
     Name           = "wp-image"
