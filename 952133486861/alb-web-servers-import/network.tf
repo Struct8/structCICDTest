@@ -5,7 +5,7 @@ resource "aws_vpc" "alb-web-servers" {
   instance_tenancy     = "default"
   tags = {
     Name           = "alb-web-servers"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -18,7 +18,7 @@ resource "aws_subnet" "private-subnet-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-subnet-a"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -31,7 +31,7 @@ resource "aws_subnet" "private-subnet-b" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-subnet-b"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -44,7 +44,7 @@ resource "aws_subnet" "private-subnet-c" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-subnet-c"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -57,7 +57,7 @@ resource "aws_subnet" "public-subnet-a" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-subnet-a"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -70,7 +70,7 @@ resource "aws_subnet" "public-subnet-b" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-subnet-b"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -83,7 +83,7 @@ resource "aws_subnet" "public-subnet-c" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-subnet-c"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -92,7 +92,7 @@ resource "aws_internet_gateway" "internet-gateway" {
   vpc_id = aws_vpc.alb-web-servers.id
   tags = {
     Name           = "internet-gateway"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -113,7 +113,7 @@ resource "aws_route_table" "private-route-table" {
   vpc_id = aws_vpc.alb-web-servers.id
   tags = {
     Name           = "private-route-table"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -122,7 +122,7 @@ resource "aws_route_table" "public-route-table" {
   vpc_id = aws_vpc.alb-web-servers.id
   tags = {
     Name           = "public-route-table"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -164,7 +164,7 @@ resource "aws_security_group" "autoscaling_group_web-server-asg_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "autoscaling_group_web-server-asg_group"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -176,7 +176,7 @@ resource "aws_security_group" "instance_nat-instance_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_nat-instance_group"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -188,7 +188,7 @@ resource "aws_security_group" "lb_application-load-balancer_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "lb_application-load-balancer_group"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -258,7 +258,7 @@ resource "aws_lb" "application-load-balancer" {
   subnets                          = [aws_subnet.public-subnet-a.id, aws_subnet.public-subnet-b.id, aws_subnet.public-subnet-c.id]
   tags = {
     Name           = "application-load-balancer"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -281,7 +281,7 @@ resource "aws_lb_listener" "http-listener" {
   }
   tags = {
     Name           = "http-listener"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -317,7 +317,7 @@ resource "aws_lb_target_group" "web-target-group" {
   }
   tags = {
     Name           = "web-target-group"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
   target_group_health {

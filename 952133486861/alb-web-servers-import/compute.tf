@@ -104,9 +104,6 @@ EOFUData
   enclave_options {
     enabled = false
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
@@ -130,7 +127,7 @@ EOFUData
   }
   tags = {
     Name           = "nat-instance"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -362,9 +359,6 @@ EOFUData
   iam_instance_profile {
     name = aws_iam_instance_profile.web-server-asg_profile.name
   }
-  lifecycle {
-    ignore_changes = [update_default_version]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 1
@@ -374,13 +368,13 @@ EOFUData
     resource_type = "volume"
     tags = {
       Name           = "web-server-asg"
-      State          = "alb-web-servers"
+      State          = "alb-web-servers-import"
       Struct8Creator = "rmay struct"
     }
   }
   tags = {
     Name           = "web-server-launch-template"
-    State          = "alb-web-servers"
+    State          = "alb-web-servers-import"
     Struct8Creator = "rmay struct"
   }
 }
@@ -406,9 +400,6 @@ resource "aws_autoscaling_group" "web-server-asg" {
     version = "2"
     id      = aws_launch_template.web-server-launch-template.id
   }
-  lifecycle {
-    ignore_changes = [termination_policies]
-  }
   tag {
     key                 = "Name"
     propagate_at_launch = true
@@ -417,7 +408,7 @@ resource "aws_autoscaling_group" "web-server-asg" {
   tag {
     key                 = "State"
     propagate_at_launch = true
-    value               = "alb-web-servers"
+    value               = "alb-web-servers-import"
   }
   tag {
     key                 = "Struct8Creator"
