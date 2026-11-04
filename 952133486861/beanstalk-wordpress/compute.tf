@@ -297,11 +297,6 @@ resource "aws_elastic_beanstalk_environment" "beanstalk-wordpress-web" {
     value     = "arm64"
   }
   setting {
-    name      = "AWS_SSM_PARAMETER_NAME_0"
-    namespace = "aws:elasticbeanstalk:application:environment"
-    value     = "ebWpAdminPassword"
-  }
-  setting {
     name      = "VPCId"
     namespace = "aws:ec2:vpc"
     value     = aws_vpc.vpc-beanstalk-wordpress.id
