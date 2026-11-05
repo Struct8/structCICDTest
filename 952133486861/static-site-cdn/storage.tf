@@ -94,9 +94,6 @@ resource "aws_s3_object" "error-html1" {
   EOF
   content_type = "text/html"
   key          = "error.html"
-  lifecycle {
-    ignore_changes = [acl, content]
-  }
   tags = {
     Name           = "error-html1"
     State          = "static-site-cdn"
@@ -147,9 +144,6 @@ resource "aws_s3_object" "index-html2" {
   EOF
   content_type = "text/html"
   key          = "index.html"
-  lifecycle {
-    ignore_changes = [acl, content]
-  }
   tags = {
     Name           = "index-html2"
     State          = "static-site-cdn"
