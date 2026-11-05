@@ -70,3 +70,8 @@ import {
   to = aws_lambda_permission.perm_aws_s3_bucket_flowlogs-bucket_to_process-flow-logs
   id = "process-flow-logs/perm_aws_s3_bucket_flowlogs-bucket_to_process-flow-logs57b11e1d930e081891c74d2abb"
 }
+
+import {
+  to = aws_prometheus_workspace_configuration.flowlogs-amp_configuration
+  id = "ws-e88c0cb4-5abf-4e0b-91fd-737e7ad5f371"
+}
