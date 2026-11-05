@@ -245,10 +245,10 @@ EOFUData
     }
   }
   tags = {
+    Struct8Debug   = "0WMToJ4cZSqnBZhOjNzSl"
     Name           = "k6-load-generator"
     State          = "loadtest-asg-mixed"
     Struct8Creator = "rmay struct"
-    Struct8Debug   = "0WMToJ4cZSqnBZhOjNzSl"
   }
 }
 
@@ -376,9 +376,6 @@ EOFUData
   }
   enclave_options {
     enabled = false
-  }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
   }
   metadata_options {
     http_endpoint               = "enabled"
@@ -532,9 +529,6 @@ EOFUData
   iam_instance_profile {
     name = aws_iam_instance_profile.hub-asg-mixed_profile.name
   }
-  lifecycle {
-    ignore_changes = [update_default_version]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 1
@@ -583,7 +577,7 @@ resource "aws_autoscaling_group" "hub-asg-mixed" {
     strategy = "Rolling"
   }
   lifecycle {
-    ignore_changes = [instance_refresh, desired_capacity]
+    ignore_changes = [desired_capacity]
   }
   mixed_instances_policy {
     instances_distribution {
