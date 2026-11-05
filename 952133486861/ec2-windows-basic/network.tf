@@ -11,10 +11,11 @@ resource "aws_vpc" "vpc-windows-basic" {
 }
 
 resource "aws_subnet" "public-windows-basic" {
-  vpc_id                  = aws_vpc.vpc-windows-basic.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.25.1.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.vpc-windows-basic.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.25.1.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-windows-basic"
     State          = "ec2-windows-basic"
@@ -83,7 +84,9 @@ resource "aws_security_group_rule" "rule_instance_windows_basic_group_ingress_tc
 }
 
 resource "aws_eip" "windows-basic-eip" {
-  instance = aws_instance.windows-basic.id
+  instance             = aws_instance.windows-basic.id
+  network_border_group = "us-west-2"
+  public_ipv4_pool     = "amazon"
   tags = {
     Name           = "windows-basic-eip"
     State          = "ec2-windows-basic"
