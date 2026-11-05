@@ -1,12 +1,11 @@
 resource "aws_instance" "windows-basic" {
-  key_name                    = aws_cloudformation_stack.windows-basic-key.outputs["KeyName"]
-  subnet_id                   = aws_subnet.public-windows-basic.id
-  ami                         = "ami-06672fd375c1bfca2"
-  associate_public_ip_address = false
-  iam_instance_profile        = aws_iam_instance_profile.windows-basic_profile.name
-  instance_type               = "t3.medium"
-  private_ip                  = "10.25.1.224"
-  vpc_security_group_ids      = [aws_security_group.instance_windows-basic_group.id]
+  key_name               = aws_cloudformation_stack.windows-basic-key.outputs["KeyName"]
+  subnet_id              = aws_subnet.public-windows-basic.id
+  ami                    = "ami-06672fd375c1bfca2"
+  iam_instance_profile   = aws_iam_instance_profile.windows-basic_profile.name
+  instance_type          = "t3.medium"
+  private_ip             = "10.25.1.224"
+  vpc_security_group_ids = [aws_security_group.instance_windows-basic_group.id]
   cpu_options {
     core_count       = 1
     threads_per_core = 2
