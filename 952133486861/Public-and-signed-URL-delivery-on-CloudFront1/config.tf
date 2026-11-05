@@ -5,31 +5,7 @@ resource "aws_ssm_parameter" "CloudFrontOutputs" {
   overwrite   = true
   tier        = "Standard"
   type        = "String"
-  value = jsonencode({
-    "aws_cloudfront_distribution" = {
-      "cdn-protected" = {
-        "id"                             = "${aws_cloudfront_distribution.cdn-protected.id}"
-        "arn"                            = "${aws_cloudfront_distribution.cdn-protected.arn}"
-        "caller_reference"               = "${aws_cloudfront_distribution.cdn-protected.caller_reference}"
-        "domain_name"                    = "${aws_cloudfront_distribution.cdn-protected.domain_name}"
-        "etag"                           = "${aws_cloudfront_distribution.cdn-protected.etag}"
-        "hosted_zone_id"                 = "${aws_cloudfront_distribution.cdn-protected.hosted_zone_id}"
-        "in_progress_validation_batches" = "${aws_cloudfront_distribution.cdn-protected.in_progress_validation_batches}"
-        "last_modified_time"             = "${aws_cloudfront_distribution.cdn-protected.last_modified_time}"
-        "logging_v1_enabled"             = "${aws_cloudfront_distribution.cdn-protected.logging_v1_enabled}"
-        "status"                         = "${aws_cloudfront_distribution.cdn-protected.status}"
-        "trusted_key_groups"             = "${aws_cloudfront_distribution.cdn-protected.trusted_key_groups}"
-        "trusted_signers"                = "${aws_cloudfront_distribution.cdn-protected.trusted_signers}"
-      }
-    }
-    "aws_cloudfront_public_key" = {
-      "signing-key-cookies" = {
-        "id"               = "${aws_cloudfront_public_key.signing-key-cookies.id}"
-        "caller_reference" = "${aws_cloudfront_public_key.signing-key-cookies.caller_reference}"
-        "etag"             = "${aws_cloudfront_public_key.signing-key-cookies.etag}"
-      }
-    }
-  })
+  value       = "{\"aws_cloudfront_distribution\":{\"cdn-protected\":{\"arn\":\"arn:aws:cloudfront::952133486861:distribution/E3FUWHWDQSXVW6\",\"caller_reference\":\"terraform-20261105101842805300000002\",\"domain_name\":\"d2lfrmqrx7bjf8.cloudfront.net\",\"etag\":\"E1F83G8C2ARO7P\",\"hosted_zone_id\":\"Z2FDTNDATAQYW2\",\"id\":\"E3FUWHWDQSXVW6\",\"in_progress_validation_batches\":0,\"last_modified_time\":\"2026-11-05 10:18:42.951 +0000 UTC\",\"logging_v1_enabled\":false,\"status\":\"Deployed\",\"trusted_key_groups\":[{\"enabled\":true,\"items\":[{\"key_group_id\":\"52a2a577-5b43-42e7-9def-b20cf2e57de2\",\"key_pair_ids\":[\"K3T1TMNXA3163B\"]},{\"key_group_id\":\"19e25183-db24-4664-983d-f8570ca34a38\",\"key_pair_ids\":[\"K1F18BQS0A9MAC\"]}]}],\"trusted_signers\":[{\"enabled\":false,\"items\":[]}]}},\"aws_cloudfront_public_key\":{\"signing-key-cookies\":{\"caller_reference\":\"terraform-ObqgPepxMRBkcxRQ7RMpyLCvEU\",\"etag\":\"E23ZP02F085DFQ\",\"id\":\"K1F18BQS0A9MAC\"}}}"
   tags = {
     Name           = "CloudFrontOutputs"
     State          = "Public-and-signed-URL-delivery-on-CloudFront1"
@@ -38,6 +14,7 @@ resource "aws_ssm_parameter" "CloudFrontOutputs" {
 }
 
 resource "aws_ssm_parameter" "cf-signing-private-key" {
+  key_id      = "alias/aws/ssm"
   name        = "/cloudfront-lab/signing-private-key"
   data_type   = "text"
   description = "RSA private key (SecureString) for CloudFront signed cookies. The login Lambda reads it at runtime to sign the /private policy. Demo/lab only; in production use a rotated secret store, never git."

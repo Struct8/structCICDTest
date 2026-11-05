@@ -65,7 +65,8 @@ resource "aws_s3_bucket_public_access_block" "origin-cf-validation_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "origin-cf-validation_configuration" {
   bucket = aws_s3_bucket.origin-cf-validation.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -81,10 +82,8 @@ resource "aws_s3_bucket_versioning" "origin-cf-validation_versioning" {
 }
 
 resource "aws_s3_object" "img-private-1" {
-  source       = "${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/private/photo-1.svg"
   bucket       = aws_s3_bucket.origin-cf-validation.bucket
   content_type = "image/svg+xml"
-  etag         = filemd5("${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/private/photo-1.svg")
   key          = "private/photo-1.svg"
   tags = {
     Name           = "img-private-1"
@@ -94,10 +93,8 @@ resource "aws_s3_object" "img-private-1" {
 }
 
 resource "aws_s3_object" "img-public-1" {
-  source       = "${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/public/photo-1.svg"
   bucket       = aws_s3_bucket.origin-cf-validation.bucket
   content_type = "image/svg+xml"
-  etag         = filemd5("${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/public/photo-1.svg")
   key          = "public/photo-1.svg"
   tags = {
     Name           = "img-public-1"
@@ -120,10 +117,8 @@ resource "aws_s3_object" "index-html2" {
 }
 
 resource "aws_s3_object" "lab-app-js" {
-  source       = "${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/app.js"
   bucket       = aws_s3_bucket.origin-cf-validation.bucket
   content_type = "application/javascript"
-  etag         = filemd5("${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/app.js")
   key          = "lab/app.js"
   tags = {
     Name           = "lab-app-js"
@@ -133,10 +128,8 @@ resource "aws_s3_object" "lab-app-js" {
 }
 
 resource "aws_s3_object" "lab-index-html" {
-  source       = "${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/index.html"
   bucket       = aws_s3_bucket.origin-cf-validation.bucket
   content_type = "text/html"
-  etag         = filemd5("${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/index.html")
   key          = "lab/index.html"
   tags = {
     Name           = "lab-index-html"
@@ -146,10 +139,8 @@ resource "aws_s3_object" "lab-index-html" {
 }
 
 resource "aws_s3_object" "lab-styles-css" {
-  source       = "${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/styles.css"
   bucket       = aws_s3_bucket.origin-cf-validation.bucket
   content_type = "text/css"
-  etag         = filemd5("${path.module}/.external_modules/struct8-templates/templates/cloudfront-lambda-edge-showcase/v1/lab/styles.css")
   key          = "lab/styles.css"
   tags = {
     Name           = "lab-styles-css"

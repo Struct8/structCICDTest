@@ -28,6 +28,12 @@ resource "aws_apigatewayv2_stage" "stage-default" {
   api_id      = aws_apigatewayv2_api.http-api-regular.id
   name        = "$default"
   auto_deploy = true
+  default_route_settings {
+    data_trace_enabled       = false
+    detailed_metrics_enabled = false
+    throttling_burst_limit   = 0
+    throttling_rate_limit    = 0
+  }
   tags = {
     Name           = "stage-default"
     State          = "Public-and-signed-URL-delivery-on-CloudFront1"
@@ -62,11 +68,14 @@ resource "aws_cloudfront_distribution" "cdn-open" {
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"
   default_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     target_origin_id       = "origin-open"
     allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
     viewer_protocol_policy = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
     cache_policy_id            = aws_cloudfront_cache_policy.cache-validation.id
@@ -75,17 +84,26 @@ resource "aws_cloudfront_distribution" "cdn-open" {
     target_origin_id           = "origin-open"
     allowed_methods            = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods             = ["GET", "HEAD", "OPTIONS"]
+    compress                   = false
+    default_ttl                = 0
+    max_ttl                    = 0
+    min_ttl                    = 0
     path_pattern               = "/route-api/*"
+    smooth_streaming           = false
     viewer_protocol_policy     = "redirect-to-https"
     function_association {
       event_type   = "viewer-request"
       function_arn = aws_cloudfront_function.viewer-request-kvs.arn
     }
+    grpc_config {
+      enabled = false
+    }
   }
   origin {
-    domain_name              = aws_s3_bucket.origin-cf-validation.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.oac_origin-cf-validation.id
-    origin_id                = "origin-open"
+    domain_name                 = aws_s3_bucket.origin-cf-validation.bucket_regional_domain_name
+    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_origin-cf-validation.id
+    origin_id                   = "origin-open"
+    response_completion_timeout = 0
   }
   restrictions {
     geo_restriction {
@@ -110,96 +128,148 @@ resource "aws_cloudfront_distribution" "cdn-protected" {
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"
   default_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     target_origin_id       = "origin-protected"
     allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
     viewer_protocol_policy = "redirect-to-https"
-    lambda_function_association {
-      event_type = "origin-request"
-      lambda_arn = aws_lambda_function.edge-rewrite-origin-request.qualified_arn
+    grpc_config {
+      enabled = false
     }
     lambda_function_association {
-      event_type = "origin-response"
-      lambda_arn = aws_lambda_function.edge-security-headers-origin-response.qualified_arn
+      event_type   = "origin-request"
+      include_body = false
+      lambda_arn   = aws_lambda_function.edge-rewrite-origin-request.qualified_arn
     }
     lambda_function_association {
-      event_type = "viewer-response"
-      lambda_arn = aws_lambda_function.edge-abtest-viewer-response.qualified_arn
+      event_type   = "origin-response"
+      include_body = false
+      lambda_arn   = aws_lambda_function.edge-security-headers-origin-response.qualified_arn
     }
     lambda_function_association {
-      event_type = "viewer-request"
-      lambda_arn = aws_lambda_function.edge-auth-viewer-request.qualified_arn
+      event_type   = "viewer-request"
+      include_body = false
+      lambda_arn   = aws_lambda_function.edge-auth-viewer-request.qualified_arn
+    }
+    lambda_function_association {
+      event_type   = "viewer-response"
+      include_body = false
+      lambda_arn   = aws_lambda_function.edge-abtest-viewer-response.qualified_arn
     }
   }
   ordered_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
+    cache_policy_id        = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     target_origin_id       = "origin-api-gateway"
     allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    compress               = false
+    default_ttl            = 0
+    max_ttl                = 0
+    min_ttl                = 0
     path_pattern           = "/api/*"
+    smooth_streaming       = false
     viewer_protocol_policy = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
+    cache_policy_id        = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     target_origin_id       = "origin-protected"
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    compress               = false
+    default_ttl            = 0
+    max_ttl                = 0
+    min_ttl                = 0
     path_pattern           = "/lab/*"
+    smooth_streaming       = false
     viewer_protocol_policy = "redirect-to-https"
-    lambda_function_association {
-      event_type = "origin-request"
-      lambda_arn = aws_lambda_function.edge-rewrite-origin-request.qualified_arn
+    grpc_config {
+      enabled = false
     }
     lambda_function_association {
-      event_type = "origin-response"
-      lambda_arn = aws_lambda_function.edge-security-headers-origin-response.qualified_arn
+      event_type   = "origin-request"
+      include_body = false
+      lambda_arn   = aws_lambda_function.edge-rewrite-origin-request.qualified_arn
     }
     lambda_function_association {
-      event_type = "viewer-response"
-      lambda_arn = aws_lambda_function.edge-abtest-viewer-response.qualified_arn
+      event_type   = "origin-response"
+      include_body = false
+      lambda_arn   = aws_lambda_function.edge-security-headers-origin-response.qualified_arn
+    }
+    lambda_function_association {
+      event_type   = "viewer-response"
+      include_body = false
+      lambda_arn   = aws_lambda_function.edge-abtest-viewer-response.qualified_arn
     }
   }
   ordered_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     target_origin_id       = "origin-protected"
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    compress               = false
+    default_ttl            = 0
+    max_ttl                = 0
+    min_ttl                = 0
     path_pattern           = "/premium/*"
+    smooth_streaming       = false
     trusted_key_groups     = [aws_cloudfront_key_group.subscribers-group.id]
     viewer_protocol_policy = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     target_origin_id       = "origin-protected"
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    compress               = false
+    default_ttl            = 0
+    max_ttl                = 0
+    min_ttl                = 0
     path_pattern           = "/public/*"
+    smooth_streaming       = false
     viewer_protocol_policy = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     target_origin_id       = "origin-protected"
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    compress               = false
+    default_ttl            = 0
+    max_ttl                = 0
+    min_ttl                = 0
     path_pattern           = "/private/*"
+    smooth_streaming       = false
     trusted_key_groups     = [aws_cloudfront_key_group.subscribers-group-cookies.id]
     viewer_protocol_policy = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   origin {
-    domain_name              = aws_s3_bucket.origin-cf-validation.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.oac_origin-cf-validation.id
-    origin_id                = "origin-protected"
-  }
-  origin {
-    domain_name = "${aws_apigatewayv2_api.http-api-regular.id}.execute-api.${data.aws_region.current.region}.amazonaws.com"
-    origin_id   = "origin-api-gateway"
+    domain_name                 = "${aws_apigatewayv2_api.http-api-regular.id}.execute-api.${data.aws_region.current.region}.amazonaws.com"
+    origin_id                   = "origin-api-gateway"
+    response_completion_timeout = 0
     custom_origin_config {
       http_port              = 80
       https_port             = 443
       origin_protocol_policy = "https-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
+  }
+  origin {
+    domain_name                 = aws_s3_bucket.origin-cf-validation.bucket_regional_domain_name
+    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_origin-cf-validation.id
+    origin_id                   = "origin-protected"
+    response_completion_timeout = 0
   }
   restrictions {
     geo_restriction {

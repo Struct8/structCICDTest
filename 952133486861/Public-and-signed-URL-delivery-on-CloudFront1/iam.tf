@@ -1,76 +1,106 @@
-data "aws_iam_policy_document" "api-regular-logs_doc" {
-  statement {
-    sid       = "AllowLogapiregular"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.log-api-regular.arn}:*"]
-  }
-}
-
 resource "aws_iam_policy" "api-regular-logs" {
   name        = "api-regular-logs"
   description = "Access Policy api-regular-logs"
-  policy      = data.aws_iam_policy_document.api-regular-logs_doc.json
-}
-
-data "aws_iam_policy_document" "edge-abtest-logs_doc" {
-  statement {
-    sid       = "AllowLogedgeabtest"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.log-edge-abtest.arn}:*"]
-  }
+  policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "${aws_cloudwatch_log_group.log-api-regular.arn}:*"
+      ],
+      "Sid": "AllowLogapiregular"
+    }
+  ]
+})
 }
 
 resource "aws_iam_policy" "edge-abtest-logs" {
   name        = "edge-abtest-logs"
   description = "Access Policy edge-abtest-logs"
-  policy      = data.aws_iam_policy_document.edge-abtest-logs_doc.json
-}
-
-data "aws_iam_policy_document" "edge-auth-logs_doc" {
-  statement {
-    sid       = "AllowLogedgeauth"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.log-edge-auth.arn}:*"]
-  }
+  policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "${aws_cloudwatch_log_group.log-edge-abtest.arn}:*"
+      ],
+      "Sid": "AllowLogedgeabtest"
+    }
+  ]
+})
 }
 
 resource "aws_iam_policy" "edge-auth-logs" {
   name        = "edge-auth-logs"
   description = "Access Policy edge-auth-logs"
-  policy      = data.aws_iam_policy_document.edge-auth-logs_doc.json
-}
-
-data "aws_iam_policy_document" "edge-headers-logs_doc" {
-  statement {
-    sid       = "AllowLogedgeheaders"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.log-edge-headers.arn}:*"]
-  }
+  policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "${aws_cloudwatch_log_group.log-edge-auth.arn}:*"
+      ],
+      "Sid": "AllowLogedgeauth"
+    }
+  ]
+})
 }
 
 resource "aws_iam_policy" "edge-headers-logs" {
   name        = "edge-headers-logs"
   description = "Access Policy edge-headers-logs"
-  policy      = data.aws_iam_policy_document.edge-headers-logs_doc.json
-}
-
-data "aws_iam_policy_document" "edge-rewrite-logs_doc" {
-  statement {
-    sid       = "AllowLogedgerewrite"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.log-edge-rewrite.arn}:*"]
-  }
+  policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "${aws_cloudwatch_log_group.log-edge-headers.arn}:*"
+      ],
+      "Sid": "AllowLogedgeheaders"
+    }
+  ]
+})
 }
 
 resource "aws_iam_policy" "edge-rewrite-logs" {
   name        = "edge-rewrite-logs"
   description = "Access Policy edge-rewrite-logs"
-  policy      = data.aws_iam_policy_document.edge-rewrite-logs_doc.json
+  policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "${aws_cloudwatch_log_group.log-edge-rewrite.arn}:*"
+      ],
+      "Sid": "AllowLogedgerewrite"
+    }
+  ]
+})
 }
 
 data "aws_iam_policy_document" "lambda_function_api-regular-nonedge_st_Public-and-signed-URL-delivery-on-CloudFront1_doc" {
@@ -106,19 +136,8 @@ resource "aws_iam_policy" "lambda_function_api-regular-nonedge_st_Public-and-sig
 }
 
 resource "aws_iam_role" "api-regular-nonedge_role" {
-  name = "api-regular-nonedge_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "api-regular-nonedge_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -130,19 +149,8 @@ resource "aws_iam_role" "api-regular-nonedge_role" {
 }
 
 resource "aws_iam_role" "edge-abtest-viewer-response_role" {
-  name = "edge-abtest-viewer-response_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": ["lambda.amazonaws.com", "edgelambda.amazonaws.com"]
-      }
-    }
-  ]
-})
+  name                  = "edge-abtest-viewer-response_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"lambda.amazonaws.com\",\"edgelambda.amazonaws.com\"]}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -154,19 +162,8 @@ resource "aws_iam_role" "edge-abtest-viewer-response_role" {
 }
 
 resource "aws_iam_role" "edge-auth-viewer-request_role" {
-  name = "edge-auth-viewer-request_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": ["lambda.amazonaws.com", "edgelambda.amazonaws.com"]
-      }
-    }
-  ]
-})
+  name                  = "edge-auth-viewer-request_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"lambda.amazonaws.com\",\"edgelambda.amazonaws.com\"]}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -178,19 +175,8 @@ resource "aws_iam_role" "edge-auth-viewer-request_role" {
 }
 
 resource "aws_iam_role" "edge-rewrite-origin-request_role" {
-  name = "edge-rewrite-origin-request_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": ["lambda.amazonaws.com", "edgelambda.amazonaws.com"]
-      }
-    }
-  ]
-})
+  name                  = "edge-rewrite-origin-request_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"lambda.amazonaws.com\",\"edgelambda.amazonaws.com\"]}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -202,19 +188,8 @@ resource "aws_iam_role" "edge-rewrite-origin-request_role" {
 }
 
 resource "aws_iam_role" "edge-security-headers-origin-response_role" {
-  name = "edge-security-headers-origin-response_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": ["lambda.amazonaws.com", "edgelambda.amazonaws.com"]
-      }
-    }
-  ]
-})
+  name                  = "edge-security-headers-origin-response_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"lambda.amazonaws.com\",\"edgelambda.amazonaws.com\"]}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
