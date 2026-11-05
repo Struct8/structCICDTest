@@ -3,6 +3,9 @@ resource "aws_s3_bucket" "flowlogs-bucket" {
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   tags = {
     Name           = "flowlogs-bucket"
     State          = "Prometheus"
