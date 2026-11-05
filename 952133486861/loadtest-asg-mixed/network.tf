@@ -11,10 +11,11 @@ resource "aws_vpc" "ltmixed-vpc" {
 }
 
 resource "aws_subnet" "private-a" {
-  vpc_id                  = aws_vpc.ltmixed-vpc.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.60.11.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.ltmixed-vpc.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.60.11.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-a"
     State          = "loadtest-asg-mixed"
@@ -23,10 +24,11 @@ resource "aws_subnet" "private-a" {
 }
 
 resource "aws_subnet" "private-b" {
-  vpc_id                  = aws_vpc.ltmixed-vpc.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.60.0.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.ltmixed-vpc.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.60.0.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-b"
     State          = "loadtest-asg-mixed"
@@ -35,10 +37,11 @@ resource "aws_subnet" "private-b" {
 }
 
 resource "aws_subnet" "public-a" {
-  vpc_id                  = aws_vpc.ltmixed-vpc.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.60.1.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.ltmixed-vpc.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.60.1.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-a"
     State          = "loadtest-asg-mixed"
@@ -47,10 +50,11 @@ resource "aws_subnet" "public-a" {
 }
 
 resource "aws_subnet" "public-b" {
-  vpc_id                  = aws_vpc.ltmixed-vpc.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.60.2.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.ltmixed-vpc.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.60.2.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-b"
     State          = "loadtest-asg-mixed"
@@ -59,10 +63,11 @@ resource "aws_subnet" "public-b" {
 }
 
 resource "aws_subnet" "public-k6" {
-  vpc_id                  = aws_vpc.ltmixed-vpc.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.60.3.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.ltmixed-vpc.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.60.3.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-k6"
     State          = "loadtest-asg-mixed"
@@ -137,6 +142,7 @@ resource "aws_route_table_association" "aws_route_table_association_public_k6_rt
 resource "aws_security_group" "autoscaling_group_hub-asg-mixed_group" {
   name                   = "autoscaling_group_hub-asg-mixed_group"
   vpc_id                 = aws_vpc.ltmixed-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "autoscaling_group_hub-asg-mixed_group"
@@ -148,6 +154,7 @@ resource "aws_security_group" "autoscaling_group_hub-asg-mixed_group" {
 resource "aws_security_group" "instance_k6-load-generator_group" {
   name                   = "instance_k6-load-generator_group"
   vpc_id                 = aws_vpc.ltmixed-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_k6-load-generator_group"
@@ -159,6 +166,7 @@ resource "aws_security_group" "instance_k6-load-generator_group" {
 resource "aws_security_group" "instance_nat-a_group" {
   name                   = "instance_nat-a_group"
   vpc_id                 = aws_vpc.ltmixed-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_nat-a_group"
@@ -170,6 +178,7 @@ resource "aws_security_group" "instance_nat-a_group" {
 resource "aws_security_group" "lb_alb-hub_group" {
   name                   = "lb_alb-hub_group"
   vpc_id                 = aws_vpc.ltmixed-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
 }
 
@@ -325,7 +334,8 @@ resource "aws_lb_listener" "listener-dashboard" {
     type             = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.tg-k6-dashboard.arn
+        arn    = aws_lb_target_group.tg-k6-dashboard.arn
+        weight = 1
       }
     }
   }
@@ -347,7 +357,8 @@ resource "aws_lb_listener" "listener-http" {
     type             = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.tg-hub.arn
+        arn    = aws_lb_target_group.tg-hub.arn
+        weight = 1
       }
     }
   }
@@ -359,52 +370,94 @@ resource "aws_lb_listener" "listener-http" {
 }
 
 resource "aws_lb_target_group" "tg-hub" {
-  name                          = "tg-hub"
-  vpc_id                        = aws_vpc.ltmixed-vpc.id
-  deregistration_delay          = "30"
-  ip_address_type               = "ipv4"
-  load_balancing_algorithm_type = "least_outstanding_requests"
-  port                          = 8080
-  protocol                      = "HTTP"
-  target_type                   = "instance"
+  name                               = "tg-hub"
+  vpc_id                             = aws_vpc.ltmixed-vpc.id
+  deregistration_delay               = "30"
+  ip_address_type                    = "ipv4"
+  lambda_multi_value_headers_enabled = false
+  load_balancing_algorithm_type      = "least_outstanding_requests"
+  load_balancing_anomaly_mitigation  = "off"
+  load_balancing_cross_zone_enabled  = "use_load_balancer_configuration"
+  port                               = 8080
+  protocol                           = "HTTP"
+  protocol_version                   = "HTTP1"
+  target_type                        = "instance"
   health_check {
+    enabled             = true
     healthy_threshold   = 2
     interval            = 10
     matcher             = "200"
     path                = "/"
+    port                = "traffic-port"
     protocol            = "HTTP"
     timeout             = 5
     unhealthy_threshold = 2
+  }
+  stickiness {
+    cookie_duration = 86400
+    enabled         = false
+    type            = "lb_cookie"
   }
   tags = {
     Name           = "tg-hub"
     State          = "loadtest-asg-mixed"
     Struct8Creator = "rmay struct"
   }
+  target_group_health {
+    dns_failover {
+      minimum_healthy_targets_count      = "1"
+      minimum_healthy_targets_percentage = "off"
+    }
+    unhealthy_state_routing {
+      minimum_healthy_targets_count      = 1
+      minimum_healthy_targets_percentage = "off"
+    }
+  }
 }
 
 resource "aws_lb_target_group" "tg-k6-dashboard" {
-  name                          = "tg-k6-dashboard"
-  vpc_id                        = aws_vpc.ltmixed-vpc.id
-  deregistration_delay          = "300"
-  ip_address_type               = "ipv4"
-  load_balancing_algorithm_type = "round_robin"
-  port                          = 5665
-  protocol                      = "HTTP"
-  target_type                   = "instance"
+  name                               = "tg-k6-dashboard"
+  vpc_id                             = aws_vpc.ltmixed-vpc.id
+  deregistration_delay               = "300"
+  ip_address_type                    = "ipv4"
+  lambda_multi_value_headers_enabled = false
+  load_balancing_algorithm_type      = "round_robin"
+  load_balancing_anomaly_mitigation  = "off"
+  load_balancing_cross_zone_enabled  = "use_load_balancer_configuration"
+  port                               = 5665
+  protocol                           = "HTTP"
+  protocol_version                   = "HTTP1"
+  target_type                        = "instance"
   health_check {
+    enabled             = true
     healthy_threshold   = 2
     interval            = 15
     matcher             = "200-399"
     path                = "/"
+    port                = "traffic-port"
     protocol            = "HTTP"
     timeout             = 5
     unhealthy_threshold = 3
+  }
+  stickiness {
+    cookie_duration = 86400
+    enabled         = false
+    type            = "lb_cookie"
   }
   tags = {
     Name           = "tg-k6-dashboard"
     State          = "loadtest-asg-mixed"
     Struct8Creator = "rmay struct"
+  }
+  target_group_health {
+    dns_failover {
+      minimum_healthy_targets_count      = "1"
+      minimum_healthy_targets_percentage = "off"
+    }
+    unhealthy_state_routing {
+      minimum_healthy_targets_count      = 1
+      minimum_healthy_targets_percentage = "off"
+    }
   }
 }
 

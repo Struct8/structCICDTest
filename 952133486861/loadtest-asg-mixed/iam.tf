@@ -1,5 +1,6 @@
 resource "aws_iam_instance_profile" "hub-asg-mixed_profile" {
   name = "hub-asg-mixed_profile"
+  path = "/"
   role = aws_iam_role.hub-asg-mixed_role.name
   tags = {
     Name           = "hub-asg-mixed_profile"
@@ -10,6 +11,7 @@ resource "aws_iam_instance_profile" "hub-asg-mixed_profile" {
 
 resource "aws_iam_instance_profile" "k6-load-generator_profile" {
   name = "k6-load-generator_profile"
+  path = "/"
   role = aws_iam_role.k6-load-generator_role.name
   tags = {
     Name           = "k6-load-generator_profile"
@@ -20,6 +22,7 @@ resource "aws_iam_instance_profile" "k6-load-generator_profile" {
 
 resource "aws_iam_instance_profile" "nat-a_profile" {
   name = "nat-a_profile"
+  path = "/"
   role = aws_iam_role.nat-a_role.name
   tags = {
     Name           = "nat-a_profile"
@@ -83,19 +86,8 @@ resource "aws_iam_role" "Struct8Debug-k6-debug" {
 }
 
 resource "aws_iam_role" "hub-asg-mixed_role" {
-  name = "hub-asg-mixed_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "hub-asg-mixed_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -107,19 +99,8 @@ resource "aws_iam_role" "hub-asg-mixed_role" {
 }
 
 resource "aws_iam_role" "k6-load-generator_role" {
-  name = "k6-load-generator_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "k6-load-generator_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -131,19 +112,8 @@ resource "aws_iam_role" "k6-load-generator_role" {
 }
 
 resource "aws_iam_role" "nat-a_role" {
-  name = "nat-a_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "nat-a_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"

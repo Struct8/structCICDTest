@@ -1,23 +1,11 @@
-data "local_file" "UserData_k6-load-generator" {
-  filename = "${path.module}/.external_modules/struct8-templates/templates/vpc-k6-load-generator/v1/user_data/k6-bootstrap.sh"
-}
-
-data "aws_ami" "AMI_Data_Source_k6-load-generator" {
-  most_recent = true
-  owners      = ["amazon"]
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-kernel-6.1-arm64"]
-  }
-}
-
 resource "aws_instance" "k6-load-generator" {
   subnet_id                   = aws_subnet.public-k6.id
-  ami                         = data.aws_ami.AMI_Data_Source_k6-load-generator.id
+  ami                         = "ami-0cc2cd1a7e55e5a3f"
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.k6-load-generator_profile.name
   instance_type               = "t4g.nano"
-  user_data_base64 = base64encode(<<-EOFUData
+  private_ip                  = "10.60.3.6"
+  user_data = <<-EOFUData
 #!/bin/bash
 
 # --- BEGIN STRUCT8 VARIABLES ---
@@ -30,9 +18,9 @@ METHOD="POST"
 MS="250"
 BOOT_GEN="4"
 NAME="k6-load-generator"
-REGION="${data.aws_region.current.region}"
-ACCOUNT="${data.aws_caller_identity.current.account_id}"
-AWS_LB_DNSNAME_0="${aws_lb.alb-hub.dns_name}"
+REGION="us-west-2"
+ACCOUNT="952133486861"
+AWS_LB_DNSNAME_0="alb-hub-975806616.us-west-2.elb.amazonaws.com"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
 sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
@@ -40,51 +28,246 @@ chmod +x /etc/profile.d/struct8_vars.sh
 chmod 644 /etc/struct8_env
 # --- END STRUCT8 VARIABLES ---
 
-${data.local_file.UserData_k6-load-generator.content}
+#!/bin/bash
+# k6 load generator on Amazon Linux 2023.
+#
+# Architecture-neutral: it runs unchanged on x86_64 and on arm64 (Graviton,
+# e.g. t4g), because it assumes no CPU. The Docker platform is detected at boot
+# and grafana/k6 (a multi-arch image) is pulled for exactly that platform. So
+# swapping the instance family -- and its matching AMI -- does not require a
+# script change.
+#
+# Boots Docker, pulls the grafana/k6 image, and drops a ready-to-run k6 test
+# script on disk. It does NOT run a test on boot: the test is fired on demand by
+# an agent (or a person) through Struct8 Debug Access / SSM, so that load starts
+# only when someone asks for it.
+#
+# This template ships its own VPC and a public subnet, so the generator is not
+# tied to any particular target. The endpoint under test is passed per run as
+# TARGET_URL:
+#   TARGET_URL=https://your-service.example.com/ /opt/k6/run.sh
+#   RPS=200 VUS=100 DURATION=5m TARGET_URL=https://... /opt/k6/run.sh
+#
+# TARGET_URL, VUS, DURATION and RPS are read by the script from the environment,
+# so the same script covers every scenario without an edit or a redeploy.
+LOGFILE="/var/log/user-data.log"
+exec >$LOGFILE 2>&1
+set -x
+
+echo "Updating the system..."
+dnf update -y
+
+echo "Installing Docker..."
+dnf install -y docker
+systemctl enable docker
+systemctl start docker
+
+# Architecture-aware: this script must boot on both x86_64 and arm64 (Graviton),
+# so nothing here assumes a CPU. We detect the arch, map it to the Docker
+# platform string, and pull grafana/k6 for exactly that platform -- grafana/k6
+# is a multi-arch image, so the right layers are fetched instead of relying on
+# the daemon guessing. If a platform ever has no manifest, we fail loudly here
+# rather than at `docker run` time.
+ARCH="$(uname -m)"
+case "$ARCH" in
+  x86_64|amd64)  K6_PLATFORM="linux/amd64" ;;
+  aarch64|arm64) K6_PLATFORM="linux/arm64" ;;
+  *)             echo "Unsupported CPU architecture: $ARCH" >&2; exit 1 ;;
+esac
+echo "Detected architecture: $ARCH -> Docker platform $K6_PLATFORM"
+echo "$K6_PLATFORM" > /opt/k6/platform 2>/dev/null || { mkdir -p /opt/k6; echo "$K6_PLATFORM" > /opt/k6/platform; }
+
+echo "Pulling the k6 image for $K6_PLATFORM..."
+if ! docker pull --platform "$K6_PLATFORM" grafana/k6:latest; then
+  echo "Failed to pull grafana/k6:latest for $K6_PLATFORM. No image for this architecture?" >&2
+  exit 1
+fi
+
+echo "Writing the k6 test script..."
+mkdir -p /opt/k6/scripts
+cat > /opt/k6/scripts/load-test.js <<'K6EOF'
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+import { Rate } from 'k6/metrics';
+
+// Every knob comes from the environment, so one script serves every run.
+// The agent sets these with -e on `docker run` -- no edit, no redeploy.
+const TARGET_URL = __ENV.TARGET_URL || 'http://localhost/';
+const VUS = parseInt(__ENV.VUS || '10', 10);
+const DURATION = __ENV.DURATION || '30s';
+// HTTP method. Default GET. Set METHOD=POST for targets whose work endpoint
+// only answers POST -- the Struct8 Hub load-test endpoint is one of them
+// (POST /loadtest?ms=N; a GET there returns 405 and every check fails).
+const METHOD = (__ENV.METHOD || 'GET').toUpperCase();
+const BODY = __ENV.BODY || '';
+// Optional fixed request rate. When RPS is set the test holds that arrival
+// rate regardless of latency, which is the honest way to measure a system
+// under a known load. When it is unset the VUs loop as fast as they can.
+const RPS = __ENV.RPS ? parseInt(__ENV.RPS, 10) : 0;
+
+const errorRate = new Rate('failed_requests');
+
+export const options = RPS > 0
+  ? {
+      scenarios: {
+        constant_rate: {
+          executor: 'constant-arrival-rate',
+          rate: RPS,
+          timeUnit: '1s',
+          duration: DURATION,
+          preAllocatedVUs: VUS,
+          maxVUs: VUS * 4,
+        },
+      },
+      thresholds: {
+        http_req_duration: ['p(95)<1000'],
+        failed_requests: ['rate<0.01'],
+      },
+    }
+  : {
+      vus: VUS,
+      duration: DURATION,
+      thresholds: {
+        http_req_duration: ['p(95)<1000'],
+        failed_requests: ['rate<0.01'],
+      },
+    };
+
+export default function () {
+  const res = METHOD === 'POST'
+    ? http.post(TARGET_URL, BODY)
+    : http.request(METHOD, TARGET_URL);
+  const ok = check(res, {
+    'status is 2xx/3xx': (r) => r.status >= 200 && r.status < 400,
+  });
+  errorRate.add(!ok);
+  sleep(1);
+}
+K6EOF
+
+echo "Writing the run wrapper..."
+cat > /opt/k6/run.sh <<'RUNEOF'
+#!/bin/bash
+# Convenience wrapper for a k6 run.
+#
+# Usage (from Debug Access, shell level):
+#   TARGET_URL=https://your-service/ /opt/k6/run.sh
+#   VUS=100 DURATION=5m TARGET_URL=https://your-service/ /opt/k6/run.sh
+#   RPS=200 VUS=100 DURATION=5m TARGET_URL=https://your-service/ /opt/k6/run.sh
+#
+# TARGET_URL is required: this generator ships its own VPC and is not wired to
+# any target, so the endpoint under test is given per run.
+set -euo pipefail
+
+[ -f /etc/struct8_env ] && source /etc/struct8_env
+
+# Run on the same platform the image was pulled for (x86_64 or arm64). The
+# platform was detected at boot and saved to /opt/k6/platform; fall back to the
+# live arch if that file is missing.
+if [ -f /opt/k6/platform ]; then
+  K6_PLATFORM="$(cat /opt/k6/platform)"
+else
+  case "$(uname -m)" in
+    x86_64|amd64)  K6_PLATFORM="linux/amd64" ;;
+    aarch64|arm64) K6_PLATFORM="linux/arm64" ;;
+    *)             K6_PLATFORM="" ;;
+  esac
+fi
+
+if [ -z "$${TARGET_URL:-}" ]; then
+  echo "TARGET_URL is required. Example: TARGET_URL=https://your-service/ /opt/k6/run.sh" >&2
+  exit 1
+fi
+
+# The k6 web dashboard is served WHILE the test runs, on port 5665. It must
+# bind 0.0.0.0 (not the default 127.0.0.1), because it runs inside the container
+# and is reached from outside the instance; the port is published from the
+# container, and a final HTML report is written so it survives the run.
+DASHBOARD_PORT="$${DASHBOARD_PORT:-5665}"
+echo "k6 -> $${TARGET_URL}  (VUS=$${VUS:-10} DURATION=$${DURATION:-30s} RPS=$${RPS:-unset}) on $${K6_PLATFORM:-native}"
+echo "Live dashboard on port $${DASHBOARD_PORT} while the test runs."
+# The grafana/k6 container runs as a non-root uid, so the report directory
+# has to be world-writable or the HTML export fails with permission denied.
+mkdir -p /opt/k6/report && chmod 777 /opt/k6/report
+exec docker run --rm -i \
+  $${K6_PLATFORM:+--platform "$${K6_PLATFORM}"} \
+  -p "$${DASHBOARD_PORT}:$${DASHBOARD_PORT}" \
+  -e TARGET_URL="$${TARGET_URL}" \
+  -e VUS="$${VUS:-10}" \
+  -e DURATION="$${DURATION:-30s}" \
+  $${RPS:+-e RPS="$${RPS}"} \
+  -e METHOD="$${METHOD:-GET}" \
+  $${BODY:+-e BODY="$${BODY}"} \
+  -e K6_WEB_DASHBOARD=true \
+  -e K6_WEB_DASHBOARD_HOST=0.0.0.0 \
+  -e K6_WEB_DASHBOARD_PORT="$${DASHBOARD_PORT}" \
+  -e K6_WEB_DASHBOARD_EXPORT=/report/index.html \
+  -v /opt/k6/report:/report \
+  grafana/k6 run --out web-dashboard - < /opt/k6/scripts/load-test.js
+RUNEOF
+chmod +x /opt/k6/run.sh
+
+echo "Done. k6 image is ready; test script is at /opt/k6/scripts/load-test.js."
+echo "Fire a run through Debug Access: TARGET_URL=... /opt/k6/run.sh -- nothing runs on its own."
+
 EOFUData
-)
+
   user_data_replace_on_change = true
   vpc_security_group_ids      = [aws_security_group.instance_k6-load-generator_group.id]
+  cpu_options {
+    core_count       = 2
+    threads_per_core = 1
+  }
+  credit_specification {
+    cpu_credits = "unlimited"
+  }
+  enclave_options {
+    enabled = false
+  }
   metadata_options {
-    http_endpoint = "enabled"
-    http_tokens   = "required"
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required"
+  }
+  private_dns_name_options {
+    enable_resource_name_dns_a_record    = false
+    enable_resource_name_dns_aaaa_record = false
+    hostname_type                        = "ip-name"
+  }
+  root_block_device {
+    encrypted   = false
+    iops        = 3000
+    throughput  = 125
+    volume_size = 8
+    volume_type = "gp3"
+    tags = {
+      Name = "k6-load-generator"
+    }
   }
   tags = {
-    Struct8Debug   = "0WMToJ4cZSqnBZhOjNzSl"
     Name           = "k6-load-generator"
     State          = "loadtest-asg-mixed"
     Struct8Creator = "rmay struct"
-  }
-}
-
-data "local_file" "UserData_nat-a" {
-  filename = "${path.module}/.external_modules/struct8-templates/templates/ec2-nat-private/v1/user_data/Nat.sh"
-}
-
-data "aws_ami" "AMI_Data_Source_nat-a" {
-  most_recent = true
-  owners      = ["amazon"]
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-kernel-6.1-x86_64"]
+    Struct8Debug   = "0WMToJ4cZSqnBZhOjNzSl"
   }
 }
 
 resource "aws_instance" "nat-a" {
   subnet_id                   = aws_subnet.public-a.id
-  ami                         = data.aws_ami.AMI_Data_Source_nat-a.id
+  ami                         = "ami-0cc098d14c47f965b"
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.nat-a_profile.name
   instance_type               = "t3.nano"
+  private_ip                  = "10.60.1.136"
   source_dest_check           = false
-  user_data_base64 = base64encode(<<-EOFUData
+  user_data = <<-EOFUData
 #!/bin/bash
 
 # --- BEGIN STRUCT8 VARIABLES ---
 cat << 'EOFENV' > /etc/struct8_env
 NAME="nat-a"
-REGION="${data.aws_region.current.region}"
-ACCOUNT="${data.aws_caller_identity.current.account_id}"
+REGION="us-west-2"
+ACCOUNT="952133486861"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
 sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
@@ -92,20 +275,131 @@ chmod +x /etc/profile.d/struct8_vars.sh
 chmod 644 /etc/struct8_env
 # --- END STRUCT8 VARIABLES ---
 
-${data.local_file.UserData_nat-a.content}
+#!/bin/bash
+# Generic NAT instance bootstrap for Amazon Linux 2023 - reusable across templates.
+# Always: routes outbound traffic from the VPC to the internet (source NAT / MASQUERADE),
+#         with a default-DROP FORWARD chain so the box is not an open router.
+# Optional: if FORWARD_PORT and FORWARD_TARGET are set (node environment variables),
+#           it also forwards that inbound port to a private host (destination NAT).
+# Notes:
+#   - Small instances (t3.nano, 512 MB) can OOM-kill dnf, so we add a little swap first
+#     and avoid heavy packages: AL2023 already ships the `iptables` command.
+#   - Reads node variables from /etc/profile.d/struct8_vars.sh (the generator writes them
+#     there with `export`); /etc/environment is NOT valid shell to source.
+#   - Requires source_dest_check disabled on the instance (the template does that).
+set -uo pipefail
+LOGFILE="/var/log/user-data.log"
+exec >"$LOGFILE" 2>&1
+
+# Load node variables (FORWARD_PORT / FORWARD_TARGET, if set on the node).
+# The generator writes them as  export KEY   = "value"  (spaces + quotes), which is NOT
+# valid shell to source, so parse the value out instead of sourcing.
+VARS=/etc/profile.d/struct8_vars.sh
+getvar() { [ -f "$VARS" ] && awk -F= -v k="$1" '$0 ~ k {gsub(/[ "]/,"",$2); print $2; exit}' "$VARS"; }
+FORWARD_PORT=$(getvar FORWARD_PORT)
+FORWARD_TARGET=$(getvar FORWARD_TARGET)
+
+# A little swap so dnf does not get OOM-killed on a 512 MB instance.
+if [ ! -f /swapfile ]; then
+  dd if=/dev/zero of=/swapfile bs=1M count=512 2>/dev/null
+  chmod 600 /swapfile
+  mkswap /swapfile
+  swapon /swapfile
+fi
+
+echo "Ensuring iptables is present..."
+command -v iptables >/dev/null 2>&1 || dnf install -y iptables
+
+echo "Enabling IPv4 forwarding..."
+echo "net.ipv4.ip_forward = 1" > /etc/sysctl.d/99-nat.conf
+sysctl -p /etc/sysctl.d/99-nat.conf
+
+PRIMARY_IF=$(ip route | awk '/default/ {print $5; exit}')
+
+TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" \
+  -H "X-aws-ec2-metadata-token-ttl-seconds: 300")
+MAC=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" \
+  http://169.254.169.254/latest/meta-data/mac)
+VPC_CIDR=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" \
+  "http://169.254.169.254/latest/meta-data/network/interfaces/macs/$${MAC}/vpc-ipv4-cidr-block")
+echo "IF=$PRIMARY_IF  VPC=$VPC_CIDR  FORWARD_PORT=$${FORWARD_PORT:-<none>}  FORWARD_TARGET=$${FORWARD_TARGET:-<none>}"
+
+echo "Base NAT rules (outbound only, scoped to the VPC)..."
+iptables -t nat -F
+iptables -F FORWARD
+iptables -P FORWARD DROP
+iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A FORWARD -s "$VPC_CIDR" -o "$PRIMARY_IF" -j ACCEPT
+iptables -t nat -A POSTROUTING -s "$VPC_CIDR" -o "$PRIMARY_IF" -j MASQUERADE
+
+# Optional destination NAT (port forward) - only if both vars are set.
+if [ -n "$${FORWARD_PORT:-}" ] && [ -n "$${FORWARD_TARGET:-}" ]; then
+  echo "Port forward: :$${FORWARD_PORT} -> $${FORWARD_TARGET}:$${FORWARD_PORT}"
+  iptables -t nat -A PREROUTING -i "$PRIMARY_IF" -p tcp --dport "$FORWARD_PORT" \
+    -j DNAT --to-destination "$${FORWARD_TARGET}:$${FORWARD_PORT}"
+  iptables -A FORWARD -p tcp -d "$FORWARD_TARGET" --dport "$FORWARD_PORT" -j ACCEPT
+  # SNAT the forwarded traffic so the target replies to THIS instance, not to
+  # the original client. Without it the target answers the client's real IP
+  # directly, the reply does not match the client's TCP session with the NAT,
+  # and the connection hangs -- the classic DNAT-without-SNAT hairpin. With it,
+  # the target sees the NAT as the source and its reply returns through here.
+  iptables -t nat -A POSTROUTING -p tcp -d "$FORWARD_TARGET" --dport "$FORWARD_PORT" \
+    -o "$PRIMARY_IF" -j MASQUERADE
+fi
+
+# Persist rules across reboot without the heavy iptables-services package.
+iptables-save > /etc/sysconfig/iptables
+cat > /etc/systemd/system/nat-restore.service <<'EOF'
+[Unit]
+Description=Restore iptables NAT rules
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'iptables-restore < /etc/sysconfig/iptables'
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable nat-restore.service
+echo "Done."
+
 EOFUData
-)
+
   vpc_security_group_ids = [aws_security_group.instance_nat-a_group.id]
+  cpu_options {
+    core_count       = 1
+    threads_per_core = 2
+  }
+  credit_specification {
+    cpu_credits = "unlimited"
+  }
+  enclave_options {
+    enabled = false
+  }
+  lifecycle {
+    ignore_changes = [user_data_replace_on_change]
+  }
   metadata_options {
-    http_endpoint = "enabled"
-    http_tokens   = "required"
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required"
+  }
+  private_dns_name_options {
+    enable_resource_name_dns_a_record    = false
+    enable_resource_name_dns_aaaa_record = false
+    hostname_type                        = "ip-name"
   }
   root_block_device {
+    kms_key_id  = "arn:aws:kms:us-west-2:952133486861:key/f019f965-2340-4c77-b976-182a1c3460ab"
     encrypted   = true
     iops        = 3000
     throughput  = 125
     volume_size = 8
     volume_type = "gp3"
+    tags = {
+      Name = "nat-a"
+    }
   }
   tags = {
     Name           = "nat-a"
@@ -114,21 +408,8 @@ EOFUData
   }
 }
 
-data "local_file" "UserData_hub-lt" {
-  filename = "${path.module}/.external_modules/struct8-templates/templates/ec2-hub-docker/v1/user_data/hub-docker.sh"
-}
-
-data "aws_ami" "AMI_Data_Source_hub-lt" {
-  most_recent = true
-  owners      = ["amazon"]
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-kernel-6.1-arm64"]
-  }
-}
-
 resource "aws_launch_template" "hub-lt" {
-  image_id               = data.aws_ami.AMI_Data_Source_hub-lt.id
+  image_id               = "ami-0cc2cd1a7e55e5a3f"
   name                   = "hub-lt"
   description            = "ASG Launch Template. user_data (hub-docker.sh) installs Docker then builds and runs the Hub arm64 image with HUB_LOADTEST on. Boot build ~5min so the ASG grace period is high. Mixed instances policy: all override types must be arm64 to match this AMI."
   instance_type          = "t4g.nano"
@@ -142,8 +423,8 @@ HUB_LOADTEST="on"
 HUB_PORT="8080"
 BOOT_GEN="3"
 NAME="hub-asg-mixed"
-REGION="${data.aws_region.current.region}"
-ACCOUNT="${data.aws_caller_identity.current.account_id}"
+REGION="us-west-2"
+ACCOUNT="952133486861"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
 sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
@@ -151,7 +432,89 @@ chmod +x /etc/profile.d/struct8_vars.sh
 chmod 644 /etc/struct8_env
 # --- END STRUCT8 VARIABLES ---
 
-${data.local_file.UserData_hub-lt.content}
+#!/bin/bash
+# Struct8 Hub on Docker - generic EC2 bootstrap for Amazon Linux 2023.
+#
+# Reusable across templates: any EC2 or Auto Scaling group that should run the
+# Struct8 Hub container points its user_data at a COPY of this script (the
+# struct8-templates repo forbids sharing a folder between templates, so each
+# template keeps its own copy).
+#
+# What it does, on boot:
+#   1. installs Docker,
+#   2. gets the Hub source (git clone of Struct8/struct8-hub) and builds the
+#      container image from image/ -- the image is not published to any
+#      registry, and building from source keeps this independent of one,
+#   3. runs the container, restarting it on reboot.
+#
+# The image is "one file, no dependencies" (image/index.mjs + Dockerfile), so
+# the build is small and fast.
+#
+# Everything tunable is a NODE ENVIRONMENT VARIABLE, so the same script serves
+# every template without an edit. The generator writes them to
+# /etc/profile.d/struct8_vars.sh as `export KEY = "value"` (spaces + quotes),
+# which is NOT valid shell to source, so we parse the value out instead.
+#
+#   HUB_PORT       port the container listens on and is published on. Default 8080.
+#   HUB_LOADTEST   'on' enables the load-test endpoint (POST /loadtest?ms=N).
+#                  Default unset (off). Only set it where load testing is the point.
+#   HUB_REF        git ref (branch/tag/commit) of struct8-hub to build. Default 'main'.
+#   HUB_POLL       optional: name a wired queue to consume (see the Hub docs).
+#
+# The Hub itself discovers its neighbours from the environment variables the
+# generator injects from the diagram's wires; nothing about the topology is set
+# here.
+set -uo pipefail
+LOGFILE="/var/log/user-data.log"
+exec >"$LOGFILE" 2>&1
+set -x
+
+VARS=/etc/profile.d/struct8_vars.sh
+getvar() { [ -f "$VARS" ] && awk -F= -v k="$1" '$0 ~ ("^[[:space:]]*export[[:space:]]+" k "[[:space:]]*=") {gsub(/[ "]/,"",$2); print $2; exit}' "$VARS"; }
+
+HUB_PORT="$(getvar HUB_PORT)";       HUB_PORT="$${HUB_PORT:-8080}"
+HUB_LOADTEST="$(getvar HUB_LOADTEST)"
+HUB_REF="$(getvar HUB_REF)";         HUB_REF="$${HUB_REF:-main}"
+HUB_POLL="$(getvar HUB_POLL)"
+echo "HUB_PORT=$HUB_PORT HUB_LOADTEST=$${HUB_LOADTEST:-<off>} HUB_REF=$HUB_REF HUB_POLL=$${HUB_POLL:-<none>}"
+
+echo "Updating the system..."
+dnf update -y
+
+echo "Installing Docker and git..."
+dnf install -y docker git
+systemctl enable docker
+systemctl start docker
+
+echo "Fetching the Hub source ($HUB_REF)..."
+rm -rf /opt/struct8-hub
+git clone --depth 1 --branch "$HUB_REF" https://github.com/Struct8/struct8-hub /opt/struct8-hub \
+  || git clone --depth 1 https://github.com/Struct8/struct8-hub /opt/struct8-hub
+
+echo "Building the Hub image..."
+docker build -t struct8-hub:local /opt/struct8-hub/image
+
+# The Hub reads the wires from its OWN environment. The generator wrote them to
+# /etc/struct8_env; pass that whole file into the container so discovery works,
+# then add the runtime knobs on top.
+ENV_ARGS=()
+[ -f /etc/struct8_env ] && ENV_ARGS+=(--env-file /etc/struct8_env)
+ENV_ARGS+=(-e "PORT=$${HUB_PORT}")
+[ -n "$${HUB_LOADTEST:-}" ] && ENV_ARGS+=(-e "HUB_LOADTEST=$${HUB_LOADTEST}")
+[ -n "$${HUB_POLL:-}" ]     && ENV_ARGS+=(-e "HUB_POLL=$${HUB_POLL}")
+
+echo "Running the Hub container on port $${HUB_PORT}..."
+docker rm -f struct8-hub 2>/dev/null || true
+docker run -d \
+  --name struct8-hub \
+  --restart unless-stopped \
+  -p "$${HUB_PORT}:$${HUB_PORT}" \
+  "$${ENV_ARGS[@]}" \
+  struct8-hub:local
+
+echo "Done. Hub is starting on port $${HUB_PORT}. GET / is health; POST / fans out."
+[ -n "$${HUB_LOADTEST:-}" ] && echo "Load-test endpoint enabled: POST /loadtest?ms=N"
+
 EOFUData
 )
   vpc_security_group_ids = [aws_security_group.autoscaling_group_hub-asg-mixed_group.id]
@@ -199,11 +562,16 @@ resource "aws_autoscaling_group" "hub-asg-mixed" {
   health_check_type         = "ELB"
   max_instance_lifetime     = 604800
   max_size                  = 3
-  metrics_granularity       = "1Minute"
   min_size                  = 1
   target_group_arns         = [aws_lb_target_group.tg-hub.arn]
   termination_policies      = ["OldestLaunchTemplate", "OldestInstance", "Default"]
   vpc_zone_identifier       = [aws_subnet.private-a.id, aws_subnet.private-b.id]
+  availability_zone_distribution {
+    capacity_distribution_strategy = "balanced-best-effort"
+  }
+  capacity_reservation_specification {
+    capacity_reservation_preference = "default"
+  }
   instance_maintenance_policy {
     max_healthy_percentage = 110
     min_healthy_percentage = 90
@@ -223,7 +591,7 @@ resource "aws_autoscaling_group" "hub-asg-mixed" {
     }
     launch_template {
       launch_template_specification {
-        version            = aws_launch_template.hub-lt.latest_version
+        version            = "1"
         launch_template_id = aws_launch_template.hub-lt.id
       }
       override {
