@@ -50,7 +50,8 @@ resource "aws_s3_bucket_public_access_block" "static-site-web_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "static-site-web_configuration" {
   bucket = aws_s3_bucket.static-site-web.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }

@@ -7,27 +7,31 @@ resource "aws_cloudfront_distribution" "site-cdn1" {
   price_class         = "PriceClass_All"
   custom_error_response {
     error_caching_min_ttl = 10
-    error_code            = 404
+    error_code            = 403
     response_code         = 404
     response_page_path    = "/error.html"
   }
   custom_error_response {
     error_caching_min_ttl = 10
-    error_code            = 403
+    error_code            = 404
     response_code         = 404
     response_page_path    = "/error.html"
   }
   default_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     target_origin_id       = "site-origin1"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     viewer_protocol_policy = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   origin {
-    domain_name              = aws_s3_bucket.static-site-web.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.oac_static-site-web.id
-    origin_id                = "site-origin1"
+    domain_name                 = aws_s3_bucket.static-site-web.bucket_regional_domain_name
+    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_static-site-web.id
+    origin_id                   = "site-origin1"
+    response_completion_timeout = 0
   }
   restrictions {
     geo_restriction {
