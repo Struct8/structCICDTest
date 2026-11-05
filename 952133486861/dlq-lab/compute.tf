@@ -14,34 +14,32 @@ resource "aws_lambda_event_source_mapping" "dlq-lab-orders-esm" {
   }
 }
 
+data "archive_file" "archive_struct8-hub_dlq-lab-consumer" {
+  output_path = "${path.module}/struct8-hub_dlq-lab-consumer.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-hub/prebuilt"
+  type        = "zip"
+}
+
 resource "aws_lambda_function" "dlq-lab-consumer" {
   function_name                  = "dlq-lab-consumer"
   architectures                  = ["arm64"]
-  filename                       = "imported_lambda_placeholder.zip"
+  filename                       = data.archive_file.archive_struct8-hub_dlq-lab-consumer.output_path
   handler                        = "index.handler"
   memory_size                    = 256
   publish                        = false
   reserved_concurrent_executions = -1
   role                           = aws_iam_role.dlq-lab-consumer_role.arn
   runtime                        = "nodejs22.x"
+  source_code_hash               = data.archive_file.archive_struct8-hub_dlq-lab-consumer.output_base64sha256
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT               = data.aws_caller_identity.current.account_id
-      AWS_XRAY_GROUP_NAME_0 = "dlq-lab-traces"
       HUB_FAULTS            = "on"
       NAME                  = "dlq-lab-consumer"
       REGION                = data.aws_region.current.region
+      ACCOUNT               = data.aws_caller_identity.current.account_id
+      AWS_XRAY_GROUP_NAME_0 = "dlq-lab-traces"
     }
-  }
-  ephemeral_storage {
-    size = 512
-  }
-  lifecycle {
-    ignore_changes = [filename, source_code_hash]
-  }
-  logging_config {
-    log_format = "Text"
   }
   tags = {
     Name           = "dlq-lab-consumer"
@@ -54,37 +52,35 @@ resource "aws_lambda_function" "dlq-lab-consumer" {
   depends_on = [aws_iam_role_policy_attachment.lambda_function_dlq-lab-consumer_st_dlq-lab_attach]
 }
 
+data "archive_file" "archive_struct8-hub_dlq-lab-legacy-notifier" {
+  output_path = "${path.module}/struct8-hub_dlq-lab-legacy-notifier.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-hub/prebuilt"
+  type        = "zip"
+}
+
 resource "aws_lambda_function" "dlq-lab-legacy-notifier" {
   function_name                  = "dlq-lab-legacy-notifier"
   architectures                  = ["arm64"]
-  filename                       = "imported_lambda_placeholder.zip"
+  filename                       = data.archive_file.archive_struct8-hub_dlq-lab-legacy-notifier.output_path
   handler                        = "index.handler"
   memory_size                    = 256
   publish                        = false
   reserved_concurrent_executions = -1
   role                           = aws_iam_role.dlq-lab-legacy-notifier_role.arn
   runtime                        = "nodejs22.x"
+  source_code_hash               = data.archive_file.archive_struct8-hub_dlq-lab-legacy-notifier.output_base64sha256
   timeout                        = 10
   dead_letter_config {
     target_arn = aws_sqs_queue.dlq-lab-legacy-dlq.arn
   }
   environment {
     variables = {
-      ACCOUNT               = data.aws_caller_identity.current.account_id
-      AWS_XRAY_GROUP_NAME_0 = "dlq-lab-traces"
       HUB_FAULTS            = "on"
       NAME                  = "dlq-lab-legacy-notifier"
       REGION                = data.aws_region.current.region
+      ACCOUNT               = data.aws_caller_identity.current.account_id
+      AWS_XRAY_GROUP_NAME_0 = "dlq-lab-traces"
     }
-  }
-  ephemeral_storage {
-    size = 512
-  }
-  lifecycle {
-    ignore_changes = [filename, source_code_hash]
-  }
-  logging_config {
-    log_format = "Text"
   }
   tags = {
     Name           = "dlq-lab-legacy-notifier"
@@ -97,35 +93,33 @@ resource "aws_lambda_function" "dlq-lab-legacy-notifier" {
   depends_on = [aws_iam_role_policy_attachment.lambda_function_dlq-lab-legacy-notifier_st_dlq-lab_attach]
 }
 
+data "archive_file" "archive_struct8-hub_dlq-lab-notifier" {
+  output_path = "${path.module}/struct8-hub_dlq-lab-notifier.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-hub/prebuilt"
+  type        = "zip"
+}
+
 resource "aws_lambda_function" "dlq-lab-notifier" {
   function_name                  = "dlq-lab-notifier"
   architectures                  = ["arm64"]
-  filename                       = "imported_lambda_placeholder.zip"
+  filename                       = data.archive_file.archive_struct8-hub_dlq-lab-notifier.output_path
   handler                        = "index.handler"
   memory_size                    = 256
   publish                        = false
   reserved_concurrent_executions = -1
   role                           = aws_iam_role.dlq-lab-notifier_role.arn
   runtime                        = "nodejs22.x"
+  source_code_hash               = data.archive_file.archive_struct8-hub_dlq-lab-notifier.output_base64sha256
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT                                        = data.aws_caller_identity.current.account_id
-      AWS_LAMBDA_FUNCTION_EVENT_INVOKE_CONFIG_NAME_0 = "dlq-lab-notifier-async"
-      AWS_XRAY_GROUP_NAME_0                          = "dlq-lab-traces"
       HUB_FAULTS                                     = "on"
       NAME                                           = "dlq-lab-notifier"
       REGION                                         = data.aws_region.current.region
+      ACCOUNT                                        = data.aws_caller_identity.current.account_id
+      AWS_LAMBDA_FUNCTION_EVENT_INVOKE_CONFIG_NAME_0 = "dlq-lab-notifier-async"
+      AWS_XRAY_GROUP_NAME_0                          = "dlq-lab-traces"
     }
-  }
-  ephemeral_storage {
-    size = 512
-  }
-  lifecycle {
-    ignore_changes = [filename, source_code_hash]
-  }
-  logging_config {
-    log_format = "Text"
   }
   tags = {
     Name           = "dlq-lab-notifier"
@@ -138,35 +132,33 @@ resource "aws_lambda_function" "dlq-lab-notifier" {
   depends_on = [aws_iam_role_policy_attachment.lambda_function_dlq-lab-notifier_st_dlq-lab_attach]
 }
 
+data "archive_file" "archive_struct8-templates_dlq-lab-producer" {
+  output_path = "${path.module}/struct8-templates_dlq-lab-producer.zip"
+  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/sqs-sns-dlq-lab/v1/lambda/dlq-lab-producer"
+  type        = "zip"
+}
+
 resource "aws_lambda_function" "dlq-lab-producer" {
   function_name                  = "dlq-lab-producer"
   architectures                  = ["arm64"]
-  filename                       = "imported_lambda_placeholder.zip"
+  filename                       = data.archive_file.archive_struct8-templates_dlq-lab-producer.output_path
   handler                        = "index.handler"
   memory_size                    = 256
   publish                        = false
   reserved_concurrent_executions = -1
   role                           = aws_iam_role.dlq-lab-producer_role.arn
   runtime                        = "nodejs22.x"
+  source_code_hash               = data.archive_file.archive_struct8-templates_dlq-lab-producer.output_base64sha256
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT                        = data.aws_caller_identity.current.account_id
-      AWS_LAMBDA_FUNCTION_URL_NAME_0 = "dlq-lab-producer-url"
-      AWS_SNS_TOPIC_NAME_0           = "dlq-lab-orders"
-      AWS_XRAY_GROUP_NAME_0          = "dlq-lab-traces"
       NAME                           = "dlq-lab-producer"
       REGION                         = data.aws_region.current.region
+      ACCOUNT                        = data.aws_caller_identity.current.account_id
+      AWS_SNS_TOPIC_NAME_0           = "dlq-lab-orders"
+      AWS_LAMBDA_FUNCTION_URL_NAME_0 = "dlq-lab-producer-url"
+      AWS_XRAY_GROUP_NAME_0          = "dlq-lab-traces"
     }
-  }
-  ephemeral_storage {
-    size = 512
-  }
-  lifecycle {
-    ignore_changes = [filename, source_code_hash]
-  }
-  logging_config {
-    log_format = "Text"
   }
   tags = {
     Name           = "dlq-lab-producer"

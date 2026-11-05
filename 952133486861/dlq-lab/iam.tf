@@ -122,8 +122,19 @@ resource "aws_iam_policy" "scheduler_schedule_dlq-lab-traffic-ok_st_dlq-lab" {
 }
 
 resource "aws_iam_role" "dlq-lab-consumer_role" {
-  name                  = "dlq-lab-consumer_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "dlq-lab-consumer_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -135,8 +146,19 @@ resource "aws_iam_role" "dlq-lab-consumer_role" {
 }
 
 resource "aws_iam_role" "dlq-lab-legacy-notifier_role" {
-  name                  = "dlq-lab-legacy-notifier_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "dlq-lab-legacy-notifier_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -148,8 +170,19 @@ resource "aws_iam_role" "dlq-lab-legacy-notifier_role" {
 }
 
 resource "aws_iam_role" "dlq-lab-notifier_role" {
-  name                  = "dlq-lab-notifier_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "dlq-lab-notifier_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -161,8 +194,19 @@ resource "aws_iam_role" "dlq-lab-notifier_role" {
 }
 
 resource "aws_iam_role" "dlq-lab-producer_role" {
-  name                  = "dlq-lab-producer_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "dlq-lab-producer_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -174,8 +218,19 @@ resource "aws_iam_role" "dlq-lab-producer_role" {
 }
 
 resource "aws_iam_role" "dlq-lab-traffic-ok_role" {
-  name                  = "dlq-lab-traffic-ok_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"scheduler.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "dlq-lab-traffic-ok_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "scheduler.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"

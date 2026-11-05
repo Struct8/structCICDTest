@@ -109,7 +109,7 @@ resource "aws_sns_topic" "dlq-lab-orders" {
     State          = "dlq-lab"
     Struct8Creator = "rmay struct"
   }
-  depends_on = [aws_xray_resource_policy.aws_xray_resource_policy_st_dlq-lab_b4702f8187, aws_sqs_queue_policy.aws_sqs_queue_policy_dlq-lab-orders-queue_st_dlq-lab]
+  depends_on = [aws_sqs_queue_policy.aws_sqs_queue_policy_dlq-lab-orders-queue_st_dlq-lab, aws_xray_resource_policy.aws_xray_resource_policy_st_dlq-lab_b4702f8187]
 }
 
 resource "aws_sns_topic_subscription" "Subscription2" {
@@ -139,9 +139,8 @@ resource "aws_sns_topic_subscription" "dlq-lab-alerts-email" {
 }
 
 resource "aws_scheduler_schedule" "dlq-lab-traffic-ok" {
-  name                         = "dlq-lab-traffic-ok"
-  schedule_expression          = "rate(1 minute)"
-  schedule_expression_timezone = "UTC"
+  name                = "dlq-lab-traffic-ok"
+  schedule_expression = "rate(1 minute)"
   flexible_time_window {
     mode = "OFF"
   }
