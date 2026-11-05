@@ -1,6 +1,7 @@
 resource "aws_vpc" "vpc-windows-secure" {
-  cidr_block       = "10.4.0.0/16"
-  instance_tenancy = "default"
+  cidr_block         = "10.4.0.0/16"
+  enable_dns_support = true
+  instance_tenancy   = "default"
   tags = {
     Name           = "vpc-windows-secure"
     State          = "ec2-windows-secure"
@@ -9,10 +10,11 @@ resource "aws_vpc" "vpc-windows-secure" {
 }
 
 resource "aws_subnet" "private-windows-secure" {
-  vpc_id                  = aws_vpc.vpc-windows-secure.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.4.2.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-windows-secure.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.4.2.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-windows-secure"
     State          = "ec2-windows-secure"
@@ -21,10 +23,11 @@ resource "aws_subnet" "private-windows-secure" {
 }
 
 resource "aws_subnet" "public-windows-secure" {
-  vpc_id                  = aws_vpc.vpc-windows-secure.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.4.1.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.vpc-windows-secure.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.4.1.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public-windows-secure"
     State          = "ec2-windows-secure"
