@@ -8,17 +8,17 @@ import {
 
 import {
   to = aws_apigatewayv2_integration.integration-lambda-regular
-  id = "wd4dwwu"
+  id = "6kex7e6nqf/wd4dwwu"
 }
 
 import {
   to = aws_apigatewayv2_route.route-api-proxy
-  id = "96aacwa"
+  id = "6kex7e6nqf/96aacwa"
 }
 
 import {
   to = aws_apigatewayv2_stage.stage-default
-  id = "$default"
+  id = "6kex7e6nqf/$default"
 }
 
 import {
@@ -63,7 +63,7 @@ import {
 
 import {
   to = aws_cloudfront_key_value_store.kvs-validation
-  id = "de8e2b51-2c41-43e5-b4c8-f36ac8c442e7"
+  id = "kvs-validation"
 }
 
 import {
