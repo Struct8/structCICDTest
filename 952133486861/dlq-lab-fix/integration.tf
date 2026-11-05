@@ -10,7 +10,7 @@ resource "aws_sqs_queue" "dlq-lab-legacy-dlq" {
   visibility_timeout_seconds        = 30
   tags = {
     Name           = "dlq-lab-legacy-dlq"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -27,7 +27,7 @@ resource "aws_sqs_queue" "dlq-lab-notifier-failed" {
   visibility_timeout_seconds        = 30
   tags = {
     Name           = "dlq-lab-notifier-failed"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -44,7 +44,7 @@ resource "aws_sqs_queue" "dlq-lab-orders-dlq" {
   visibility_timeout_seconds        = 30
   tags = {
     Name           = "dlq-lab-orders-dlq"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -62,7 +62,7 @@ resource "aws_sqs_queue" "dlq-lab-orders-queue" {
   visibility_timeout_seconds        = 60
   tags = {
     Name           = "dlq-lab-orders-queue"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -95,7 +95,7 @@ resource "aws_sns_topic" "dlq-lab-alerts" {
   tracing_config = "Active"
   tags = {
     Name           = "dlq-lab-alerts"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_xray_resource_policy.aws_xray_resource_policy_st_dlq-lab_b4702f8187]
@@ -106,7 +106,7 @@ resource "aws_sns_topic" "dlq-lab-orders" {
   tracing_config = "Active"
   tags = {
     Name           = "dlq-lab-orders"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_xray_resource_policy.aws_xray_resource_policy_st_dlq-lab_b4702f8187, aws_sqs_queue_policy.aws_sqs_queue_policy_dlq-lab-orders-queue_st_dlq-lab-fix]

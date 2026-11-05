@@ -4,7 +4,7 @@ resource "aws_cloudwatch_log_group" "dlq-lab-consumer-logs" {
   retention_in_days = 7
   tags = {
     Name           = "dlq-lab-consumer-logs"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -15,7 +15,7 @@ resource "aws_cloudwatch_log_group" "dlq-lab-legacy-notifier-logs" {
   retention_in_days = 7
   tags = {
     Name           = "dlq-lab-legacy-notifier-logs"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -26,7 +26,7 @@ resource "aws_cloudwatch_log_group" "dlq-lab-notifier-logs" {
   retention_in_days = 7
   tags = {
     Name           = "dlq-lab-notifier-logs"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -37,7 +37,7 @@ resource "aws_cloudwatch_log_group" "dlq-lab-producer-logs" {
   retention_in_days = 7
   tags = {
     Name           = "dlq-lab-producer-logs"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -45,7 +45,7 @@ resource "aws_cloudwatch_log_group" "dlq-lab-producer-logs" {
 resource "aws_cloudwatch_metric_alarm" "dlq-lab-orders-dlq-not-empty" {
   alarm_name          = "dlq-lab-orders-dlq-not-empty"
   metric_name         = "ApproximateNumberOfMessagesVisible"
-  alarm_actions       = ["arn:aws:sns:us-west-2:952133486861:dlq-lab-alerts"]
+  alarm_actions       = [aws_sns_topic.dlq-lab-alerts.arn]
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   namespace           = "AWS/SQS"
@@ -58,7 +58,7 @@ resource "aws_cloudwatch_metric_alarm" "dlq-lab-orders-dlq-not-empty" {
   }
   tags = {
     Name           = "dlq-lab-orders-dlq-not-empty"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
@@ -72,7 +72,7 @@ resource "aws_xray_group" "dlq-lab-traces" {
   }
   tags = {
     Name           = "dlq-lab-traces"
-    State          = "dlq-lab"
+    State          = "dlq-lab-fix"
     Struct8Creator = "rmay struct"
   }
 }
