@@ -12,9 +12,9 @@
       ]
     }
   ],
-  "action": "plan",
-  "trigger_id": "1793908111312",
-  "triggered_by": "rmay struct",
+  "action": "apply",
+  "trigger_id": "1793908856746",
+  "triggered_by": "assistant.rmay_struct",
   "engine_ref": "dev",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
   "backend_global_config": {
