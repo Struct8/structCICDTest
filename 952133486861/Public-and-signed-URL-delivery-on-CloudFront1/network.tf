@@ -337,9 +337,6 @@ EOF
   key_value_store_associations = [aws_cloudfront_key_value_store.kvs-validation.arn]
   publish                      = true
   runtime                      = "cloudfront-js-2.0"
-  lifecycle {
-    ignore_changes = [publish]
-  }
   tags = {
     Name           = "viewer-request-kvs"
     State          = "Public-and-signed-URL-delivery-on-CloudFront1"

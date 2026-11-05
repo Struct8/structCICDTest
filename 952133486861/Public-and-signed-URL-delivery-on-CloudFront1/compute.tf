@@ -12,14 +12,14 @@ resource "aws_lambda_function" "api-regular-nonedge" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT                       = "952133486861"
+      ACCOUNT                       = data.aws_caller_identity.current.account_id
       AWS_SSM_PARAMETER_NAME_0      = "cf-signing-private-key"
       AWS_SSM_PARAMETER_NAME_ENVVAR = "CloudFrontOutputs"
       CF_OUTPUTS_PARAM              = "/cloudfront-lab/cf-outputs"
       GREETING_NAME                 = "world"
       NAME                          = "api-regular-nonedge"
       PRIVATE_KEY_PARAM             = "/cloudfront-lab/signing-private-key"
-      REGION                        = "us-east-1"
+      REGION                        = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -55,7 +55,7 @@ resource "aws_lambda_function" "edge-abtest-viewer-response" {
     size = 512
   }
   lifecycle {
-    ignore_changes = [filename, source_code_hash, publish]
+    ignore_changes = [filename, source_code_hash]
   }
   logging_config {
     log_format = "Text"
@@ -84,7 +84,7 @@ resource "aws_lambda_function" "edge-auth-viewer-request" {
     size = 512
   }
   lifecycle {
-    ignore_changes = [filename, source_code_hash, publish]
+    ignore_changes = [filename, source_code_hash]
   }
   logging_config {
     log_format = "Text"
@@ -113,7 +113,7 @@ resource "aws_lambda_function" "edge-rewrite-origin-request" {
     size = 512
   }
   lifecycle {
-    ignore_changes = [filename, source_code_hash, publish]
+    ignore_changes = [filename, source_code_hash]
   }
   logging_config {
     log_format = "Text"
@@ -142,7 +142,7 @@ resource "aws_lambda_function" "edge-security-headers-origin-response" {
     size = 512
   }
   lifecycle {
-    ignore_changes = [filename, source_code_hash, publish]
+    ignore_changes = [filename, source_code_hash]
   }
   logging_config {
     log_format = "Text"
@@ -156,9 +156,9 @@ resource "aws_lambda_function" "edge-security-headers-origin-response" {
 }
 
 resource "aws_lambda_permission" "perm_aws_apigatewayv2_api_http-api-regular_to_api-regular-nonedge" {
-  function_name = aws_lambda_function.api-regular-nonedge.function_name
-  statement_id  = "perm_aws_apigatewayv2_api_http-api-regular_to_api-regular-nonedge5fef65d2fc9eb3eb594e7c58e2"
-  principal     = "apigateway.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = "${aws_apigatewayv2_api.http-api-regular.execution_arn}/*/*"
+  function_name       = aws_lambda_function.api-regular-nonedge.function_name
+  principal           = "apigateway.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = "${aws_apigatewayv2_api.http-api-regular.execution_arn}/*/*"
+  statement_id_prefix = "perm_aws_apigatewayv2_api_http-api-regular_to_api-regular-nonedge"
 }

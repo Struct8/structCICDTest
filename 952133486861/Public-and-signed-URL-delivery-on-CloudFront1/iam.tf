@@ -1,106 +1,76 @@
+data "aws_iam_policy_document" "api-regular-logs_doc" {
+  statement {
+    sid       = "AllowLogapiregular"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.log-api-regular.arn}:*"]
+  }
+}
+
 resource "aws_iam_policy" "api-regular-logs" {
   name        = "api-regular-logs"
   description = "Access Policy api-regular-logs"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "${aws_cloudwatch_log_group.log-api-regular.arn}:*"
-      ],
-      "Sid": "AllowLogapiregular"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.api-regular-logs_doc.json
+}
+
+data "aws_iam_policy_document" "edge-abtest-logs_doc" {
+  statement {
+    sid       = "AllowLogedgeabtest"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.log-edge-abtest.arn}:*"]
+  }
 }
 
 resource "aws_iam_policy" "edge-abtest-logs" {
   name        = "edge-abtest-logs"
   description = "Access Policy edge-abtest-logs"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "${aws_cloudwatch_log_group.log-edge-abtest.arn}:*"
-      ],
-      "Sid": "AllowLogedgeabtest"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.edge-abtest-logs_doc.json
+}
+
+data "aws_iam_policy_document" "edge-auth-logs_doc" {
+  statement {
+    sid       = "AllowLogedgeauth"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.log-edge-auth.arn}:*"]
+  }
 }
 
 resource "aws_iam_policy" "edge-auth-logs" {
   name        = "edge-auth-logs"
   description = "Access Policy edge-auth-logs"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "${aws_cloudwatch_log_group.log-edge-auth.arn}:*"
-      ],
-      "Sid": "AllowLogedgeauth"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.edge-auth-logs_doc.json
+}
+
+data "aws_iam_policy_document" "edge-headers-logs_doc" {
+  statement {
+    sid       = "AllowLogedgeheaders"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.log-edge-headers.arn}:*"]
+  }
 }
 
 resource "aws_iam_policy" "edge-headers-logs" {
   name        = "edge-headers-logs"
   description = "Access Policy edge-headers-logs"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "${aws_cloudwatch_log_group.log-edge-headers.arn}:*"
-      ],
-      "Sid": "AllowLogedgeheaders"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.edge-headers-logs_doc.json
+}
+
+data "aws_iam_policy_document" "edge-rewrite-logs_doc" {
+  statement {
+    sid       = "AllowLogedgerewrite"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.log-edge-rewrite.arn}:*"]
+  }
 }
 
 resource "aws_iam_policy" "edge-rewrite-logs" {
   name        = "edge-rewrite-logs"
   description = "Access Policy edge-rewrite-logs"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "${aws_cloudwatch_log_group.log-edge-rewrite.arn}:*"
-      ],
-      "Sid": "AllowLogedgerewrite"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.edge-rewrite-logs_doc.json
 }
 
 data "aws_iam_policy_document" "lambda_function_api-regular-nonedge_st_Public-and-signed-URL-delivery-on-CloudFront1_doc" {
