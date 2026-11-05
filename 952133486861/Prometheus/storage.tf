@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "flowlogs-bucket" {
-  bucket              = "flowlogs-bucket-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "flowlogs-bucket-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -11,7 +11,8 @@ resource "aws_s3_bucket" "flowlogs-bucket" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "flowlogs-bucket_lifecycle" {
-  bucket = aws_s3_bucket.flowlogs-bucket.id
+  bucket                                 = aws_s3_bucket.flowlogs-bucket.id
+  transition_default_minimum_object_size = "all_storage_classes_128K"
   rule {
     id     = "expire-logs"
     status = "Enabled"
@@ -51,7 +52,8 @@ resource "aws_s3_bucket_public_access_block" "flowlogs-bucket_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "flowlogs-bucket_configuration" {
   bucket = aws_s3_bucket.flowlogs-bucket.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }

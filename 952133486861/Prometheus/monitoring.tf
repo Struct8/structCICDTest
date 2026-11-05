@@ -2,7 +2,6 @@ resource "aws_cloudwatch_log_group" "process-flow-logs" {
   name              = "/aws/lambda/process-flow-logs"
   log_group_class   = "STANDARD"
   retention_in_days = 1
-  skip_destroy      = false
   tags = {
     Name           = "process-flow-logs"
     State          = "Prometheus"
@@ -13,10 +12,10 @@ resource "aws_cloudwatch_log_group" "process-flow-logs" {
 resource "aws_prometheus_workspace" "flowlogs-amp" {
   alias = "flowlogs-amp"
   tags = {
-    Struct8Management = "Struct8Flow"
     Name              = "flowlogs-amp"
     State             = "Prometheus"
     Struct8Creator    = "rmay struct"
+    Struct8Management = "Struct8Flow"
   }
 }
 
