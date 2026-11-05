@@ -2,6 +2,9 @@ resource "aws_s3_bucket" "origin-cf-validation" {
   bucket              = "origem-cf-validacao"
   force_destroy       = true
   object_lock_enabled = false
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   tags = {
     Name           = "origin-cf-validation"
     State          = "Public-and-signed-URL-delivery-on-CloudFront1"
@@ -109,6 +112,9 @@ resource "aws_s3_object" "index-html2" {
   content      = "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Struct8 CloudFront</title></head><body><h1>CloudFront serving from S3</h1><p>If you are reading this through the CloudFront domain, the Origin Access Control, the distribution and the cache policy are deployed and working.</p></body></html>"
   content_type = "text/html"
   key          = "index.html"
+  lifecycle {
+    ignore_changes = [force_destroy, acl, content]
+  }
   tags = {
     Name           = "index-html2"
     State          = "Public-and-signed-URL-delivery-on-CloudFront1"
@@ -155,6 +161,9 @@ resource "aws_s3_object" "premium-secret-html" {
   content      = "<!doctype html><meta charset=utf-8><title>Premium</title><h1>Signed-URL protected content</h1><p>You presented a valid signed URL. Direct access to /premium without a signature returns 403.</p>"
   content_type = "text/html"
   key          = "premium/secret.html"
+  lifecycle {
+    ignore_changes = [force_destroy, acl, content]
+  }
   tags = {
     Name           = "premium-secret-html"
     State          = "Public-and-signed-URL-delivery-on-CloudFront1"

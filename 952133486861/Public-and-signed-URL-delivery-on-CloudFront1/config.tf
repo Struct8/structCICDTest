@@ -6,6 +6,9 @@ resource "aws_ssm_parameter" "CloudFrontOutputs" {
   tier        = "Standard"
   type        = "String"
   value       = "{\"aws_cloudfront_distribution\":{\"cdn-protected\":{\"arn\":\"arn:aws:cloudfront::952133486861:distribution/E3FUWHWDQSXVW6\",\"caller_reference\":\"terraform-20261105101842805300000002\",\"domain_name\":\"d2lfrmqrx7bjf8.cloudfront.net\",\"etag\":\"E1F83G8C2ARO7P\",\"hosted_zone_id\":\"Z2FDTNDATAQYW2\",\"id\":\"E3FUWHWDQSXVW6\",\"in_progress_validation_batches\":0,\"last_modified_time\":\"2026-11-05 10:18:42.951 +0000 UTC\",\"logging_v1_enabled\":false,\"status\":\"Deployed\",\"trusted_key_groups\":[{\"enabled\":true,\"items\":[{\"key_group_id\":\"52a2a577-5b43-42e7-9def-b20cf2e57de2\",\"key_pair_ids\":[\"K3T1TMNXA3163B\"]},{\"key_group_id\":\"19e25183-db24-4664-983d-f8570ca34a38\",\"key_pair_ids\":[\"K1F18BQS0A9MAC\"]}]}],\"trusted_signers\":[{\"enabled\":false,\"items\":[]}]}},\"aws_cloudfront_public_key\":{\"signing-key-cookies\":{\"caller_reference\":\"terraform-ObqgPepxMRBkcxRQ7RMpyLCvEU\",\"etag\":\"E23ZP02F085DFQ\",\"id\":\"K1F18BQS0A9MAC\"}}}"
+  lifecycle {
+    ignore_changes = [overwrite]
+  }
   tags = {
     Name           = "CloudFrontOutputs"
     State          = "Public-and-signed-URL-delivery-on-CloudFront1"
