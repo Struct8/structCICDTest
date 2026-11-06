@@ -1,9 +1,10 @@
 resource "aws_vpc" "vpc-a" {
-  assign_generated_ipv6_cidr_block = true
-  cidr_block                       = "10.5.0.0/16"
-  enable_dns_hostnames             = true
-  enable_dns_support               = true
-  instance_tenancy                 = "default"
+  assign_generated_ipv6_cidr_block     = true
+  cidr_block                           = "10.5.0.0/16"
+  enable_dns_hostnames                 = true
+  enable_dns_support                   = true
+  instance_tenancy                     = "default"
+  ipv6_cidr_block_network_border_group = "us-west-2"
   tags = {
     Name           = "vpc-a"
     State          = "state-vpc-a"
@@ -14,26 +15,28 @@ resource "aws_vpc" "vpc-a" {
 resource "aws_vpc_endpoint" "dynamodb-endpoint-a_DynamoDB" {
   service_name      = "com.amazonaws.us-west-2.dynamodb"
   vpc_id            = aws_vpc.vpc-a.id
+  policy            = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}],\"Version\":\"2008-10-17\"}"
   route_table_ids   = [aws_route_table.rt-vpc-a-private.id]
   vpc_endpoint_type = "Gateway"
   tags = {
-    DifName        = "dynamodb-endpoint-a_DynamoDB"
     Name           = "dynamodb-endpoint-a"
     State          = "state-vpc-a"
     Struct8Creator = "rmay struct"
+    DifName        = "dynamodb-endpoint-a_DynamoDB"
   }
 }
 
 resource "aws_vpc_endpoint" "s3-endpoint-a_S3" {
   service_name      = "com.amazonaws.us-west-2.s3"
   vpc_id            = aws_vpc.vpc-a.id
+  policy            = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}],\"Version\":\"2008-10-17\"}"
   route_table_ids   = [aws_route_table.rt-vpc-a-private.id]
   vpc_endpoint_type = "Gateway"
   tags = {
-    DifName        = "s3-endpoint-a_S3"
     Name           = "s3-endpoint-a"
     State          = "state-vpc-a"
     Struct8Creator = "rmay struct"
+    DifName        = "s3-endpoint-a_S3"
   }
 }
 
@@ -42,6 +45,7 @@ resource "aws_subnet" "vpc-a-private" {
   availability_zone                           = "us-west-2a"
   cidr_block                                  = "10.5.1.0/24"
   enable_resource_name_dns_a_record_on_launch = true
+  map_public_ip_on_launch                     = false
   private_dns_hostname_type_on_launch         = "ip-name"
   tags = {
     Name           = "vpc-a-private"
@@ -116,6 +120,7 @@ resource "aws_route_table_association" "aws_route_table_association_vpc_a_public
 resource "aws_security_group" "instance_nat-a_group" {
   name                   = "instance_nat-a_group"
   vpc_id                 = aws_vpc.vpc-a.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_nat-a_group"
@@ -127,6 +132,7 @@ resource "aws_security_group" "instance_nat-a_group" {
 resource "aws_security_group" "instance_traffic-gen-private_group" {
   name                   = "instance_traffic-gen-private_group"
   vpc_id                 = aws_vpc.vpc-a.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_traffic-gen-private_group"
@@ -138,6 +144,7 @@ resource "aws_security_group" "instance_traffic-gen-private_group" {
 resource "aws_security_group" "instance_traffic-gen-public_group" {
   name                   = "instance_traffic-gen-public_group"
   vpc_id                 = aws_vpc.vpc-a.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_traffic-gen-public_group"

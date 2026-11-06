@@ -1,5 +1,6 @@
 resource "aws_iam_instance_profile" "nat-a_profile" {
   name = "nat-a_profile"
+  path = "/"
   role = aws_iam_role.nat-a_role.name
   tags = {
     Name           = "nat-a_profile"
@@ -10,6 +11,7 @@ resource "aws_iam_instance_profile" "nat-a_profile" {
 
 resource "aws_iam_instance_profile" "traffic-gen-private_profile" {
   name = "traffic-gen-private_profile"
+  path = "/"
   role = aws_iam_role.traffic-gen-private_role.name
   tags = {
     Name           = "traffic-gen-private_profile"
@@ -20,6 +22,7 @@ resource "aws_iam_instance_profile" "traffic-gen-private_profile" {
 
 resource "aws_iam_instance_profile" "traffic-gen-public_profile" {
   name = "traffic-gen-public_profile"
+  path = "/"
   role = aws_iam_role.traffic-gen-public_role.name
   tags = {
     Name           = "traffic-gen-public_profile"
@@ -164,19 +167,8 @@ resource "aws_iam_role" "Struct8Debug-debug-gen-public" {
 }
 
 resource "aws_iam_role" "nat-a_role" {
-  name = "nat-a_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "nat-a_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -188,19 +180,8 @@ resource "aws_iam_role" "nat-a_role" {
 }
 
 resource "aws_iam_role" "traffic-gen-private_role" {
-  name = "traffic-gen-private_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "traffic-gen-private_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -212,19 +193,8 @@ resource "aws_iam_role" "traffic-gen-private_role" {
 }
 
 resource "aws_iam_role" "traffic-gen-public_role" {
-  name = "traffic-gen-public_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "traffic-gen-public_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
