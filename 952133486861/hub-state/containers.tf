@@ -2,6 +2,12 @@ resource "aws_ecr_repository" "hub-image" {
   name                 = "hub-image"
   force_delete         = true
   image_tag_mutability = "MUTABLE"
+  encryption_configuration {
+    encryption_type = "AES256"
+  }
+  image_scanning_configuration {
+    scan_on_push = false
+  }
   tags = {
     Name           = "hub-image"
     State          = "hub-state"
@@ -11,6 +17,10 @@ resource "aws_ecr_repository" "hub-image" {
 
 resource "aws_ecs_cluster" "hub-cluster" {
   name = "hub-cluster"
+  setting {
+    name  = "containerInsights"
+    value = "disabled"
+  }
   tags = {
     Name           = "hub-cluster"
     State          = "hub-state"
@@ -24,18 +34,25 @@ resource "aws_ecs_cluster_capacity_providers" "assoc_cp_to_hub-cluster" {
 }
 
 resource "aws_ecs_service" "hub_service" {
-  name                    = "hub_service"
-  cluster                 = aws_ecs_cluster.hub-cluster.id
-  desired_count           = 1
-  enable_ecs_managed_tags = true
-  force_delete            = true
-  propagate_tags          = "TASK_DEFINITION"
-  scheduling_strategy     = "REPLICA"
-  task_definition         = "${aws_ecs_task_definition.hub.family}:${aws_ecs_task_definition.hub.revision}"
+  name                          = "hub_service"
+  availability_zone_rebalancing = "ENABLED"
+  cluster                       = aws_ecs_cluster.hub-cluster.id
+  desired_count                 = 1
+  enable_ecs_managed_tags       = true
+  force_delete                  = true
+  iam_role                      = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+  platform_version              = "LATEST"
+  propagate_tags                = "TASK_DEFINITION"
+  scheduling_strategy           = "REPLICA"
+  task_definition               = "${aws_ecs_task_definition.hub.family}:${aws_ecs_task_definition.hub.revision}"
   capacity_provider_strategy {
     base              = 1
     capacity_provider = "FARGATE_SPOT"
     weight            = 1
+  }
+  deployment_configuration {
+    bake_time_in_minutes = "0"
+    strategy             = "ROLLING"
   }
   network_configuration {
     assign_public_ip = true
@@ -47,13 +64,12 @@ resource "aws_ecs_service" "hub_service" {
     State          = "hub-state"
     Struct8Creator = "rmay struct"
   }
-  depends_on = [terraform_data.seed_hub-image]
 }
 
 locals {
   container_def_hub_hub_1 = {
     name      = "hub"
-    image     = "${aws_ecr_repository.hub-image.repository_url}:latest"
+    image     = "952133486861.dkr.ecr.us-west-2.amazonaws.com/hub-image:latest"
     essential = true
     cpu       = 128
     memory    = 256
@@ -61,9 +77,42 @@ locals {
       {
         protocol      = "tcp"
         containerPort = 8080
+        hostPort      = 8080
       }
     ]
     environment = [
+      {
+        name  = "ACCOUNT"
+        value = "952133486861"
+      },
+      {
+        name  = "AWS_DYNAMODB_TABLE_NAME_0"
+        value = "hub-out"
+      },
+      {
+        name  = "AWS_LAMBDA_FUNCTION_NAME_0"
+        value = "hub-fn"
+      },
+      {
+        name  = "AWS_S3_BUCKET_NAME_0"
+        value = "hub-demo-952133486861-us-west-2-an"
+      },
+      {
+        name  = "AWS_SECRETSMANAGER_SECRET_NAME_0"
+        value = "hub-secret"
+      },
+      {
+        name  = "AWS_SNS_TOPIC_NAME_0"
+        value = "hub-topic"
+      },
+      {
+        name  = "AWS_SQS_QUEUE_NAME_0"
+        value = "hub-in"
+      },
+      {
+        name  = "AWS_SSM_PARAMETER_NAME_0"
+        value = "hub-param"
+      },
       {
         name  = "HUB_POLL"
         value = "hub-in"
@@ -74,46 +123,9 @@ locals {
       },
       {
         name  = "REGION"
-        value = tostring(data.aws_region.current.region)
-      },
-      {
-        name  = "ACCOUNT"
-        value = tostring(data.aws_caller_identity.current.account_id)
-      },
-      {
-        name  = "AWS_SQS_QUEUE_NAME_0"
-        value = "hub-in"
-      },
-      {
-        name  = "AWS_DYNAMODB_TABLE_NAME_0"
-        value = "hub-out"
-      },
-      {
-        name  = "AWS_SNS_TOPIC_NAME_0"
-        value = "hub-topic"
-      },
-      {
-        name  = "AWS_S3_BUCKET_NAME_0"
-        value = "hub-demo-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
-      },
-      {
-        name  = "AWS_SSM_PARAMETER_NAME_0"
-        value = "hub-param"
-      },
-      {
-        name  = "AWS_SECRETSMANAGER_SECRET_NAME_0"
-        value = "hub-secret"
-      },
-      {
-        name  = "AWS_LAMBDA_FUNCTION_NAME_0"
-        value = "hub-fn"
+        value = "us-west-2"
       }
     ]
-    mountPoints            = []
-    systemControls         = []
-    volumesFrom            = []
-    privileged             = false
-    readonlyRootFilesystem = false
     logConfiguration = {
       logDriver = "awslogs"
       options = {
@@ -122,6 +134,11 @@ locals {
         awslogs-stream-prefix = "hub"
       }
     }
+    mountPoints            = []
+    systemControls         = []
+    volumesFrom            = []
+    privileged             = false
+    readonlyRootFilesystem = false
   }
 }
 

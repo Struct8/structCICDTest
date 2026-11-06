@@ -1,6 +1,7 @@
 resource "aws_vpc" "VPC3" {
-  cidr_block       = "10.3.0.0/16"
-  instance_tenancy = "default"
+  cidr_block         = "10.3.0.0/16"
+  enable_dns_support = true
+  instance_tenancy   = "default"
   tags = {
     Name           = "VPC3"
     State          = "hub-state"
@@ -9,10 +10,11 @@ resource "aws_vpc" "VPC3" {
 }
 
 resource "aws_subnet" "hub-public-a" {
-  vpc_id                  = aws_vpc.VPC3.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.3.1.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.VPC3.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.3.1.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "hub-public-a"
     State          = "hub-state"
@@ -52,6 +54,7 @@ resource "aws_route_table_association" "aws_route_table_association_hub_public_a
 resource "aws_security_group" "ecs_task_definition_hub_group" {
   name                   = "ecs_task_definition_hub_group"
   vpc_id                 = aws_vpc.VPC3.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "ecs_task_definition_hub_group"

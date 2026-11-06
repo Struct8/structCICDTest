@@ -61,6 +61,7 @@ resource "aws_cloudwatch_event_rule" "hub-tick" {
 }
 
 resource "aws_cloudwatch_event_target" "Target" {
-  arn  = aws_sqs_queue.hub-in.arn
-  rule = aws_cloudwatch_event_rule.hub-tick.name
+  target_id = "terraform-ek05AmBjKHhqy01MLhePa7BPPa"
+  arn       = aws_sqs_queue.hub-in.arn
+  rule      = aws_cloudwatch_event_rule.hub-tick.name
 }

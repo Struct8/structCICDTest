@@ -9,9 +9,15 @@ resource "aws_dynamodb_table" "hub-out" {
     name = "ID"
     type = "S"
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "hub-out"
     State          = "hub-state"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }

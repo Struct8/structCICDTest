@@ -98,19 +98,8 @@ resource "aws_iam_policy" "lambda_function_hub-fn_st_hub-state" {
 }
 
 resource "aws_iam_role" "execution_role_ecs_hub" {
-  name = "execution_role_ecs_hub"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "execution_role_ecs_hub"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -122,19 +111,8 @@ resource "aws_iam_role" "execution_role_ecs_hub" {
 }
 
 resource "aws_iam_role" "hub-fn_role" {
-  name = "hub-fn_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "hub-fn_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -146,19 +124,8 @@ resource "aws_iam_role" "hub-fn_role" {
 }
 
 resource "aws_iam_role" "task_role_ecs_hub" {
-  name = "task_role_ecs_hub"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "task_role_ecs_hub"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -185,10 +152,9 @@ resource "aws_iam_role_policy_attachment" "lambda_function_hub-fn_st_hub-state_a
 }
 
 resource "aws_secretsmanager_secret" "hub-secret" {
-  name                           = "hub-secret"
-  description                    = "Destination secret for the messages this workload forwards. Each delivery stores the message as a new current version, so a read returns the one that arrived last."
-  force_overwrite_replica_secret = false
-  recovery_window_in_days        = 0
+  name                    = "hub-secret"
+  description             = "Destination secret for the messages this workload forwards. Each delivery stores the message as a new current version, so a read returns the one that arrived last."
+  recovery_window_in_days = 0
   tags = {
     Name           = "hub-secret"
     State          = "hub-state"

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "hub-demo" {
-  bucket              = "hub-demo-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "hub-demo-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -28,7 +28,8 @@ resource "aws_s3_bucket_public_access_block" "hub-demo_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "hub-demo_configuration" {
   bucket = aws_s3_bucket.hub-demo.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
