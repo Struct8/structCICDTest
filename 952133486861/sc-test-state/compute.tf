@@ -111,9 +111,6 @@ EOFUData
   enclave_options {
     enabled = false
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
