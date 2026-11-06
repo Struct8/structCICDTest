@@ -65,7 +65,8 @@ resource "aws_s3_bucket_public_access_block" "origem-cf-validacao_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "origem-cf-validacao_configuration" {
   bucket = aws_s3_bucket.origem-cf-validacao.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }

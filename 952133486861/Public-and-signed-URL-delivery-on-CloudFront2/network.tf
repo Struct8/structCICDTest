@@ -25,11 +25,14 @@ resource "aws_cloudfront_distribution" "cdn-aberta" {
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"
   default_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     target_origin_id       = "origin-aberta"
     allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
     viewer_protocol_policy = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
     cache_policy_id            = aws_cloudfront_cache_policy.cache-validacao.id
@@ -38,17 +41,26 @@ resource "aws_cloudfront_distribution" "cdn-aberta" {
     target_origin_id           = "origin-aberta"
     allowed_methods            = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods             = ["GET", "HEAD", "OPTIONS"]
+    compress                   = false
+    default_ttl                = 0
+    max_ttl                    = 0
+    min_ttl                    = 0
     path_pattern               = "/rota-api/*"
+    smooth_streaming           = false
     viewer_protocol_policy     = "redirect-to-https"
     function_association {
       event_type   = "viewer-request"
       function_arn = aws_cloudfront_function.viewer-request-kvs1.arn
     }
+    grpc_config {
+      enabled = false
+    }
   }
   origin {
-    domain_name              = aws_s3_bucket.origem-cf-validacao.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.oac_origem-cf-validacao.id
-    origin_id                = "origin-aberta"
+    domain_name                 = aws_s3_bucket.origem-cf-validacao.bucket_regional_domain_name
+    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_origem-cf-validacao.id
+    origin_id                   = "origin-aberta"
+    response_completion_timeout = 0
   }
   restrictions {
     geo_restriction {
@@ -73,18 +85,22 @@ resource "aws_cloudfront_distribution" "cdn-protegida" {
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"
   default_cache_behavior {
-    cache_policy_id           = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id           = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     field_level_encryption_id = aws_cloudfront_field_level_encryption_config.cifra-cartao.id
     target_origin_id          = "origin-protegida"
     allowed_methods           = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods            = ["GET", "HEAD", "OPTIONS"]
     trusted_key_groups        = [aws_cloudfront_key_group.grupo-assinantes.id]
     viewer_protocol_policy    = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   origin {
-    domain_name              = aws_s3_bucket.origem-cf-validacao.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.oac_origem-cf-validacao.id
-    origin_id                = "origin-protegida"
+    domain_name                 = aws_s3_bucket.origem-cf-validacao.bucket_regional_domain_name
+    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_origem-cf-validacao.id
+    origin_id                   = "origin-protegida"
+    response_completion_timeout = 0
   }
   restrictions {
     geo_restriction {
@@ -152,6 +168,11 @@ EOF
   key_value_store_associations = [aws_cloudfront_key_value_store.kvs-validacao.arn]
   publish                      = true
   runtime                      = "cloudfront-js-2.0"
+  tags = {
+    Name           = "viewer-request-kvs1"
+    State          = "Public-and-signed-URL-delivery-on-CloudFront2"
+    Struct8Creator = "rmay struct"
+  }
 }
 
 resource "aws_cloudfront_key_group" "grupo-assinantes" {
