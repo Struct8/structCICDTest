@@ -30,9 +30,9 @@ resource "aws_lambda_function" "StreamConsumer" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT = "952133486861"
+      ACCOUNT = data.aws_caller_identity.current.account_id
       NAME    = "StreamConsumer"
-      REGION  = "us-west-2"
+      REGION  = data.aws_region.current.region
     }
   }
   ephemeral_storage {

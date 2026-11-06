@@ -129,9 +129,6 @@ resource "aws_dynamodb_table" "RestoredLatest" {
     name = "Id"
     type = "S"
   }
-  lifecycle {
-    ignore_changes = [restore_to_latest_time]
-  }
   point_in_time_recovery {
     enabled = false
   }
@@ -156,9 +153,6 @@ resource "aws_dynamodb_table" "RestoredPointInTime" {
   attribute {
     name = "Id"
     type = "S"
-  }
-  lifecycle {
-    ignore_changes = [restore_date_time]
   }
   point_in_time_recovery {
     enabled = false
