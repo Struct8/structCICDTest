@@ -1,6 +1,7 @@
 resource "aws_vpc" "codebuild-lab-vpc" {
-  cidr_block       = "10.6.0.0/16"
-  instance_tenancy = "default"
+  cidr_block         = "10.6.0.0/16"
+  enable_dns_support = true
+  instance_tenancy   = "default"
   tags = {
     Name           = "codebuild-lab-vpc"
     State          = "codebuild-lab-integration"
@@ -9,10 +10,11 @@ resource "aws_vpc" "codebuild-lab-vpc" {
 }
 
 resource "aws_subnet" "codebuild-lab-build-a" {
-  vpc_id                  = aws_vpc.codebuild-lab-vpc.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.6.2.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.codebuild-lab-vpc.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.6.2.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "codebuild-lab-build-a"
     State          = "codebuild-lab-integration"
@@ -21,10 +23,11 @@ resource "aws_subnet" "codebuild-lab-build-a" {
 }
 
 resource "aws_subnet" "codebuild-lab-build-b" {
-  vpc_id                  = aws_vpc.codebuild-lab-vpc.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.6.3.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.codebuild-lab-vpc.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.6.3.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "codebuild-lab-build-b"
     State          = "codebuild-lab-integration"
@@ -33,10 +36,11 @@ resource "aws_subnet" "codebuild-lab-build-b" {
 }
 
 resource "aws_subnet" "codebuild-lab-db-a" {
-  vpc_id                  = aws_vpc.codebuild-lab-vpc.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.6.0.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.codebuild-lab-vpc.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.6.0.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "codebuild-lab-db-a"
     State          = "codebuild-lab-integration"
@@ -45,10 +49,11 @@ resource "aws_subnet" "codebuild-lab-db-a" {
 }
 
 resource "aws_subnet" "codebuild-lab-db-b" {
-  vpc_id                  = aws_vpc.codebuild-lab-vpc.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.6.1.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.codebuild-lab-vpc.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.6.1.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "codebuild-lab-db-b"
     State          = "codebuild-lab-integration"
@@ -117,6 +122,7 @@ resource "aws_security_group" "codebuild_project_codebuild-lab-integration_group
 resource "aws_security_group" "db_instance_codebuild-lab-orders-db_group" {
   name                   = "db_instance_codebuild-lab-orders-db_group"
   vpc_id                 = aws_vpc.codebuild-lab-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "db_instance_codebuild-lab-orders-db_group"

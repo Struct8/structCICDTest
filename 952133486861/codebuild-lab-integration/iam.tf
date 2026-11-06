@@ -13,19 +13,27 @@ resource "aws_iam_policy" "cloudwatch_event_rule_codebuild-lab-nightly_st_codebu
   policy      = data.aws_iam_policy_document.cloudwatch_event_rule_codebuild-lab-nightly_st_codebuild-lab-integration_doc.json
 }
 
-data "aws_iam_policy_document" "cloudwatch_event_rule_codebuild-lab-release-succeeded_st_codebuild-lab-ci_doc" {
-  statement {
-    sid       = "AllowEventBridgeToStartBuild"
-    effect    = "Allow"
-    actions   = ["codebuild:StartBuild"]
-    resources = [aws_codebuild_project.codebuild-lab-integration.arn]
-  }
-}
-
 resource "aws_iam_policy" "cloudwatch_event_rule_codebuild-lab-release-succeeded_st_codebuild-lab-ci" {
   name        = "cloudwatch_event_rule_codebuild-lab-release-succeeded_st_codebuild-lab-ci"
   description = "Access Policy for codebuild-lab-release-succeeded"
-  policy      = data.aws_iam_policy_document.cloudwatch_event_rule_codebuild-lab-release-succeeded_st_codebuild-lab-ci_doc.json
+  policy = <<EOF
+{
+  "Statement": [
+    {
+      "Action": "codebuild:StartBuild",
+      "Effect": "Allow",
+      "Resource": "arn:aws:codebuild:us-west-2:952133486861:project/codebuild-lab-integration",
+      "Sid": "AllowEventBridgeToStartBuild"
+    }
+  ],
+  "Version": "2012-10-17"
+}
+  EOF
+  tags = {
+    Name           = "cloudwatch_event_rule_codebuild-lab-release-succeeded_st_codebuild-lab-ci"
+    State          = "codebuild-lab-integration"
+    Struct8Creator = "rmay struct"
+  }
 }
 
 data "aws_iam_policy_document" "codebuild_project_codebuild-lab-integration_st_codebuild-lab-integration_doc" {
@@ -84,19 +92,8 @@ resource "aws_iam_policy" "codebuild_project_codebuild-lab-integration_st_codebu
 }
 
 resource "aws_iam_role" "codebuild-lab-integration_role" {
-  name = "codebuild-lab-integration_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codebuild.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "codebuild-lab-integration_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codebuild.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
