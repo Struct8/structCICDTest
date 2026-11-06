@@ -85,7 +85,6 @@ resource "aws_codebuild_project" "codebuild-lab-release" {
   name                   = "codebuild-lab-release"
   auto_retry_limit       = 0
   badge_enabled          = true
-  badge_url              = "https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiVlFub25IbFp2clQ1b1FjOUYrVkNGRW45ejNIa0pIWEYzSlJ2L01Gc1dXTWVLNEdHaWZNMmozaFlzQzhiRHA4QzI3OTlleGsrRGJkYlYzMXNEZU95Wkw0PSIsIml2UGFyYW1ldGVyU3BlYyI6Ild4U0xIOWtnSnlDTnpmcCsiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main"
   build_timeout          = 30
   concurrent_build_limit = 1
   description            = "Image to ECR tagged with the commit and release zip to S3 on each push to main."
@@ -251,8 +250,6 @@ resource "aws_codebuild_project" "codebuild-lab-runner" {
 
 resource "aws_codebuild_webhook" "codebuild-lab-pr-check_webhook" {
   project_name = aws_codebuild_project.codebuild-lab-pr-check.name
-  payload_url  = "https://codebuild.us-west-2.amazonaws.com/webhooks?t=eyJlbmNyeXB0ZWREYXRhIjoiTGt2OVR4RGNCdXVSUWRMK0QwZk02eFV4MUI4Z2lIZXZ1bU1yZE1QYjZpMkU0VUN4aEFUNHZaa1RXcEhOYjI1UFZOcC9wWU5XTkZOcmxwQlpIL2F4UUNNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ii83TzJrSTJORysxeDZLVloiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&v=1"
-  url          = "https://api.github.com/repos/Struct8/codebuild-lab/hooks/707968401"
   filter_group {
     filter {
       exclude_matched_pattern = false
@@ -273,8 +270,6 @@ resource "aws_codebuild_webhook" "codebuild-lab-pr-check_webhook" {
 
 resource "aws_codebuild_webhook" "codebuild-lab-release_webhook" {
   project_name = aws_codebuild_project.codebuild-lab-release.name
-  payload_url  = "https://codebuild.us-west-2.amazonaws.com/webhooks?t=eyJlbmNyeXB0ZWREYXRhIjoib0tZcUdiZUFGNHk1ZVQrbWxRaXBsSnJHWEdFT1BDRzZWVmRicytTSDNpNlZKckphWmdTV3ZKVXpTNEZOcnAxYWxVeUFyQ2cwWjBhRnRKamVmVjZXdkVRPSIsIml2UGFyYW1ldGVyU3BlYyI6ImlrVEVnWnJoZnlxUzRXd3YiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&v=1"
-  url          = "https://api.github.com/repos/Struct8/codebuild-lab/hooks/707968467"
   filter_group {
     filter {
       exclude_matched_pattern = false
@@ -295,8 +290,6 @@ resource "aws_codebuild_webhook" "codebuild-lab-release_webhook" {
 
 resource "aws_codebuild_webhook" "codebuild-lab-runner_webhook" {
   project_name = aws_codebuild_project.codebuild-lab-runner.name
-  payload_url  = "https://codebuild.us-west-2.amazonaws.com/webhooks?t=eyJlbmNyeXB0ZWREYXRhIjoiTXZoaHUxRmU3dTcwbWlleHVISkg3aDlIZnE3SXkxVHE4eUIvU2hCMFowVy9NbkhKbkR1Z2lET0JaRTBrODF0ZDRtOEp6SnlBeUpSN2xmZGYwWnRZQnBjPSIsIml2UGFyYW1ldGVyU3BlYyI6IkE5bUR5SHl3NzF2TzRCY0wiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&v=1"
-  url          = "https://api.github.com/repos/Struct8/codebuild-lab/hooks/707968402"
   filter_group {
     filter {
       exclude_matched_pattern = false
