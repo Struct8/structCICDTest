@@ -12,7 +12,7 @@ resource "aws_cloudwatch_log_group" "struct8-engine-logs" {
 resource "aws_cloudwatch_metric_alarm" "struct8-engine-failed-builds" {
   alarm_name          = "struct8-engine-failed-builds"
   metric_name         = "FailedBuilds"
-  alarm_actions       = ["arn:aws:sns:us-west-2:952133486861:struct8-engine-alerts"]
+  alarm_actions       = [aws_sns_topic.struct8-engine-alerts.arn]
   alarm_description   = "A build of the CodeBuild project that runs the GitOps engine failed. Check the build logs and the run in GitHub Actions."
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
