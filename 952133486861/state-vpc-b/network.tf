@@ -17,10 +17,10 @@ resource "aws_vpc_endpoint" "dynamodb-endpoint-b_DynamoDB" {
   route_table_ids   = [aws_route_table.rt-vpc-b-private.id]
   vpc_endpoint_type = "Gateway"
   tags = {
+    DifName        = "dynamodb-endpoint-b_DynamoDB"
     Name           = "dynamodb-endpoint-b"
     State          = "state-vpc-b"
     Struct8Creator = "rmay struct"
-    DifName        = "dynamodb-endpoint-b_DynamoDB"
   }
 }
 
