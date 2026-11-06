@@ -8,9 +8,6 @@ resource "aws_ecr_repository" "codebuild-lab-orders" {
   image_scanning_configuration {
     scan_on_push = false
   }
-  lifecycle {
-    ignore_changes = [force_delete]
-  }
   tags = {
     Name           = "codebuild-lab-orders"
     State          = "codebuild-lab-ci"

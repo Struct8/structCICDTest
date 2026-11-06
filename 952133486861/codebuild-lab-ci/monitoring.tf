@@ -33,7 +33,7 @@ resource "aws_cloudwatch_log_group" "codebuild-lab-runner-logs" {
 
 resource "aws_cloudwatch_metric_alarm" "codebuild-lab-failed-builds" {
   alarm_name          = "codebuild-lab-failed-builds"
-  alarm_actions       = ["arn:aws:sns:us-west-2:952133486861:codebuild-lab-notifications"]
+  alarm_actions       = [aws_sns_topic.codebuild-lab-notifications.arn]
   alarm_description   = "A pull request check or a release build failed."
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1

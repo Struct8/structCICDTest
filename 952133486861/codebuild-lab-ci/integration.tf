@@ -49,9 +49,6 @@ resource "aws_sns_topic_subscription" "codebuild-lab-email" {
   endpoint  = "lab@acme.example"
   protocol  = "email"
   topic_arn = aws_sns_topic.codebuild-lab-notifications.arn
-  lifecycle {
-    ignore_changes = [confirmation_timeout_in_minutes, endpoint_auto_confirms]
-  }
 }
 
 resource "aws_cloudwatch_event_rule" "codebuild-lab-build-finished" {
