@@ -91,18 +91,8 @@ resource "aws_bedrockagentcore_harness" "agent_lab_orders" {
   max_iterations     = 10
   max_tokens         = 4096
   timeout_seconds    = 90
-  environment {
-    agentcore_runtime_environment {
-      lifecycle_configuration = [
-        {
-          idle_runtime_session_timeout = 900
-          max_lifetime                 = 28800
-        }
-      ]
-      network_configuration {
-        network_mode = "PUBLIC"
-      }
-    }
+  lifecycle {
+    ignore_changes = [environment]
   }
   memory {
     agentcore_memory_configuration {

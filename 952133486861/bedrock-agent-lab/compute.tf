@@ -11,14 +11,14 @@ resource "aws_lambda_function" "agent-lab-chat" {
   timeout                        = 120
   environment {
     variables = {
-      ACCOUNT                                   = data.aws_caller_identity.current.account_id
-      AWS_BEDROCKAGENTCORE_HARNESS_ARN_0        = aws_bedrockagentcore_harness.agent_lab_orders.arn
-      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_ID_0      = aws_bedrock_guardrail.agent-lab-guardrail.guardrail_id
-      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_VERSION_0 = aws_bedrock_guardrail.agent-lab-guardrail.version
+      ACCOUNT                                   = "952133486861"
+      AWS_BEDROCKAGENTCORE_HARNESS_ARN_0        = "arn:aws:bedrock-agentcore:us-west-2:952133486861:harness/agent_lab_orders-Ul2ksNHdtu"
+      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_ID_0      = "u0z5jq6ckxrt"
+      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_VERSION_0 = "DRAFT"
       AWS_LAMBDA_FUNCTION_URL_NAME_0            = "agent-lab-chat-url"
       AWS_XRAY_GROUP_NAME_0                     = "agent-lab-traces"
       NAME                                      = "agent-lab-chat"
-      REGION                                    = data.aws_region.current.region
+      REGION                                    = "us-west-2"
     }
   }
   ephemeral_storage {
@@ -54,11 +54,11 @@ resource "aws_lambda_function" "agent-lab-orders-tool" {
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT                   = data.aws_caller_identity.current.account_id
+      ACCOUNT                   = "952133486861"
       AWS_DYNAMODB_TABLE_NAME_0 = "agent-lab-orders"
       AWS_XRAY_GROUP_NAME_0     = "agent-lab-traces"
       NAME                      = "agent-lab-orders-tool"
-      REGION                    = data.aws_region.current.region
+      REGION                    = "us-west-2"
     }
   }
   ephemeral_storage {
@@ -88,18 +88,18 @@ resource "aws_lambda_function_url" "agent-lab-chat-url" {
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat" {
   function_name          = aws_lambda_function.agent-lab-chat.function_name
+  statement_id           = "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat5a8335c8d42053d169ab0b1ad2"
   principal              = "*"
   action                 = "lambda:InvokeFunctionUrl"
   function_url_auth_type = "NONE"
-  statement_id_prefix    = "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat"
   depends_on             = [aws_lambda_function_url.agent-lab-chat-url]
 }
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat_invoke" {
   function_name            = aws_lambda_function.agent-lab-chat.function_name
+  statement_id             = "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat_invokea4f2aa90bd035a55a36f07b1ee"
   principal                = "*"
   action                   = "lambda:InvokeFunction"
   invoked_via_function_url = true
-  statement_id_prefix      = "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat_invoke"
   depends_on               = [aws_lambda_function_url.agent-lab-chat-url, aws_lambda_permission.perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat]
 }
