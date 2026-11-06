@@ -51,7 +51,7 @@ resource "aws_cloudwatch_event_rule" "hub-tick" {
   name                = "hub-tick"
   description         = "Scheduled EventBridge rule. It invokes the Lambda once an hour and is the recurring source of traffic in this diagram."
   schedule_expression = "rate(1 minute)"
-  state               = "ENABLED"
+  state               = "DISABLED"
   tags = {
     Name           = "hub-tick"
     State          = "hub-state"
