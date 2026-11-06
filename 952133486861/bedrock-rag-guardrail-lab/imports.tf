@@ -62,6 +62,16 @@ import {
 }
 
 import {
+  to = aws_s3vectors_index.bedrock-kb-index
+  id = "arn:aws:s3vectors:us-west-2:952133486861:bucket/bedrock-vectors/index/bedrock-kb-index"
+}
+
+import {
+  to = aws_s3vectors_vector_bucket.bedrock-vectors
+  id = "arn:aws:s3vectors:us-west-2:952133486861:bucket/bedrock-vectors"
+}
+
+import {
   to = aws_iam_role.role_kb_bedrock-kb-lab
   id = "role_kb_bedrock-kb-lab"
 }
