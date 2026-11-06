@@ -242,7 +242,7 @@ import {
 }
 
 import {
-  to = aws_route53_record.Route53_Record_hardstore-cert_hardstore_cloudman_pro
+  to = aws_route53_record.Route53_Record_hardstore-cert_hardstore_cloudman_pro["hardstore.cloudman.pro"]
   id = "Z04251074NSF989QRSG9__c14486b2aa45d5eeec62e46c34b5afde.hardstore.cloudman.pro._CNAME"
 }
 
