@@ -6,7 +6,7 @@ resource "aws_codebuild_project" "codebuild-lab-pr-check" {
     report_build_status = true
     type                = "GITHUB"
     auth {
-      resource = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
+      resource = data.aws_codestarconnections_connection.codebuild-lab-github.arn
       type     = "CODECONNECTIONS"
     }
   }
@@ -78,7 +78,7 @@ resource "aws_codebuild_project" "codebuild-lab-release" {
     report_build_status = true
     type                = "GITHUB"
     auth {
-      resource = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
+      resource = data.aws_codestarconnections_connection.codebuild-lab-github.arn
       type     = "CODECONNECTIONS"
     }
   }
@@ -184,7 +184,7 @@ resource "aws_codebuild_project" "codebuild-lab-runner" {
     report_build_status = false
     type                = "GITHUB"
     auth {
-      resource = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
+      resource = data.aws_codestarconnections_connection.codebuild-lab-github.arn
       type     = "CODECONNECTIONS"
     }
   }

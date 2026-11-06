@@ -6,6 +6,12 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-pr-check_st_code
     resources = ["${aws_cloudwatch_log_group.codebuild-lab-pr-check-logs.arn}:*"]
   }
   statement {
+    sid       = "AllowUseOfConnection"
+    effect    = "Allow"
+    actions   = ["codeconnections:GetConnection", "codeconnections:GetConnectionToken", "codestar-connections:GetConnection", "codestar-connections:GetConnectionToken"]
+    resources = [data.aws_codestarconnections_connection.codebuild-lab-github.arn]
+  }
+  statement {
     sid       = "PublishTestReportsOfThisProject"
     effect    = "Allow"
     actions   = ["codebuild:BatchPutCodeCoverages", "codebuild:BatchPutTestCases", "codebuild:CreateReport", "codebuild:CreateReportGroup", "codebuild:UpdateReport"]
@@ -25,6 +31,12 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-release_st_codeb
     effect    = "Allow"
     actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["${aws_cloudwatch_log_group.codebuild-lab-release-logs.arn}:*"]
+  }
+  statement {
+    sid       = "AllowUseOfConnection"
+    effect    = "Allow"
+    actions   = ["codeconnections:GetConnection", "codeconnections:GetConnectionToken", "codestar-connections:GetConnection", "codestar-connections:GetConnectionToken"]
+    resources = [data.aws_codestarconnections_connection.codebuild-lab-github.arn]
   }
   statement {
     sid       = "AllowKMSAccess"
@@ -76,6 +88,12 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-runner_st_codebu
     effect    = "Allow"
     actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["${aws_cloudwatch_log_group.codebuild-lab-runner-logs.arn}:*"]
+  }
+  statement {
+    sid       = "AllowUseOfConnection"
+    effect    = "Allow"
+    actions   = ["codeconnections:GetConnection", "codeconnections:GetConnectionToken", "codestar-connections:GetConnection", "codestar-connections:GetConnectionToken"]
+    resources = [data.aws_codestarconnections_connection.codebuild-lab-github.arn]
   }
   statement {
     sid       = "PublishTestReportsOfThisProject"
