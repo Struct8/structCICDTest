@@ -1,11 +1,5 @@
 data "aws_iam_policy_document" "lambda_function_Function3_st_Mix-Inline-and-Identity-Policy_doc" {
   statement {
-    sid       = "AllowDynamoDBCRUD"
-    effect    = "Allow"
-    actions   = ["dynamodb:BatchGetItem", "dynamodb:DeleteItem", "dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:Query", "dynamodb:UpdateItem"]
-    resources = [aws_dynamodb_table.Table3.arn, "${aws_dynamodb_table.Table3.arn}/*"]
-  }
-  statement {
     sid       = "AllowSQSActions"
     effect    = "Allow"
     actions   = ["sqs:DeleteMessage", "sqs:GetQueueAttributes", "sqs:ReceiveMessage", "sqs:SendMessage"]
@@ -25,6 +19,30 @@ resource "aws_iam_role" "Function3_role" {
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
+  inline_policy {
+    name = "lambda_function_Function3_st_Mix-Inline-and-Identity-Policy"
+    policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:UpdateItem"
+      ],
+      "Resource": [
+        "${aws_dynamodb_table.Table3.arn}",
+        "${aws_dynamodb_table.Table3.arn}/*"
+      ],
+      "Sid": "AllowDynamoDBCRUD"
+    }
+  ]
+})
+  }
   tags = {
     Name           = "Function3_role"
     State          = "Mix-Inline-and-Identity-Policy"
