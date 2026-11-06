@@ -25,7 +25,7 @@ resource "aws_lambda_function" "lambda-ingestion" {
   timeout                        = 60
   environment {
     variables = {
-      ACCOUNT                      = "952133486861"
+      ACCOUNT                      = data.aws_caller_identity.current.account_id
       AWS_RDS_CLUSTER_ARN_0        = "arn:aws:rds:us-west-2:952133486861:cluster:products-aurora"
       AWS_RDS_CLUSTER_DATA_API_0   = true
       AWS_RDS_CLUSTER_DB_NAME_0    = "produtos"
@@ -35,7 +35,7 @@ resource "aws_lambda_function" "lambda-ingestion" {
       AWS_RDS_CLUSTER_PORT_0       = "5432"
       AWS_RDS_CLUSTER_SECRET_ARN_0 = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-6788012a-6256-4b26-a1a1-d42699e4aede-sWTR33"
       NAME                         = "lambda-ingestion"
-      REGION                       = "us-west-2"
+      REGION                       = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -69,7 +69,7 @@ resource "aws_lambda_function" "lambda-init-db" {
   timeout                        = 60
   environment {
     variables = {
-      ACCOUNT                      = "952133486861"
+      ACCOUNT                      = data.aws_caller_identity.current.account_id
       AWS_RDS_CLUSTER_ARN_0        = "arn:aws:rds:us-west-2:952133486861:cluster:products-aurora"
       AWS_RDS_CLUSTER_DATA_API_0   = true
       AWS_RDS_CLUSTER_DB_NAME_0    = "produtos"
@@ -79,7 +79,7 @@ resource "aws_lambda_function" "lambda-init-db" {
       AWS_RDS_CLUSTER_PORT_0       = "5432"
       AWS_RDS_CLUSTER_SECRET_ARN_0 = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-6788012a-6256-4b26-a1a1-d42699e4aede-sWTR33"
       NAME                         = "lambda-init-db"
-      REGION                       = "us-west-2"
+      REGION                       = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -113,10 +113,10 @@ resource "aws_lambda_function" "lambda-presign" {
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT              = "952133486861"
+      ACCOUNT              = data.aws_caller_identity.current.account_id
       AWS_S3_BUCKET_NAME_0 = "static-site-952133486861-us-west-2-an"
       NAME                 = "lambda-presign"
-      REGION               = "us-west-2"
+      REGION               = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -150,10 +150,10 @@ resource "aws_lambda_function" "lambda-publisher" {
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT              = "952133486861"
+      ACCOUNT              = data.aws_caller_identity.current.account_id
       AWS_SQS_QUEUE_NAME_0 = "ingestion-queue"
       NAME                 = "lambda-publisher"
-      REGION               = "us-west-2"
+      REGION               = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -187,7 +187,7 @@ resource "aws_lambda_function" "lambda-search" {
   timeout                        = 15
   environment {
     variables = {
-      ACCOUNT                      = "952133486861"
+      ACCOUNT                      = data.aws_caller_identity.current.account_id
       AWS_RDS_CLUSTER_ARN_0        = "arn:aws:rds:us-west-2:952133486861:cluster:products-aurora"
       AWS_RDS_CLUSTER_DATA_API_0   = true
       AWS_RDS_CLUSTER_DB_NAME_0    = "produtos"
@@ -197,7 +197,7 @@ resource "aws_lambda_function" "lambda-search" {
       AWS_RDS_CLUSTER_PORT_0       = "5432"
       AWS_RDS_CLUSTER_SECRET_ARN_0 = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-6788012a-6256-4b26-a1a1-d42699e4aede-sWTR33"
       NAME                         = "lambda-search"
-      REGION                       = "us-west-2"
+      REGION                       = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -220,9 +220,6 @@ resource "aws_lambda_function" "lambda-search" {
 resource "aws_lambda_invocation" "init-db-invocation" {
   function_name = aws_lambda_function.lambda-init-db.function_name
   input         = "{}"
-  lifecycle {
-    ignore_changes = [input, triggers, lifecycle_scope, terraform_key]
-  }
   triggers = {
     rds_cluster          = "products-aurora"
     rds_cluster_instance = "products-aurora-instance"
@@ -231,25 +228,25 @@ resource "aws_lambda_invocation" "init-db-invocation" {
 }
 
 resource "aws_lambda_permission" "perm_aws_apigatewayv2_api_products-http-api_to_lambda-presign" {
-  function_name = aws_lambda_function.lambda-presign.function_name
-  statement_id  = "perm_aws_apigatewayv2_api_products-http-api_to_lambda-presign71127ad6b0391d05b58067d56d"
-  principal     = "apigateway.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = "${aws_apigatewayv2_api.products-http-api.execution_arn}/*/*"
+  function_name       = aws_lambda_function.lambda-presign.function_name
+  principal           = "apigateway.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = "${aws_apigatewayv2_api.products-http-api.execution_arn}/*/*"
+  statement_id_prefix = "perm_aws_apigatewayv2_api_products-http-api_to_lambda-presign"
 }
 
 resource "aws_lambda_permission" "perm_aws_apigatewayv2_api_products-http-api_to_lambda-publisher" {
-  function_name = aws_lambda_function.lambda-publisher.function_name
-  statement_id  = "perm_aws_apigatewayv2_api_products-http-api_to_lambda-publisher4a4eeccfe32aca529dbd29c887"
-  principal     = "apigateway.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = "${aws_apigatewayv2_api.products-http-api.execution_arn}/*/*"
+  function_name       = aws_lambda_function.lambda-publisher.function_name
+  principal           = "apigateway.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = "${aws_apigatewayv2_api.products-http-api.execution_arn}/*/*"
+  statement_id_prefix = "perm_aws_apigatewayv2_api_products-http-api_to_lambda-publisher"
 }
 
 resource "aws_lambda_permission" "perm_aws_apigatewayv2_api_products-http-api_to_lambda-search" {
-  function_name = aws_lambda_function.lambda-search.function_name
-  statement_id  = "perm_aws_apigatewayv2_api_products-http-api_to_lambda-search6ae2c4a7465b9fceea0ff7024a"
-  principal     = "apigateway.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = "${aws_apigatewayv2_api.products-http-api.execution_arn}/*/*"
+  function_name       = aws_lambda_function.lambda-search.function_name
+  principal           = "apigateway.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = "${aws_apigatewayv2_api.products-http-api.execution_arn}/*/*"
+  statement_id_prefix = "perm_aws_apigatewayv2_api_products-http-api_to_lambda-search"
 }
