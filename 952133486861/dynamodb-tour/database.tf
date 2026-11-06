@@ -14,10 +14,16 @@ resource "aws_dynamodb_table" "EventsOnDemand" {
     name = "EventId"
     type = "S"
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "EventsOnDemand"
     State          = "dynamodb-tour"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }
 
@@ -38,10 +44,16 @@ resource "aws_dynamodb_table" "Ledger" {
     name = "TxnId"
     type = "S"
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "Ledger"
     State          = "dynamodb-tour"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }
 
@@ -61,10 +73,16 @@ resource "aws_dynamodb_table" "MetricsAutoscaling" {
   lifecycle {
     ignore_changes = [read_capacity, write_capacity]
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "MetricsAutoscaling"
     State          = "dynamodb-tour"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }
 
@@ -79,17 +97,23 @@ resource "aws_dynamodb_table" "Orders" {
   table_class                 = "STANDARD"
   write_capacity              = 1
   attribute {
-    name = "OrderId"
+    name = "CreatedAt"
     type = "S"
   }
   attribute {
-    name = "CreatedAt"
+    name = "OrderId"
     type = "S"
+  }
+  point_in_time_recovery {
+    enabled = false
   }
   tags = {
     Name           = "Orders"
     State          = "dynamodb-tour"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }
 
@@ -105,10 +129,16 @@ resource "aws_dynamodb_table" "RestoredLatest" {
     name = "Id"
     type = "S"
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "RestoredLatest"
     State          = "dynamodb-tour"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }
 
@@ -124,10 +154,16 @@ resource "aws_dynamodb_table" "RestoredPointInTime" {
     name = "Id"
     type = "S"
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "RestoredPointInTime"
     State          = "dynamodb-tour"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }
 
@@ -143,7 +179,8 @@ resource "aws_dynamodb_table" "Sessions" {
     type = "S"
   }
   point_in_time_recovery {
-    enabled = true
+    enabled                 = true
+    recovery_period_in_days = 35
   }
   tags = {
     Name           = "Sessions"
@@ -167,11 +204,7 @@ resource "aws_dynamodb_table" "Users" {
   table_class                 = "STANDARD"
   write_capacity              = 1
   attribute {
-    name = "UserId"
-    type = "S"
-  }
-  attribute {
-    name = "ProfileType"
+    name = "Country"
     type = "S"
   }
   attribute {
@@ -179,7 +212,11 @@ resource "aws_dynamodb_table" "Users" {
     type = "S"
   }
   attribute {
-    name = "Country"
+    name = "Fingerprint"
+    type = "B"
+  }
+  attribute {
+    name = "ProfileType"
     type = "S"
   }
   attribute {
@@ -187,8 +224,8 @@ resource "aws_dynamodb_table" "Users" {
     type = "N"
   }
   attribute {
-    name = "Fingerprint"
-    type = "B"
+    name = "UserId"
+    type = "S"
   }
   global_secondary_index {
     name            = "ByCountry"
@@ -207,7 +244,7 @@ resource "aws_dynamodb_table" "Users" {
   global_secondary_index {
     name               = "ByProfileInclude"
     hash_key           = "ProfileType"
-    non_key_attributes = ["Email", "Country"]
+    non_key_attributes = ["Country", "Email"]
     projection_type    = "INCLUDE"
     read_capacity      = 1
     write_capacity     = 1
@@ -218,20 +255,26 @@ resource "aws_dynamodb_table" "Users" {
     range_key       = "Email"
   }
   local_secondary_index {
-    name            = "ByScoreAll"
-    projection_type = "ALL"
-    range_key       = "Score"
-  }
-  local_secondary_index {
     name               = "ByFingerprintInclude"
     non_key_attributes = ["Email"]
     projection_type    = "INCLUDE"
     range_key          = "Fingerprint"
   }
+  local_secondary_index {
+    name            = "ByScoreAll"
+    projection_type = "ALL"
+    range_key       = "Score"
+  }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "Users"
     State          = "dynamodb-tour"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }
 
@@ -239,14 +282,7 @@ resource "aws_dynamodb_table_item" "AdminUser" {
   table_name = aws_dynamodb_table.Users.name
   hash_key   = aws_dynamodb_table.Users.hash_key
   item = <<EOF
-{
-  "UserId": {"S": "USR-7"},
-  "ProfileType": {"S": "ADMIN"},
-  "Email": {"S": "alice@example.com"},
-  "Country": {"S": "BR"},
-  "Score": {"N": "980"},
-  "Tags": {"SS": ["vip", "beta"]}
-}
+{"Country":{"S":"BR"},"Email":{"S":"alice@example.com"},"ProfileType":{"S":"ADMIN"},"Score":{"N":"980"},"Tags":{"SS":["beta","vip"]},"UserId":{"S":"USR-7"}}
   EOF
   range_key = aws_dynamodb_table.Users.range_key
 }
@@ -255,12 +291,7 @@ resource "aws_dynamodb_table_item" "OrderPending" {
   table_name = aws_dynamodb_table.Orders.name
   hash_key   = aws_dynamodb_table.Orders.hash_key
   item = <<EOF
-{
-  "OrderId": {"S": "ORD-1002"},
-  "CreatedAt": {"S": "2026-02-01T08:15:00Z"},
-  "Total": {"N": "32.50"},
-  "Status": {"S": "PENDING"}
-}
+{"CreatedAt":{"S":"2026-02-01T08:15:00Z"},"OrderId":{"S":"ORD-1002"},"Status":{"S":"PENDING"},"Total":{"N":"32.5"}}
   EOF
   range_key = aws_dynamodb_table.Orders.range_key
 }
@@ -269,12 +300,7 @@ resource "aws_dynamodb_table_item" "OrderShipped" {
   table_name = aws_dynamodb_table.Orders.name
   hash_key   = aws_dynamodb_table.Orders.hash_key
   item = <<EOF
-{
-  "OrderId": {"S": "ORD-1001"},
-  "CreatedAt": {"S": "2026-01-15T10:30:00Z"},
-  "Total": {"N": "149.90"},
-  "Status": {"S": "SHIPPED"}
-}
+{"CreatedAt":{"S":"2026-01-15T10:30:00Z"},"OrderId":{"S":"ORD-1001"},"Status":{"S":"SHIPPED"},"Total":{"N":"149.9"}}
   EOF
   range_key = aws_dynamodb_table.Orders.range_key
 }
@@ -283,11 +309,7 @@ resource "aws_dynamodb_table_item" "SignupEvent" {
   table_name = aws_dynamodb_table.EventsOnDemand.name
   hash_key   = aws_dynamodb_table.EventsOnDemand.hash_key
   item = <<EOF
-{
-  "EventId": {"S": "EVT-abc123"},
-  "Type": {"S": "user.signup"},
-  "Payload": {"M": {"plan": {"S": "free"}, "referred": {"BOOL": false}}}
-}
+{"EventId":{"S":"EVT-abc123"},"Payload":{"M":{"plan":{"S":"free"},"referred":{"BOOL":false}}},"Type":{"S":"user.signup"}}
   EOF
   range_key = aws_dynamodb_table.EventsOnDemand.range_key
 }

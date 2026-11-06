@@ -7,6 +7,7 @@ resource "aws_lambda_event_source_mapping" "LedgerStreamMapping" {
   maximum_batching_window_in_seconds = 5
   maximum_record_age_in_seconds      = -1
   maximum_retry_attempts             = -1
+  parallelization_factor             = 1
   starting_position                  = "LATEST"
   tags = {
     Name           = "LedgerStreamMapping"
@@ -15,31 +16,33 @@ resource "aws_lambda_event_source_mapping" "LedgerStreamMapping" {
   }
 }
 
-data "archive_file" "archive_struct8-hub_StreamConsumer" {
-  output_path = "${path.module}/struct8-hub_StreamConsumer.zip"
-  source_dir  = "${path.module}/.external_modules/struct8-hub/prebuilt"
-  type        = "zip"
-}
-
 resource "aws_lambda_function" "StreamConsumer" {
   function_name                  = "StreamConsumer"
   architectures                  = ["arm64"]
   description                    = "Stream consumer running the Struct8 hub (code from Struct8/struct8-hub prebuilt). It reads the Ledger stream via the Event Source Mapping and reports each hop."
-  filename                       = data.archive_file.archive_struct8-hub_StreamConsumer.output_path
+  filename                       = "imported_lambda_placeholder.zip"
   handler                        = "index.handler"
   memory_size                    = 128
   publish                        = false
   reserved_concurrent_executions = -1
   role                           = aws_iam_role.StreamConsumer_role.arn
   runtime                        = "nodejs22.x"
-  source_code_hash               = data.archive_file.archive_struct8-hub_StreamConsumer.output_base64sha256
   timeout                        = 30
   environment {
     variables = {
+      ACCOUNT = "952133486861"
       NAME    = "StreamConsumer"
-      REGION  = data.aws_region.current.region
-      ACCOUNT = data.aws_caller_identity.current.account_id
+      REGION  = "us-west-2"
     }
+  }
+  ephemeral_storage {
+    size = 512
+  }
+  lifecycle {
+    ignore_changes = [filename, source_code_hash]
+  }
+  logging_config {
+    log_format = "Text"
   }
   tags = {
     Name           = "StreamConsumer"
