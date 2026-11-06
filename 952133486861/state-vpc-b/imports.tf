@@ -102,6 +102,26 @@ import {
 }
 
 import {
+  to = aws_security_group_rule.rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_icmp_8_0
+  id = "sg-0591fbf4f7d87b046_ingress_icmp_8_0_sg-04b511f5c1f8f4fdb"
+}
+
+import {
+  to = aws_security_group_rule.rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_tcp_22
+  id = "sg-0591fbf4f7d87b046_ingress_tcp_22_22_sg-04b511f5c1f8f4fdb"
+}
+
+import {
+  to = aws_security_group_rule.rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_tcp_80
+  id = "sg-0591fbf4f7d87b046_ingress_tcp_80_80_sg-04b511f5c1f8f4fdb"
+}
+
+import {
+  to = aws_security_group_rule.rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_udp_53
+  id = "sg-0591fbf4f7d87b046_ingress_udp_53_53_sg-04b511f5c1f8f4fdb"
+}
+
+import {
   to = aws_iam_policy.autoscaling_group_traffic-gen-asg_st_state-vpc-b
   id = "arn:aws:iam::952133486861:policy/autoscaling_group_traffic-gen-asg_st_state-vpc-b"
 }
