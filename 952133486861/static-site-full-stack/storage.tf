@@ -152,9 +152,6 @@ resource "aws_s3_object" "error-html" {
   EOF
   content_type = "text/html"
   key          = "error.html"
-  lifecycle {
-    ignore_changes = [acl, content]
-  }
   tags = {
     Name           = "error-html"
     State          = "static-site-full-stack"
@@ -395,9 +392,6 @@ resource "aws_s3_object" "index-html" {
   EOF
   content_type = "text/html"
   key          = "index.html"
-  lifecycle {
-    ignore_changes = [acl, content]
-  }
   tags = {
     Name           = "index-html"
     State          = "static-site-full-stack"

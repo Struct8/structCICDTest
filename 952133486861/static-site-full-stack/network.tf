@@ -102,9 +102,6 @@ EOF
   comment = "Rewrites /api/* paths by removing /api prefix before forwarding to Lambda Function URL"
   publish = true
   runtime = "cloudfront-js-2.0"
-  lifecycle {
-    ignore_changes = [publish]
-  }
   tags = {
     Name           = "path-rewrite-api-to-origin"
     State          = "static-site-full-stack"
