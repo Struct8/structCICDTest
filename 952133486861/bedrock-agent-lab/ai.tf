@@ -104,6 +104,9 @@ resource "aws_bedrockagentcore_harness" "agent_lab_orders" {
       }
     }
   }
+  lifecycle {
+    ignore_changes = [memory]
+  }
   memory {
     agentcore_memory_configuration {
       arn = aws_bedrockagentcore_memory.agent_lab_memory.arn
