@@ -12,16 +12,16 @@ data "aws_iam_policy_document" "lambda_function_lambda-ingestion_st_products-sea
     resources = [aws_rds_cluster.products-aurora.arn]
   }
   statement {
-    sid       = "AllowRDSSecretAccessproductsaurora"
-    effect    = "Allow"
-    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
-    resources = [aws_rds_cluster.products-aurora.master_user_secret[0].secret_arn]
-  }
-  statement {
     sid       = "AllowEventSourceRead"
     effect    = "Allow"
     actions   = ["sqs:DeleteMessage", "sqs:GetQueueAttributes", "sqs:ReceiveMessage"]
     resources = [aws_sqs_queue.ingestion-queue.arn]
+  }
+  statement {
+    sid       = "AllowRDSSecretAccessproductsaurora"
+    effect    = "Allow"
+    actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
+    resources = ["arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-6788012a-6256-4b26-a1a1-d42699e4aede-sWTR33"]
   }
 }
 
@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "lambda_function_lambda-init-db_st_products-searc
     sid       = "AllowRDSSecretAccessproductsaurora"
     effect    = "Allow"
     actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
-    resources = [aws_rds_cluster.products-aurora.master_user_secret[0].secret_arn]
+    resources = ["arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-6788012a-6256-4b26-a1a1-d42699e4aede-sWTR33"]
   }
 }
 
@@ -117,7 +117,7 @@ data "aws_iam_policy_document" "lambda_function_lambda-search_st_products-search
     sid       = "AllowRDSSecretAccessproductsaurora"
     effect    = "Allow"
     actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
-    resources = [aws_rds_cluster.products-aurora.master_user_secret[0].secret_arn]
+    resources = ["arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-6788012a-6256-4b26-a1a1-d42699e4aede-sWTR33"]
   }
 }
 
@@ -128,19 +128,8 @@ resource "aws_iam_policy" "lambda_function_lambda-search_st_products-search-stat
 }
 
 resource "aws_iam_role" "lambda-ingestion_role" {
-  name = "lambda-ingestion_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "lambda-ingestion_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -152,19 +141,8 @@ resource "aws_iam_role" "lambda-ingestion_role" {
 }
 
 resource "aws_iam_role" "lambda-init-db_role" {
-  name = "lambda-init-db_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "lambda-init-db_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -176,19 +154,8 @@ resource "aws_iam_role" "lambda-init-db_role" {
 }
 
 resource "aws_iam_role" "lambda-presign_role" {
-  name = "lambda-presign_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "lambda-presign_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -200,19 +167,8 @@ resource "aws_iam_role" "lambda-presign_role" {
 }
 
 resource "aws_iam_role" "lambda-publisher_role" {
-  name = "lambda-publisher_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "lambda-publisher_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -224,19 +180,8 @@ resource "aws_iam_role" "lambda-publisher_role" {
 }
 
 resource "aws_iam_role" "lambda-search_role" {
-  name = "lambda-search_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "lambda-search_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -273,15 +218,17 @@ resource "aws_iam_role_policy_attachment" "lambda_function_lambda-search_st_prod
 }
 
 resource "aws_acm_certificate" "hardstore-cert" {
-  domain_name       = "hardstore.cloudman.pro"
-  key_algorithm     = "RSA_2048"
-  region            = "us-east-1"
-  validation_method = "DNS"
+  domain_name               = "hardstore.cloudman.pro"
+  key_algorithm             = "RSA_2048"
+  region                    = "us-east-1"
+  subject_alternative_names = ["hardstore.cloudman.pro"]
+  validation_method         = "DNS"
   lifecycle {
     create_before_destroy = true
   }
   options {
     certificate_transparency_logging_preference = "ENABLED"
+    export                                      = "DISABLED"
   }
   tags = {
     Name           = "hardstore-cert"

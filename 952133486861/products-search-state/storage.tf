@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "static-site" {
-  bucket              = "static-site-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "static-site-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -14,7 +14,7 @@ resource "aws_s3_bucket_cors_configuration" "static-site_cors" {
   bucket = aws_s3_bucket.static-site.id
   cors_rule {
     allowed_headers = ["*"]
-    allowed_methods = ["PUT", "GET"]
+    allowed_methods = ["GET", "PUT"]
     allowed_origins = ["https://hardstore.cloudman.pro"]
     max_age_seconds = 3000
   }
@@ -61,7 +61,8 @@ resource "aws_s3_bucket_public_access_block" "static-site_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "static-site_configuration" {
   bucket = aws_s3_bucket.static-site.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -76,13 +77,87 @@ resource "aws_s3_bucket_versioning" "static-site_versioning" {
   }
 }
 
-resource "aws_s3_object" "site-files" {
-  for_each     = fileset("${path.module}/.external_modules/CloudMan/LambdaFiles/produtos-search/site", "**")
-  source       = "${path.module}/.external_modules/CloudMan/LambdaFiles/produtos-search/site/${each.value}"
+resource "aws_s3_object" "site-files_admin_html" {
   bucket       = aws_s3_bucket.static-site.bucket
-  content_type = lookup({ "html" = "text/html; charset=utf-8", "js" = "text/javascript; charset=utf-8", "css" = "text/css; charset=utf-8", "json" = "application/json", "svg" = "image/svg+xml" }, lower(regex("[^.]*$", each.value)), "application/octet-stream")
-  etag         = filemd5("${path.module}/.external_modules/CloudMan/LambdaFiles/produtos-search/site/${each.value}")
-  key          = each.value
+  content_type = "text/html; charset=utf-8"
+  key          = "admin.html"
+  tags = {
+    Name           = "site-files"
+    State          = "products-search-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "site-files_img_seed_gpu_svg" {
+  bucket       = aws_s3_bucket.static-site.bucket
+  content_type = "image/svg+xml"
+  key          = "img/seed/gpu.svg"
+  tags = {
+    Name           = "site-files"
+    State          = "products-search-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "site-files_img_seed_keyboard_svg" {
+  bucket       = aws_s3_bucket.static-site.bucket
+  content_type = "image/svg+xml"
+  key          = "img/seed/keyboard.svg"
+  tags = {
+    Name           = "site-files"
+    State          = "products-search-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "site-files_img_seed_laptop_svg" {
+  bucket       = aws_s3_bucket.static-site.bucket
+  content_type = "image/svg+xml"
+  key          = "img/seed/laptop.svg"
+  tags = {
+    Name           = "site-files"
+    State          = "products-search-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "site-files_img_seed_monitor_svg" {
+  bucket       = aws_s3_bucket.static-site.bucket
+  content_type = "image/svg+xml"
+  key          = "img/seed/monitor.svg"
+  tags = {
+    Name           = "site-files"
+    State          = "products-search-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "site-files_img_seed_mouse_svg" {
+  bucket       = aws_s3_bucket.static-site.bucket
+  content_type = "image/svg+xml"
+  key          = "img/seed/mouse.svg"
+  tags = {
+    Name           = "site-files"
+    State          = "products-search-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "site-files_img_seed_storage_svg" {
+  bucket       = aws_s3_bucket.static-site.bucket
+  content_type = "image/svg+xml"
+  key          = "img/seed/storage.svg"
+  tags = {
+    Name           = "site-files"
+    State          = "products-search-state"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "site-files_index_html" {
+  bucket       = aws_s3_bucket.static-site.bucket
+  content_type = "text/html; charset=utf-8"
+  key          = "index.html"
   tags = {
     Name           = "site-files"
     State          = "products-search-state"

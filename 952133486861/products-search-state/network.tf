@@ -11,10 +11,11 @@ resource "aws_vpc" "products-vpc" {
 }
 
 resource "aws_subnet" "private-a" {
-  vpc_id                  = aws_vpc.products-vpc.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.7.0.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.products-vpc.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.7.0.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-a"
     State          = "products-search-state"
@@ -23,10 +24,11 @@ resource "aws_subnet" "private-a" {
 }
 
 resource "aws_subnet" "private-b" {
-  vpc_id                  = aws_vpc.products-vpc.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.7.1.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.products-vpc.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.7.1.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "private-b"
     State          = "products-search-state"
@@ -72,6 +74,7 @@ resource "aws_route53_record" "alias_aaaa_aws_cloudfront_distribution_site-cdn_h
 resource "aws_security_group" "rds_cluster_products-aurora_group" {
   name                   = "rds_cluster_products-aurora_group"
   vpc_id                 = aws_vpc.products-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "rds_cluster_products-aurora_group"
@@ -94,9 +97,11 @@ resource "aws_apigatewayv2_api" "products-http-api" {
   description   = "HTTP API de busca e detalhe de produtos"
   protocol_type = "HTTP"
   cors_configuration {
-    allow_headers = ["content-type"]
-    allow_methods = ["GET", "POST", "OPTIONS"]
-    allow_origins = ["*"]
+    allow_credentials = false
+    allow_headers     = ["content-type"]
+    allow_methods     = ["GET", "OPTIONS", "POST"]
+    allow_origins     = ["*"]
+    max_age           = 0
   }
   tags = {
     Name           = "products-http-api"
@@ -154,6 +159,12 @@ resource "aws_apigatewayv2_stage" "default-stage" {
   api_id      = aws_apigatewayv2_api.products-http-api.id
   name        = "$default"
   auto_deploy = true
+  default_route_settings {
+    data_trace_enabled       = false
+    detailed_metrics_enabled = false
+    throttling_burst_limit   = 0
+    throttling_rate_limit    = 0
+  }
   tags = {
     Name           = "default-stage"
     State          = "products-search-state"
@@ -170,45 +181,66 @@ resource "aws_cloudfront_distribution" "site-cdn" {
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"
   default_cache_behavior {
-    cache_policy_id          = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.policy_cors_s3origin.id
+    cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    origin_request_policy_id = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf"
     target_origin_id         = "site-origin"
     allowed_methods          = ["GET", "HEAD", "OPTIONS"]
     cached_methods           = ["GET", "HEAD", "OPTIONS"]
     viewer_protocol_policy   = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
-    cache_policy_id          = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.policy_allviewerexcepthostheader.id
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
     target_origin_id         = "api-origin"
     allowed_methods          = ["GET", "HEAD", "OPTIONS"]
     cached_methods           = ["GET", "HEAD"]
+    compress                 = false
+    default_ttl              = 0
+    max_ttl                  = 0
+    min_ttl                  = 0
     path_pattern             = "/busca*"
+    smooth_streaming         = false
     viewer_protocol_policy   = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
-    cache_policy_id          = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.policy_allviewerexcepthostheader.id
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
     target_origin_id         = "api-origin"
     allowed_methods          = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods           = ["GET", "HEAD"]
+    compress                 = false
+    default_ttl              = 0
+    max_ttl                  = 0
+    min_ttl                  = 0
     path_pattern             = "/produtos*"
+    smooth_streaming         = false
     viewer_protocol_policy   = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
-    cache_policy_id          = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.policy_allviewerexcepthostheader.id
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
     target_origin_id         = "api-origin"
     allowed_methods          = ["GET", "HEAD", "OPTIONS"]
     cached_methods           = ["GET", "HEAD"]
+    compress                 = false
+    default_ttl              = 0
+    max_ttl                  = 0
+    min_ttl                  = 0
     path_pattern             = "/upload-url*"
+    smooth_streaming         = false
     viewer_protocol_policy   = "redirect-to-https"
-  }
-  origin {
-    domain_name                 = aws_s3_bucket.static-site.bucket_regional_domain_name
-    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_static-site.id
-    origin_id                   = "site-origin"
-    response_completion_timeout = 0
+    grpc_config {
+      enabled = false
+    }
   }
   origin {
     domain_name                 = "${aws_apigatewayv2_api.products-http-api.id}.execute-api.${data.aws_region.current.region}.amazonaws.com"
@@ -220,6 +252,12 @@ resource "aws_cloudfront_distribution" "site-cdn" {
       origin_protocol_policy = "https-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
+  }
+  origin {
+    domain_name                 = aws_s3_bucket.static-site.bucket_regional_domain_name
+    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_static-site.id
+    origin_id                   = "site-origin"
+    response_completion_timeout = 0
   }
   restrictions {
     geo_restriction {
