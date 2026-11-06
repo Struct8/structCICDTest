@@ -1,6 +1,5 @@
 resource "aws_iam_instance_profile" "ecs-asg-k6_profile" {
   name = "ecs-asg-k6_profile"
-  path = "/"
   role = aws_iam_role.ecs-asg-k6_role.name
   tags = {
     Name           = "ecs-asg-k6_profile"
@@ -11,7 +10,6 @@ resource "aws_iam_instance_profile" "ecs-asg-k6_profile" {
 
 resource "aws_iam_instance_profile" "ecs-asg-nat-instance_profile" {
   name = "ecs-asg-nat-instance_profile"
-  path = "/"
   role = aws_iam_role.ecs-asg-nat-instance_role.name
   tags = {
     Name           = "ecs-asg-nat-instance_profile"
@@ -22,7 +20,6 @@ resource "aws_iam_instance_profile" "ecs-asg-nat-instance_profile" {
 
 resource "aws_iam_instance_profile" "ecs-asg-nodes_profile" {
   name = "ecs-asg-nodes_profile"
-  path = "/"
   role = aws_iam_role.ecs-asg-nodes_role.name
   tags = {
     Name           = "ecs-asg-nodes_profile"
@@ -68,8 +65,19 @@ resource "aws_iam_policy" "ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-
 }
 
 resource "aws_iam_role" "ecs-asg-k6_role" {
-  name                  = "ecs-asg-k6_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "ecs-asg-k6_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -81,8 +89,19 @@ resource "aws_iam_role" "ecs-asg-k6_role" {
 }
 
 resource "aws_iam_role" "ecs-asg-nat-instance_role" {
-  name                  = "ecs-asg-nat-instance_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "ecs-asg-nat-instance_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -94,8 +113,19 @@ resource "aws_iam_role" "ecs-asg-nat-instance_role" {
 }
 
 resource "aws_iam_role" "ecs-asg-nodes_role" {
-  name                  = "ecs-asg-nodes_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "ecs-asg-nodes_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -107,8 +137,19 @@ resource "aws_iam_role" "ecs-asg-nodes_role" {
 }
 
 resource "aws_iam_role" "execution_role_ecs_ecs-asg-hub" {
-  name                  = "execution_role_ecs_ecs-asg-hub"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "execution_role_ecs_ecs-asg-hub"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -120,8 +161,19 @@ resource "aws_iam_role" "execution_role_ecs_ecs-asg-hub" {
 }
 
 resource "aws_iam_role" "task_role_ecs_ecs-asg-hub" {
-  name                  = "task_role_ecs_ecs-asg-hub"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "task_role_ecs_ecs-asg-hub"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -137,7 +189,7 @@ resource "aws_iam_role_policy_attachment" "autoscaling_group_ecs-asg-nodes_st_ec
   role       = aws_iam_role.ecs-asg-nodes_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state_attach_execution_role_ecs_ecs-asg-hub" {
+resource "aws_iam_role_policy_attachment" "ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state_attach" {
   policy_arn = aws_iam_policy.ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state.arn
   role       = aws_iam_role.execution_role_ecs_ecs-asg-hub.name
 }

@@ -1,7 +1,27 @@
 {
-  "external_repositories": [],
-  "action": "destroy",
-  "trigger_id": "1793968444685",
+  "external_repositories": [
+    {
+      "repo_name": "struct8-templates",
+      "org": "Struct8",
+      "branch": "main",
+      "target_dir": ".external_modules/struct8-templates",
+      "folders": [
+        "templates/vpc-k6-load-generator/v2/user_data",
+        "templates/ec2-nat-private/v1/user_data"
+      ]
+    },
+    {
+      "repo_name": "struct8-hub",
+      "org": "Struct8",
+      "branch": "main",
+      "target_dir": ".external_modules/struct8-hub",
+      "folders": [
+        "image"
+      ]
+    }
+  ],
+  "action": "apply",
+  "trigger_id": "1793970389279",
   "triggered_by": "assistant.rmay_struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
