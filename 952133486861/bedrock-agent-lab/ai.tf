@@ -27,11 +27,13 @@ resource "aws_bedrock_guardrail" "agent-lab-guardrail" {
       name       = "Travel"
       definition = "Planning or taking trips: destinations, routes and transport between cities or countries, flights, trains, hotels, tourism and visas."
       examples   = ["How can I get to Paris?", "What is the cheapest flight to Lisbon?", "Which hotels are near the Eiffel Tower?", "Do I need a visa to visit Japan?"]
+      type       = "DENY"
     }
     topics_config {
       name       = "General knowledge"
       definition = "Facts about geography, history, science, politics, sports and famous people, such as capitals, dates of events, records and definitions."
       examples   = ["What is the capital of France?", "Who won the last World Cup?", "When did World War II end?", "How far is the Moon from Earth?"]
+      type       = "DENY"
     }
   }
 }
