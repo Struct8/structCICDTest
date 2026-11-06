@@ -202,6 +202,11 @@ import {
 }
 
 import {
+  to = aws_lambda_permission.perm_aws_sns_topic_fanout-topic_to_fanout-consumer-a
+  id = "fanout-consumer-a/perm_aws_sns_topic_fanout-topic_to_fanout-consumer-a18dae25f5d3b2bab656e4c9e5d"
+}
+
+import {
   to = aws_cloudwatch_event_target.tgt-eventpattern-queue
   id = "tour-bus/rule-event-pattern/terraform-CTYybFysk314QknmxAY7TXCAOI"
 }

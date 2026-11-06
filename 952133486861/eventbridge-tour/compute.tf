@@ -156,9 +156,9 @@ resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_rule-schedule-1
 }
 
 resource "aws_lambda_permission" "perm_aws_sns_topic_fanout-topic_to_fanout-consumer-a" {
-  function_name       = aws_lambda_function.fanout-consumer-a.function_name
-  principal           = "sns.amazonaws.com"
-  action              = "lambda:InvokeFunction"
-  source_arn          = aws_sns_topic.fanout-topic.arn
-  statement_id_prefix = "perm_aws_sns_topic_fanout-topic_to_fanout-consumer-a"
+  function_name = aws_lambda_function.fanout-consumer-a.function_name
+  statement_id  = "perm_aws_sns_topic_fanout-topic_to_fanout-consumer-a18dae25f5d3b2bab656e4c9e5d"
+  principal     = "sns.amazonaws.com"
+  action        = "lambda:InvokeFunction"
+  source_arn    = aws_sns_topic.fanout-topic.arn
 }
