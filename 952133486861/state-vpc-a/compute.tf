@@ -111,9 +111,6 @@ EOFUData
   enclave_options {
     enabled = false
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
@@ -370,9 +367,6 @@ EOFUData
       spot_instance_type             = "one-time"
     }
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_protocol_ipv6          = "enabled"
@@ -396,10 +390,10 @@ EOFUData
     }
   }
   tags = {
+    Struct8Debug   = "FX2YywXH644G8HUw23NLU"
     Name           = "traffic-gen-private"
     State          = "state-vpc-a"
     Struct8Creator = "rmay struct"
-    Struct8Debug   = "FX2YywXH644G8HUw23NLU"
   }
 }
 
@@ -484,9 +478,6 @@ EOFUData
       spot_instance_type             = "one-time"
     }
   }
-  lifecycle {
-    ignore_changes = [user_data_replace_on_change]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_protocol_ipv6          = "enabled"
@@ -510,9 +501,9 @@ EOFUData
     }
   }
   tags = {
+    Struct8Debug   = "Sl9JhZ0nMqByjOi8dVpJa"
     Name           = "traffic-gen-public"
     State          = "state-vpc-a"
     Struct8Creator = "rmay struct"
-    Struct8Debug   = "Sl9JhZ0nMqByjOi8dVpJa"
   }
 }

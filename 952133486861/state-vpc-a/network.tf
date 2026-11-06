@@ -19,10 +19,10 @@ resource "aws_vpc_endpoint" "dynamodb-endpoint-a_DynamoDB" {
   route_table_ids   = [aws_route_table.rt-vpc-a-private.id]
   vpc_endpoint_type = "Gateway"
   tags = {
+    DifName        = "dynamodb-endpoint-a_DynamoDB"
     Name           = "dynamodb-endpoint-a"
     State          = "state-vpc-a"
     Struct8Creator = "rmay struct"
-    DifName        = "dynamodb-endpoint-a_DynamoDB"
   }
 }
 
@@ -33,10 +33,10 @@ resource "aws_vpc_endpoint" "s3-endpoint-a_S3" {
   route_table_ids   = [aws_route_table.rt-vpc-a-private.id]
   vpc_endpoint_type = "Gateway"
   tags = {
+    DifName        = "s3-endpoint-a_S3"
     Name           = "s3-endpoint-a"
     State          = "state-vpc-a"
     Struct8Creator = "rmay struct"
-    DifName        = "s3-endpoint-a_S3"
   }
 }
 
