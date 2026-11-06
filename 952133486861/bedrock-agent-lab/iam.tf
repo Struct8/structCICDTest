@@ -15,6 +15,12 @@ resource "aws_iam_policy" "bedrockagentcore_gateway_agent-lab-gateway_st_bedrock
 
 data "aws_iam_policy_document" "bedrockagentcore_harness_agent_lab_orders_st_bedrock-agent-lab_doc" {
   statement {
+    sid       = "AgentCoreGatewayAccess"
+    effect    = "Allow"
+    actions   = ["bedrock-agentcore:InvokeGateway"]
+    resources = [aws_bedrockagentcore_gateway.agent-lab-gateway.gateway_arn]
+  }
+  statement {
     sid       = "AgentCoreMemory"
     effect    = "Allow"
     actions   = ["bedrock-agentcore:CreateEvent", "bedrock-agentcore:DeleteEvent", "bedrock-agentcore:GetEvent", "bedrock-agentcore:ListEvents", "bedrock-agentcore:RetrieveMemoryRecords"]
@@ -88,6 +94,12 @@ resource "aws_iam_policy" "bedrockagentcore_harness_agent_lab_orders_st_bedrock-
 
 data "aws_iam_policy_document" "lambda_function_agent-lab-chat_st_bedrock-agent-lab_doc" {
   statement {
+    sid       = "AllowApplyGuardrail"
+    effect    = "Allow"
+    actions   = ["bedrock:ApplyGuardrail"]
+    resources = [aws_bedrock_guardrail.agent-lab-guardrail.guardrail_arn]
+  }
+  statement {
     sid       = "AllowInvokeHarness"
     effect    = "Allow"
     actions   = ["bedrock-agentcore:InvokeAgentRuntime", "bedrock-agentcore:InvokeHarness"]
@@ -104,12 +116,6 @@ data "aws_iam_policy_document" "lambda_function_agent-lab-chat_st_bedrock-agent-
     effect    = "Allow"
     actions   = ["xray:PutTelemetryRecords", "xray:PutTraceSegments"]
     resources = ["*"]
-  }
-  statement {
-    sid       = "AllowApplyGuardrail"
-    effect    = "Allow"
-    actions   = ["bedrock:ApplyGuardrail"]
-    resources = ["arn:aws:bedrock:us-west-2:952133486861:guardrail/u0z5jq6ckxrt"]
   }
 }
 
@@ -223,9 +229,6 @@ resource "aws_kms_key" "agent-lab-key" {
   multi_region                       = false
   policy                             = "{\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::952133486861:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}"
   rotation_period_in_days            = 365
-  lifecycle {
-    ignore_changes = [bypass_policy_lockout_safety_check, deletion_window_in_days]
-  }
   tags = {
     Name           = "agent-lab-key"
     State          = "bedrock-agent-lab"

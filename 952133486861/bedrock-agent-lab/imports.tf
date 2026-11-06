@@ -62,11 +62,6 @@ import {
 }
 
 import {
-  to = aws_iam_policy.lambda_function_agent-lab-chat_st_bedrock-agent-lab
-  id = "arn:aws:iam::952133486861:policy/lambda_function_agent-lab-chat_st_bedrock-agent-lab"
-}
-
-import {
   to = aws_kms_key.agent-lab-key
   id = "65941ad7-3133-44f5-896d-7c9e3987f16e"
 }
@@ -109,6 +104,11 @@ import {
 import {
   to = aws_iam_role.agent-lab-orders-tool_role
   id = "agent-lab-orders-tool_role"
+}
+
+import {
+  to = aws_iam_role_policy_attachment.lambda_function_agent-lab-chat_st_bedrock-agent-lab_attach
+  id = "agent-lab-chat_role/arn:aws:iam::952133486861:policy/lambda_function_agent-lab-chat_st_bedrock-agent-lab"
 }
 
 import {
@@ -167,8 +167,8 @@ import {
 }
 
 import {
-  to = aws_iam_role_policy_attachment.lambda_function_agent-lab-chat_st_bedrock-agent-lab_attach
-  id = "agent-lab-chat_role/arn:aws:iam::952133486861:policy/lambda_function_agent-lab-chat_st_bedrock-agent-lab"
+  to = aws_iam_policy.lambda_function_agent-lab-chat_st_bedrock-agent-lab
+  id = "arn:aws:iam::952133486861:policy/lambda_function_agent-lab-chat_st_bedrock-agent-lab"
 }
 
 import {

@@ -91,9 +91,6 @@ resource "aws_bedrockagentcore_harness" "agent_lab_orders" {
   max_iterations     = 10
   max_tokens         = 4096
   timeout_seconds    = 90
-  lifecycle {
-    ignore_changes = [environment, memory]
-  }
   memory {
     agentcore_memory_configuration {
       arn = aws_bedrockagentcore_memory.agent_lab_memory.arn
@@ -126,7 +123,7 @@ resource "aws_bedrockagentcore_harness" "agent_lab_orders" {
     type = "agentcore_gateway"
     config {
       agentcore_gateway {
-        gateway_arn = "arn:aws:bedrock-agentcore:us-west-2:952133486861:gateway/agent-lab-gateway-bevszphca3"
+        gateway_arn = aws_bedrockagentcore_gateway.agent-lab-gateway.gateway_arn
         outbound_auth {
           aws_iam = true
         }
