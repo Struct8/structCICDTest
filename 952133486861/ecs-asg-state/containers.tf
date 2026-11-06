@@ -2,6 +2,12 @@ resource "aws_ecr_repository" "ecs-asg-hub-ecr" {
   name                 = "ecs-asg-hub-ecr"
   force_delete         = true
   image_tag_mutability = "MUTABLE"
+  encryption_configuration {
+    encryption_type = "AES256"
+  }
+  image_scanning_configuration {
+    scan_on_push = false
+  }
   tags = {
     Name           = "ecs-asg-hub-ecr"
     State          = "ecs-asg-state"
@@ -32,6 +38,10 @@ resource "aws_ecs_capacity_provider" "asg-ec2-cp" {
 
 resource "aws_ecs_cluster" "ecs-asg-cluster" {
   name = "ecs-asg-cluster"
+  setting {
+    name  = "containerInsights"
+    value = "disabled"
+  }
   tags = {
     Name           = "ecs-asg-cluster"
     State          = "ecs-asg-state"
@@ -45,18 +55,24 @@ resource "aws_ecs_cluster_capacity_providers" "assoc_cp_to_ecs-asg-cluster" {
 }
 
 resource "aws_ecs_service" "ecs-asg-hub_service" {
-  name                    = "ecs-asg-hub_service"
-  cluster                 = aws_ecs_cluster.ecs-asg-cluster.id
-  desired_count           = 1
-  enable_ecs_managed_tags = true
-  force_delete            = true
-  propagate_tags          = "TASK_DEFINITION"
-  scheduling_strategy     = "REPLICA"
-  task_definition         = "${aws_ecs_task_definition.ecs-asg-hub.family}:${aws_ecs_task_definition.ecs-asg-hub.revision}"
+  name                          = "ecs-asg-hub_service"
+  availability_zone_rebalancing = "DISABLED"
+  cluster                       = aws_ecs_cluster.ecs-asg-cluster.id
+  desired_count                 = 1
+  enable_ecs_managed_tags       = true
+  force_delete                  = true
+  iam_role                      = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+  propagate_tags                = "TASK_DEFINITION"
+  scheduling_strategy           = "REPLICA"
+  task_definition               = "${aws_ecs_task_definition.ecs-asg-hub.family}:${aws_ecs_task_definition.ecs-asg-hub.revision}"
   capacity_provider_strategy {
     base              = 0
     capacity_provider = aws_ecs_capacity_provider.asg-ec2-cp.name
     weight            = 1
+  }
+  deployment_configuration {
+    bake_time_in_minutes = "0"
+    strategy             = "ROLLING"
   }
   lifecycle {
     ignore_changes = [desired_count]
@@ -75,13 +91,13 @@ resource "aws_ecs_service" "ecs-asg-hub_service" {
     State          = "ecs-asg-state"
     Struct8Creator = "rmay struct"
   }
-  depends_on = [aws_lb_listener.ecs-asg-listener, terraform_data.seed_ecs-asg-hub-ecr]
+  depends_on = [aws_lb_listener.ecs-asg-listener]
 }
 
 locals {
   container_def_ecs-asg-hub_hub = {
     name      = "hub"
-    image     = "${aws_ecr_repository.ecs-asg-hub-ecr.repository_url}:latest"
+    image     = "952133486861.dkr.ecr.us-west-2.amazonaws.com/ecs-asg-hub-ecr:latest"
     essential = true
     cpu       = 128
     memory    = 85
@@ -92,6 +108,14 @@ locals {
       }
     ]
     environment = [
+      {
+        name  = "ACCOUNT"
+        value = "952133486861"
+      },
+      {
+        name  = "AWS_ECS_CAPACITY_PROVIDER_NAME_0"
+        value = tostring(aws_ecs_capacity_provider.asg-ec2-cp.name)
+      },
       {
         name  = "HUB_LOADTEST"
         value = "on"
@@ -106,15 +130,7 @@ locals {
       },
       {
         name  = "REGION"
-        value = tostring(data.aws_region.current.region)
-      },
-      {
-        name  = "ACCOUNT"
-        value = tostring(data.aws_caller_identity.current.account_id)
-      },
-      {
-        name  = "AWS_ECS_CAPACITY_PROVIDER_NAME_0"
-        value = "asg-ec2-cp"
+        value = "us-west-2"
       }
     ]
     mountPoints            = []
@@ -139,5 +155,5 @@ resource "aws_ecs_task_definition" "ecs-asg-hub" {
     State          = "ecs-asg-state"
     Struct8Creator = "rmay struct"
   }
-  depends_on = [aws_iam_role_policy_attachment.ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state_attach]
+  depends_on = [aws_iam_role_policy_attachment.ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state_attach_execution_role_ecs_ecs-asg-hub]
 }
