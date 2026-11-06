@@ -11,12 +11,12 @@ resource "aws_lambda_function" "ProcessCUR" {
   timeout                        = 120
   environment {
     variables = {
-      ACCOUNT              = "952133486861"
+      ACCOUNT              = data.aws_caller_identity.current.account_id
       AWS_S3_BUCKET_NAME_0 = "struct8-lab-cur-952133486861-usw2"
       DAYS_TO_RETAIN       = "60"
       MONTHS_TO_RETAIN     = "24"
       NAME                 = "ProcessCUR"
-      REGION               = "us-west-2"
+      REGION               = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -37,9 +37,9 @@ resource "aws_lambda_function" "ProcessCUR" {
 }
 
 resource "aws_lambda_permission" "perm_aws_s3_bucket_your-bucket-cost-usage-report_to_ProcessCUR" {
-  function_name = aws_lambda_function.ProcessCUR.function_name
-  statement_id  = "perm_aws_s3_bucket_your-bucket-cost-usage-report_to_ProcessCUR77213e3b53da5095fcb0b11f61"
-  principal     = "s3.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_s3_bucket.your-bucket-cost-usage-report.arn
+  function_name       = aws_lambda_function.ProcessCUR.function_name
+  principal           = "s3.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_s3_bucket.your-bucket-cost-usage-report.arn
+  statement_id_prefix = "perm_aws_s3_bucket_your-bucket-cost-usage-report_to_ProcessCUR"
 }

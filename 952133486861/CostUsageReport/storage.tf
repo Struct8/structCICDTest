@@ -3,10 +3,10 @@ resource "aws_s3_bucket" "your-bucket-cost-usage-report" {
   force_destroy       = false
   object_lock_enabled = false
   tags = {
+    Struct8Management = "Struct8CUR"
     Name              = "your-bucket-cost-usage-report"
     State             = "CostUsageReport"
     Struct8Creator    = "rmay struct"
-    Struct8Management = "Struct8CUR"
   }
 }
 
