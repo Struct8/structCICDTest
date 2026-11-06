@@ -3,10 +3,10 @@ resource "aws_s3_bucket" "your-bucket-cost-usage-report" {
   force_destroy       = false
   object_lock_enabled = false
   tags = {
-    Struct8Management = "Struct8CUR"
     Name              = "your-bucket-cost-usage-report"
     State             = "CostUsageReport"
     Struct8Creator    = "rmay struct"
+    Struct8Management = "Struct8CUR"
   }
 }
 
@@ -77,7 +77,8 @@ resource "aws_s3_bucket_public_access_block" "your-bucket-cost-usage-report_bloc
 resource "aws_s3_bucket_server_side_encryption_configuration" "your-bucket-cost-usage-report_configuration" {
   bucket = aws_s3_bucket.your-bucket-cost-usage-report.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
