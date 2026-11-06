@@ -78,11 +78,13 @@ resource "aws_cloudwatch_event_rule" "Rule2" {
 }
 
 resource "aws_cloudwatch_event_target" "Target1" {
-  arn  = aws_sqs_queue.Queue1.arn
-  rule = aws_cloudwatch_event_rule.Rule1.name
+  target_id = "terraform-vtUFeaQA2UOuQTRgxL6uWJeae8"
+  arn       = aws_sqs_queue.Queue1.arn
+  rule      = aws_cloudwatch_event_rule.Rule1.name
 }
 
 resource "aws_cloudwatch_event_target" "Target2" {
-  arn  = aws_sqs_queue.Queue1.arn
-  rule = aws_cloudwatch_event_rule.Rule2.name
+  target_id = "terraform-cPmhrSegq2ZMy5CEOtVnRINxBv"
+  arn       = aws_sqs_queue.Queue1.arn
+  rule      = aws_cloudwatch_event_rule.Rule2.name
 }
