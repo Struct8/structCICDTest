@@ -52,32 +52,10 @@ resource "aws_sns_topic_subscription" "codebuild-lab-email" {
 }
 
 resource "aws_cloudwatch_event_rule" "codebuild-lab-build-finished" {
-  name        = "codebuild-lab-build-finished"
-  description = "Every finished build of the lab projects, sent to the notifications topic."
-  event_pattern = <<EOF
-{
-  "source": [
-    "aws.codebuild"
-  ],
-  "detail-type": [
-    "CodeBuild Build State Change"
-  ],
-  "detail": {
-    "build-status": [
-      "SUCCEEDED",
-      "FAILED",
-      "STOPPED"
-    ],
-    "project-name": [
-      "${aws_codebuild_project.codebuild-lab-pr-check.name}",
-      "${aws_codebuild_project.codebuild-lab-release.name}",
-      "${aws_codebuild_project.codebuild-lab-runner.name}",
-      "${local.aws_codebuild_project_codebuild_lab_integration_name}"
-    ]
-  }
-}
-  EOF
-  state = "ENABLED"
+  name          = "codebuild-lab-build-finished"
+  description   = "Every finished build of the lab projects, sent to the notifications topic."
+  event_pattern = "{\"detail\":{\"build-status\":[\"SUCCEEDED\",\"FAILED\",\"STOPPED\"],\"project-name\":[\"codebuild-lab-pr-check\",\"codebuild-lab-release\",\"codebuild-lab-runner\",\"codebuild-lab-integration\"]},\"detail-type\":[\"CodeBuild Build State Change\"],\"source\":[\"aws.codebuild\"]}"
+  state         = "ENABLED"
   tags = {
     Name           = "codebuild-lab-build-finished"
     State          = "codebuild-lab-ci"
@@ -87,27 +65,10 @@ resource "aws_cloudwatch_event_rule" "codebuild-lab-build-finished" {
 }
 
 resource "aws_cloudwatch_event_rule" "codebuild-lab-release-succeeded" {
-  name        = "codebuild-lab-release-succeeded"
-  description = "A release build that succeeded starts the integration tests."
-  event_pattern = <<EOF
-{
-  "source": [
-    "aws.codebuild"
-  ],
-  "detail-type": [
-    "CodeBuild Build State Change"
-  ],
-  "detail": {
-    "build-status": [
-      "SUCCEEDED"
-    ],
-    "project-name": [
-      "${aws_codebuild_project.codebuild-lab-release.name}"
-    ]
-  }
-}
-  EOF
-  state = "ENABLED"
+  name          = "codebuild-lab-release-succeeded"
+  description   = "A release build that succeeded starts the integration tests."
+  event_pattern = "{\"detail\":{\"build-status\":[\"SUCCEEDED\"],\"project-name\":[\"codebuild-lab-release\"]},\"detail-type\":[\"CodeBuild Build State Change\"],\"source\":[\"aws.codebuild\"]}"
+  state         = "ENABLED"
   tags = {
     Name           = "codebuild-lab-release-succeeded"
     State          = "codebuild-lab-ci"
@@ -116,21 +77,22 @@ resource "aws_cloudwatch_event_rule" "codebuild-lab-release-succeeded" {
 }
 
 resource "aws_cloudwatch_event_target" "notify-email" {
-  arn  = aws_sns_topic.codebuild-lab-notifications.arn
-  rule = aws_cloudwatch_event_rule.codebuild-lab-build-finished.name
+  target_id = "terraform-skTYmYql1mRLpLj3rWFqrUMh5H"
+  arn       = aws_sns_topic.codebuild-lab-notifications.arn
+  rule      = aws_cloudwatch_event_rule.codebuild-lab-build-finished.name
   input_transformer {
     input_template = "\"CodeBuild <project>: <status> at <time>. Build <build>\""
     input_paths = {
+      build   = "$.detail.build-id"
       project = "$.detail.project-name"
       status  = "$.detail.build-status"
-      build   = "$.detail.build-id"
       time    = "$.time"
     }
   }
 }
 
 resource "aws_cloudwatch_event_target" "release-integration" {
-  arn      = local.aws_codebuild_project_codebuild_lab_integration_arn
-  role_arn = aws_iam_role.role_eventbridge_codebuild-lab-release-succeeded.arn
-  rule     = aws_cloudwatch_event_rule.codebuild-lab-release-succeeded.name
+  target_id = "terraform-F2Jvm39DZIZ81zhATfWnYrYELh"
+  arn       = "arn:aws:codebuild:us-west-2:952133486861:project/codebuild-lab-integration"
+  rule      = aws_cloudwatch_event_rule.codebuild-lab-release-succeeded.name
 }

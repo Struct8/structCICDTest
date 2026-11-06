@@ -6,7 +6,7 @@ resource "aws_codebuild_project" "codebuild-lab-pr-check" {
     report_build_status = true
     type                = "GITHUB"
     auth {
-      resource = data.aws_codestarconnections_connection.codebuild-lab-github.arn
+      resource = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
       type     = "CODECONNECTIONS"
     }
   }
@@ -14,9 +14,13 @@ resource "aws_codebuild_project" "codebuild-lab-pr-check" {
   auto_retry_limit = 0
   build_timeout    = 15
   description      = "Unit tests and coverage of each pull request on Lambda compute."
+  encryption_key   = "arn:aws:kms:us-west-2:952133486861:alias/aws/s3"
   service_role     = aws_iam_role.codebuild-lab-pr-check_role.arn
   artifacts {
     type = "NO_ARTIFACTS"
+  }
+  cache {
+    type = "NO_CACHE"
   }
   environment {
     compute_type = "BUILD_LAMBDA_1GB"
@@ -30,28 +34,32 @@ resource "aws_codebuild_project" "codebuild-lab-pr-check" {
     environment_variable {
       name  = "REGION"
       type  = "PLAINTEXT"
-      value = data.aws_region.current.region
+      value = "us-west-2"
     }
     environment_variable {
       name  = "ACCOUNT"
       type  = "PLAINTEXT"
-      value = data.aws_caller_identity.current.account_id
+      value = "952133486861"
     }
     environment_variable {
       name  = "AWS_CODECONNECTIONS_CONNECTION_ARN_0"
       type  = "PLAINTEXT"
-      value = data.aws_codestarconnections_connection.codebuild-lab-github.arn
+      value = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
     }
     environment_variable {
       name  = "AWS_CODECONNECTIONS_CONNECTION_NAME_0"
       type  = "PLAINTEXT"
-      value = data.aws_codestarconnections_connection.codebuild-lab-github.name
+      value = "codebuild-lab-github"
     }
   }
   logs_config {
     cloudwatch_logs {
       group_name = aws_cloudwatch_log_group.codebuild-lab-pr-check-logs.name
       status     = "ENABLED"
+    }
+    s3_logs {
+      encryption_disabled = false
+      status              = "DISABLED"
     }
   }
   tags = {
@@ -70,24 +78,27 @@ resource "aws_codebuild_project" "codebuild-lab-release" {
     report_build_status = true
     type                = "GITHUB"
     auth {
-      resource = data.aws_codestarconnections_connection.codebuild-lab-github.arn
+      resource = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
       type     = "CODECONNECTIONS"
     }
   }
   name                   = "codebuild-lab-release"
   auto_retry_limit       = 0
   badge_enabled          = true
+  badge_url              = "https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiVlFub25IbFp2clQ1b1FjOUYrVkNGRW45ejNIa0pIWEYzSlJ2L01Gc1dXTWVLNEdHaWZNMmozaFlzQzhiRHA4QzI3OTlleGsrRGJkYlYzMXNEZU95Wkw0PSIsIml2UGFyYW1ldGVyU3BlYyI6Ild4U0xIOWtnSnlDTnpmcCsiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main"
   build_timeout          = 30
   concurrent_build_limit = 1
   description            = "Image to ECR tagged with the commit and release zip to S3 on each push to main."
   encryption_key         = aws_kms_key.codebuild-lab-artifacts-key.arn
   service_role           = aws_iam_role.codebuild-lab-release_role.arn
   artifacts {
-    name           = "release.zip"
-    location       = aws_s3_bucket.codebuild-lab-artifacts.bucket
-    namespace_type = "BUILD_ID"
-    packaging      = "ZIP"
-    type           = "S3"
+    name                   = "release.zip"
+    override_artifact_name = false
+    encryption_disabled    = false
+    location               = aws_s3_bucket.codebuild-lab-artifacts.bucket
+    namespace_type         = "BUILD_ID"
+    packaging              = "ZIP"
+    type                   = "S3"
   }
   cache {
     location = aws_s3_bucket.codebuild-lab-cache.bucket
@@ -101,7 +112,7 @@ resource "aws_codebuild_project" "codebuild-lab-release" {
     environment_variable {
       name  = "IMAGE_REPO_URL"
       type  = "PLAINTEXT"
-      value = aws_ecr_repository.codebuild-lab-orders.repository_url
+      value = "952133486861.dkr.ecr.us-west-2.amazonaws.com/codebuild-lab-orders"
     }
     environment_variable {
       name  = "NAME"
@@ -111,27 +122,27 @@ resource "aws_codebuild_project" "codebuild-lab-release" {
     environment_variable {
       name  = "REGION"
       type  = "PLAINTEXT"
-      value = data.aws_region.current.region
+      value = "us-west-2"
     }
     environment_variable {
       name  = "ACCOUNT"
       type  = "PLAINTEXT"
-      value = data.aws_caller_identity.current.account_id
+      value = "952133486861"
     }
     environment_variable {
       name  = "AWS_CODECONNECTIONS_CONNECTION_ARN_0"
       type  = "PLAINTEXT"
-      value = data.aws_codestarconnections_connection.codebuild-lab-github.arn
+      value = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
     }
     environment_variable {
       name  = "AWS_CODECONNECTIONS_CONNECTION_NAME_0"
       type  = "PLAINTEXT"
-      value = data.aws_codestarconnections_connection.codebuild-lab-github.name
+      value = "codebuild-lab-github"
     }
     environment_variable {
       name  = "AWS_S3_BUCKET_NAME_0"
       type  = "PLAINTEXT"
-      value = "codebuild-lab-cache-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+      value = "codebuild-lab-cache-952133486861-us-west-2-an"
     }
     environment_variable {
       name  = "AWS_KMS_KEY_NAME_0"
@@ -146,13 +157,17 @@ resource "aws_codebuild_project" "codebuild-lab-release" {
     environment_variable {
       name  = "AWS_ECR_REPOSITORY_URL_0"
       type  = "PLAINTEXT"
-      value = aws_ecr_repository.codebuild-lab-orders.repository_url
+      value = "952133486861.dkr.ecr.us-west-2.amazonaws.com/codebuild-lab-orders"
     }
   }
   logs_config {
     cloudwatch_logs {
       group_name = aws_cloudwatch_log_group.codebuild-lab-release-logs.name
       status     = "ENABLED"
+    }
+    s3_logs {
+      encryption_disabled = false
+      status              = "DISABLED"
     }
   }
   tags = {
@@ -165,11 +180,12 @@ resource "aws_codebuild_project" "codebuild-lab-release" {
 
 resource "aws_codebuild_project" "codebuild-lab-runner" {
   source {
-    git_clone_depth = 1
-    location        = "https://github.com/Struct8/codebuild-lab.git"
-    type            = "GITHUB"
+    git_clone_depth     = 1
+    location            = "https://github.com/Struct8/codebuild-lab.git"
+    report_build_status = false
+    type                = "GITHUB"
     auth {
-      resource = data.aws_codestarconnections_connection.codebuild-lab-github.arn
+      resource = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
       type     = "CODECONNECTIONS"
     }
   }
@@ -177,9 +193,13 @@ resource "aws_codebuild_project" "codebuild-lab-runner" {
   auto_retry_limit = 0
   build_timeout    = 30
   description      = "Runs the GitHub Actions jobs whose runs-on label names this project."
+  encryption_key   = "arn:aws:kms:us-west-2:952133486861:alias/aws/s3"
   service_role     = aws_iam_role.codebuild-lab-runner_role.arn
   artifacts {
     type = "NO_ARTIFACTS"
+  }
+  cache {
+    type = "NO_CACHE"
   }
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
@@ -193,28 +213,32 @@ resource "aws_codebuild_project" "codebuild-lab-runner" {
     environment_variable {
       name  = "REGION"
       type  = "PLAINTEXT"
-      value = data.aws_region.current.region
+      value = "us-west-2"
     }
     environment_variable {
       name  = "ACCOUNT"
       type  = "PLAINTEXT"
-      value = data.aws_caller_identity.current.account_id
+      value = "952133486861"
     }
     environment_variable {
       name  = "AWS_CODECONNECTIONS_CONNECTION_ARN_0"
       type  = "PLAINTEXT"
-      value = data.aws_codestarconnections_connection.codebuild-lab-github.arn
+      value = "arn:aws:codeconnections:us-west-2:952133486861:connection/e6535080-d42a-4a04-a298-6df6ffd54fc4"
     }
     environment_variable {
       name  = "AWS_CODECONNECTIONS_CONNECTION_NAME_0"
       type  = "PLAINTEXT"
-      value = data.aws_codestarconnections_connection.codebuild-lab-github.name
+      value = "codebuild-lab-github"
     }
   }
   logs_config {
     cloudwatch_logs {
       group_name = aws_cloudwatch_log_group.codebuild-lab-runner-logs.name
       status     = "ENABLED"
+    }
+    s3_logs {
+      encryption_disabled = false
+      status              = "DISABLED"
     }
   }
   tags = {
@@ -227,6 +251,8 @@ resource "aws_codebuild_project" "codebuild-lab-runner" {
 
 resource "aws_codebuild_webhook" "codebuild-lab-pr-check_webhook" {
   project_name = aws_codebuild_project.codebuild-lab-pr-check.name
+  payload_url  = "https://codebuild.us-west-2.amazonaws.com/webhooks?t=eyJlbmNyeXB0ZWREYXRhIjoiTGt2OVR4RGNCdXVSUWRMK0QwZk02eFV4MUI4Z2lIZXZ1bU1yZE1QYjZpMkU0VUN4aEFUNHZaa1RXcEhOYjI1UFZOcC9wWU5XTkZOcmxwQlpIL2F4UUNNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ii83TzJrSTJORysxeDZLVloiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&v=1"
+  url          = "https://api.github.com/repos/Struct8/codebuild-lab/hooks/707968401"
   filter_group {
     filter {
       exclude_matched_pattern = false
@@ -239,10 +265,16 @@ resource "aws_codebuild_webhook" "codebuild-lab-pr-check_webhook" {
       type                    = "BASE_REF"
     }
   }
+  pull_request_build_policy {
+    approver_roles            = ["GITHUB_ADMIN", "GITHUB_MAINTAIN", "GITHUB_WRITE"]
+    requires_comment_approval = "ALL_PULL_REQUESTS"
+  }
 }
 
 resource "aws_codebuild_webhook" "codebuild-lab-release_webhook" {
   project_name = aws_codebuild_project.codebuild-lab-release.name
+  payload_url  = "https://codebuild.us-west-2.amazonaws.com/webhooks?t=eyJlbmNyeXB0ZWREYXRhIjoib0tZcUdiZUFGNHk1ZVQrbWxRaXBsSnJHWEdFT1BDRzZWVmRicytTSDNpNlZKckphWmdTV3ZKVXpTNEZOcnAxYWxVeUFyQ2cwWjBhRnRKamVmVjZXdkVRPSIsIml2UGFyYW1ldGVyU3BlYyI6ImlrVEVnWnJoZnlxUzRXd3YiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&v=1"
+  url          = "https://api.github.com/repos/Struct8/codebuild-lab/hooks/707968467"
   filter_group {
     filter {
       exclude_matched_pattern = false
@@ -255,15 +287,25 @@ resource "aws_codebuild_webhook" "codebuild-lab-release_webhook" {
       type                    = "HEAD_REF"
     }
   }
+  pull_request_build_policy {
+    approver_roles            = ["GITHUB_ADMIN", "GITHUB_MAINTAIN", "GITHUB_WRITE"]
+    requires_comment_approval = "ALL_PULL_REQUESTS"
+  }
 }
 
 resource "aws_codebuild_webhook" "codebuild-lab-runner_webhook" {
   project_name = aws_codebuild_project.codebuild-lab-runner.name
+  payload_url  = "https://codebuild.us-west-2.amazonaws.com/webhooks?t=eyJlbmNyeXB0ZWREYXRhIjoiTXZoaHUxRmU3dTcwbWlleHVISkg3aDlIZnE3SXkxVHE4eUIvU2hCMFowVy9NbkhKbkR1Z2lET0JaRTBrODF0ZDRtOEp6SnlBeUpSN2xmZGYwWnRZQnBjPSIsIml2UGFyYW1ldGVyU3BlYyI6IkE5bUR5SHl3NzF2TzRCY0wiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&v=1"
+  url          = "https://api.github.com/repos/Struct8/codebuild-lab/hooks/707968402"
   filter_group {
     filter {
       exclude_matched_pattern = false
       pattern                 = "WORKFLOW_JOB_QUEUED"
       type                    = "EVENT"
     }
+  }
+  pull_request_build_policy {
+    approver_roles            = ["GITHUB_ADMIN", "GITHUB_MAINTAIN", "GITHUB_WRITE"]
+    requires_comment_approval = "ALL_PULL_REQUESTS"
   }
 }

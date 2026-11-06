@@ -6,12 +6,6 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-pr-check_st_code
     resources = ["${aws_cloudwatch_log_group.codebuild-lab-pr-check-logs.arn}:*"]
   }
   statement {
-    sid       = "AllowUseOfConnection"
-    effect    = "Allow"
-    actions   = ["codeconnections:GetConnection", "codeconnections:GetConnectionToken", "codestar-connections:GetConnection", "codestar-connections:GetConnectionToken"]
-    resources = [data.aws_codestarconnections_connection.codebuild-lab-github.arn]
-  }
-  statement {
     sid       = "PublishTestReportsOfThisProject"
     effect    = "Allow"
     actions   = ["codebuild:BatchPutCodeCoverages", "codebuild:BatchPutTestCases", "codebuild:CreateReport", "codebuild:CreateReportGroup", "codebuild:UpdateReport"]
@@ -31,18 +25,6 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-release_st_codeb
     effect    = "Allow"
     actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["${aws_cloudwatch_log_group.codebuild-lab-release-logs.arn}:*"]
-  }
-  statement {
-    sid       = "AllowUseOfConnection"
-    effect    = "Allow"
-    actions   = ["codeconnections:GetConnection", "codeconnections:GetConnectionToken", "codestar-connections:GetConnection", "codestar-connections:GetConnectionToken"]
-    resources = [data.aws_codestarconnections_connection.codebuild-lab-github.arn]
-  }
-  statement {
-    sid       = "AllowPullFromRepository"
-    effect    = "Allow"
-    actions   = ["ecr:BatchCheckLayerAvailability", "ecr:BatchGetImage", "ecr:CompleteLayerUpload", "ecr:GetDownloadUrlForLayer", "ecr:InitiateLayerUpload", "ecr:PutImage", "ecr:UploadLayerPart"]
-    resources = [aws_ecr_repository.codebuild-lab-orders.arn]
   }
   statement {
     sid       = "AllowKMSAccess"
@@ -75,12 +57,6 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-release_st_codeb
     resources = ["${aws_s3_bucket.codebuild-lab-cache.arn}/*"]
   }
   statement {
-    sid       = "AllowEcrAuth"
-    effect    = "Allow"
-    actions   = ["ecr:GetAuthorizationToken"]
-    resources = ["*"]
-  }
-  statement {
     sid       = "PublishTestReportsOfThisProject"
     effect    = "Allow"
     actions   = ["codebuild:BatchPutCodeCoverages", "codebuild:BatchPutTestCases", "codebuild:CreateReport", "codebuild:CreateReportGroup", "codebuild:UpdateReport"]
@@ -102,12 +78,6 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-runner_st_codebu
     resources = ["${aws_cloudwatch_log_group.codebuild-lab-runner-logs.arn}:*"]
   }
   statement {
-    sid       = "AllowUseOfConnection"
-    effect    = "Allow"
-    actions   = ["codeconnections:GetConnection", "codeconnections:GetConnectionToken", "codestar-connections:GetConnection", "codestar-connections:GetConnectionToken"]
-    resources = [data.aws_codestarconnections_connection.codebuild-lab-github.arn]
-  }
-  statement {
     sid       = "PublishTestReportsOfThisProject"
     effect    = "Allow"
     actions   = ["codebuild:BatchPutCodeCoverages", "codebuild:BatchPutTestCases", "codebuild:CreateReport", "codebuild:CreateReportGroup", "codebuild:UpdateReport"]
@@ -122,19 +92,8 @@ resource "aws_iam_policy" "codebuild_project_codebuild-lab-runner_st_codebuild-l
 }
 
 resource "aws_iam_role" "codebuild-lab-pr-check_role" {
-  name = "codebuild-lab-pr-check_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codebuild.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "codebuild-lab-pr-check_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codebuild.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -146,19 +105,8 @@ resource "aws_iam_role" "codebuild-lab-pr-check_role" {
 }
 
 resource "aws_iam_role" "codebuild-lab-release_role" {
-  name = "codebuild-lab-release_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codebuild.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "codebuild-lab-release_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codebuild.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -170,19 +118,8 @@ resource "aws_iam_role" "codebuild-lab-release_role" {
 }
 
 resource "aws_iam_role" "codebuild-lab-runner_role" {
-  name = "codebuild-lab-runner_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codebuild.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "codebuild-lab-runner_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codebuild.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -194,19 +131,11 @@ resource "aws_iam_role" "codebuild-lab-runner_role" {
 }
 
 resource "aws_iam_role" "role_eventbridge_codebuild-lab-release-succeeded" {
-  name = "role_eventbridge_codebuild-lab-release-succeeded"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "events.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "role_eventbridge_codebuild-lab-release-succeeded"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"events.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
   tags = {
     Name           = "role_eventbridge_codebuild-lab-release-succeeded"
     State          = "codebuild-lab-ci"
@@ -237,23 +166,8 @@ resource "aws_kms_key" "codebuild-lab-artifacts-key" {
   is_enabled                         = true
   key_usage                          = "ENCRYPT_DECRYPT"
   multi_region                       = false
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "Enable IAM User Permissions",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-      },
-      "Action": "kms:*",
-      "Resource": "*"
-    }
-  ]
-}
-  EOF
-  rotation_period_in_days = 365
+  policy                             = "{\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::952133486861:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}"
+  rotation_period_in_days            = 365
   tags = {
     Name           = "codebuild-lab-artifacts-key"
     State          = "codebuild-lab-ci"

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "codebuild-lab-artifacts" {
-  bucket              = "codebuild-lab-artifacts-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "codebuild-lab-artifacts-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "codebuild-lab-artifacts" {
 }
 
 resource "aws_s3_bucket" "codebuild-lab-cache" {
-  bucket              = "codebuild-lab-cache-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "codebuild-lab-cache-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -55,7 +55,8 @@ resource "aws_s3_bucket_public_access_block" "codebuild-lab-cache_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "codebuild-lab-artifacts_configuration" {
   bucket = aws_s3_bucket.codebuild-lab-artifacts.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -65,7 +66,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "codebuild-lab-art
 resource "aws_s3_bucket_server_side_encryption_configuration" "codebuild-lab-cache_configuration" {
   bucket = aws_s3_bucket.codebuild-lab-cache.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
