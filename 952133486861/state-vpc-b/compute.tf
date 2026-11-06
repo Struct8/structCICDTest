@@ -363,6 +363,9 @@ EOFUData
   iam_instance_profile {
     name = aws_iam_instance_profile.traffic-gen-asg_profile.name
   }
+  lifecycle {
+    ignore_changes = [update_default_version]
+  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 1
@@ -402,6 +405,9 @@ resource "aws_autoscaling_group" "traffic-gen-asg" {
   launch_template {
     version = "1"
     id      = aws_launch_template.traffic-gen-asg-lt.id
+  }
+  lifecycle {
+    ignore_changes = [termination_policies]
   }
   tag {
     key                 = "Struct8Debug"

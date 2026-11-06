@@ -142,6 +142,46 @@ resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group
   type                     = "ingress"
 }
 
+resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_icmp_8_0" {
+  security_group_id        = data.aws_security_group.instance_traffic-gen-private_group.id
+  source_security_group_id = aws_security_group.autoscaling_group_traffic-gen-asg_group.id
+  description              = "Ping (ICMP echo request) from traffic-gen-asg"
+  from_port                = 8
+  protocol                 = "icmp"
+  to_port                  = 0
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_tcp_22" {
+  security_group_id        = data.aws_security_group.instance_traffic-gen-private_group.id
+  source_security_group_id = aws_security_group.autoscaling_group_traffic-gen-asg_group.id
+  description              = "SSH from traffic-gen-asg"
+  from_port                = 22
+  protocol                 = "tcp"
+  to_port                  = 22
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_tcp_80" {
+  security_group_id        = data.aws_security_group.instance_traffic-gen-private_group.id
+  source_security_group_id = aws_security_group.autoscaling_group_traffic-gen-asg_group.id
+  description              = "HTTP from traffic-gen-asg"
+  from_port                = 80
+  protocol                 = "tcp"
+  to_port                  = 80
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_udp_53" {
+  security_group_id        = data.aws_security_group.instance_traffic-gen-private_group.id
+  source_security_group_id = aws_security_group.autoscaling_group_traffic-gen-asg_group.id
+  description              = "DNS from traffic-gen-asg"
+  from_port                = 53
+  protocol                 = "udp"
+  to_port                  = 53
+  type                     = "ingress"
+}
+
 resource "aws_security_group_rule" "rule_instance_nat_b_group_egress_all_protocols" {
   security_group_id = aws_security_group.instance_nat-b_group.id
   cidr_blocks       = ["0.0.0.0/0"]
