@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "your-bucket-cost-usage-report" {
   bucket              = "struct8-lab-cur-952133486861-usw2"
-  force_destroy       = false
+  force_destroy       = true
   object_lock_enabled = false
   tags = {
     Struct8Management = "Struct8CUR"

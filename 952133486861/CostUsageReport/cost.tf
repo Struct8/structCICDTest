@@ -1,8 +1,3 @@
-resource "aws_ce_cost_allocation_tag" "CURLab_tag" {
-  status  = "Active"
-  tag_key = "Name"
-}
-
 resource "aws_cur_report_definition" "CURLab" {
   report_name                = "CURLab"
   additional_schema_elements = ["RESOURCES"]
