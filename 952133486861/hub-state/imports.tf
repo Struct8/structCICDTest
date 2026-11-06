@@ -113,7 +113,7 @@ import {
 
 import {
   to = aws_secretsmanager_secret_version.hub-secret_version
-  id = "hub-secret-NqgxLZ"
+  id = "arn:aws:secretsmanager:us-west-2:952133486861:secret:hub-secret-NqgxLZ|terraform-6wJrYngfYm4CfSM0HsN7DT5oVx"
 }
 
 import {
