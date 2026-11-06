@@ -6,9 +6,6 @@ resource "aws_ssm_parameter" "hub-param" {
   tier        = "Standard"
   type        = "String"
   value       = "defaultValue"
-  lifecycle {
-    ignore_changes = [overwrite, value]
-  }
   tags = {
     Name           = "hub-param"
     State          = "hub-state"
