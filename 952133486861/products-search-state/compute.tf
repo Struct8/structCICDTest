@@ -221,7 +221,7 @@ resource "aws_lambda_invocation" "init-db-invocation" {
   function_name = aws_lambda_function.lambda-init-db.function_name
   input         = "{}"
   lifecycle {
-    ignore_changes = [input, triggers]
+    ignore_changes = [input, triggers, lifecycle_scope, terraform_key]
   }
   triggers = {
     rds_cluster          = "products-aurora"
