@@ -92,7 +92,7 @@ resource "aws_bedrockagentcore_harness" "agent_lab_orders" {
   max_tokens         = 4096
   timeout_seconds    = 90
   lifecycle {
-    ignore_changes = [environment, memory]
+    ignore_changes = [environment, memory, environment_variables]
   }
   memory {
     agentcore_memory_configuration {
