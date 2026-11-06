@@ -39,6 +39,12 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-release_st_codeb
     resources = [data.aws_codestarconnections_connection.codebuild-lab-github.arn]
   }
   statement {
+    sid       = "AllowPullFromRepository"
+    effect    = "Allow"
+    actions   = ["ecr:BatchCheckLayerAvailability", "ecr:BatchGetImage", "ecr:CompleteLayerUpload", "ecr:GetDownloadUrlForLayer", "ecr:InitiateLayerUpload", "ecr:PutImage", "ecr:UploadLayerPart"]
+    resources = [aws_ecr_repository.codebuild-lab-orders.arn]
+  }
+  statement {
     sid       = "AllowKMSAccess"
     effect    = "Allow"
     actions   = ["kms:Decrypt", "kms:DescribeKey", "kms:Encrypt", "kms:GenerateDataKey"]
@@ -67,6 +73,12 @@ data "aws_iam_policy_document" "codebuild_project_codebuild-lab-release_st_codeb
     effect    = "Allow"
     actions   = ["s3:DeleteObject", "s3:GetObject", "s3:GetObjectVersion", "s3:PutObject"]
     resources = ["${aws_s3_bucket.codebuild-lab-cache.arn}/*"]
+  }
+  statement {
+    sid       = "AllowEcrAuth"
+    effect    = "Allow"
+    actions   = ["ecr:GetAuthorizationToken"]
+    resources = ["*"]
   }
   statement {
     sid       = "PublishTestReportsOfThisProject"
@@ -186,9 +198,6 @@ resource "aws_kms_key" "codebuild-lab-artifacts-key" {
   multi_region                       = false
   policy                             = "{\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::952133486861:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}"
   rotation_period_in_days            = 365
-  lifecycle {
-    ignore_changes = [bypass_policy_lockout_safety_check, deletion_window_in_days]
-  }
   tags = {
     Name           = "codebuild-lab-artifacts-key"
     State          = "codebuild-lab-ci"
