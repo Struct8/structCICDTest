@@ -5,3 +5,18 @@ import {
   to = aws_xray_trace_segment_destination.transaction-search-us-west-2
   id = "us-west-2"
 }
+
+import {
+  to = aws_cloudwatch_log_resource_policy.transaction-search-us-west-2_spans
+  id = "transaction-search-us-west-2-xray-spans"
+}
+
+import {
+  to = aws_xray_indexing_rule.transaction-search-us-west-2_indexing
+  id = "Default"
+}
+
+import {
+  to = terraform_data.transaction-search-us-west-2_reset
+  id = "f1f3ed02-8114-e0ab-394d-0eeff976a2b9"
+}
