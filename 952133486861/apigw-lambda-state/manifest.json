@@ -1,7 +1,17 @@
 {
-  "external_repositories": [],
+  "external_repositories": [
+    {
+      "repo_name": "struct8-hub",
+      "org": "Struct8",
+      "branch": "main",
+      "target_dir": ".external_modules/struct8-hub",
+      "folders": [
+        "prebuilt"
+      ]
+    }
+  ],
   "action": "destroy",
-  "trigger_id": "1793984355498",
+  "trigger_id": "1793984526937",
   "triggered_by": "assistant.rmay_struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
