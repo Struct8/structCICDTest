@@ -166,4 +166,7 @@ resource "aws_secretsmanager_secret_version" "hub-secret_version" {
   secret_id      = aws_secretsmanager_secret.hub-secret.id
   secret_string  = "{\"demo\":\"this value is never written to the report\"}"
   version_stages = ["AWSCURRENT"]
+  lifecycle {
+    ignore_changes = [version_stages]
+  }
 }
