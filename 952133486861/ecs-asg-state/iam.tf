@@ -46,36 +46,25 @@ resource "aws_iam_policy" "autoscaling_group_ecs-asg-nodes_st_ecs-asg-state" {
   policy      = data.aws_iam_policy_document.autoscaling_group_ecs-asg-nodes_st_ecs-asg-state_doc.json
 }
 
+data "aws_iam_policy_document" "ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state_doc" {
+  statement {
+    sid       = "AllowPullFromRepo"
+    effect    = "Allow"
+    actions   = ["ecr:BatchCheckLayerAvailability", "ecr:BatchGetImage", "ecr:GetDownloadUrlForLayer"]
+    resources = [aws_ecr_repository.ecs-asg-hub-ecr.arn]
+  }
+  statement {
+    sid       = "AllowEcrAuth"
+    effect    = "Allow"
+    actions   = ["ecr:GetAuthorizationToken"]
+    resources = ["*"]
+  }
+}
+
 resource "aws_iam_policy" "ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state" {
   name        = "ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state"
   description = "Access Policy for ecs-asg-hub (Role: execution)"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:BatchGetImage",
-        "ecr:GetDownloadUrlForLayer"
-      ],
-      "Resource": [
-        "${aws_ecr_repository.ecs-asg-hub-ecr.arn}"
-      ],
-      "Sid": "AllowPullFromRepo"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ecr:GetAuthorizationToken"
-      ],
-      "Resource": [
-        "*"
-      ],
-      "Sid": "AllowEcrAuth"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.ecs_task_definition_ecs-asg-hub_execution_st_ecs-asg-state_doc.json
 }
 
 resource "aws_iam_role" "ecs-asg-k6_role" {
