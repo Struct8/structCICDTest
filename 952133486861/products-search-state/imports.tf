@@ -242,11 +242,6 @@ import {
 }
 
 import {
-  to = aws_acm_certificate_validation.Validation_hardstore-cert
-  id = "2026-11-06 09:42:21.094 +0000 UTC"
-}
-
-import {
   to = aws_route53_record.Route53_Record_hardstore-cert_hardstore_cloudman_pro
   id = "Z04251074NSF989QRSG9__c14486b2aa45d5eeec62e46c34b5afde.hardstore.cloudman.pro._CNAME"
 }
