@@ -108,7 +108,7 @@ import {
 
 import {
   to = aws_appautoscaling_policy.ecs-asg-hub-cpu
-  id = "1c91c73a-4f0d-4b25-9d2c-292869d2af83:resource/ecs/service/ecs-asg-cluster/ecs-asg-hub_service:policyName/ecs-asg-hub-cpu"
+  id = "ecs/service/ecs-asg-cluster/ecs-asg-hub_service/ecs:service:DesiredCount/ecs-asg-hub-cpu"
 }
 
 import {
@@ -189,11 +189,6 @@ import {
 import {
   to = aws_iam_policy.autoscaling_group_ecs-asg-nodes_st_ecs-asg-state
   id = "arn:aws:iam::952133486861:policy/autoscaling_group_ecs-asg-nodes_st_ecs-asg-state"
-}
-
-import {
-  to = null_resource.cleanup_ecs-asg-cluster
-  id = "6563575751579465539"
 }
 
 import {
