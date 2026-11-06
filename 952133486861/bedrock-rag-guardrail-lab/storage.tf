@@ -102,9 +102,6 @@ resource "aws_s3vectors_vector_bucket" "bedrock-vectors" {
   encryption_configuration {
     sse_type = "AES256"
   }
-  lifecycle {
-    ignore_changes = [force_destroy]
-  }
   tags = {
     Name           = "bedrock-vectors"
     State          = "bedrock-rag-guardrail-lab"

@@ -11,16 +11,16 @@ resource "aws_lambda_function" "bedrock-rag-handler" {
   timeout                        = 60
   environment {
     variables = {
-      ACCOUNT                                          = "952133486861"
+      ACCOUNT                                          = data.aws_caller_identity.current.account_id
       AWS_BEDROCKAGENT_DATA_SOURCE_ID_0                = "DJT0B6TZQ3"
       AWS_BEDROCKAGENT_DATA_SOURCE_KNOWLEDGE_BASE_ID_0 = "AGNZ18BSXH"
-      AWS_BEDROCKAGENT_KNOWLEDGE_BASE_ID_0             = "AGNZ18BSXH"
-      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_ID_0             = "b6mvskbqxnne"
-      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_VERSION_0        = "DRAFT"
-      AWS_BEDROCK_INFERENCE_PROFILE_ARN_0              = "arn:aws:bedrock:us-west-2:952133486861:application-inference-profile/71rt9ymm0fli"
+      AWS_BEDROCKAGENT_KNOWLEDGE_BASE_ID_0             = aws_bedrockagent_knowledge_base.bedrock-kb-lab.id
+      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_ID_0             = aws_bedrock_guardrail.lab-guardrail.guardrail_id
+      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_VERSION_0        = aws_bedrock_guardrail.lab-guardrail.version
+      AWS_BEDROCK_INFERENCE_PROFILE_ARN_0              = aws_bedrock_inference_profile.bedrock-rag-answer-model.arn
       AWS_LAMBDA_FUNCTION_URL_NAME_0                   = "bedrock-rag-url"
       NAME                                             = "bedrock-rag-handler"
-      REGION                                           = "us-west-2"
+      REGION                                           = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -47,18 +47,18 @@ resource "aws_lambda_function_url" "bedrock-rag-url" {
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_bedrock-rag-url_to_bedrock-rag-handler" {
   function_name          = aws_lambda_function.bedrock-rag-handler.function_name
-  statement_id           = "perm_aws_lambda_function_url_bedrock-rag-url_to_bedrock-rag-handlera3bcd411d4503709c5c435c595"
   principal              = "*"
   action                 = "lambda:InvokeFunctionUrl"
   function_url_auth_type = "NONE"
+  statement_id_prefix    = "perm_aws_lambda_function_url_bedrock-rag-url_to_bedrock-rag-handler"
   depends_on             = [aws_lambda_function_url.bedrock-rag-url]
 }
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_bedrock-rag-url_to_bedrock-rag-handler_invoke" {
   function_name            = aws_lambda_function.bedrock-rag-handler.function_name
-  statement_id             = "perm_aws_lambda_function_url_bedrock-rag-url_to_bedrock-rag-handler_invoke9afd67d2efa15922862ed70702"
   principal                = "*"
   action                   = "lambda:InvokeFunction"
   invoked_via_function_url = true
+  statement_id_prefix      = "perm_aws_lambda_function_url_bedrock-rag-url_to_bedrock-rag-handler_invoke"
   depends_on               = [aws_lambda_function_url.bedrock-rag-url, aws_lambda_permission.perm_aws_lambda_function_url_bedrock-rag-url_to_bedrock-rag-handler]
 }
