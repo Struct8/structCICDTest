@@ -31,6 +31,9 @@ resource "aws_rds_cluster" "products-aurora" {
   skip_final_snapshot             = true
   storage_encrypted               = true
   vpc_security_group_ids          = [aws_security_group.rds_cluster_products-aurora_group.id]
+  lifecycle {
+    ignore_changes = [manage_master_user_password]
+  }
   serverlessv2_scaling_configuration {
     max_capacity             = 4
     min_capacity             = 0

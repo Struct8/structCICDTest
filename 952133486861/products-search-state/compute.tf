@@ -220,6 +220,9 @@ resource "aws_lambda_function" "lambda-search" {
 resource "aws_lambda_invocation" "init-db-invocation" {
   function_name = aws_lambda_function.lambda-init-db.function_name
   input         = "{}"
+  lifecycle {
+    ignore_changes = [input, triggers]
+  }
   triggers = {
     rds_cluster          = "products-aurora"
     rds_cluster_instance = "products-aurora-instance"
