@@ -2,7 +2,6 @@ resource "aws_cloudwatch_log_group" "process-flow-logs" {
   name              = "/aws/lambda/process-flow-logs"
   log_group_class   = "STANDARD"
   retention_in_days = 1
-  skip_destroy      = false
   tags = {
     Name           = "process-flow-logs"
     State          = "state-traffic-metrics"
@@ -13,10 +12,10 @@ resource "aws_cloudwatch_log_group" "process-flow-logs" {
 resource "aws_prometheus_workspace" "vpc-traffic" {
   alias = "vpc-traffic"
   tags = {
-    Struct8Management = "Struct8Flow"
     Name              = "vpc-traffic"
     State             = "state-traffic-metrics"
     Struct8Creator    = "rmay struct"
+    Struct8Management = "Struct8Flow"
   }
 }
 
