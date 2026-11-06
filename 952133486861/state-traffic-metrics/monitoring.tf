@@ -12,10 +12,10 @@ resource "aws_cloudwatch_log_group" "process-flow-logs" {
 resource "aws_prometheus_workspace" "vpc-traffic" {
   alias = "vpc-traffic"
   tags = {
+    Struct8Management = "Struct8Flow"
     Name              = "vpc-traffic"
     State             = "state-traffic-metrics"
     Struct8Creator    = "rmay struct"
-    Struct8Management = "Struct8Flow"
   }
 }
 

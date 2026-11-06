@@ -12,15 +12,15 @@ resource "aws_lambda_function" "process-flow-logs" {
   timeout                        = 120
   environment {
     variables = {
-      ACCOUNT                             = "952133486861"
-      AWS_PROMETHEUS_WORKSPACE_ENDPOINT_0 = "https://aps-workspaces.us-west-2.amazonaws.com/workspaces/ws-b77166c0-58b0-431a-bd69-37bb1e2d794f/"
-      AWS_PROMETHEUS_WORKSPACE_ID_0       = "ws-b77166c0-58b0-431a-bd69-37bb1e2d794f"
+      ACCOUNT                             = data.aws_caller_identity.current.account_id
+      AWS_PROMETHEUS_WORKSPACE_ENDPOINT_0 = aws_prometheus_workspace.vpc-traffic.prometheus_endpoint
+      AWS_PROMETHEUS_WORKSPACE_ID_0       = aws_prometheus_workspace.vpc-traffic.id
       AWS_S3_BUCKET_NAME_0                = "flowlogs-bucket-952133486861-us-west-2-an"
       BUCKET_SECONDS                      = "60"
       FALLBACK_FIELD_ORDER                = "version vpc-id subnet-id interface-id instance-id srcaddr dstaddr pkt-srcaddr pkt-dstaddr srcport dstport protocol packets bytes start end action log-status flow-direction traffic-path pkt-src-aws-service pkt-dst-aws-service interface-type"
       FLOW_LOG_BUCKET                     = "flowlogs-bucket-952133486861-us-west-2-an"
       NAME                                = "process-flow-logs"
-      REGION                              = "us-west-2"
+      REGION                              = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -41,9 +41,9 @@ resource "aws_lambda_function" "process-flow-logs" {
 }
 
 resource "aws_lambda_permission" "perm_aws_s3_bucket_flowlogs-bucket_to_process-flow-logs" {
-  function_name = aws_lambda_function.process-flow-logs.function_name
-  statement_id  = "perm_aws_s3_bucket_flowlogs-bucket_to_process-flow-logsb1cb727431a6e5e3193898cfc9"
-  principal     = "s3.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_s3_bucket.flowlogs-bucket.arn
+  function_name       = aws_lambda_function.process-flow-logs.function_name
+  principal           = "s3.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_s3_bucket.flowlogs-bucket.arn
+  statement_id_prefix = "perm_aws_s3_bucket_flowlogs-bucket_to_process-flow-logs"
 }
