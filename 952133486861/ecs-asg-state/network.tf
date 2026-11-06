@@ -1,6 +1,7 @@
 resource "aws_vpc" "ecs-asg-vpc" {
-  cidr_block       = "10.6.0.0/16"
-  instance_tenancy = "default"
+  cidr_block         = "10.6.0.0/16"
+  enable_dns_support = true
+  instance_tenancy   = "default"
   tags = {
     Name           = "ecs-asg-vpc"
     State          = "ecs-asg-state"
@@ -9,10 +10,11 @@ resource "aws_vpc" "ecs-asg-vpc" {
 }
 
 resource "aws_subnet" "ecs-asg-private-a" {
-  vpc_id                  = aws_vpc.ecs-asg-vpc.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.6.1.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.ecs-asg-vpc.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.6.1.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "ecs-asg-private-a"
     State          = "ecs-asg-state"
@@ -21,10 +23,11 @@ resource "aws_subnet" "ecs-asg-private-a" {
 }
 
 resource "aws_subnet" "ecs-asg-private-b" {
-  vpc_id                  = aws_vpc.ecs-asg-vpc.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.6.3.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.ecs-asg-vpc.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.6.3.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "ecs-asg-private-b"
     State          = "ecs-asg-state"
@@ -33,10 +36,11 @@ resource "aws_subnet" "ecs-asg-private-b" {
 }
 
 resource "aws_subnet" "ecs-asg-public-a" {
-  vpc_id                  = aws_vpc.ecs-asg-vpc.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.6.0.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.ecs-asg-vpc.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.6.0.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "ecs-asg-public-a"
     State          = "ecs-asg-state"
@@ -45,10 +49,11 @@ resource "aws_subnet" "ecs-asg-public-a" {
 }
 
 resource "aws_subnet" "ecs-asg-public-b" {
-  vpc_id                  = aws_vpc.ecs-asg-vpc.id
-  availability_zone       = "us-west-2b"
-  cidr_block              = "10.6.2.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.ecs-asg-vpc.id
+  availability_zone                   = "us-west-2b"
+  cidr_block                          = "10.6.2.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "ecs-asg-public-b"
     State          = "ecs-asg-state"
@@ -118,6 +123,7 @@ resource "aws_route_table_association" "aws_route_table_association_ecs_asg_publ
 resource "aws_security_group" "autoscaling_group_ecs-asg-nodes_group" {
   name                   = "autoscaling_group_ecs-asg-nodes_group"
   vpc_id                 = aws_vpc.ecs-asg-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "autoscaling_group_ecs-asg-nodes_group"
@@ -129,6 +135,7 @@ resource "aws_security_group" "autoscaling_group_ecs-asg-nodes_group" {
 resource "aws_security_group" "instance_ecs-asg-k6_group" {
   name                   = "instance_ecs-asg-k6_group"
   vpc_id                 = aws_vpc.ecs-asg-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_ecs-asg-k6_group"
@@ -152,6 +159,7 @@ resource "aws_security_group" "instance_ecs-asg-nat-instance_group" {
 resource "aws_security_group" "lb_ecs-asg-alb_group" {
   name                   = "lb_ecs-asg-alb_group"
   vpc_id                 = aws_vpc.ecs-asg-vpc.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "lb_ecs-asg-alb_group"
@@ -257,11 +265,12 @@ resource "aws_security_group_rule" "rule_lb_ecs_asg_alb_group_to_autoscaling_gro
 }
 
 resource "aws_lb" "ecs-asg-alb" {
-  name               = "ecs-asg-alb"
-  idle_timeout       = 60
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb_ecs-asg-alb_group.id]
-  subnets            = [aws_subnet.ecs-asg-public-a.id, aws_subnet.ecs-asg-public-b.id]
+  name                             = "ecs-asg-alb"
+  enable_cross_zone_load_balancing = true
+  idle_timeout                     = 60
+  load_balancer_type               = "application"
+  security_groups                  = [aws_security_group.lb_ecs-asg-alb_group.id]
+  subnets                          = [aws_subnet.ecs-asg-public-a.id, aws_subnet.ecs-asg-public-b.id]
   tags = {
     Name           = "ecs-asg-alb"
     State          = "ecs-asg-state"
@@ -280,7 +289,8 @@ resource "aws_lb_listener" "ecs-asg-listener" {
     type             = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.ecs-asg-tg-hub.arn
+        arn    = aws_lb_target_group.ecs-asg-tg-hub.arn
+        weight = 1
       }
     }
   }
@@ -292,14 +302,18 @@ resource "aws_lb_listener" "ecs-asg-listener" {
 }
 
 resource "aws_lb_target_group" "ecs-asg-tg-hub" {
-  name                          = "ecs-asg-tg-hub"
-  vpc_id                        = aws_vpc.ecs-asg-vpc.id
-  deregistration_delay          = "300"
-  ip_address_type               = "ipv4"
-  load_balancing_algorithm_type = "round_robin"
-  port                          = 8080
-  protocol                      = "HTTP"
-  target_type                   = "instance"
+  name                               = "ecs-asg-tg-hub"
+  vpc_id                             = aws_vpc.ecs-asg-vpc.id
+  deregistration_delay               = "300"
+  ip_address_type                    = "ipv4"
+  lambda_multi_value_headers_enabled = false
+  load_balancing_algorithm_type      = "round_robin"
+  load_balancing_anomaly_mitigation  = "off"
+  load_balancing_cross_zone_enabled  = "use_load_balancer_configuration"
+  port                               = 8080
+  protocol                           = "HTTP"
+  protocol_version                   = "HTTP1"
+  target_type                        = "instance"
   health_check {
     enabled             = true
     healthy_threshold   = 2
@@ -311,9 +325,24 @@ resource "aws_lb_target_group" "ecs-asg-tg-hub" {
     timeout             = 5
     unhealthy_threshold = 3
   }
+  stickiness {
+    cookie_duration = 86400
+    enabled         = false
+    type            = "lb_cookie"
+  }
   tags = {
     Name           = "ecs-asg-tg-hub"
     State          = "ecs-asg-state"
     Struct8Creator = "rmay struct"
+  }
+  target_group_health {
+    dns_failover {
+      minimum_healthy_targets_count      = "1"
+      minimum_healthy_targets_percentage = "off"
+    }
+    unhealthy_state_routing {
+      minimum_healthy_targets_count      = 1
+      minimum_healthy_targets_percentage = "off"
+    }
   }
 }
