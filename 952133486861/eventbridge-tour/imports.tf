@@ -203,7 +203,7 @@ import {
 
 import {
   to = aws_cloudwatch_event_target.tgt-eventpattern-queue
-  id = "rule-event-pattern/terraform-CTYybFysk314QknmxAY7TXCAOI"
+  id = "tour-bus/rule-event-pattern/terraform-CTYybFysk314QknmxAY7TXCAOI"
 }
 
 import {
