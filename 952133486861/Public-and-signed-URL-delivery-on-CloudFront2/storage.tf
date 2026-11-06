@@ -87,6 +87,9 @@ resource "aws_s3_object" "index-html2" {
   content      = "<!doctype html><meta charset=\"utf-8\"><title>Struct8 CloudFront</title><h1>CloudFront servindo do S3</h1><p>Se voce esta lendo isto pelo dominio do CloudFront, o Origin Access Control, a distribution e a policy de cache subiram e funcionam.</p>"
   content_type = "text/html"
   key          = "index.html"
+  lifecycle {
+    ignore_changes = [acl, content]
+  }
   tags = {
     Name           = "index-html2"
     State          = "Public-and-signed-URL-delivery-on-CloudFront2"
