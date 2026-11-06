@@ -27,9 +27,6 @@ resource "aws_db_instance" "codebuild-lab-orders-db" {
   upgrade_storage_config      = false
   username                    = "orders"
   vpc_security_group_ids      = [aws_security_group.db_instance_codebuild-lab-orders-db_group.id]
-  lifecycle {
-    ignore_changes = [apply_immediately, delete_automated_backups, upgrade_storage_config, manage_master_user_password, engine_version]
-  }
   tags = {
     Name           = "codebuild-lab-orders-db"
     State          = "codebuild-lab-integration"
