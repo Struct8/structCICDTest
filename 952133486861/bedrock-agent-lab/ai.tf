@@ -105,7 +105,7 @@ resource "aws_bedrockagentcore_harness" "agent_lab_orders" {
     }
   }
   lifecycle {
-    ignore_changes = [memory]
+    ignore_changes = [memory, environment_actual, environment_variables]
   }
   memory {
     agentcore_memory_configuration {
