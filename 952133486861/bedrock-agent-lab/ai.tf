@@ -91,6 +91,9 @@ resource "aws_bedrockagentcore_harness" "agent_lab_orders" {
   max_iterations     = 10
   max_tokens         = 4096
   timeout_seconds    = 90
+  lifecycle {
+    ignore_changes = [environment, memory]
+  }
   memory {
     agentcore_memory_configuration {
       arn = aws_bedrockagentcore_memory.agent_lab_memory.arn
