@@ -1,5 +1,9 @@
 resource "aws_ecs_cluster" "kuma-cluster" {
   name = "kuma-cluster"
+  setting {
+    name  = "containerInsights"
+    value = "disabled"
+  }
   tags = {
     Name           = "kuma-cluster"
     State          = "Kuma-ECS-Fargate-Spot"
@@ -13,18 +17,25 @@ resource "aws_ecs_cluster_capacity_providers" "assoc_cp_to_kuma-cluster" {
 }
 
 resource "aws_ecs_service" "kuma_service" {
-  name                    = "kuma_service"
-  cluster                 = aws_ecs_cluster.kuma-cluster.id
-  desired_count           = 1
-  enable_ecs_managed_tags = true
-  force_delete            = true
-  propagate_tags          = "TASK_DEFINITION"
-  scheduling_strategy     = "REPLICA"
-  task_definition         = "${aws_ecs_task_definition.kuma.family}:${aws_ecs_task_definition.kuma.revision}"
+  name                          = "kuma_service"
+  availability_zone_rebalancing = "ENABLED"
+  cluster                       = aws_ecs_cluster.kuma-cluster.id
+  desired_count                 = 1
+  enable_ecs_managed_tags       = true
+  force_delete                  = true
+  iam_role                      = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+  platform_version              = "LATEST"
+  propagate_tags                = "TASK_DEFINITION"
+  scheduling_strategy           = "REPLICA"
+  task_definition               = "${aws_ecs_task_definition.kuma.family}:${aws_ecs_task_definition.kuma.revision}"
   capacity_provider_strategy {
     base              = 1
     capacity_provider = "FARGATE_SPOT"
     weight            = 1
+  }
+  deployment_configuration {
+    bake_time_in_minutes = "0"
+    strategy             = "ROLLING"
   }
   network_configuration {
     assign_public_ip = true
@@ -54,16 +65,16 @@ locals {
     ]
     environment = [
       {
+        name  = "ACCOUNT"
+        value = "952133486861"
+      },
+      {
         name  = "NAME"
         value = "kuma"
       },
       {
         name  = "REGION"
-        value = tostring(data.aws_region.current.region)
-      },
-      {
-        name  = "ACCOUNT"
-        value = tostring(data.aws_caller_identity.current.account_id)
+        value = "us-west-2"
       }
     ]
     mountPoints            = []

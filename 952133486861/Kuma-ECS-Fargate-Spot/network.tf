@@ -1,6 +1,7 @@
 resource "aws_vpc" "Kuma-ECS-Fargate-Spot" {
-  cidr_block       = "10.3.0.0/16"
-  instance_tenancy = "default"
+  cidr_block         = "10.3.0.0/16"
+  enable_dns_support = true
+  instance_tenancy   = "default"
   tags = {
     Name           = "Kuma-ECS-Fargate-Spot"
     State          = "Kuma-ECS-Fargate-Spot"
@@ -9,10 +10,11 @@ resource "aws_vpc" "Kuma-ECS-Fargate-Spot" {
 }
 
 resource "aws_subnet" "public" {
-  vpc_id                  = aws_vpc.Kuma-ECS-Fargate-Spot.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.3.1.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.Kuma-ECS-Fargate-Spot.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.3.1.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "public"
     State          = "Kuma-ECS-Fargate-Spot"
