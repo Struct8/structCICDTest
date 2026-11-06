@@ -3,17 +3,17 @@
 
 import {
   to = aws_bedrock_guardrail.agent-lab-guardrail
-  id = "agent-lab-guardrail"
+  id = "u0z5jq6ckxrt,DRAFT"
 }
 
 import {
   to = aws_bedrockagentcore_gateway.agent-lab-gateway
-  id = "agent-lab-gateway"
+  id = "agent-lab-gateway-bevszphca3"
 }
 
 import {
   to = aws_bedrockagentcore_gateway_target.orders
-  id = "orders"
+  id = "agent-lab-gateway-bevszphca3,XGIUX25B0M"
 }
 
 import {
@@ -28,7 +28,7 @@ import {
 
 import {
   to = aws_bedrockagentcore_memory_strategy.session_summaries
-  id = "session_summaries"
+  id = "agent_lab_memory-dUo4aqEKYF,session_summaries-N10xKGCTWm"
 }
 
 import {
