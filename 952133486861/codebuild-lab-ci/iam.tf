@@ -186,6 +186,9 @@ resource "aws_kms_key" "codebuild-lab-artifacts-key" {
   multi_region                       = false
   policy                             = "{\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::952133486861:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}"
   rotation_period_in_days            = 365
+  lifecycle {
+    ignore_changes = [bypass_policy_lockout_safety_check, deletion_window_in_days]
+  }
   tags = {
     Name           = "codebuild-lab-artifacts-key"
     State          = "codebuild-lab-ci"

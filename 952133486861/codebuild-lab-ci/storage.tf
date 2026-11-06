@@ -3,6 +3,9 @@ resource "aws_s3_bucket" "codebuild-lab-artifacts" {
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   tags = {
     Name           = "codebuild-lab-artifacts"
     State          = "codebuild-lab-ci"
@@ -15,6 +18,9 @@ resource "aws_s3_bucket" "codebuild-lab-cache" {
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
+  lifecycle {
+    ignore_changes = [force_destroy]
+  }
   tags = {
     Name           = "codebuild-lab-cache"
     State          = "codebuild-lab-ci"
