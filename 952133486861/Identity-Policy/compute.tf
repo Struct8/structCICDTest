@@ -11,11 +11,11 @@ resource "aws_lambda_function" "Function1" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT                   = "952133486861"
+      ACCOUNT                   = data.aws_caller_identity.current.account_id
       AWS_DYNAMODB_TABLE_NAME_0 = "Table1"
       AWS_SQS_QUEUE_NAME_0      = "Queue2"
       NAME                      = "Function1"
-      REGION                    = "us-west-2"
+      REGION                    = data.aws_region.current.region
     }
   }
   ephemeral_storage {
