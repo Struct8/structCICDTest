@@ -3,7 +3,7 @@
 
 import {
   to = aws_appautoscaling_target.ecs-asg-hub-scale
-  id = "service/ecs-asg-cluster/ecs-asg-hub_service"
+  id = "ecs/service/ecs-asg-cluster/ecs-asg-hub_service/ecs:service:DesiredCount"
 }
 
 import {
