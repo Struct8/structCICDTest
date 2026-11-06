@@ -24,10 +24,10 @@ resource "aws_lambda_function" "fanout-consumer-a" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT               = "952133486861"
+      ACCOUNT               = data.aws_caller_identity.current.account_id
       AWS_XRAY_GROUP_NAME_0 = "tour-xray"
       NAME                  = "fanout-consumer-a"
-      REGION                = "us-west-2"
+      REGION                = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -64,10 +64,10 @@ resource "aws_lambda_function" "fanout-consumer-b" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT               = "952133486861"
+      ACCOUNT               = data.aws_caller_identity.current.account_id
       AWS_XRAY_GROUP_NAME_0 = "tour-xray"
       NAME                  = "fanout-consumer-b"
-      REGION                = "us-west-2"
+      REGION                = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -104,11 +104,11 @@ resource "aws_lambda_function" "schedule-target-fn" {
   timeout                        = 30
   environment {
     variables = {
-      ACCOUNT                         = "952133486861"
+      ACCOUNT                         = data.aws_caller_identity.current.account_id
       AWS_CLOUDWATCH_EVENT_BUS_NAME_0 = "tour-bus"
       AWS_XRAY_GROUP_NAME_0           = "tour-xray"
       NAME                            = "schedule-target-fn"
-      REGION                          = "us-west-2"
+      REGION                          = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -132,33 +132,33 @@ resource "aws_lambda_function" "schedule-target-fn" {
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_rule-fanout_to_fanout-consumer-a" {
-  function_name = aws_lambda_function.fanout-consumer-a.function_name
-  statement_id  = "perm_aws_cloudwatch_event_rule_rule-fanout_to_fanout-consumer-ab6aa27cfd8ce0d5a6a16617d0e"
-  principal     = "events.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_cloudwatch_event_rule.rule-fanout.arn
+  function_name       = aws_lambda_function.fanout-consumer-a.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.rule-fanout.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_rule-fanout_to_fanout-consumer-a"
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_rule-fanout_to_fanout-consumer-b" {
-  function_name = aws_lambda_function.fanout-consumer-b.function_name
-  statement_id  = "perm_aws_cloudwatch_event_rule_rule-fanout_to_fanout-consumer-bde680cd8a802da366c547ce69e"
-  principal     = "events.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_cloudwatch_event_rule.rule-fanout.arn
+  function_name       = aws_lambda_function.fanout-consumer-b.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.rule-fanout.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_rule-fanout_to_fanout-consumer-b"
 }
 
 resource "aws_lambda_permission" "perm_aws_cloudwatch_event_rule_rule-schedule-1min_to_schedule-target-fn" {
-  function_name = aws_lambda_function.schedule-target-fn.function_name
-  statement_id  = "perm_aws_cloudwatch_event_rule_rule-schedule-1min_to_schedule-target-fn46a4a7b653332de718b940c8e7"
-  principal     = "events.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_cloudwatch_event_rule.rule-schedule-1min.arn
+  function_name       = aws_lambda_function.schedule-target-fn.function_name
+  principal           = "events.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_cloudwatch_event_rule.rule-schedule-1min.arn
+  statement_id_prefix = "perm_aws_cloudwatch_event_rule_rule-schedule-1min_to_schedule-target-fn"
 }
 
 resource "aws_lambda_permission" "perm_aws_sns_topic_fanout-topic_to_fanout-consumer-a" {
-  function_name = aws_lambda_function.fanout-consumer-a.function_name
-  statement_id  = "perm_aws_sns_topic_fanout-topic_to_fanout-consumer-a18dae25f5d3b2bab656e4c9e5d"
-  principal     = "sns.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_sns_topic.fanout-topic.arn
+  function_name       = aws_lambda_function.fanout-consumer-a.function_name
+  principal           = "sns.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_sns_topic.fanout-topic.arn
+  statement_id_prefix = "perm_aws_sns_topic_fanout-topic_to_fanout-consumer-a"
 }
