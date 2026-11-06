@@ -5,7 +5,7 @@ resource "aws_codebuild_project" "gitopslab-engine" {
     report_build_status = false
     type                = "GITHUB"
     auth {
-      resource = data.aws_codestarconnections_connection.gitopslab-engine-github.arn
+      resource = "arn:aws:codeconnections:us-west-2:952133486861:connection/4f2f83ba-5ad2-4786-bd23-503d24564cbf"
       type     = "CODECONNECTIONS"
     }
   }
@@ -13,9 +13,13 @@ resource "aws_codebuild_project" "gitopslab-engine" {
   auto_retry_limit = 0
   build_timeout    = 480
   description      = "Runs the GitOps engine's GitHub Actions jobs whose runs-on label names this project."
+  encryption_key   = "arn:aws:kms:us-west-2:952133486861:alias/aws/s3"
   service_role     = aws_iam_role.gitopslab-engine_role.arn
   artifacts {
     type = "NO_ARTIFACTS"
+  }
+  cache {
+    type = "NO_CACHE"
   }
   environment {
     compute_type    = "BUILD_GENERAL1_SMALL"
@@ -30,28 +34,32 @@ resource "aws_codebuild_project" "gitopslab-engine" {
     environment_variable {
       name  = "REGION"
       type  = "PLAINTEXT"
-      value = data.aws_region.current.region
+      value = "us-west-2"
     }
     environment_variable {
       name  = "ACCOUNT"
       type  = "PLAINTEXT"
-      value = data.aws_caller_identity.current.account_id
+      value = "952133486861"
     }
     environment_variable {
       name  = "AWS_CODECONNECTIONS_CONNECTION_ARN_0"
       type  = "PLAINTEXT"
-      value = data.aws_codestarconnections_connection.gitopslab-engine-github.arn
+      value = "arn:aws:codeconnections:us-west-2:952133486861:connection/4f2f83ba-5ad2-4786-bd23-503d24564cbf"
     }
     environment_variable {
       name  = "AWS_CODECONNECTIONS_CONNECTION_NAME_0"
       type  = "PLAINTEXT"
-      value = data.aws_codestarconnections_connection.gitopslab-engine-github.name
+      value = "gitopslab-engine-github"
     }
   }
   logs_config {
     cloudwatch_logs {
       group_name = aws_cloudwatch_log_group.struct8-engine-logs.name
       status     = "ENABLED"
+    }
+    s3_logs {
+      encryption_disabled = false
+      status              = "DISABLED"
     }
   }
   tags = {
@@ -70,5 +78,9 @@ resource "aws_codebuild_webhook" "gitopslab-engine_webhook" {
       pattern                 = "WORKFLOW_JOB_QUEUED"
       type                    = "EVENT"
     }
+  }
+  pull_request_build_policy {
+    approver_roles            = ["GITHUB_ADMIN", "GITHUB_MAINTAIN", "GITHUB_WRITE"]
+    requires_comment_approval = "ALL_PULL_REQUESTS"
   }
 }

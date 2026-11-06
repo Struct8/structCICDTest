@@ -6,16 +6,16 @@ data "aws_iam_policy_document" "codebuild_project_gitopslab-engine_st_gitops-eng
     resources = ["${aws_cloudwatch_log_group.struct8-engine-logs.arn}:*"]
   }
   statement {
-    sid       = "AllowUseOfConnection"
-    effect    = "Allow"
-    actions   = ["codeconnections:GetConnection", "codeconnections:GetConnectionToken", "codestar-connections:GetConnection", "codestar-connections:GetConnectionToken"]
-    resources = [data.aws_codestarconnections_connection.gitopslab-engine-github.arn]
-  }
-  statement {
     sid       = "PublishTestReportsOfThisProject"
     effect    = "Allow"
     actions   = ["codebuild:BatchPutCodeCoverages", "codebuild:BatchPutTestCases", "codebuild:CreateReport", "codebuild:CreateReportGroup", "codebuild:UpdateReport"]
     resources = ["arn:aws:codebuild:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:report-group/gitopslab-engine-*"]
+  }
+  statement {
+    sid       = "AllowUseOfConnection"
+    effect    = "Allow"
+    actions   = ["codeconnections:GetConnection", "codeconnections:GetConnectionToken", "codestar-connections:GetConnection", "codestar-connections:GetConnectionToken"]
+    resources = ["arn:aws:codeconnections:us-west-2:952133486861:connection/4f2f83ba-5ad2-4786-bd23-503d24564cbf"]
   }
 }
 
@@ -26,19 +26,8 @@ resource "aws_iam_policy" "codebuild_project_gitopslab-engine_st_gitops-engine-c
 }
 
 resource "aws_iam_role" "gitopslab-engine_role" {
-  name = "gitopslab-engine_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codebuild.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "gitopslab-engine_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codebuild.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
