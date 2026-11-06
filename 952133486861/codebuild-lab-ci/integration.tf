@@ -94,5 +94,6 @@ resource "aws_cloudwatch_event_target" "notify-email" {
 resource "aws_cloudwatch_event_target" "release-integration" {
   target_id = "terraform-F2Jvm39DZIZ81zhATfWnYrYELh"
   arn       = "arn:aws:codebuild:us-west-2:952133486861:project/codebuild-lab-integration"
+  role_arn  = aws_iam_role.role_eventbridge_codebuild-lab-release-succeeded.arn
   rule      = aws_cloudwatch_event_rule.codebuild-lab-release-succeeded.name
 }

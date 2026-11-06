@@ -102,11 +102,6 @@ import {
 }
 
 import {
-  to = time_sleep.codebuild-lab-pr-check_role_propagation
-  id = "2026-11-06T00:32:13Z"
-}
-
-import {
   to = aws_iam_role_policy_attachment.codebuild_project_codebuild-lab-pr-check_st_codebuild-lab-ci_attach
   id = "codebuild-lab-pr-check_role/arn:aws:iam::952133486861:policy/codebuild_project_codebuild-lab-pr-check_st_codebuild-lab-ci"
 }
@@ -122,11 +117,6 @@ import {
 }
 
 import {
-  to = time_sleep.codebuild-lab-release_role_propagation
-  id = "2026-11-06T00:32:26Z"
-}
-
-import {
   to = aws_iam_role_policy_attachment.codebuild_project_codebuild-lab-release_st_codebuild-lab-ci_attach
   id = "codebuild-lab-release_role/arn:aws:iam::952133486861:policy/codebuild_project_codebuild-lab-release_st_codebuild-lab-ci"
 }
@@ -139,11 +129,6 @@ import {
 import {
   to = aws_iam_policy.codebuild_project_codebuild-lab-runner_st_codebuild-lab-ci
   id = "arn:aws:iam::952133486861:policy/codebuild_project_codebuild-lab-runner_st_codebuild-lab-ci"
-}
-
-import {
-  to = time_sleep.codebuild-lab-runner_role_propagation
-  id = "2026-11-06T00:32:13Z"
 }
 
 import {
