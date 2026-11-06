@@ -3,6 +3,10 @@ resource "aws_ecs_cluster" "sc-test-cluster1" {
   service_connect_defaults {
     namespace = aws_service_discovery_http_namespace.sc-test-ns.arn
   }
+  setting {
+    name  = "containerInsights"
+    value = "disabled"
+  }
   tags = {
     Name           = "sc-test-cluster1"
     State          = "sc-test-state"
@@ -11,22 +15,30 @@ resource "aws_ecs_cluster" "sc-test-cluster1" {
 }
 
 resource "aws_ecs_service" "sc-client_service" {
-  name                    = "sc-client_service"
-  cluster                 = aws_ecs_cluster.sc-test-cluster1.id
-  desired_count           = 1
-  enable_ecs_managed_tags = true
-  force_delete            = true
-  launch_type             = "FARGATE"
-  propagate_tags          = "TASK_DEFINITION"
-  scheduling_strategy     = "REPLICA"
-  task_definition         = "${aws_ecs_task_definition.sc-client.family}:${aws_ecs_task_definition.sc-client.revision}"
+  name                          = "sc-client_service"
+  availability_zone_rebalancing = "ENABLED"
+  cluster                       = aws_ecs_cluster.sc-test-cluster1.id
+  desired_count                 = 1
+  enable_ecs_managed_tags       = true
+  force_delete                  = true
+  iam_role                      = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+  launch_type                   = "FARGATE"
+  platform_version              = "LATEST"
+  propagate_tags                = "TASK_DEFINITION"
+  scheduling_strategy           = "REPLICA"
+  task_definition               = "${aws_ecs_task_definition.sc-client.family}:${aws_ecs_task_definition.sc-client.revision}"
+  deployment_configuration {
+    bake_time_in_minutes = "0"
+    strategy             = "ROLLING"
+  }
   network_configuration {
     assign_public_ip = false
     security_groups  = [aws_security_group.ecs_task_definition_sc-client_group.id]
     subnets          = [aws_subnet.sc-test-private-a.id]
   }
   service_connect_configuration {
-    enabled = true
+    enabled   = true
+    namespace = "arn:aws:servicediscovery:us-west-2:952133486861:namespace/ns-bgxttzyd6jndnccb"
   }
   tags = {
     Name           = "sc-client_service"
@@ -36,25 +48,34 @@ resource "aws_ecs_service" "sc-client_service" {
 }
 
 resource "aws_ecs_service" "sc-server_service" {
-  name                    = "sc-server_service"
-  cluster                 = aws_ecs_cluster.sc-test-cluster1.id
-  desired_count           = 3
-  enable_ecs_managed_tags = true
-  force_delete            = true
-  launch_type             = "FARGATE"
-  propagate_tags          = "TASK_DEFINITION"
-  scheduling_strategy     = "REPLICA"
-  task_definition         = "${aws_ecs_task_definition.sc-server.family}:${aws_ecs_task_definition.sc-server.revision}"
+  name                          = "sc-server_service"
+  availability_zone_rebalancing = "ENABLED"
+  cluster                       = aws_ecs_cluster.sc-test-cluster1.id
+  desired_count                 = 3
+  enable_ecs_managed_tags       = true
+  force_delete                  = true
+  iam_role                      = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+  launch_type                   = "FARGATE"
+  platform_version              = "LATEST"
+  propagate_tags                = "TASK_DEFINITION"
+  scheduling_strategy           = "REPLICA"
+  task_definition               = "${aws_ecs_task_definition.sc-server.family}:${aws_ecs_task_definition.sc-server.revision}"
+  deployment_configuration {
+    bake_time_in_minutes = "0"
+    strategy             = "ROLLING"
+  }
   network_configuration {
     assign_public_ip = false
     security_groups  = [aws_security_group.ecs_task_definition_sc-server_group.id]
     subnets          = [aws_subnet.sc-test-private-a.id]
   }
   service_connect_configuration {
-    enabled = true
+    enabled   = true
+    namespace = "arn:aws:servicediscovery:us-west-2:952133486861:namespace/ns-bgxttzyd6jndnccb"
     service {
-      discovery_name = "server"
-      port_name      = "server-80"
+      discovery_name        = "server"
+      port_name             = "server-80"
+      ingress_port_override = 0
       client_alias {
         dns_name = "server"
         port     = 80
@@ -77,28 +98,22 @@ locals {
     memory    = 256
     environment = [
       {
+        name  = "ACCOUNT"
+        value = "952133486861"
+      },
+      {
+        name  = "AWS_ECS_TASK_DEFINITION_NAME_0"
+        value = "sc-server"
+      },
+      {
         name  = "NAME"
         value = "sc-client"
       },
       {
         name  = "REGION"
-        value = tostring(data.aws_region.current.region)
-      },
-      {
-        name  = "ACCOUNT"
-        value = tostring(data.aws_caller_identity.current.account_id)
-      },
-      {
-        name  = "AWS_ECS_TASK_DEFINITION_NAME_0"
-        value = "sc-server"
+        value = "us-west-2"
       }
     ]
-    mountPoints            = []
-    systemControls         = []
-    volumesFrom            = []
-    command                = ["sh", "-c", "sleep 30; while true; do echo \"--- $(date +%T) ---\"; curl -sS --max-time 5 http://server:80/ 2>&1 | grep -Ei 'Hostname|curl:|resolve' || echo 'NO-RESPONSE'; sleep 4; done"]
-    privileged             = false
-    readonlyRootFilesystem = false
     logConfiguration = {
       logDriver = "awslogs"
       options = {
@@ -107,6 +122,12 @@ locals {
         awslogs-stream-prefix = "client"
       }
     }
+    mountPoints            = []
+    systemControls         = []
+    volumesFrom            = []
+    command                = ["sh", "-c", "sleep 30; while true; do echo \"--- $(date +%T) ---\"; curl -sS --max-time 5 http://server:80/ 2>&1 | grep -Ei 'Hostname|curl:|resolve' || echo 'NO-RESPONSE'; sleep 4; done"]
+    privileged             = false
+    readonlyRootFilesystem = false
   }
 }
 
@@ -144,23 +165,18 @@ locals {
     ]
     environment = [
       {
+        name  = "ACCOUNT"
+        value = "952133486861"
+      },
+      {
         name  = "NAME"
         value = "sc-server"
       },
       {
         name  = "REGION"
-        value = tostring(data.aws_region.current.region)
-      },
-      {
-        name  = "ACCOUNT"
-        value = tostring(data.aws_caller_identity.current.account_id)
+        value = "us-west-2"
       }
     ]
-    mountPoints            = []
-    systemControls         = []
-    volumesFrom            = []
-    privileged             = false
-    readonlyRootFilesystem = false
     logConfiguration = {
       logDriver = "awslogs"
       options = {
@@ -169,6 +185,11 @@ locals {
         awslogs-stream-prefix = "server"
       }
     }
+    mountPoints            = []
+    systemControls         = []
+    volumesFrom            = []
+    privileged             = false
+    readonlyRootFilesystem = false
   }
 }
 

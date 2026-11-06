@@ -1,5 +1,6 @@
 resource "aws_iam_instance_profile" "sc-test-nat_profile" {
   name = "sc-test-nat_profile"
+  path = "/"
   role = aws_iam_role.sc-test-nat_role.name
   tags = {
     Name           = "sc-test-nat_profile"
@@ -39,19 +40,8 @@ resource "aws_iam_policy" "ecs_task_definition_sc-server_execution_st_sc-test-st
 }
 
 resource "aws_iam_role" "execution_role_ecs_sc-client" {
-  name = "execution_role_ecs_sc-client"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "execution_role_ecs_sc-client"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -63,19 +53,8 @@ resource "aws_iam_role" "execution_role_ecs_sc-client" {
 }
 
 resource "aws_iam_role" "execution_role_ecs_sc-server" {
-  name = "execution_role_ecs_sc-server"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "execution_role_ecs_sc-server"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -87,19 +66,8 @@ resource "aws_iam_role" "execution_role_ecs_sc-server" {
 }
 
 resource "aws_iam_role" "sc-test-nat_role" {
-  name = "sc-test-nat_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "sc-test-nat_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -111,19 +79,8 @@ resource "aws_iam_role" "sc-test-nat_role" {
 }
 
 resource "aws_iam_role" "task_role_ecs_sc-client" {
-  name = "task_role_ecs_sc-client"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "task_role_ecs_sc-client"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -135,19 +92,8 @@ resource "aws_iam_role" "task_role_ecs_sc-client" {
 }
 
 resource "aws_iam_role" "task_role_ecs_sc-server" {
-  name = "task_role_ecs_sc-server"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "task_role_ecs_sc-server"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"

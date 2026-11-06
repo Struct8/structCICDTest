@@ -1,9 +1,10 @@
 resource "aws_vpc" "service-connect-test" {
-  assign_generated_ipv6_cidr_block = true
-  cidr_block                       = "10.5.0.0/16"
-  enable_dns_hostnames             = true
-  enable_dns_support               = true
-  instance_tenancy                 = "default"
+  assign_generated_ipv6_cidr_block     = true
+  cidr_block                           = "10.5.0.0/16"
+  enable_dns_hostnames                 = true
+  enable_dns_support                   = true
+  instance_tenancy                     = "default"
+  ipv6_cidr_block_network_border_group = "us-west-2"
   tags = {
     Name           = "service-connect-test"
     State          = "sc-test-state"
@@ -12,10 +13,11 @@ resource "aws_vpc" "service-connect-test" {
 }
 
 resource "aws_subnet" "sc-test-nat-public" {
-  vpc_id                  = aws_vpc.service-connect-test.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.5.2.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.service-connect-test.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.5.2.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "sc-test-nat-public"
     State          = "sc-test-state"
@@ -24,10 +26,11 @@ resource "aws_subnet" "sc-test-nat-public" {
 }
 
 resource "aws_subnet" "sc-test-private-a" {
-  vpc_id                  = aws_vpc.service-connect-test.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.5.1.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.service-connect-test.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.5.1.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "sc-test-private-a"
     State          = "sc-test-state"
@@ -87,6 +90,7 @@ resource "aws_route_table_association" "aws_route_table_association_sc_test_priv
 resource "aws_security_group" "ecs_task_definition_sc-client_group" {
   name                   = "ecs_task_definition_sc-client_group"
   vpc_id                 = aws_vpc.service-connect-test.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "ecs_task_definition_sc-client_group"
@@ -98,6 +102,7 @@ resource "aws_security_group" "ecs_task_definition_sc-client_group" {
 resource "aws_security_group" "ecs_task_definition_sc-server_group" {
   name                   = "ecs_task_definition_sc-server_group"
   vpc_id                 = aws_vpc.service-connect-test.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "ecs_task_definition_sc-server_group"
@@ -107,9 +112,10 @@ resource "aws_security_group" "ecs_task_definition_sc-server_group" {
 }
 
 resource "aws_security_group" "instance_sc-test-nat_group" {
-  name        = "instance_sc-test-nat_group"
-  vpc_id      = aws_vpc.service-connect-test.id
-  description = "NAT instance SG: accepts all traffic from the VPC CIDR to forward/masquerade to the internet; egress open."
+  name                   = "instance_sc-test-nat_group"
+  vpc_id                 = aws_vpc.service-connect-test.id
+  description            = "NAT instance SG: accepts all traffic from the VPC CIDR to forward/masquerade to the internet; egress open."
+  revoke_rules_on_delete = false
 }
 
 resource "aws_security_group_rule" "rule_ecs_task_definition_sc_client_group_egress_all_protocols" {
