@@ -13,21 +13,23 @@ resource "aws_vpc" "vpc-b" {
 resource "aws_vpc_endpoint" "dynamodb-endpoint-b_DynamoDB" {
   service_name      = "com.amazonaws.us-west-2.dynamodb"
   vpc_id            = aws_vpc.vpc-b.id
+  policy            = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}],\"Version\":\"2008-10-17\"}"
   route_table_ids   = [aws_route_table.rt-vpc-b-private.id]
   vpc_endpoint_type = "Gateway"
   tags = {
-    DifName        = "dynamodb-endpoint-b_DynamoDB"
     Name           = "dynamodb-endpoint-b"
     State          = "state-vpc-b"
     Struct8Creator = "rmay struct"
+    DifName        = "dynamodb-endpoint-b_DynamoDB"
   }
 }
 
 resource "aws_subnet" "vpc-b-private" {
-  vpc_id                  = aws_vpc.vpc-b.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.1.0.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                              = aws_vpc.vpc-b.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.1.0.0/24"
+  map_public_ip_on_launch             = false
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "vpc-b-private"
     State          = "state-vpc-b"
@@ -36,10 +38,11 @@ resource "aws_subnet" "vpc-b-private" {
 }
 
 resource "aws_subnet" "vpc-b-public" {
-  vpc_id                  = aws_vpc.vpc-b.id
-  availability_zone       = "us-west-2a"
-  cidr_block              = "10.1.1.0/24"
-  map_public_ip_on_launch = true
+  vpc_id                              = aws_vpc.vpc-b.id
+  availability_zone                   = "us-west-2a"
+  cidr_block                          = "10.1.1.0/24"
+  map_public_ip_on_launch             = true
+  private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "vpc-b-public"
     State          = "state-vpc-b"
@@ -99,6 +102,7 @@ resource "aws_route_table_association" "aws_route_table_association_vpc_b_public
 resource "aws_security_group" "autoscaling_group_traffic-gen-asg_group" {
   name                   = "autoscaling_group_traffic-gen-asg_group"
   vpc_id                 = aws_vpc.vpc-b.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "autoscaling_group_traffic-gen-asg_group"
@@ -110,6 +114,7 @@ resource "aws_security_group" "autoscaling_group_traffic-gen-asg_group" {
 resource "aws_security_group" "instance_nat-b_group" {
   name                   = "instance_nat-b_group"
   vpc_id                 = aws_vpc.vpc-b.id
+  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "instance_nat-b_group"
@@ -134,46 +139,6 @@ resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group
   from_port                = 443
   protocol                 = "tcp"
   to_port                  = 443
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_icmp_8_0" {
-  security_group_id        = data.aws_security_group.instance_traffic-gen-private_group.id
-  source_security_group_id = aws_security_group.autoscaling_group_traffic-gen-asg_group.id
-  description              = "Ping (ICMP echo request) from traffic-gen-asg"
-  from_port                = 8
-  protocol                 = "icmp"
-  to_port                  = 0
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_tcp_22" {
-  security_group_id        = data.aws_security_group.instance_traffic-gen-private_group.id
-  source_security_group_id = aws_security_group.autoscaling_group_traffic-gen-asg_group.id
-  description              = "SSH from traffic-gen-asg"
-  from_port                = 22
-  protocol                 = "tcp"
-  to_port                  = 22
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_tcp_80" {
-  security_group_id        = data.aws_security_group.instance_traffic-gen-private_group.id
-  source_security_group_id = aws_security_group.autoscaling_group_traffic-gen-asg_group.id
-  description              = "HTTP from traffic-gen-asg"
-  from_port                = 80
-  protocol                 = "tcp"
-  to_port                  = 80
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_autoscaling_group_traffic_gen_asg_group_to_instance_traffic_gen_private_group_udp_53" {
-  security_group_id        = data.aws_security_group.instance_traffic-gen-private_group.id
-  source_security_group_id = aws_security_group.autoscaling_group_traffic-gen-asg_group.id
-  description              = "DNS from traffic-gen-asg"
-  from_port                = 53
-  protocol                 = "udp"
-  to_port                  = 53
   type                     = "ingress"
 }
 

@@ -11,9 +11,15 @@ resource "aws_dynamodb_table" "traffic-table-b" {
     name = "ID"
     type = "S"
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "traffic-table-b"
     State          = "state-vpc-b"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }

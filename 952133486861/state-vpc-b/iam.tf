@@ -1,5 +1,6 @@
 resource "aws_iam_instance_profile" "nat-b_profile" {
   name = "nat-b_profile"
+  path = "/"
   role = aws_iam_role.nat-b_role.name
   tags = {
     Name           = "nat-b_profile"
@@ -10,6 +11,7 @@ resource "aws_iam_instance_profile" "nat-b_profile" {
 
 resource "aws_iam_instance_profile" "traffic-gen-asg_profile" {
   name = "traffic-gen-asg_profile"
+  path = "/"
   role = aws_iam_role.traffic-gen-asg_role.name
   tags = {
     Name           = "traffic-gen-asg_profile"
@@ -88,19 +90,8 @@ resource "aws_iam_role" "Struct8Debug-debug-gen-asg" {
 }
 
 resource "aws_iam_role" "nat-b_role" {
-  name = "nat-b_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "nat-b_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -112,19 +103,8 @@ resource "aws_iam_role" "nat-b_role" {
 }
 
 resource "aws_iam_role" "traffic-gen-asg_role" {
-  name = "traffic-gen-asg_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "traffic-gen-asg_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
