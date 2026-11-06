@@ -73,7 +73,7 @@ import {
 
 import {
   to = aws_kinesis_stream.LedgerKinesisStream
-  id = "arn:aws:kinesis:us-west-2:952133486861:stream/LedgerKinesisStream"
+  id = "LedgerKinesisStream"
 }
 
 import {
