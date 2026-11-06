@@ -36,6 +36,9 @@ resource "aws_bedrock_guardrail" "lab-guardrail" {
 
 resource "aws_bedrock_inference_profile" "bedrock-rag-answer-model" {
   name = "bedrock-rag-answer-model"
+  lifecycle {
+    ignore_changes = [model_source]
+  }
   model_source {
     copy_from = "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-lite-v1:0"
   }
