@@ -1,32 +1,34 @@
-data "archive_file" "archive_struct8-templates_agent-lab-chat" {
-  output_path = "${path.module}/struct8-templates_agent-lab-chat.zip"
-  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/bedrock-agent-lab/v1/lambda/chat"
-  type        = "zip"
-}
-
 resource "aws_lambda_function" "agent-lab-chat" {
   function_name                  = "agent-lab-chat"
   architectures                  = ["arm64"]
-  filename                       = data.archive_file.archive_struct8-templates_agent-lab-chat.output_path
+  filename                       = "imported_lambda_placeholder.zip"
   handler                        = "index.handler"
   memory_size                    = 256
   publish                        = false
   reserved_concurrent_executions = -1
   role                           = aws_iam_role.agent-lab-chat_role.arn
   runtime                        = "nodejs22.x"
-  source_code_hash               = data.archive_file.archive_struct8-templates_agent-lab-chat.output_base64sha256
   timeout                        = 120
   environment {
     variables = {
-      NAME                                      = "agent-lab-chat"
-      REGION                                    = data.aws_region.current.region
-      ACCOUNT                                   = data.aws_caller_identity.current.account_id
+      ACCOUNT                                   = "952133486861"
+      AWS_BEDROCKAGENTCORE_HARNESS_ARN_0        = "arn:aws:bedrock-agentcore:us-west-2:952133486861:harness/agent_lab_orders-Ul2ksNHdtu"
+      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_ID_0      = "u0z5jq6ckxrt"
+      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_VERSION_0 = "DRAFT"
       AWS_LAMBDA_FUNCTION_URL_NAME_0            = "agent-lab-chat-url"
-      AWS_BEDROCKAGENTCORE_HARNESS_ARN_0        = aws_bedrockagentcore_harness.agent_lab_orders.arn
-      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_ID_0      = aws_bedrock_guardrail.agent-lab-guardrail.guardrail_id
-      AWS_BEDROCK_GUARDRAIL_GUARDRAIL_VERSION_0 = aws_bedrock_guardrail.agent-lab-guardrail.version
       AWS_XRAY_GROUP_NAME_0                     = "agent-lab-traces"
+      NAME                                      = "agent-lab-chat"
+      REGION                                    = "us-west-2"
     }
+  }
+  ephemeral_storage {
+    size = 512
+  }
+  lifecycle {
+    ignore_changes = [filename, source_code_hash]
+  }
+  logging_config {
+    log_format = "Text"
   }
   tags = {
     Name           = "agent-lab-chat"
@@ -39,32 +41,34 @@ resource "aws_lambda_function" "agent-lab-chat" {
   depends_on = [aws_iam_role_policy_attachment.lambda_function_agent-lab-chat_st_bedrock-agent-lab_attach]
 }
 
-data "archive_file" "archive_struct8-templates_agent-lab-orders-tool" {
-  output_path = "${path.module}/struct8-templates_agent-lab-orders-tool.zip"
-  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/bedrock-agent-lab/v1/lambda/orders-tool"
-  type        = "zip"
-}
-
 resource "aws_lambda_function" "agent-lab-orders-tool" {
   function_name                  = "agent-lab-orders-tool"
   architectures                  = ["arm64"]
-  filename                       = data.archive_file.archive_struct8-templates_agent-lab-orders-tool.output_path
+  filename                       = "imported_lambda_placeholder.zip"
   handler                        = "index.handler"
   memory_size                    = 256
   publish                        = false
   reserved_concurrent_executions = -1
   role                           = aws_iam_role.agent-lab-orders-tool_role.arn
   runtime                        = "nodejs22.x"
-  source_code_hash               = data.archive_file.archive_struct8-templates_agent-lab-orders-tool.output_base64sha256
   timeout                        = 10
   environment {
     variables = {
-      NAME                      = "agent-lab-orders-tool"
-      REGION                    = data.aws_region.current.region
-      ACCOUNT                   = data.aws_caller_identity.current.account_id
+      ACCOUNT                   = "952133486861"
       AWS_DYNAMODB_TABLE_NAME_0 = "agent-lab-orders"
       AWS_XRAY_GROUP_NAME_0     = "agent-lab-traces"
+      NAME                      = "agent-lab-orders-tool"
+      REGION                    = "us-west-2"
     }
+  }
+  ephemeral_storage {
+    size = 512
+  }
+  lifecycle {
+    ignore_changes = [filename, source_code_hash]
+  }
+  logging_config {
+    log_format = "Text"
   }
   tags = {
     Name           = "agent-lab-orders-tool"
@@ -84,18 +88,18 @@ resource "aws_lambda_function_url" "agent-lab-chat-url" {
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat" {
   function_name          = aws_lambda_function.agent-lab-chat.function_name
+  statement_id           = "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat5a8335c8d42053d169ab0b1ad2"
   principal              = "*"
   action                 = "lambda:InvokeFunctionUrl"
   function_url_auth_type = "NONE"
-  statement_id_prefix    = "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat"
   depends_on             = [aws_lambda_function_url.agent-lab-chat-url]
 }
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat_invoke" {
   function_name            = aws_lambda_function.agent-lab-chat.function_name
+  statement_id             = "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat_invokea4f2aa90bd035a55a36f07b1ee"
   principal                = "*"
   action                   = "lambda:InvokeFunction"
   invoked_via_function_url = true
-  statement_id_prefix      = "perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat_invoke"
   depends_on               = [aws_lambda_function_url.agent-lab-chat-url, aws_lambda_permission.perm_aws_lambda_function_url_agent-lab-chat-url_to_agent-lab-chat]
 }

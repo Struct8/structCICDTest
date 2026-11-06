@@ -15,12 +15,6 @@ resource "aws_iam_policy" "bedrockagentcore_gateway_agent-lab-gateway_st_bedrock
 
 data "aws_iam_policy_document" "bedrockagentcore_harness_agent_lab_orders_st_bedrock-agent-lab_doc" {
   statement {
-    sid       = "AgentCoreGatewayAccess"
-    effect    = "Allow"
-    actions   = ["bedrock-agentcore:InvokeGateway"]
-    resources = [aws_bedrockagentcore_gateway.agent-lab-gateway.gateway_arn]
-  }
-  statement {
     sid       = "AgentCoreMemory"
     effect    = "Allow"
     actions   = ["bedrock-agentcore:CreateEvent", "bedrock-agentcore:DeleteEvent", "bedrock-agentcore:GetEvent", "bedrock-agentcore:ListEvents", "bedrock-agentcore:RetrieveMemoryRecords"]
@@ -94,12 +88,6 @@ resource "aws_iam_policy" "bedrockagentcore_harness_agent_lab_orders_st_bedrock-
 
 data "aws_iam_policy_document" "lambda_function_agent-lab-chat_st_bedrock-agent-lab_doc" {
   statement {
-    sid       = "AllowApplyGuardrail"
-    effect    = "Allow"
-    actions   = ["bedrock:ApplyGuardrail"]
-    resources = [aws_bedrock_guardrail.agent-lab-guardrail.guardrail_arn]
-  }
-  statement {
     sid       = "AllowInvokeHarness"
     effect    = "Allow"
     actions   = ["bedrock-agentcore:InvokeAgentRuntime", "bedrock-agentcore:InvokeHarness"]
@@ -116,6 +104,12 @@ data "aws_iam_policy_document" "lambda_function_agent-lab-chat_st_bedrock-agent-
     effect    = "Allow"
     actions   = ["xray:PutTelemetryRecords", "xray:PutTraceSegments"]
     resources = ["*"]
+  }
+  statement {
+    sid       = "AllowApplyGuardrail"
+    effect    = "Allow"
+    actions   = ["bedrock:ApplyGuardrail"]
+    resources = ["arn:aws:bedrock:us-west-2:952133486861:guardrail/u0z5jq6ckxrt"]
   }
 }
 
@@ -153,38 +147,16 @@ resource "aws_iam_policy" "lambda_function_agent-lab-orders-tool_st_bedrock-agen
 }
 
 resource "aws_iam_role" "agent-lab-chat_role" {
-  name = "agent-lab-chat_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "agent-lab-chat_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
 }
 
 resource "aws_iam_role" "agent-lab-orders-tool_role" {
-  name = "agent-lab-orders-tool_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "agent-lab-orders-tool_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -196,27 +168,11 @@ resource "aws_iam_role" "agent-lab-orders-tool_role" {
 }
 
 resource "aws_iam_role" "role_agent-lab-gateway" {
-  name = "role_agent-lab-gateway"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "bedrock-agentcore.amazonaws.com"
-      },
-      "Condition": {
-        "StringEquals": {
-          "aws:SourceAccount": "${data.aws_caller_identity.current.account_id}"
-        },
-        "ArnLike": {
-          "aws:SourceArn": "arn:aws:bedrock-agentcore:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:gateway/*"
-        }
-      }
-    }
-  ]
-})
+  name                  = "role_agent-lab-gateway"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Condition\":{\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:bedrock-agentcore:us-west-2:952133486861:gateway/*\"},\"StringEquals\":{\"aws:SourceAccount\":\"952133486861\"}},\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"bedrock-agentcore.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
   tags = {
     Name           = "role_agent-lab-gateway"
     State          = "bedrock-agent-lab"
@@ -225,27 +181,11 @@ resource "aws_iam_role" "role_agent-lab-gateway" {
 }
 
 resource "aws_iam_role" "role_agent_lab_orders" {
-  name = "role_agent_lab_orders"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "bedrock-agentcore.amazonaws.com"
-      },
-      "Condition": {
-        "StringEquals": {
-          "aws:SourceAccount": "${data.aws_caller_identity.current.account_id}"
-        },
-        "ArnLike": {
-          "aws:SourceArn": "arn:aws:bedrock-agentcore:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:*"
-        }
-      }
-    }
-  ]
-})
+  name                  = "role_agent_lab_orders"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Condition\":{\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:bedrock-agentcore:us-west-2:952133486861:*\"},\"StringEquals\":{\"aws:SourceAccount\":\"952133486861\"}},\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"bedrock-agentcore.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  force_detach_policies = false
+  max_session_duration  = 3600
+  path                  = "/"
   tags = {
     Name           = "role_agent_lab_orders"
     State          = "bedrock-agent-lab"
@@ -281,23 +221,8 @@ resource "aws_kms_key" "agent-lab-key" {
   is_enabled                         = true
   key_usage                          = "ENCRYPT_DECRYPT"
   multi_region                       = false
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "Enable IAM User Permissions",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-      },
-      "Action": "kms:*",
-      "Resource": "*"
-    }
-  ]
-}
-  EOF
-  rotation_period_in_days = 365
+  policy                             = "{\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::952133486861:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}"
+  rotation_period_in_days            = 365
   tags = {
     Name           = "agent-lab-key"
     State          = "bedrock-agent-lab"

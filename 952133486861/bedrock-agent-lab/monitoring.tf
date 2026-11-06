@@ -75,7 +75,6 @@ resource "aws_cloudwatch_log_group" "agent-lab-chat-logs" {
   name              = "/aws/lambda/agent-lab-chat"
   log_group_class   = "STANDARD"
   retention_in_days = 7
-  skip_destroy      = false
   tags = {
     Name           = "agent-lab-chat-logs"
     State          = "bedrock-agent-lab"
@@ -87,7 +86,6 @@ resource "aws_cloudwatch_log_group" "agent-lab-orders-tool-logs" {
   name              = "/aws/lambda/agent-lab-orders-tool"
   log_group_class   = "STANDARD"
   retention_in_days = 7
-  skip_destroy      = false
   tags = {
     Name           = "agent-lab-orders-tool-logs"
     State          = "bedrock-agent-lab"
@@ -98,6 +96,10 @@ resource "aws_cloudwatch_log_group" "agent-lab-orders-tool-logs" {
 resource "aws_xray_group" "agent-lab-traces" {
   group_name        = "agent-lab-traces"
   filter_expression = "service(\"agent-lab-chat\") OR service(\"agent-lab-orders-tool\")"
+  insights_configuration {
+    insights_enabled      = false
+    notifications_enabled = false
+  }
   tags = {
     Name           = "agent-lab-traces"
     State          = "bedrock-agent-lab"
