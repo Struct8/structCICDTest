@@ -13,17 +13,17 @@ import {
 
 import {
   to = aws_ecs_cluster.sc-test-cluster1
-  id = "arn:aws:ecs:us-west-2:952133486861:cluster/sc-test-cluster1"
+  id = "sc-test-cluster1"
 }
 
 import {
   to = aws_ecs_task_definition.sc-client
-  id = "sc-client"
+  id = "arn:aws:ecs:us-west-2:952133486861:task-definition/sc-client:1"
 }
 
 import {
   to = aws_ecs_task_definition.sc-server
-  id = "sc-server"
+  id = "arn:aws:ecs:us-west-2:952133486861:task-definition/sc-server:1"
 }
 
 import {
