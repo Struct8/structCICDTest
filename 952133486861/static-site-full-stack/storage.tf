@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "site-assets" {
-  bucket              = "site-web-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "site-web-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "site-assets" {
 }
 
 resource "aws_s3_bucket" "site-uploads" {
-  bucket              = "s3-presign-uploads-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "s3-presign-uploads-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -26,7 +26,7 @@ resource "aws_s3_bucket_cors_configuration" "site-uploads_cors" {
   bucket = aws_s3_bucket.site-uploads.id
   cors_rule {
     allowed_headers = ["*"]
-    allowed_methods = ["PUT", "GET"]
+    allowed_methods = ["GET", "PUT"]
     allowed_origins = ["*"]
     expose_headers  = ["ETag"]
     max_age_seconds = 300
@@ -89,7 +89,8 @@ resource "aws_s3_bucket_public_access_block" "site-uploads_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "site-assets_configuration" {
   bucket = aws_s3_bucket.site-assets.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -99,7 +100,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "site-assets_confi
 resource "aws_s3_bucket_server_side_encryption_configuration" "site-uploads_configuration" {
   bucket = aws_s3_bucket.site-uploads.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }

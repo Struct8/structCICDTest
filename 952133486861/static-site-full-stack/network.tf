@@ -7,50 +7,63 @@ resource "aws_cloudfront_distribution" "site-cdn" {
   price_class         = "PriceClass_All"
   custom_error_response {
     error_caching_min_ttl = 10
-    error_code            = 404
+    error_code            = 403
     response_code         = 404
     response_page_path    = "/error.html"
   }
   custom_error_response {
     error_caching_min_ttl = 10
-    error_code            = 403
+    error_code            = 404
     response_code         = 404
     response_page_path    = "/error.html"
   }
   default_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     target_origin_id       = "site-origin"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     viewer_protocol_policy = "redirect-to-https"
+    grpc_config {
+      enabled = false
+    }
   }
   ordered_cache_behavior {
-    cache_policy_id          = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.policy_allviewerexcepthostheader.id
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
     target_origin_id         = "api-origin"
     allowed_methods          = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods           = ["GET", "HEAD", "OPTIONS"]
+    compress                 = false
+    default_ttl              = 0
+    max_ttl                  = 0
+    min_ttl                  = 0
     path_pattern             = "/api/*"
+    smooth_streaming         = false
     viewer_protocol_policy   = "redirect-to-https"
     function_association {
       event_type   = "viewer-request"
       function_arn = aws_cloudfront_function.path-rewrite-api-to-origin.arn
     }
+    grpc_config {
+      enabled = false
+    }
   }
   origin {
-    domain_name              = aws_s3_bucket.site-assets.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.oac_site-assets.id
-    origin_id                = "site-origin"
-  }
-  origin {
-    domain_name = trimsuffix(trimprefix(aws_lambda_function_url.presign-url.function_url, "https://"), "/")
-    origin_id   = "api-origin"
+    domain_name                 = trimsuffix(trimprefix(aws_lambda_function_url.presign-url.function_url, "https://"), "/")
+    origin_id                   = "api-origin"
+    response_completion_timeout = 0
     custom_origin_config {
       http_port              = 80
       https_port             = 443
       origin_protocol_policy = "https-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
+  }
+  origin {
+    domain_name                 = aws_s3_bucket.site-assets.bucket_regional_domain_name
+    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_site-assets.id
+    origin_id                   = "site-origin"
+    response_completion_timeout = 0
   }
   restrictions {
     geo_restriction {
