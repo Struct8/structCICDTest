@@ -37,7 +37,7 @@ resource "aws_bedrock_guardrail" "lab-guardrail" {
 resource "aws_bedrock_inference_profile" "bedrock-rag-answer-model" {
   name = "bedrock-rag-answer-model"
   model_source {
-    copy_from = "arn:aws:bedrock:${data.aws_region.current.region}::foundation-model/amazon.nova-lite-v1:0"
+    copy_from = "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-lite-v1:0"
   }
   tags = {
     Name           = "bedrock-rag-answer-model"
@@ -64,7 +64,7 @@ resource "aws_bedrockagent_knowledge_base" "bedrock-kb-lab" {
   knowledge_base_configuration {
     type = "VECTOR"
     vector_knowledge_base_configuration {
-      embedding_model_arn = "arn:aws:bedrock:${data.aws_region.current.region}::foundation-model/amazon.titan-embed-text-v2:0"
+      embedding_model_arn = "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v2:0"
     }
   }
   storage_configuration {

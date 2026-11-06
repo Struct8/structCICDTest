@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bedrock-documents" {
-  bucket              = "bedrock-documents-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket              = "bedrock-documents-952133486861-us-west-2-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -28,7 +28,8 @@ resource "aws_s3_bucket_public_access_block" "bedrock-documents_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "bedrock-documents_configuration" {
   bucket = aws_s3_bucket.bedrock-documents.id
   rule {
-    bucket_key_enabled = true
+    blocked_encryption_types = ["SSE-C"]
+    bucket_key_enabled       = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -43,13 +44,32 @@ resource "aws_s3_bucket_versioning" "bedrock-documents_versioning" {
   }
 }
 
-resource "aws_s3_object" "bedrock-rag-documents-files" {
-  for_each     = fileset("${path.module}/.external_modules/struct8-templates/templates/bedrock-rag-lab/v1/documents", "**")
-  source       = "${path.module}/.external_modules/struct8-templates/templates/bedrock-rag-lab/v1/documents/${each.value}"
+resource "aws_s3_object" "bedrock-rag-documents-files_returns-and-refunds_md" {
   bucket       = aws_s3_bucket.bedrock-documents.bucket
-  content_type = lookup({ "md" = "text/markdown; charset=utf-8" }, lower(regex("[^.]*$", each.value)), "application/octet-stream")
-  etag         = filemd5("${path.module}/.external_modules/struct8-templates/templates/bedrock-rag-lab/v1/documents/${each.value}")
-  key          = each.value
+  content_type = "text/markdown; charset=utf-8"
+  key          = "returns-and-refunds.md"
+  tags = {
+    Name           = "bedrock-rag-documents-files"
+    State          = "bedrock-rag-guardrail-lab"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "bedrock-rag-documents-files_shipping-policy_md" {
+  bucket       = aws_s3_bucket.bedrock-documents.bucket
+  content_type = "text/markdown; charset=utf-8"
+  key          = "shipping-policy.md"
+  tags = {
+    Name           = "bedrock-rag-documents-files"
+    State          = "bedrock-rag-guardrail-lab"
+    Struct8Creator = "rmay struct"
+  }
+}
+
+resource "aws_s3_object" "bedrock-rag-documents-files_subscriptions_md" {
+  bucket       = aws_s3_bucket.bedrock-documents.bucket
+  content_type = "text/markdown; charset=utf-8"
+  key          = "subscriptions.md"
   tags = {
     Name           = "bedrock-rag-documents-files"
     State          = "bedrock-rag-guardrail-lab"
@@ -63,8 +83,11 @@ resource "aws_s3vectors_index" "bedrock-kb-index" {
   data_type          = "float32"
   dimension          = 1024
   distance_metric    = "cosine"
+  encryption_configuration {
+    sse_type = "AES256"
+  }
   metadata_configuration {
-    non_filterable_metadata_keys = ["AMAZON_BEDROCK_TEXT", "AMAZON_BEDROCK_METADATA"]
+    non_filterable_metadata_keys = ["AMAZON_BEDROCK_METADATA", "AMAZON_BEDROCK_TEXT"]
   }
   tags = {
     Name           = "bedrock-kb-index"
@@ -76,6 +99,9 @@ resource "aws_s3vectors_index" "bedrock-kb-index" {
 resource "aws_s3vectors_vector_bucket" "bedrock-vectors" {
   vector_bucket_name = "bedrock-vectors"
   force_destroy      = false
+  encryption_configuration {
+    sse_type = "AES256"
+  }
   tags = {
     Name           = "bedrock-vectors"
     State          = "bedrock-rag-guardrail-lab"

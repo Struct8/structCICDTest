@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "bedrockagent_knowledge_base_bedrock-kb-lab_st_be
     sid       = "InvokeTheEmbeddingModel"
     effect    = "Allow"
     actions   = ["bedrock:InvokeModel"]
-    resources = ["arn:aws:bedrock:${data.aws_region.current.region}::foundation-model/amazon.titan-embed-text-v2:0"]
+    resources = ["arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v2:0"]
   }
 }
 
@@ -63,16 +63,16 @@ data "aws_iam_policy_document" "lambda_function_bedrock-rag-handler_st_bedrock-r
     resources = ["*"]
   }
   statement {
-    sid       = "AllowInferenceProfileModel"
-    effect    = "Allow"
-    actions   = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
-    resources = ["arn:aws:bedrock:${data.aws_region.current.region}::foundation-model/amazon.nova-lite-v1:0"]
-  }
-  statement {
     sid       = "AllowDataSourceSync"
     effect    = "Allow"
     actions   = ["bedrock:GetIngestionJob", "bedrock:ListIngestionJobs", "bedrock:StartIngestionJob"]
-    resources = ["arn:aws:bedrock:*:${data.aws_caller_identity.current.account_id}:knowledge-base/${aws_bedrockagent_data_source.bedrock-rag-documents.knowledge_base_id}"]
+    resources = ["arn:aws:bedrock:*:952133486861:knowledge-base/AGNZ18BSXH"]
+  }
+  statement {
+    sid       = "AllowInferenceProfileModel"
+    effect    = "Allow"
+    actions   = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
+    resources = ["arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-lite-v1:0"]
   }
 }
 
@@ -83,19 +83,8 @@ resource "aws_iam_policy" "lambda_function_bedrock-rag-handler_st_bedrock-rag-gu
 }
 
 resource "aws_iam_role" "bedrock-rag-handler_role" {
-  name = "bedrock-rag-handler_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "bedrock-rag-handler_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -107,27 +96,8 @@ resource "aws_iam_role" "bedrock-rag-handler_role" {
 }
 
 resource "aws_iam_role" "role_kb_bedrock-kb-lab" {
-  name = "role_kb_bedrock-kb-lab"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "bedrock.amazonaws.com"
-      },
-      "Condition": {
-        "StringEquals": {
-          "aws:SourceAccount": "${data.aws_caller_identity.current.account_id}"
-        },
-        "ArnLike": {
-          "aws:SourceArn": "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:knowledge-base/*"
-        }
-      }
-    }
-  ]
-})
+  name                  = "role_kb_bedrock-kb-lab"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Condition\":{\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:bedrock:us-west-2:952133486861:knowledge-base/*\"},\"StringEquals\":{\"aws:SourceAccount\":\"952133486861\"}},\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"bedrock.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
