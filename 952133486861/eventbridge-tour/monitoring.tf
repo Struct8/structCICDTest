@@ -2,7 +2,6 @@ resource "aws_cloudwatch_log_group" "logs-fanout-consumer-a" {
   name              = "/aws/lambda/fanout-consumer-a"
   log_group_class   = "STANDARD"
   retention_in_days = 14
-  skip_destroy      = false
   tags = {
     Name           = "logs-fanout-consumer-a"
     State          = "eventbridge-tour"
@@ -14,7 +13,6 @@ resource "aws_cloudwatch_log_group" "logs-fanout-consumer-b" {
   name              = "/aws/lambda/fanout-consumer-b"
   log_group_class   = "STANDARD"
   retention_in_days = 14
-  skip_destroy      = false
   tags = {
     Name           = "logs-fanout-consumer-b"
     State          = "eventbridge-tour"
@@ -26,7 +24,6 @@ resource "aws_cloudwatch_log_group" "logs-schedule-target-fn" {
   name              = "/aws/lambda/schedule-target-fn"
   log_group_class   = "STANDARD"
   retention_in_days = 14
-  skip_destroy      = false
   tags = {
     Name           = "logs-schedule-target-fn"
     State          = "eventbridge-tour"
@@ -37,6 +34,10 @@ resource "aws_cloudwatch_log_group" "logs-schedule-target-fn" {
 resource "aws_xray_group" "tour-xray" {
   group_name        = "tour-xray"
   filter_expression = "service(\"fanout-consumer-a\") OR service(\"fanout-consumer-b\") OR service(\"fanout-topic\") OR service(\"schedule-target-fn\")"
+  insights_configuration {
+    insights_enabled      = false
+    notifications_enabled = false
+  }
   tags = {
     Name           = "tour-xray"
     State          = "eventbridge-tour"

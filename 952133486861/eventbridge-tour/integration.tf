@@ -100,7 +100,7 @@ resource "aws_cloudwatch_event_rule" "rule-event-pattern" {
   event_bus_name = aws_cloudwatch_event_bus.tour-bus.name
   name           = "rule-event-pattern"
   description    = "SECTION 1 - Event pattern trigger: matches a custom application event"
-  event_pattern  = "{\"source\":[\"struct8.hub\"],\"detail-type\":[\"Hub Message\"]}"
+  event_pattern  = "{\"detail-type\":[\"Hub Message\"],\"source\":[\"struct8.hub\"]}"
   state          = "ENABLED"
   tags = {
     Name           = "rule-event-pattern"
@@ -115,11 +115,11 @@ resource "aws_cloudwatch_event_rule" "rule-fanout" {
   description = "SECTION 2 - Fan-out: ONE event matched here is delivered to multiple targets (2 Lambdas + SQS + SNS)"
   event_pattern = <<EOF
 {
-  "source": [
-    "aws.s3"
-  ],
   "detail-type": [
     "Object Created"
+  ],
+  "source": [
+    "aws.s3"
   ],
   "detail": {
     "bucket": {
@@ -153,20 +153,23 @@ resource "aws_cloudwatch_event_rule" "rule-schedule-1min" {
 
 resource "aws_cloudwatch_event_target" "tgt-eventpattern-queue" {
   event_bus_name = aws_cloudwatch_event_bus.tour-bus.name
+  target_id      = "terraform-CTYybFysk314QknmxAY7TXCAOI"
   arn            = aws_sqs_queue.fanout-queue.arn
   input          = "{\"trigger\": \"custom-app-event\", \"note\": \"constant payload replaces the matched event\"}"
   rule           = aws_cloudwatch_event_rule.rule-event-pattern.name
 }
 
 resource "aws_cloudwatch_event_target" "tgt-fanout-a" {
+  target_id  = "terraform-39oQG6HrgAAs5FdxhzB1JPrOY9"
   arn        = aws_lambda_function.fanout-consumer-a.arn
   rule       = aws_cloudwatch_event_rule.rule-fanout.name
   depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_rule-fanout_to_fanout-consumer-a]
 }
 
 resource "aws_cloudwatch_event_target" "tgt-fanout-b" {
-  arn  = aws_lambda_function.fanout-consumer-b.arn
-  rule = aws_cloudwatch_event_rule.rule-fanout.name
+  target_id = "terraform-ab0pd5L5dYdfq0CehIHsnp0HDh"
+  arn       = aws_lambda_function.fanout-consumer-b.arn
+  rule      = aws_cloudwatch_event_rule.rule-fanout.name
   input_transformer {
     input_template = "{\"message\": \"New object <key> landed in <bucket>\"}"
     input_paths = {
@@ -178,31 +181,39 @@ resource "aws_cloudwatch_event_target" "tgt-fanout-b" {
 }
 
 resource "aws_cloudwatch_event_target" "tgt-fanout-queue" {
-  arn  = aws_sqs_queue.fanout-queue.arn
-  rule = aws_cloudwatch_event_rule.rule-fanout.name
+  target_id = "terraform-A4gzWmABUMNLjmCwEpbNLHAMbp"
+  arn       = aws_sqs_queue.fanout-queue.arn
+  rule      = aws_cloudwatch_event_rule.rule-fanout.name
 }
 
 resource "aws_cloudwatch_event_target" "tgt-fanout-topic" {
-  arn  = aws_sns_topic.fanout-topic.arn
-  rule = aws_cloudwatch_event_rule.rule-fanout.name
+  target_id = "terraform-TdW3LnkNxM5LdBMxr7jhFmqg6i"
+  arn       = aws_sns_topic.fanout-topic.arn
+  rule      = aws_cloudwatch_event_rule.rule-fanout.name
 }
 
 resource "aws_cloudwatch_event_target" "tgt-schedule-fn" {
+  target_id  = "terraform-ZkaVQrD9Ulh3j6vpfiADeLb4Xm"
   arn        = aws_lambda_function.schedule-target-fn.arn
   rule       = aws_cloudwatch_event_rule.rule-schedule-1min.name
   depends_on = [aws_lambda_permission.perm_aws_cloudwatch_event_rule_rule-schedule-1min_to_schedule-target-fn]
 }
 
 resource "aws_scheduler_schedule" "sched-flexible" {
-  name                = "sched-flexible"
-  description         = "SECTION 1 - EventBridge Scheduler (the newer service): flexible delivery window + timezone"
-  schedule_expression = "rate(1 minute)"
+  name                         = "sched-flexible"
+  description                  = "SECTION 1 - EventBridge Scheduler (the newer service): flexible delivery window + timezone"
+  schedule_expression          = "rate(1 minute)"
+  schedule_expression_timezone = "UTC"
   flexible_time_window {
     mode = "OFF"
   }
   target {
     arn      = aws_sqs_queue.fanout-queue.arn
     role_arn = aws_iam_role.sched-flexible_role.arn
+    retry_policy {
+      maximum_event_age_in_seconds = 86400
+      maximum_retry_attempts       = 185
+    }
   }
   depends_on = [aws_iam_role_policy_attachment.scheduler_schedule_sched-flexible_st_eventbridge-tour_attach]
 }
