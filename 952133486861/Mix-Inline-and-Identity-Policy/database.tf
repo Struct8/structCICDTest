@@ -9,9 +9,15 @@ resource "aws_dynamodb_table" "Table3" {
     name = "ID"
     type = "S"
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "Table3"
     State          = "Mix-Inline-and-Identity-Policy"
     Struct8Creator = "rmay struct"
+  }
+  ttl {
+    enabled = false
   }
 }
