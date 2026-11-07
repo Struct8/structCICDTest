@@ -145,6 +145,10 @@ output "source_arn" {
   value = aws_s3_bucket.source.arn
 }
 
+output "source_bucket" {
+  value = aws_s3_bucket.source.bucket
+}
+
 output "archive_arn" {
   value = aws_sqs_queue.archive.arn
 }
