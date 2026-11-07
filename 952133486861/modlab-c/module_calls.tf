@@ -1,3 +1,3 @@
-module "mensagens" {
-  source = "./modules/mensagens"
+module "mensageria" {
+  source = "./modules/mensageria"
 }
