@@ -7,8 +7,8 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 data "archive_file" "archive_struct8-templates_order-charge" {
-  output_path = "${path.module}/struct8-templates_order-charge.zip"
-  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/stepfunctions-order-lab/v1/lambda/order-charge"
+  output_path = "${path.root}/struct8-templates_order-charge.zip"
+  source_dir  = "${path.root}/.external_modules/struct8-templates/templates/stepfunctions-order-lab/v1/lambda/order-charge"
   type        = "zip"
 }
 
@@ -44,8 +44,8 @@ resource "aws_lambda_function" "order-charge" {
 }
 
 data "archive_file" "archive_struct8-templates_order-release" {
-  output_path = "${path.module}/struct8-templates_order-release.zip"
-  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/stepfunctions-order-lab/v1/lambda/order-release"
+  output_path = "${path.root}/struct8-templates_order-release.zip"
+  source_dir  = "${path.root}/.external_modules/struct8-templates/templates/stepfunctions-order-lab/v1/lambda/order-release"
   type        = "zip"
 }
 
