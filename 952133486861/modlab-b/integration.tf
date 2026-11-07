@@ -147,9 +147,9 @@ resource "aws_sfn_state_machine" "order-workflow" {
       "order-lab-data" = aws_dynamodb_table.order-lab-data
     }
     aws_lambda_function = {
-      "order-charge"    = aws_lambda_function.order-charge
+      "order-charge"    = module.pagamento.order_charge_whole
       "order-pack-item" = aws_lambda_function.order-pack-item
-      "order-release"   = aws_lambda_function.order-release
+      "order-release"   = module.pagamento.order_release_whole
       "order-reserve"   = aws_lambda_function.order-reserve
       "order-validate"  = aws_lambda_function.order-validate
     }

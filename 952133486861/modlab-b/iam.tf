@@ -31,27 +31,6 @@ resource "aws_iam_policy" "lambda_function_order-approval-inbox_st_modlab-b" {
   policy      = data.aws_iam_policy_document.lambda_function_order-approval-inbox_st_modlab-b_doc.json
 }
 
-data "aws_iam_policy_document" "lambda_function_order-charge_st_modlab-b_doc" {
-  statement {
-    sid       = "AllowWriteLogs"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.order-charge-logs.arn}:*"]
-  }
-  statement {
-    sid       = "AllowSendTracesToXRay"
-    effect    = "Allow"
-    actions   = ["xray:PutTelemetryRecords", "xray:PutTraceSegments"]
-    resources = ["*"]
-  }
-}
-
-resource "aws_iam_policy" "lambda_function_order-charge_st_modlab-b" {
-  name        = "lambda_function_order-charge_st_modlab-b"
-  description = "Access Policy for order-charge"
-  policy      = data.aws_iam_policy_document.lambda_function_order-charge_st_modlab-b_doc.json
-}
-
 data "aws_iam_policy_document" "lambda_function_order-console_st_modlab-b_doc" {
   statement {
     sid       = "AllowWriteLogs"
@@ -118,31 +97,13 @@ resource "aws_iam_policy" "lambda_function_order-pack-item_st_modlab-b" {
   policy      = data.aws_iam_policy_document.lambda_function_order-pack-item_st_modlab-b_doc.json
 }
 
-data "aws_iam_policy_document" "lambda_function_order-release_st_modlab-b_doc" {
-  statement {
-    sid       = "AllowWriteLogs"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.order-release-logs.arn}:*"]
-  }
+data "aws_iam_policy_document" "lambda_function_order-release_st_modlab-b_doc_extra_statements" {
   statement {
     sid       = "AllowDynamoDBUpdate"
     effect    = "Allow"
     actions   = ["dynamodb:UpdateItem"]
     resources = [aws_dynamodb_table.order-lab-data.arn]
   }
-  statement {
-    sid       = "AllowSendTracesToXRay"
-    effect    = "Allow"
-    actions   = ["xray:PutTelemetryRecords", "xray:PutTraceSegments"]
-    resources = ["*"]
-  }
-}
-
-resource "aws_iam_policy" "lambda_function_order-release_st_modlab-b" {
-  name        = "lambda_function_order-release_st_modlab-b"
-  description = "Access Policy for order-release"
-  policy      = data.aws_iam_policy_document.lambda_function_order-release_st_modlab-b_doc.json
 }
 
 data "aws_iam_policy_document" "lambda_function_order-reserve_st_modlab-b_doc" {
@@ -210,7 +171,7 @@ data "aws_iam_policy_document" "sfn_state_machine_order-workflow_st_modlab-b_doc
     sid       = "AllowLambdaInvoke"
     effect    = "Allow"
     actions   = ["lambda:InvokeFunction"]
-    resources = [aws_lambda_function.order-charge.arn]
+    resources = [module.pagamento.order_charge_arn]
   }
   statement {
     sid       = "AllowLambdaInvoke1"
@@ -222,7 +183,7 @@ data "aws_iam_policy_document" "sfn_state_machine_order-workflow_st_modlab-b_doc
     sid       = "AllowLambdaInvoke2"
     effect    = "Allow"
     actions   = ["lambda:InvokeFunction"]
-    resources = [aws_lambda_function.order-release.arn]
+    resources = [module.pagamento.order_release_arn]
   }
   statement {
     sid       = "AllowLambdaInvoke3"
@@ -286,30 +247,6 @@ resource "aws_iam_role" "order-approval-inbox_role" {
   }
 }
 
-resource "aws_iam_role" "order-charge_role" {
-  name = "order-charge_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
-  force_detach_policies = false
-  max_session_duration  = 3600
-  path                  = "/"
-  tags = {
-    Name           = "order-charge_role"
-    State          = "modlab-b"
-    Struct8Creator = "rmay struct"
-  }
-}
-
 resource "aws_iam_role" "order-console_role" {
   name = "order-console_role"
   assume_role_policy = jsonencode({
@@ -353,30 +290,6 @@ resource "aws_iam_role" "order-pack-item_role" {
   path                  = "/"
   tags = {
     Name           = "order-pack-item_role"
-    State          = "modlab-b"
-    Struct8Creator = "rmay struct"
-  }
-}
-
-resource "aws_iam_role" "order-release_role" {
-  name = "order-release_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
-  force_detach_policies = false
-  max_session_duration  = 3600
-  path                  = "/"
-  tags = {
-    Name           = "order-release_role"
     State          = "modlab-b"
     Struct8Creator = "rmay struct"
   }
@@ -459,11 +372,6 @@ resource "aws_iam_role_policy_attachment" "lambda_function_order-approval-inbox_
   role       = aws_iam_role.order-approval-inbox_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_function_order-charge_st_modlab-b_attach" {
-  policy_arn = aws_iam_policy.lambda_function_order-charge_st_modlab-b.arn
-  role       = aws_iam_role.order-charge_role.name
-}
-
 resource "aws_iam_role_policy_attachment" "lambda_function_order-console_st_modlab-b_attach" {
   policy_arn = aws_iam_policy.lambda_function_order-console_st_modlab-b.arn
   role       = aws_iam_role.order-console_role.name
@@ -472,11 +380,6 @@ resource "aws_iam_role_policy_attachment" "lambda_function_order-console_st_modl
 resource "aws_iam_role_policy_attachment" "lambda_function_order-pack-item_st_modlab-b_attach" {
   policy_arn = aws_iam_policy.lambda_function_order-pack-item_st_modlab-b.arn
   role       = aws_iam_role.order-pack-item_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_function_order-release_st_modlab-b_attach" {
-  policy_arn = aws_iam_policy.lambda_function_order-release_st_modlab-b.arn
-  role       = aws_iam_role.order-release_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_function_order-reserve_st_modlab-b_attach" {

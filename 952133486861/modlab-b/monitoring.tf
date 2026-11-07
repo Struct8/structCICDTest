@@ -10,18 +10,6 @@ resource "aws_cloudwatch_log_group" "order-approval-inbox-logs" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "order-charge-logs" {
-  name              = "/aws/lambda/order-charge"
-  log_group_class   = "STANDARD"
-  retention_in_days = 7
-  skip_destroy      = false
-  tags = {
-    Name           = "order-charge-logs"
-    State          = "modlab-b"
-    Struct8Creator = "rmay struct"
-  }
-}
-
 resource "aws_cloudwatch_log_group" "order-console-logs" {
   name              = "/aws/lambda/order-console"
   log_group_class   = "STANDARD"
@@ -41,18 +29,6 @@ resource "aws_cloudwatch_log_group" "order-pack-item-logs" {
   skip_destroy      = false
   tags = {
     Name           = "order-pack-item-logs"
-    State          = "modlab-b"
-    Struct8Creator = "rmay struct"
-  }
-}
-
-resource "aws_cloudwatch_log_group" "order-release-logs" {
-  name              = "/aws/lambda/order-release"
-  log_group_class   = "STANDARD"
-  retention_in_days = 7
-  skip_destroy      = false
-  tags = {
-    Name           = "order-release-logs"
     State          = "modlab-b"
     Struct8Creator = "rmay struct"
   }

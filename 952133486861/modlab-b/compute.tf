@@ -47,43 +47,6 @@ resource "aws_lambda_function" "order-approval-inbox" {
   depends_on = [aws_iam_role_policy_attachment.lambda_function_order-approval-inbox_st_modlab-b_attach]
 }
 
-data "archive_file" "archive_struct8-templates_order-charge" {
-  output_path = "${path.module}/struct8-templates_order-charge.zip"
-  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/stepfunctions-order-lab/v1/lambda/order-charge"
-  type        = "zip"
-}
-
-resource "aws_lambda_function" "order-charge" {
-  function_name                  = "order-charge"
-  architectures                  = ["arm64"]
-  filename                       = data.archive_file.archive_struct8-templates_order-charge.output_path
-  handler                        = "index.handler"
-  memory_size                    = 128
-  publish                        = false
-  reserved_concurrent_executions = -1
-  role                           = aws_iam_role.order-charge_role.arn
-  runtime                        = "nodejs22.x"
-  source_code_hash               = data.archive_file.archive_struct8-templates_order-charge.output_base64sha256
-  timeout                        = 10
-  environment {
-    variables = {
-      NAME                  = "order-charge"
-      REGION                = data.aws_region.current.region
-      ACCOUNT               = data.aws_caller_identity.current.account_id
-      AWS_XRAY_GROUP_NAME_0 = "order-lab-traces"
-    }
-  }
-  tags = {
-    Name           = "order-charge"
-    State          = "modlab-b"
-    Struct8Creator = "rmay struct"
-  }
-  tracing_config {
-    mode = "Active"
-  }
-  depends_on = [aws_iam_role_policy_attachment.lambda_function_order-charge_st_modlab-b_attach]
-}
-
 data "archive_file" "archive_struct8-templates_order-console" {
   output_path = "${path.module}/struct8-templates_order-console.zip"
   source_dir  = "${path.module}/.external_modules/struct8-templates/templates/stepfunctions-order-lab/v1/lambda/order-console"
@@ -160,44 +123,6 @@ resource "aws_lambda_function" "order-pack-item" {
     mode = "Active"
   }
   depends_on = [aws_iam_role_policy_attachment.lambda_function_order-pack-item_st_modlab-b_attach]
-}
-
-data "archive_file" "archive_struct8-templates_order-release" {
-  output_path = "${path.module}/struct8-templates_order-release.zip"
-  source_dir  = "${path.module}/.external_modules/struct8-templates/templates/stepfunctions-order-lab/v1/lambda/order-release"
-  type        = "zip"
-}
-
-resource "aws_lambda_function" "order-release" {
-  function_name                  = "order-release"
-  architectures                  = ["arm64"]
-  filename                       = data.archive_file.archive_struct8-templates_order-release.output_path
-  handler                        = "index.handler"
-  memory_size                    = 128
-  publish                        = false
-  reserved_concurrent_executions = -1
-  role                           = aws_iam_role.order-release_role.arn
-  runtime                        = "nodejs22.x"
-  source_code_hash               = data.archive_file.archive_struct8-templates_order-release.output_base64sha256
-  timeout                        = 10
-  environment {
-    variables = {
-      NAME                      = "order-release"
-      REGION                    = data.aws_region.current.region
-      ACCOUNT                   = data.aws_caller_identity.current.account_id
-      AWS_DYNAMODB_TABLE_NAME_0 = "order-lab-data"
-      AWS_XRAY_GROUP_NAME_0     = "order-lab-traces"
-    }
-  }
-  tags = {
-    Name           = "order-release"
-    State          = "modlab-b"
-    Struct8Creator = "rmay struct"
-  }
-  tracing_config {
-    mode = "Active"
-  }
-  depends_on = [aws_iam_role_policy_attachment.lambda_function_order-release_st_modlab-b_attach]
 }
 
 data "archive_file" "archive_struct8-templates_order-reserve" {
