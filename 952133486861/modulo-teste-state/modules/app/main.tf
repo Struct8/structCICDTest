@@ -10,16 +10,23 @@ data "aws_caller_identity" "current" {}
 
 data "aws_region" "current" {}
 
+data "archive_file" "archive_struct8-hub_processador" {
+  output_path = "${path.root}/struct8-hub_processador.zip"
+  source_dir  = "${path.root}/.external_modules/struct8-hub/prebuilt"
+  type        = "zip"
+}
+
 resource "aws_lambda_function" "processador" {
   function_name                  = "processador"
   architectures                  = ["arm64"]
-  filename                       = "lambda.zip"
-  handler                        = "index.lambda_handler"
+  filename                       = data.archive_file.archive_struct8-hub_processador.output_path
+  handler                        = "index.handler"
   memory_size                    = 3008
   publish                        = false
   reserved_concurrent_executions = -1
   role                           = aws_iam_role.processador_role.arn
-  runtime                        = "python3.13"
+  runtime                        = "nodejs22.x"
+  source_code_hash               = data.archive_file.archive_struct8-hub_processador.output_base64sha256
   timeout                        = 30
   environment {
     variables = {
