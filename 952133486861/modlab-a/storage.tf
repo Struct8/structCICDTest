@@ -13,16 +13,3 @@ a,b
     Struct8Creator = "rmay struct"
   }
 }
-
-resource "aws_s3_object" "teste-jpg" {
-  acl          = "private"
-  bucket       = module.dados.source_bucket
-  content      = "not an image, only the suffix matters"
-  content_type = "text/plain"
-  key          = "y.jpg"
-  tags = {
-    Name           = "teste-jpg"
-    State          = "modlab-a"
-    Struct8Creator = "rmay struct"
-  }
-}
