@@ -1,16 +1,16 @@
 moved {
-  from = aws_instance.app-fora
-  to   = module.rede.aws_instance.app-fora
+  from = module.rede.aws_instance.app-fora
+  to   = aws_instance.app-fora
 }
 
 moved {
-  from = aws_iam_instance_profile.app-fora_profile
-  to   = module.rede.aws_iam_instance_profile.app-fora_profile
+  from = module.rede.aws_iam_instance_profile.app-fora_profile
+  to   = aws_iam_instance_profile.app-fora_profile
 }
 
 moved {
-  from = aws_iam_role.app-fora_role
-  to   = module.rede.aws_iam_role.app-fora_role
+  from = module.rede.aws_iam_role.app-fora_role
+  to   = aws_iam_role.app-fora_role
 }
 
 moved {
@@ -39,8 +39,8 @@ moved {
 }
 
 moved {
-  from = aws_security_group.instance_app-fora_group
-  to   = module.rede.aws_security_group.instance_app-fora_group
+  from = module.rede.aws_security_group.instance_app-fora_group
+  to   = aws_security_group.instance_app-fora_group
 }
 
 moved {
@@ -84,6 +84,6 @@ moved {
 }
 
 moved {
-  from = aws_security_group_rule.rule_instance_app_fora_group_egress_all_protocols
-  to   = module.rede.aws_security_group_rule.rule_instance_app_fora_group_egress_all_protocols
+  from = module.rede.aws_security_group_rule.rule_instance_app_fora_group_egress_all_protocols
+  to   = aws_security_group_rule.rule_instance_app_fora_group_egress_all_protocols
 }
