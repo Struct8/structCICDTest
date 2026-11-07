@@ -56,7 +56,7 @@ import {
 
 import {
   to = aws_eks_node_group.eksimp-ng
-  id = "eksimp-cluster/eksimp-ng"
+  id = "eksimp-cluster:eksimp-ng"
 }
 
 import {
