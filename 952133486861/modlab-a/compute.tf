@@ -36,6 +36,6 @@ resource "aws_lambda_permission" "perm_aws_s3_bucket_source_to_processor" {
   function_name       = aws_lambda_function.processor.function_name
   principal           = "s3.amazonaws.com"
   action              = "lambda:InvokeFunction"
-  source_arn          = aws_s3_bucket.source.arn
+  source_arn          = module.dados.source_arn
   statement_id_prefix = "perm_aws_s3_bucket_source_to_processor"
 }
