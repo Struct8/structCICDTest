@@ -17,8 +17,8 @@
       ]
     }
   ],
-  "action": "plan",
-  "trigger_id": "1794015849968",
+  "action": "apply",
+  "trigger_id": "1794015935476",
   "triggered_by": "assistant.rmay_struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
