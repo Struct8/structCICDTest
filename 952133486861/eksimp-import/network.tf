@@ -244,7 +244,7 @@ resource "aws_lb_target_group" "eksimp-tg" {
   port                              = 30080
   protocol                          = "HTTP"
   protocol_version                  = "HTTP1"
-  target_type                       = "ip"
+  target_type                       = "instance"
   health_check {
     enabled             = true
     healthy_threshold   = 5

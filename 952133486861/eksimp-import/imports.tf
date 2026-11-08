@@ -92,6 +92,11 @@ import {
 }
 
 import {
+  to = aws_autoscaling_traffic_source_attachment.eksimp-tg_to_eksimp-ng
+  id = "eks-eksimp-ng-0ad0ddd4-a303-cc50-29a4-1408bb3c9053,elbv2,arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksimp-tg/bc67b517e2be6c9b"
+}
+
+import {
   to = aws_iam_role_policy_attachment.AmazonEKSClusterPolicy_to_eksimp-cluster_attach
   id = "eksimp-cluster-role/arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
