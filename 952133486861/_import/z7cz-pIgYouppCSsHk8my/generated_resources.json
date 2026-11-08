@@ -1,0 +1,4813 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.5.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_eks_cluster.eksgw-cluster",
+          "mode": "managed",
+          "type": "aws_eks_cluster",
+          "name": "eksgw-cluster",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "access_config": [
+              {
+                "authentication_mode": "API_AND_CONFIG_MAP",
+                "bootstrap_cluster_creator_admin_permissions": true
+              }
+            ],
+            "arn": "arn:aws:eks:us-west-2:952133486861:cluster/eksgw-cluster",
+            "bootstrap_self_managed_addons": true,
+            "certificate_authority": [
+              {
+                "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNakNDQWhxZ0F3SUJBZ0lSQUlXQmhER25Eai81M1oxdW1STEwzbE13RFFZSktvWklodmNOQVFFTEJRQXcKSnpFUU1BNEdBMVVFQ2hNSFFWZFRJRVZMVXpFVE1CRUdBMVVFQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TmpFeApNRGd5TVRJeU5ESmFGdzB6TVRFeE1EY3lNVEl5TkRKYU1DY3hFREFPQmdOVkJBb1RCMEZYVXlCRlMxTXhFekFSCkJnTlZCQU1UQ210MVltVnlibVYwWlhNd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUIKQVFDNVdqL3dWQytnQy9iUmh3Smh2b3VDY0dKYythTHhJY2d1WC9PS3Q4YVpwNlFqYVdjOGl5am01OXZxM2QrQQpXUEhJUzhOK0pHbVhqNVN3cEtPNmNXT3Eyczl0Tlg2eHNOUEdPclZvL2ppcm9RRENjMHl0NVQ5Wi9laVpaY3RrCkNnSENzV2dJOWF2d3BpTEh1Tjl2ZjdKY2RNY0VQaVpVZFNqSW1aYmZBem1MR1hxWjlrUTZVVWh4VWpqVU4yMlUKTkpGRTdUN051MGdQbmVneCtJRjJ6ZzJJSU9RK1dzaEczMk1Cb0hvQmdNWDAzajVUS1Vac2ZpRXN6NVcxM0VydgpEWmdSRkQramQzUy9NWHU3RUZwQmJnRnI3THZ6TC8wSW5tRkdxL2JlVXQxcXFNYlptQmthNnY5WWhpV3RmWXo0CmdaWEY5WHlZbVY0ZHdhMm1uRytWMHI2WkFnTUJBQUdqV1RCWE1BNEdBMVVkRHdFQi93UUVBd0lDcERBUEJnTlYKSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUWQ2TzdGYWdOR0F6T0hnelZGRnJMYitYTmxxekFWQmdOVgpIUkVFRGpBTWdncHJkV0psY201bGRHVnpNQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUJaekhqQW1jMlZ5WGNECkpQcWNNSDBkVXpVTFArUmg3aEkxdlUwMklRRWd5TGFuQjRPRU5ZYWsydFZmd2NyTWIvelljN1F1N0JmWWQraEEKYkNyM1BwYi9NNy9hbkxuSWNJZldwWWM5a2NSRVZhdGVpTFhiZjA2bHJacWYwNVQxeGNBTkxZL092emRmYVJNbApVd1VlRDJwMitkL0w1OGFYQWtqNTZwWm94bkVEQ0E2cWhtN1Z6VUgwQ1FVU05WUHA4d3BteEg1R0k1UFFxaGM4Ckl4OFdSMXpzT0pqVDdUNTQ0QVVDNWdqUU40amJDZm54WEF5Mnp6MjZlNjR1cDRSQU9CZWJDZzB5eGZ3OFdKc3UKS0pZZ05wdUZNWTdsQWtoZFJyMVhpZnFlWWVXN01FQjhHeTRmeitsNk9SM2ttNnE3bUc2dUFxTWVjeEtBRjVVeQp3THBPWStJKwotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+              }
+            ],
+            "cluster_id": null,
+            "compute_config": [],
+            "control_plane_scaling_config": [
+              {
+                "tier": "standard"
+              }
+            ],
+            "created_at": "2026-11-08T21:22:34Z",
+            "deletion_protection": false,
+            "enabled_cluster_log_types": [],
+            "encryption_config": [],
+            "endpoint": "https://A127BE1594BA3FBC505E05E910331972.gr7.us-west-2.eks.amazonaws.com",
+            "force_update_version": null,
+            "id": "eksgw-cluster",
+            "identity": [
+              {
+                "oidc": [
+                  {
+                    "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972"
+                  }
+                ]
+              }
+            ],
+            "kube_api_server_config": [
+              {
+                "event_ttl": "60m",
+                "service_node_port_range": [
+                  {
+                    "max_port": 32767,
+                    "min_port": 30000
+                  }
+                ]
+              }
+            ],
+            "kube_controller_manager_config": [
+              {
+                "horizontal_pod_autoscaler_controller_config": [
+                  {
+                    "horizontal_pod_autoscaler_sync_period": "15s"
+                  }
+                ],
+                "pod_gc_controller_config": [
+                  {
+                    "terminated_pod_gc_threshold": 12500
+                  }
+                ]
+              }
+            ],
+            "kube_scheduler_config": [
+              {
+                "node_resources_fit": [
+                  {
+                    "scoring_strategy": [
+                      {
+                        "resource": [
+                          {
+                            "name": "cpu",
+                            "weight": 1
+                          },
+                          {
+                            "name": "memory",
+                            "weight": 1
+                          }
+                        ],
+                        "type": "LeastAllocated"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "kubernetes_network_config": [
+              {
+                "elastic_load_balancing": [
+                  {
+                    "enabled": false
+                  }
+                ],
+                "ip_family": "ipv4",
+                "service_ipv4_cidr": "172.20.0.0/16",
+                "service_ipv6_cidr": ""
+              }
+            ],
+            "name": "eksgw-cluster",
+            "outpost_config": [],
+            "platform_version": "eks.7",
+            "region": "us-west-2",
+            "remote_network_config": [],
+            "role_arn": "arn:aws:iam::952133486861:role/eksgw-cluster-role",
+            "status": "ACTIVE",
+            "storage_config": [],
+            "tags": {
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Project": "eks-gw-lab"
+            },
+            "timeouts": null,
+            "upgrade_policy": [
+              {
+                "support_type": "EXTENDED"
+              }
+            ],
+            "version": "1.37",
+            "vpc_config": [
+              {
+                "cluster_security_group_id": "sg-0d20513747bcffe86",
+                "control_plane_egress_mode": "AWS_MANAGED",
+                "endpoint_private_access": true,
+                "endpoint_public_access": true,
+                "public_access_cidrs": [
+                  "0.0.0.0/0"
+                ],
+                "security_group_ids": [],
+                "subnet_ids": [
+                  "subnet-0368e087f31860f17",
+                  "subnet-0424de63cbf6d2b84"
+                ],
+                "vpc_id": "vpc-0d79526bd9da71afb"
+              }
+            ],
+            "zonal_shift_config": []
+          },
+          "sensitive_values": {
+            "access_config": [
+              {}
+            ],
+            "certificate_authority": [
+              {}
+            ],
+            "compute_config": [],
+            "control_plane_scaling_config": [
+              {}
+            ],
+            "enabled_cluster_log_types": [],
+            "encryption_config": [],
+            "identity": [
+              {
+                "oidc": [
+                  {}
+                ]
+              }
+            ],
+            "kube_api_server_config": [
+              {
+                "service_node_port_range": [
+                  {}
+                ]
+              }
+            ],
+            "kube_controller_manager_config": [
+              {
+                "horizontal_pod_autoscaler_controller_config": [
+                  {}
+                ],
+                "pod_gc_controller_config": [
+                  {}
+                ]
+              }
+            ],
+            "kube_scheduler_config": [
+              {
+                "node_resources_fit": [
+                  {
+                    "scoring_strategy": [
+                      {
+                        "resource": [
+                          {},
+                          {}
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "kubernetes_network_config": [
+              {
+                "elastic_load_balancing": [
+                  {}
+                ]
+              }
+            ],
+            "outpost_config": [],
+            "remote_network_config": [],
+            "storage_config": [],
+            "tags": {},
+            "tags_all": {},
+            "upgrade_policy": [
+              {}
+            ],
+            "vpc_config": [
+              {
+                "public_access_cidrs": [
+                  false
+                ],
+                "security_group_ids": [],
+                "subnet_ids": [
+                  false,
+                  false
+                ]
+              }
+            ],
+            "zonal_shift_config": []
+          }
+        },
+        {
+          "address": "aws_eks_node_group.eksgw-ng",
+          "mode": "managed",
+          "type": "aws_eks_node_group",
+          "name": "eksgw-ng",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "ami_type": "AL2023_x86_64_STANDARD",
+            "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/eksgw-cluster/eksgw-ng/54d0de8a-7010-3543-498a-a8f44db5f759",
+            "capacity_type": "ON_DEMAND",
+            "cluster_name": "eksgw-cluster",
+            "disk_size": 20,
+            "force_update_version": null,
+            "id": "eksgw-cluster:eksgw-ng",
+            "instance_types": [
+              "t3.small"
+            ],
+            "labels": {},
+            "launch_template": [],
+            "node_group_name": "eksgw-ng",
+            "node_group_name_prefix": "",
+            "node_repair_config": [],
+            "node_role_arn": "arn:aws:iam::952133486861:role/eksgw-node-role",
+            "region": "us-west-2",
+            "release_version": "1.37.1-20261031",
+            "remote_access": [],
+            "resources": [
+              {
+                "autoscaling_groups": [
+                  {
+                    "name": "eks-eksgw-ng-54d0de8a-7010-3543-498a-a8f44db5f759"
+                  }
+                ],
+                "remote_access_security_group_id": ""
+              }
+            ],
+            "scaling_config": [
+              {
+                "desired_size": 2,
+                "max_size": 3,
+                "min_size": 1
+              }
+            ],
+            "status": "ACTIVE",
+            "subnet_ids": [
+              "subnet-0368e087f31860f17",
+              "subnet-0424de63cbf6d2b84"
+            ],
+            "tags": {
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Project": "eks-gw-lab"
+            },
+            "taint": [],
+            "timeouts": null,
+            "update_config": [
+              {
+                "max_unavailable": 1,
+                "max_unavailable_percentage": 0,
+                "update_strategy": ""
+              }
+            ],
+            "version": "1.37",
+            "warm_pool_config": []
+          },
+          "sensitive_values": {
+            "instance_types": [
+              false
+            ],
+            "labels": {},
+            "launch_template": [],
+            "node_repair_config": [],
+            "remote_access": [],
+            "resources": [
+              {
+                "autoscaling_groups": [
+                  {}
+                ]
+              }
+            ],
+            "scaling_config": [
+              {}
+            ],
+            "subnet_ids": [
+              false,
+              false
+            ],
+            "tags": {},
+            "tags_all": {},
+            "taint": [],
+            "update_config": [
+              {}
+            ],
+            "warm_pool_config": []
+          }
+        },
+        {
+          "address": "aws_iam_openid_connect_provider.oidc_eks_us-west-2_amazonaws_com_id_A127BE1594BA3FBC505E05E910331972",
+          "mode": "managed",
+          "type": "aws_iam_openid_connect_provider",
+          "name": "oidc_eks_us-west-2_amazonaws_com_id_A127BE1594BA3FBC505E05E910331972",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972",
+            "client_id_list": [
+              "sts.amazonaws.com"
+            ],
+            "id": "arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972",
+            "tags": {
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Project": "eks-gw-lab"
+            },
+            "thumbprint_list": [
+              "06b25927c42a721631c1efd9431e648fa62e1e39"
+            ],
+            "url": "oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972"
+          },
+          "sensitive_values": {
+            "client_id_list": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {},
+            "thumbprint_list": [
+              false
+            ]
+          }
+        },
+        {
+          "address": "aws_iam_policy.AWSLoadBalancerControllerIAMPolicy",
+          "mode": "managed",
+          "type": "aws_iam_policy",
+          "name": "AWSLoadBalancerControllerIAMPolicy",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy",
+            "attachment_count": 1,
+            "delay_after_policy_creation_in_ms": null,
+            "description": "",
+            "id": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy",
+            "name": "AWSLoadBalancerControllerIAMPolicy",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"ec2:DescribeAccountAttributes\",\"ec2:DescribeAddresses\",\"ec2:DescribeAvailabilityZones\",\"ec2:DescribeInternetGateways\",\"ec2:DescribeVpcs\",\"ec2:DescribeSubnets\",\"ec2:DescribeSecurityGroups\",\"ec2:DescribeInstances\",\"ec2:DescribeNetworkInterfaces\",\"ec2:DescribeTags\",\"ec2:DescribeRouteTables\",\"ec2:GetSecurityGroupsForVpc\",\"elasticloadbalancing:DescribeLoadBalancers\",\"elasticloadbalancing:DescribeTargetGroups\",\"elasticloadbalancing:DescribeTargetHealth\",\"elasticloadbalancing:DescribeListeners\",\"elasticloadbalancing:DescribeTags\",\"elasticloadbalancing:DescribeTargetGroupAttributes\",\"elasticloadbalancing:DescribeLoadBalancerAttributes\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"elasticloadbalancing:RegisterTargets\",\"elasticloadbalancing:DeregisterTargets\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:elasticloadbalancing:*:*:targetgroup/*/*\"}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "ANPA53L4UBEGR3ZLUD5DL",
+            "tags": {
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Project": "eks-gw-lab"
+            }
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.AmazonEKSLoadBalancerControllerRole",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "AmazonEKSLoadBalancerControllerRole",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/AmazonEKSLoadBalancerControllerRole",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:aud\":\"sts.amazonaws.com\",\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:sub\":\"system:serviceaccount:kube-system:aws-load-balancer-controller\"}},\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-11-08T21:33:53Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "AmazonEKSLoadBalancerControllerRole",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy"
+            ],
+            "max_session_duration": 3600,
+            "name": "AmazonEKSLoadBalancerControllerRole",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Project": "eks-gw-lab"
+            },
+            "unique_id": "AROA53L4UBEGQPRHOFMVN"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.eksgw-cluster-role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "eksgw-cluster-role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/eksgw-cluster-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-11-08T21:22:06Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "eksgw-cluster-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+            ],
+            "max_session_duration": 3600,
+            "name": "eksgw-cluster-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Project": "eks-gw-lab"
+            },
+            "unique_id": "AROA53L4UBEGQ5OGL7N4I"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.eksgw-node-role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "eksgw-node-role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/eksgw-node-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-11-08T21:22:10Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "eksgw-node-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+              "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+              "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+            ],
+            "max_session_duration": 3600,
+            "name": "eksgw-node-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Project": "eks-gw-lab"
+            },
+            "unique_id": "AROA53L4UBEGSI3O4CYOQ"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false,
+              false,
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_internet_gateway.eksgw-igw",
+          "mode": "managed",
+          "type": "aws_internet_gateway",
+          "name": "eksgw-igw",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-072d7a0fb243ad399",
+            "id": "igw-072d7a0fb243ad399",
+            "owner_id": "952133486861",
+            "region": "us-west-2",
+            "tags": {
+              "Name": "eksgw-igw",
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Name": "eksgw-igw",
+              "Project": "eks-gw-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0d79526bd9da71afb"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_lb.eksgw-alb",
+          "mode": "managed",
+          "type": "aws_lb",
+          "name": "eksgw-alb",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "access_logs": [
+              {
+                "bucket": "",
+                "enabled": false,
+                "prefix": ""
+              }
+            ],
+            "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+            "arn_suffix": "app/eksgw-alb/1f709313d54a9928",
+            "client_keep_alive": 3600,
+            "connection_logs": [
+              {
+                "bucket": "",
+                "enabled": false,
+                "prefix": ""
+              }
+            ],
+            "customer_owned_ipv4_pool": "",
+            "desync_mitigation_mode": "defensive",
+            "dns_name": "eksgw-alb-1708466071.us-west-2.elb.amazonaws.com",
+            "dns_record_client_routing_policy": null,
+            "drop_invalid_header_fields": false,
+            "enable_cross_zone_load_balancing": true,
+            "enable_deletion_protection": false,
+            "enable_http2": true,
+            "enable_prefix_for_ipv6_source_nat": "off",
+            "enable_tls_version_and_cipher_suite_headers": false,
+            "enable_waf_fail_open": false,
+            "enable_xff_client_port": false,
+            "enable_zonal_shift": false,
+            "enforce_security_group_inbound_rules_on_private_link_traffic": "",
+            "health_check_logs": [
+              {
+                "bucket": "",
+                "enabled": false,
+                "prefix": ""
+              }
+            ],
+            "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+            "idle_timeout": 60,
+            "internal": false,
+            "ip_address_type": "ipv4",
+            "ipam_pools": [],
+            "load_balancer_type": "application",
+            "minimum_load_balancer_capacity": [],
+            "name": "eksgw-alb",
+            "name_prefix": "",
+            "preserve_host_header": false,
+            "region": "us-west-2",
+            "secondary_ips_auto_assigned_per_subnet": null,
+            "security_groups": [
+              "sg-050139307b9764720"
+            ],
+            "subnet_mapping": [
+              {
+                "allocation_id": "",
+                "ipv6_address": "",
+                "outpost_id": "",
+                "private_ipv4_address": "",
+                "subnet_id": "subnet-0368e087f31860f17"
+              },
+              {
+                "allocation_id": "",
+                "ipv6_address": "",
+                "outpost_id": "",
+                "private_ipv4_address": "",
+                "subnet_id": "subnet-0424de63cbf6d2b84"
+              }
+            ],
+            "subnets": [
+              "subnet-0368e087f31860f17",
+              "subnet-0424de63cbf6d2b84"
+            ],
+            "tags": {
+              "Name": "eksgw-alb",
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Name": "eksgw-alb",
+              "Project": "eks-gw-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0d79526bd9da71afb",
+            "xff_header_processing_mode": "append",
+            "zone_id": "Z1H1FL5HABSF5"
+          },
+          "sensitive_values": {
+            "access_logs": [
+              {}
+            ],
+            "connection_logs": [
+              {}
+            ],
+            "health_check_logs": [
+              {}
+            ],
+            "ipam_pools": [],
+            "minimum_load_balancer_capacity": [],
+            "security_groups": [
+              false
+            ],
+            "subnet_mapping": [
+              {},
+              {}
+            ],
+            "subnets": [
+              false,
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_lb_listener.eksgw-http",
+          "mode": "managed",
+          "type": "aws_lb_listener",
+          "name": "eksgw-http",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "alpn_policy": null,
+            "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:listener/app/eksgw-alb/1f709313d54a9928/f52f7861c5f1116e",
+            "certificate_arn": null,
+            "default_action": [
+              {
+                "authenticate_cognito": [],
+                "authenticate_oidc": [],
+                "fixed_response": [],
+                "forward": [
+                  {
+                    "stickiness": [
+                      {
+                        "duration": 0,
+                        "enabled": false
+                      }
+                    ],
+                    "target_group": [
+                      {
+                        "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+                        "weight": 1
+                      }
+                    ]
+                  }
+                ],
+                "jwt_validation": [],
+                "order": 0,
+                "redirect": [],
+                "target_group_arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+                "type": "forward"
+              }
+            ],
+            "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:listener/app/eksgw-alb/1f709313d54a9928/f52f7861c5f1116e",
+            "load_balancer_arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+            "mutual_authentication": [],
+            "port": 80,
+            "protocol": "HTTP",
+            "region": "us-west-2",
+            "routing_http_request_x_amzn_mtls_clientcert_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_issuer_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_leaf_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_subject_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_validity_header_name": null,
+            "routing_http_request_x_amzn_tls_cipher_suite_header_name": null,
+            "routing_http_request_x_amzn_tls_version_header_name": null,
+            "routing_http_response_access_control_allow_credentials_header_value": "",
+            "routing_http_response_access_control_allow_headers_header_value": "",
+            "routing_http_response_access_control_allow_methods_header_value": "",
+            "routing_http_response_access_control_allow_origin_header_value": "",
+            "routing_http_response_access_control_expose_headers_header_value": "",
+            "routing_http_response_access_control_max_age_header_value": "",
+            "routing_http_response_content_security_policy_header_value": "",
+            "routing_http_response_server_enabled": true,
+            "routing_http_response_strict_transport_security_header_value": "",
+            "routing_http_response_x_content_type_options_header_value": "",
+            "routing_http_response_x_frame_options_header_value": "",
+            "ssl_policy": "",
+            "tags": {
+              "Name": "eksgw-http",
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Name": "eksgw-http",
+              "Project": "eks-gw-lab"
+            },
+            "tcp_idle_timeout_seconds": null,
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "default_action": [
+              {
+                "authenticate_cognito": [],
+                "authenticate_oidc": [],
+                "fixed_response": [],
+                "forward": [
+                  {
+                    "stickiness": [
+                      {}
+                    ],
+                    "target_group": [
+                      {}
+                    ]
+                  }
+                ],
+                "jwt_validation": [],
+                "redirect": []
+              }
+            ],
+            "mutual_authentication": [],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_lb_target_group.eksgw-tg",
+          "mode": "managed",
+          "type": "aws_lb_target_group",
+          "name": "eksgw-tg",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+            "arn_suffix": "targetgroup/eksgw-tg/1f7f5c50a60492b9",
+            "connection_termination": null,
+            "deregistration_delay": "300",
+            "health_check": [
+              {
+                "enabled": true,
+                "healthy_threshold": 5,
+                "interval": 30,
+                "matcher": "200",
+                "path": "/",
+                "port": "traffic-port",
+                "protocol": "HTTP",
+                "timeout": 5,
+                "unhealthy_threshold": 2
+              }
+            ],
+            "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+            "ip_address_type": "ipv4",
+            "lambda_multi_value_headers_enabled": null,
+            "load_balancer_arns": [
+              "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928"
+            ],
+            "load_balancing_algorithm_type": "round_robin",
+            "load_balancing_anomaly_mitigation": "off",
+            "load_balancing_cross_zone_enabled": "use_load_balancer_configuration",
+            "name": "eksgw-tg",
+            "name_prefix": "",
+            "port": 80,
+            "preserve_client_ip": null,
+            "protocol": "HTTP",
+            "protocol_version": "HTTP1",
+            "proxy_protocol_v2": null,
+            "region": "us-west-2",
+            "slow_start": 0,
+            "stickiness": [
+              {
+                "cookie_duration": 86400,
+                "cookie_name": "",
+                "enabled": false,
+                "type": "lb_cookie"
+              }
+            ],
+            "tags": {
+              "Name": "eksgw-tg",
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Name": "eksgw-tg",
+              "Project": "eks-gw-lab"
+            },
+            "target_control_port": 0,
+            "target_failover": [
+              {
+                "on_deregistration": null,
+                "on_unhealthy": null
+              }
+            ],
+            "target_group_health": [
+              {
+                "dns_failover": [
+                  {
+                    "minimum_healthy_targets_count": "1",
+                    "minimum_healthy_targets_percentage": "off"
+                  }
+                ],
+                "unhealthy_state_routing": [
+                  {
+                    "minimum_healthy_targets_count": 1,
+                    "minimum_healthy_targets_percentage": "off"
+                  }
+                ]
+              }
+            ],
+            "target_health_state": [
+              {
+                "enable_unhealthy_connection_termination": null,
+                "unhealthy_draining_interval": null
+              }
+            ],
+            "target_type": "ip",
+            "vpc_id": "vpc-0d79526bd9da71afb"
+          },
+          "sensitive_values": {
+            "health_check": [
+              {}
+            ],
+            "load_balancer_arns": [
+              false
+            ],
+            "stickiness": [
+              {}
+            ],
+            "tags": {},
+            "tags_all": {},
+            "target_failover": [
+              {}
+            ],
+            "target_group_health": [
+              {
+                "dns_failover": [
+                  {}
+                ],
+                "unhealthy_state_routing": [
+                  {}
+                ]
+              }
+            ],
+            "target_health_state": [
+              {}
+            ]
+          }
+        },
+        {
+          "address": "aws_route_table.eksgw-public-rt",
+          "mode": "managed",
+          "type": "aws_route_table",
+          "name": "eksgw-public-rt",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-04bc25c84f0627094",
+            "id": "rtb-04bc25c84f0627094",
+            "owner_id": "952133486861",
+            "propagating_vgws": [],
+            "region": "us-west-2",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "igw-072d7a0fb243ad399",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "odb_network_arn": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Name": "eksgw-public-rt",
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Name": "eksgw-public-rt",
+              "Project": "eks-gw-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0d79526bd9da71afb"
+          },
+          "sensitive_values": {
+            "propagating_vgws": [],
+            "route": [
+              {}
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_route_table_association.subnet-0368e087f31860f17_rtb-04bc25c84f0627094",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-0368e087f31860f17_rtb-04bc25c84f0627094",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "gateway_id": "",
+            "id": "rtbassoc-032fac43abde21563",
+            "region": "us-west-2",
+            "route_table_id": "rtb-04bc25c84f0627094",
+            "subnet_id": "subnet-0368e087f31860f17",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_route_table_association.subnet-0424de63cbf6d2b84_rtb-04bc25c84f0627094",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-0424de63cbf6d2b84_rtb-04bc25c84f0627094",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "gateway_id": "",
+            "id": "rtbassoc-03ae1612e5dac787e",
+            "region": "us-west-2",
+            "route_table_id": "rtb-04bc25c84f0627094",
+            "subnet_id": "subnet-0424de63cbf6d2b84",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_security_group.eksgw-alb-sg",
+          "mode": "managed",
+          "type": "aws_security_group",
+          "name": "eksgw-alb-sg",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:security-group/sg-050139307b9764720",
+            "description": "eksgw ALB: HTTP from the internet",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-050139307b9764720",
+            "ingress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "HTTP",
+                "from_port": 80,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 80
+              }
+            ],
+            "name": "eksgw-alb-sg",
+            "name_prefix": "",
+            "owner_id": "952133486861",
+            "region": "us-west-2",
+            "revoke_rules_on_delete": null,
+            "tags": {
+              "Name": "eksgw-alb-sg",
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Name": "eksgw-alb-sg",
+              "Project": "eks-gw-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0d79526bd9da71afb"
+          },
+          "sensitive_values": {
+            "egress": [
+              {
+                "cidr_blocks": [
+                  false
+                ],
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "security_groups": []
+              }
+            ],
+            "ingress": [
+              {
+                "cidr_blocks": [
+                  false
+                ],
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "security_groups": []
+              }
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_subnet.eksgw-public-us-west-2a",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "eksgw-public-us-west-2a",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0424de63cbf6d2b84",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-west-2a",
+            "availability_zone_id": "usw2-az1",
+            "cidr_block": "10.78.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0424de63cbf6d2b84",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "952133486861",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-west-2",
+            "tags": {
+              "Name": "eksgw-public-us-west-2a",
+              "Project": "eks-gw-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Name": "eksgw-public-us-west-2a",
+              "Project": "eks-gw-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0d79526bd9da71afb"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_subnet.eksgw-public-us-west-2b",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "eksgw-public-us-west-2b",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0368e087f31860f17",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-west-2b",
+            "availability_zone_id": "usw2-az2",
+            "cidr_block": "10.78.2.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0368e087f31860f17",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "952133486861",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-west-2",
+            "tags": {
+              "Name": "eksgw-public-us-west-2b",
+              "Project": "eks-gw-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Name": "eksgw-public-us-west-2b",
+              "Project": "eks-gw-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0d79526bd9da71afb"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_vpc.eksgw-vpc",
+          "mode": "managed",
+          "type": "aws_vpc",
+          "name": "eksgw-vpc",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-0d79526bd9da71afb",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.78.0.0/16",
+            "default_network_acl_id": "acl-04361bf514b5d04e7",
+            "default_route_table_id": "rtb-095267da87a8f8ac8",
+            "default_security_group_id": "sg-00e30449b72e6c7ec",
+            "dhcp_options_id": "dopt-03b17c556ffb1011e",
+            "enable_dns_hostnames": true,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-0d79526bd9da71afb",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-095267da87a8f8ac8",
+            "owner_id": "952133486861",
+            "region": "us-west-2",
+            "tags": {
+              "Name": "eksgw-vpc",
+              "Project": "eks-gw-lab"
+            },
+            "tags_all": {
+              "Name": "eksgw-vpc",
+              "Project": "eks-gw-lab"
+            }
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_eks_cluster.eksgw-cluster",
+      "mode": "managed",
+      "type": "aws_eks_cluster",
+      "name": "eksgw-cluster",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "access_config": [
+            {
+              "authentication_mode": "API_AND_CONFIG_MAP",
+              "bootstrap_cluster_creator_admin_permissions": true
+            }
+          ],
+          "arn": "arn:aws:eks:us-west-2:952133486861:cluster/eksgw-cluster",
+          "bootstrap_self_managed_addons": true,
+          "certificate_authority": [
+            {
+              "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNakNDQWhxZ0F3SUJBZ0lSQUlXQmhER25Eai81M1oxdW1STEwzbE13RFFZSktvWklodmNOQVFFTEJRQXcKSnpFUU1BNEdBMVVFQ2hNSFFWZFRJRVZMVXpFVE1CRUdBMVVFQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TmpFeApNRGd5TVRJeU5ESmFGdzB6TVRFeE1EY3lNVEl5TkRKYU1DY3hFREFPQmdOVkJBb1RCMEZYVXlCRlMxTXhFekFSCkJnTlZCQU1UQ210MVltVnlibVYwWlhNd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUIKQVFDNVdqL3dWQytnQy9iUmh3Smh2b3VDY0dKYythTHhJY2d1WC9PS3Q4YVpwNlFqYVdjOGl5am01OXZxM2QrQQpXUEhJUzhOK0pHbVhqNVN3cEtPNmNXT3Eyczl0Tlg2eHNOUEdPclZvL2ppcm9RRENjMHl0NVQ5Wi9laVpaY3RrCkNnSENzV2dJOWF2d3BpTEh1Tjl2ZjdKY2RNY0VQaVpVZFNqSW1aYmZBem1MR1hxWjlrUTZVVWh4VWpqVU4yMlUKTkpGRTdUN051MGdQbmVneCtJRjJ6ZzJJSU9RK1dzaEczMk1Cb0hvQmdNWDAzajVUS1Vac2ZpRXN6NVcxM0VydgpEWmdSRkQramQzUy9NWHU3RUZwQmJnRnI3THZ6TC8wSW5tRkdxL2JlVXQxcXFNYlptQmthNnY5WWhpV3RmWXo0CmdaWEY5WHlZbVY0ZHdhMm1uRytWMHI2WkFnTUJBQUdqV1RCWE1BNEdBMVVkRHdFQi93UUVBd0lDcERBUEJnTlYKSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUWQ2TzdGYWdOR0F6T0hnelZGRnJMYitYTmxxekFWQmdOVgpIUkVFRGpBTWdncHJkV0psY201bGRHVnpNQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUJaekhqQW1jMlZ5WGNECkpQcWNNSDBkVXpVTFArUmg3aEkxdlUwMklRRWd5TGFuQjRPRU5ZYWsydFZmd2NyTWIvelljN1F1N0JmWWQraEEKYkNyM1BwYi9NNy9hbkxuSWNJZldwWWM5a2NSRVZhdGVpTFhiZjA2bHJacWYwNVQxeGNBTkxZL092emRmYVJNbApVd1VlRDJwMitkL0w1OGFYQWtqNTZwWm94bkVEQ0E2cWhtN1Z6VUgwQ1FVU05WUHA4d3BteEg1R0k1UFFxaGM4Ckl4OFdSMXpzT0pqVDdUNTQ0QVVDNWdqUU40amJDZm54WEF5Mnp6MjZlNjR1cDRSQU9CZWJDZzB5eGZ3OFdKc3UKS0pZZ05wdUZNWTdsQWtoZFJyMVhpZnFlWWVXN01FQjhHeTRmeitsNk9SM2ttNnE3bUc2dUFxTWVjeEtBRjVVeQp3THBPWStJKwotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+            }
+          ],
+          "cluster_id": null,
+          "compute_config": [],
+          "control_plane_scaling_config": [
+            {
+              "tier": "standard"
+            }
+          ],
+          "created_at": "2026-11-08T21:22:34Z",
+          "deletion_protection": false,
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "endpoint": "https://A127BE1594BA3FBC505E05E910331972.gr7.us-west-2.eks.amazonaws.com",
+          "force_update_version": null,
+          "id": "eksgw-cluster",
+          "identity": [
+            {
+              "oidc": [
+                {
+                  "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972"
+                }
+              ]
+            }
+          ],
+          "kube_api_server_config": [
+            {
+              "event_ttl": "60m",
+              "service_node_port_range": [
+                {
+                  "max_port": 32767,
+                  "min_port": 30000
+                }
+              ]
+            }
+          ],
+          "kube_controller_manager_config": [
+            {
+              "horizontal_pod_autoscaler_controller_config": [
+                {
+                  "horizontal_pod_autoscaler_sync_period": "15s"
+                }
+              ],
+              "pod_gc_controller_config": [
+                {
+                  "terminated_pod_gc_threshold": 12500
+                }
+              ]
+            }
+          ],
+          "kube_scheduler_config": [
+            {
+              "node_resources_fit": [
+                {
+                  "scoring_strategy": [
+                    {
+                      "resource": [
+                        {
+                          "name": "cpu",
+                          "weight": 1
+                        },
+                        {
+                          "name": "memory",
+                          "weight": 1
+                        }
+                      ],
+                      "type": "LeastAllocated"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {
+                  "enabled": false
+                }
+              ],
+              "ip_family": "ipv4",
+              "service_ipv4_cidr": "172.20.0.0/16",
+              "service_ipv6_cidr": ""
+            }
+          ],
+          "name": "eksgw-cluster",
+          "outpost_config": [],
+          "platform_version": "eks.7",
+          "region": "us-west-2",
+          "remote_network_config": [],
+          "role_arn": "arn:aws:iam::952133486861:role/eksgw-cluster-role",
+          "status": "ACTIVE",
+          "storage_config": [],
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "upgrade_policy": [
+            {
+              "support_type": "EXTENDED"
+            }
+          ],
+          "version": "1.37",
+          "vpc_config": [
+            {
+              "cluster_security_group_id": "sg-0d20513747bcffe86",
+              "control_plane_egress_mode": "AWS_MANAGED",
+              "endpoint_private_access": true,
+              "endpoint_public_access": true,
+              "public_access_cidrs": [
+                "0.0.0.0/0"
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                "subnet-0368e087f31860f17",
+                "subnet-0424de63cbf6d2b84"
+              ],
+              "vpc_id": "vpc-0d79526bd9da71afb"
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after": {
+          "access_config": [
+            {
+              "authentication_mode": "API_AND_CONFIG_MAP",
+              "bootstrap_cluster_creator_admin_permissions": true
+            }
+          ],
+          "arn": "arn:aws:eks:us-west-2:952133486861:cluster/eksgw-cluster",
+          "bootstrap_self_managed_addons": true,
+          "certificate_authority": [
+            {
+              "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNakNDQWhxZ0F3SUJBZ0lSQUlXQmhER25Eai81M1oxdW1STEwzbE13RFFZSktvWklodmNOQVFFTEJRQXcKSnpFUU1BNEdBMVVFQ2hNSFFWZFRJRVZMVXpFVE1CRUdBMVVFQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TmpFeApNRGd5TVRJeU5ESmFGdzB6TVRFeE1EY3lNVEl5TkRKYU1DY3hFREFPQmdOVkJBb1RCMEZYVXlCRlMxTXhFekFSCkJnTlZCQU1UQ210MVltVnlibVYwWlhNd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUIKQVFDNVdqL3dWQytnQy9iUmh3Smh2b3VDY0dKYythTHhJY2d1WC9PS3Q4YVpwNlFqYVdjOGl5am01OXZxM2QrQQpXUEhJUzhOK0pHbVhqNVN3cEtPNmNXT3Eyczl0Tlg2eHNOUEdPclZvL2ppcm9RRENjMHl0NVQ5Wi9laVpaY3RrCkNnSENzV2dJOWF2d3BpTEh1Tjl2ZjdKY2RNY0VQaVpVZFNqSW1aYmZBem1MR1hxWjlrUTZVVWh4VWpqVU4yMlUKTkpGRTdUN051MGdQbmVneCtJRjJ6ZzJJSU9RK1dzaEczMk1Cb0hvQmdNWDAzajVUS1Vac2ZpRXN6NVcxM0VydgpEWmdSRkQramQzUy9NWHU3RUZwQmJnRnI3THZ6TC8wSW5tRkdxL2JlVXQxcXFNYlptQmthNnY5WWhpV3RmWXo0CmdaWEY5WHlZbVY0ZHdhMm1uRytWMHI2WkFnTUJBQUdqV1RCWE1BNEdBMVVkRHdFQi93UUVBd0lDcERBUEJnTlYKSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUWQ2TzdGYWdOR0F6T0hnelZGRnJMYitYTmxxekFWQmdOVgpIUkVFRGpBTWdncHJkV0psY201bGRHVnpNQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUJaekhqQW1jMlZ5WGNECkpQcWNNSDBkVXpVTFArUmg3aEkxdlUwMklRRWd5TGFuQjRPRU5ZYWsydFZmd2NyTWIvelljN1F1N0JmWWQraEEKYkNyM1BwYi9NNy9hbkxuSWNJZldwWWM5a2NSRVZhdGVpTFhiZjA2bHJacWYwNVQxeGNBTkxZL092emRmYVJNbApVd1VlRDJwMitkL0w1OGFYQWtqNTZwWm94bkVEQ0E2cWhtN1Z6VUgwQ1FVU05WUHA4d3BteEg1R0k1UFFxaGM4Ckl4OFdSMXpzT0pqVDdUNTQ0QVVDNWdqUU40amJDZm54WEF5Mnp6MjZlNjR1cDRSQU9CZWJDZzB5eGZ3OFdKc3UKS0pZZ05wdUZNWTdsQWtoZFJyMVhpZnFlWWVXN01FQjhHeTRmeitsNk9SM2ttNnE3bUc2dUFxTWVjeEtBRjVVeQp3THBPWStJKwotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+            }
+          ],
+          "cluster_id": null,
+          "compute_config": [],
+          "control_plane_scaling_config": [
+            {
+              "tier": "standard"
+            }
+          ],
+          "created_at": "2026-11-08T21:22:34Z",
+          "deletion_protection": false,
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "endpoint": "https://A127BE1594BA3FBC505E05E910331972.gr7.us-west-2.eks.amazonaws.com",
+          "force_update_version": null,
+          "id": "eksgw-cluster",
+          "identity": [
+            {
+              "oidc": [
+                {
+                  "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972"
+                }
+              ]
+            }
+          ],
+          "kube_api_server_config": [
+            {
+              "event_ttl": "60m",
+              "service_node_port_range": [
+                {
+                  "max_port": 32767,
+                  "min_port": 30000
+                }
+              ]
+            }
+          ],
+          "kube_controller_manager_config": [
+            {
+              "horizontal_pod_autoscaler_controller_config": [
+                {
+                  "horizontal_pod_autoscaler_sync_period": "15s"
+                }
+              ],
+              "pod_gc_controller_config": [
+                {
+                  "terminated_pod_gc_threshold": 12500
+                }
+              ]
+            }
+          ],
+          "kube_scheduler_config": [
+            {
+              "node_resources_fit": [
+                {
+                  "scoring_strategy": [
+                    {
+                      "resource": [
+                        {
+                          "name": "cpu",
+                          "weight": 1
+                        },
+                        {
+                          "name": "memory",
+                          "weight": 1
+                        }
+                      ],
+                      "type": "LeastAllocated"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {
+                  "enabled": false
+                }
+              ],
+              "ip_family": "ipv4",
+              "service_ipv4_cidr": "172.20.0.0/16",
+              "service_ipv6_cidr": ""
+            }
+          ],
+          "name": "eksgw-cluster",
+          "outpost_config": [],
+          "platform_version": "eks.7",
+          "region": "us-west-2",
+          "remote_network_config": [],
+          "role_arn": "arn:aws:iam::952133486861:role/eksgw-cluster-role",
+          "status": "ACTIVE",
+          "storage_config": [],
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "upgrade_policy": [
+            {
+              "support_type": "EXTENDED"
+            }
+          ],
+          "version": "1.37",
+          "vpc_config": [
+            {
+              "cluster_security_group_id": "sg-0d20513747bcffe86",
+              "control_plane_egress_mode": "AWS_MANAGED",
+              "endpoint_private_access": true,
+              "endpoint_public_access": true,
+              "public_access_cidrs": [
+                "0.0.0.0/0"
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                "subnet-0368e087f31860f17",
+                "subnet-0424de63cbf6d2b84"
+              ],
+              "vpc_id": "vpc-0d79526bd9da71afb"
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "access_config": [
+            {}
+          ],
+          "certificate_authority": [
+            {}
+          ],
+          "compute_config": [],
+          "control_plane_scaling_config": [
+            {}
+          ],
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "identity": [
+            {
+              "oidc": [
+                {}
+              ]
+            }
+          ],
+          "kube_api_server_config": [
+            {
+              "service_node_port_range": [
+                {}
+              ]
+            }
+          ],
+          "kube_controller_manager_config": [
+            {
+              "horizontal_pod_autoscaler_controller_config": [
+                {}
+              ],
+              "pod_gc_controller_config": [
+                {}
+              ]
+            }
+          ],
+          "kube_scheduler_config": [
+            {
+              "node_resources_fit": [
+                {
+                  "scoring_strategy": [
+                    {
+                      "resource": [
+                        {},
+                        {}
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {}
+              ]
+            }
+          ],
+          "outpost_config": [],
+          "remote_network_config": [],
+          "storage_config": [],
+          "tags": {},
+          "tags_all": {},
+          "upgrade_policy": [
+            {}
+          ],
+          "vpc_config": [
+            {
+              "public_access_cidrs": [
+                false
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                false,
+                false
+              ]
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after_sensitive": {
+          "access_config": [
+            {}
+          ],
+          "certificate_authority": [
+            {}
+          ],
+          "compute_config": [],
+          "control_plane_scaling_config": [
+            {}
+          ],
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "identity": [
+            {
+              "oidc": [
+                {}
+              ]
+            }
+          ],
+          "kube_api_server_config": [
+            {
+              "service_node_port_range": [
+                {}
+              ]
+            }
+          ],
+          "kube_controller_manager_config": [
+            {
+              "horizontal_pod_autoscaler_controller_config": [
+                {}
+              ],
+              "pod_gc_controller_config": [
+                {}
+              ]
+            }
+          ],
+          "kube_scheduler_config": [
+            {
+              "node_resources_fit": [
+                {
+                  "scoring_strategy": [
+                    {
+                      "resource": [
+                        {},
+                        {}
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {}
+              ]
+            }
+          ],
+          "outpost_config": [],
+          "remote_network_config": [],
+          "storage_config": [],
+          "tags": {},
+          "tags_all": {},
+          "upgrade_policy": [
+            {}
+          ],
+          "vpc_config": [
+            {
+              "public_access_cidrs": [
+                false
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                false,
+                false
+              ]
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "importing": {
+          "id": "eksgw-cluster"
+        },
+        "generated_config": "resource \"aws_eks_cluster\" \"eksgw-cluster\" {\n  bootstrap_self_managed_addons = true\n  deletion_protection           = false\n  enabled_cluster_log_types     = []\n  force_update_version          = null\n  name                          = \"eksgw-cluster\"\n  region                        = \"us-west-2\"\n  role_arn                      = \"arn:aws:iam::952133486861:role/eksgw-cluster-role\"\n  tags = {\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Project = \"eks-gw-lab\"\n  }\n  version = \"1.37\"\n  access_config {\n    authentication_mode                         = \"API_AND_CONFIG_MAP\"\n    bootstrap_cluster_creator_admin_permissions = true\n  }\n  control_plane_scaling_config {\n    tier = \"standard\"\n  }\n  kube_api_server_config {\n    event_ttl = \"60m\"\n    service_node_port_range {\n      max_port = 32767\n      min_port = 30000\n    }\n  }\n  kube_controller_manager_config {\n    horizontal_pod_autoscaler_controller_config {\n      horizontal_pod_autoscaler_sync_period = \"15s\"\n    }\n    pod_gc_controller_config {\n      terminated_pod_gc_threshold = 12500\n    }\n  }\n  kube_scheduler_config {\n    node_resources_fit {\n      scoring_strategy {\n        type = \"LeastAllocated\"\n        resource {\n          name   = \"cpu\"\n          weight = 1\n        }\n        resource {\n          name   = \"memory\"\n          weight = 1\n        }\n      }\n    }\n  }\n  kubernetes_network_config {\n    ip_family         = \"ipv4\"\n    service_ipv4_cidr = \"172.20.0.0/16\"\n    elastic_load_balancing {\n      enabled = false\n    }\n  }\n  upgrade_policy {\n    support_type = \"EXTENDED\"\n  }\n  vpc_config {\n    control_plane_egress_mode = \"AWS_MANAGED\"\n    endpoint_private_access   = true\n    endpoint_public_access    = true\n    public_access_cidrs       = [\"0.0.0.0/0\"]\n    security_group_ids        = []\n    subnet_ids                = [\"subnet-0368e087f31860f17\", \"subnet-0424de63cbf6d2b84\"]\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_eks_node_group.eksgw-ng",
+      "mode": "managed",
+      "type": "aws_eks_node_group",
+      "name": "eksgw-ng",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "ami_type": "AL2023_x86_64_STANDARD",
+          "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/eksgw-cluster/eksgw-ng/54d0de8a-7010-3543-498a-a8f44db5f759",
+          "capacity_type": "ON_DEMAND",
+          "cluster_name": "eksgw-cluster",
+          "disk_size": 20,
+          "force_update_version": null,
+          "id": "eksgw-cluster:eksgw-ng",
+          "instance_types": [
+            "t3.small"
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_group_name": "eksgw-ng",
+          "node_group_name_prefix": "",
+          "node_repair_config": [],
+          "node_role_arn": "arn:aws:iam::952133486861:role/eksgw-node-role",
+          "region": "us-west-2",
+          "release_version": "1.37.1-20261031",
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {
+                  "name": "eks-eksgw-ng-54d0de8a-7010-3543-498a-a8f44db5f759"
+                }
+              ],
+              "remote_access_security_group_id": ""
+            }
+          ],
+          "scaling_config": [
+            {
+              "desired_size": 2,
+              "max_size": 3,
+              "min_size": 1
+            }
+          ],
+          "status": "ACTIVE",
+          "subnet_ids": [
+            "subnet-0368e087f31860f17",
+            "subnet-0424de63cbf6d2b84"
+          ],
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "taint": [],
+          "timeouts": null,
+          "update_config": [
+            {
+              "max_unavailable": 1,
+              "max_unavailable_percentage": 0,
+              "update_strategy": ""
+            }
+          ],
+          "version": "1.37",
+          "warm_pool_config": []
+        },
+        "after": {
+          "ami_type": "AL2023_x86_64_STANDARD",
+          "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/eksgw-cluster/eksgw-ng/54d0de8a-7010-3543-498a-a8f44db5f759",
+          "capacity_type": "ON_DEMAND",
+          "cluster_name": "eksgw-cluster",
+          "disk_size": 20,
+          "force_update_version": null,
+          "id": "eksgw-cluster:eksgw-ng",
+          "instance_types": [
+            "t3.small"
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_group_name": "eksgw-ng",
+          "node_group_name_prefix": "",
+          "node_repair_config": [],
+          "node_role_arn": "arn:aws:iam::952133486861:role/eksgw-node-role",
+          "region": "us-west-2",
+          "release_version": "1.37.1-20261031",
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {
+                  "name": "eks-eksgw-ng-54d0de8a-7010-3543-498a-a8f44db5f759"
+                }
+              ],
+              "remote_access_security_group_id": ""
+            }
+          ],
+          "scaling_config": [
+            {
+              "desired_size": 2,
+              "max_size": 3,
+              "min_size": 1
+            }
+          ],
+          "status": "ACTIVE",
+          "subnet_ids": [
+            "subnet-0368e087f31860f17",
+            "subnet-0424de63cbf6d2b84"
+          ],
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "taint": [],
+          "timeouts": null,
+          "update_config": [
+            {
+              "max_unavailable": 1,
+              "max_unavailable_percentage": 0,
+              "update_strategy": ""
+            }
+          ],
+          "version": "1.37",
+          "warm_pool_config": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "instance_types": [
+            false
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_repair_config": [],
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {}
+              ]
+            }
+          ],
+          "scaling_config": [
+            {}
+          ],
+          "subnet_ids": [
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {},
+          "taint": [],
+          "update_config": [
+            {}
+          ],
+          "warm_pool_config": []
+        },
+        "after_sensitive": {
+          "instance_types": [
+            false
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_repair_config": [],
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {}
+              ]
+            }
+          ],
+          "scaling_config": [
+            {}
+          ],
+          "subnet_ids": [
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {},
+          "taint": [],
+          "update_config": [
+            {}
+          ],
+          "warm_pool_config": []
+        },
+        "generated_config": "resource \"aws_eks_node_group\" \"eksgw-ng\" {\n  ami_type               = \"AL2023_x86_64_STANDARD\"\n  capacity_type          = \"ON_DEMAND\"\n  cluster_name           = \"eksgw-cluster\"\n  disk_size              = 20\n  force_update_version   = null\n  instance_types         = [\"t3.small\"]\n  labels                 = {}\n  node_group_name        = \"eksgw-ng\"\n  node_group_name_prefix = null\n  node_role_arn          = \"arn:aws:iam::952133486861:role/eksgw-node-role\"\n  region                 = \"us-west-2\"\n  release_version        = \"1.37.1-20261031\"\n  subnet_ids             = [\"subnet-0368e087f31860f17\", \"subnet-0424de63cbf6d2b84\"]\n  tags = {\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Project = \"eks-gw-lab\"\n  }\n  version = \"1.37\"\n  scaling_config {\n    desired_size = 2\n    max_size     = 3\n    min_size     = 1\n  }\n  update_config {\n    max_unavailable            = 1\n    max_unavailable_percentage = 0\n    update_strategy            = null\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_iam_openid_connect_provider.oidc_eks_us-west-2_amazonaws_com_id_A127BE1594BA3FBC505E05E910331972",
+      "mode": "managed",
+      "type": "aws_iam_openid_connect_provider",
+      "name": "oidc_eks_us-west-2_amazonaws_com_id_A127BE1594BA3FBC505E05E910331972",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972",
+          "client_id_list": [
+            "sts.amazonaws.com"
+          ],
+          "id": "arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "thumbprint_list": [
+            "06b25927c42a721631c1efd9431e648fa62e1e39"
+          ],
+          "url": "oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972",
+          "client_id_list": [
+            "sts.amazonaws.com"
+          ],
+          "id": "arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "thumbprint_list": [
+            "06b25927c42a721631c1efd9431e648fa62e1e39"
+          ],
+          "url": "oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "client_id_list": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {},
+          "thumbprint_list": [
+            false
+          ]
+        },
+        "after_sensitive": {
+          "client_id_list": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {},
+          "thumbprint_list": [
+            false
+          ]
+        },
+        "generated_config": "resource \"aws_iam_openid_connect_provider\" \"oidc_eks_us-west-2_amazonaws_com_id_A127BE1594BA3FBC505E05E910331972\" {\n  client_id_list = [\"sts.amazonaws.com\"]\n  tags = {\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Project = \"eks-gw-lab\"\n  }\n  thumbprint_list = [\"06b25927c42a721631c1efd9431e648fa62e1e39\"]\n  url             = \"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972\"\n}"
+      }
+    },
+    {
+      "address": "aws_iam_policy.AWSLoadBalancerControllerIAMPolicy",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "AWSLoadBalancerControllerIAMPolicy",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy",
+          "attachment_count": 1,
+          "delay_after_policy_creation_in_ms": null,
+          "description": "",
+          "id": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy",
+          "name": "AWSLoadBalancerControllerIAMPolicy",
+          "name_prefix": "",
+          "path": "/",
+          "policy": "{\"Statement\":[{\"Action\":[\"ec2:DescribeAccountAttributes\",\"ec2:DescribeAddresses\",\"ec2:DescribeAvailabilityZones\",\"ec2:DescribeInternetGateways\",\"ec2:DescribeVpcs\",\"ec2:DescribeSubnets\",\"ec2:DescribeSecurityGroups\",\"ec2:DescribeInstances\",\"ec2:DescribeNetworkInterfaces\",\"ec2:DescribeTags\",\"ec2:DescribeRouteTables\",\"ec2:GetSecurityGroupsForVpc\",\"elasticloadbalancing:DescribeLoadBalancers\",\"elasticloadbalancing:DescribeTargetGroups\",\"elasticloadbalancing:DescribeTargetHealth\",\"elasticloadbalancing:DescribeListeners\",\"elasticloadbalancing:DescribeTags\",\"elasticloadbalancing:DescribeTargetGroupAttributes\",\"elasticloadbalancing:DescribeLoadBalancerAttributes\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"elasticloadbalancing:RegisterTargets\",\"elasticloadbalancing:DeregisterTargets\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:elasticloadbalancing:*:*:targetgroup/*/*\"}],\"Version\":\"2012-10-17\"}",
+          "policy_id": "ANPA53L4UBEGR3ZLUD5DL",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          }
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy",
+          "attachment_count": 1,
+          "delay_after_policy_creation_in_ms": null,
+          "description": "",
+          "id": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy",
+          "name": "AWSLoadBalancerControllerIAMPolicy",
+          "name_prefix": "",
+          "path": "/",
+          "policy": "{\"Statement\":[{\"Action\":[\"ec2:DescribeAccountAttributes\",\"ec2:DescribeAddresses\",\"ec2:DescribeAvailabilityZones\",\"ec2:DescribeInternetGateways\",\"ec2:DescribeVpcs\",\"ec2:DescribeSubnets\",\"ec2:DescribeSecurityGroups\",\"ec2:DescribeInstances\",\"ec2:DescribeNetworkInterfaces\",\"ec2:DescribeTags\",\"ec2:DescribeRouteTables\",\"ec2:GetSecurityGroupsForVpc\",\"elasticloadbalancing:DescribeLoadBalancers\",\"elasticloadbalancing:DescribeTargetGroups\",\"elasticloadbalancing:DescribeTargetHealth\",\"elasticloadbalancing:DescribeListeners\",\"elasticloadbalancing:DescribeTags\",\"elasticloadbalancing:DescribeTargetGroupAttributes\",\"elasticloadbalancing:DescribeLoadBalancerAttributes\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"elasticloadbalancing:RegisterTargets\",\"elasticloadbalancing:DeregisterTargets\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:elasticloadbalancing:*:*:targetgroup/*/*\"}],\"Version\":\"2012-10-17\"}",
+          "policy_id": "ANPA53L4UBEGR3ZLUD5DL",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          }
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy"
+        },
+        "generated_config": "resource \"aws_iam_policy\" \"AWSLoadBalancerControllerIAMPolicy\" {\n  delay_after_policy_creation_in_ms = null\n  description                       = null\n  name                              = \"AWSLoadBalancerControllerIAMPolicy\"\n  name_prefix                       = null\n  path                              = \"/\"\n  policy                            = \"{\\\"Statement\\\":[{\\\"Action\\\":[\\\"ec2:DescribeAccountAttributes\\\",\\\"ec2:DescribeAddresses\\\",\\\"ec2:DescribeAvailabilityZones\\\",\\\"ec2:DescribeInternetGateways\\\",\\\"ec2:DescribeVpcs\\\",\\\"ec2:DescribeSubnets\\\",\\\"ec2:DescribeSecurityGroups\\\",\\\"ec2:DescribeInstances\\\",\\\"ec2:DescribeNetworkInterfaces\\\",\\\"ec2:DescribeTags\\\",\\\"ec2:DescribeRouteTables\\\",\\\"ec2:GetSecurityGroupsForVpc\\\",\\\"elasticloadbalancing:DescribeLoadBalancers\\\",\\\"elasticloadbalancing:DescribeTargetGroups\\\",\\\"elasticloadbalancing:DescribeTargetHealth\\\",\\\"elasticloadbalancing:DescribeListeners\\\",\\\"elasticloadbalancing:DescribeTags\\\",\\\"elasticloadbalancing:DescribeTargetGroupAttributes\\\",\\\"elasticloadbalancing:DescribeLoadBalancerAttributes\\\"],\\\"Effect\\\":\\\"Allow\\\",\\\"Resource\\\":\\\"*\\\"},{\\\"Action\\\":[\\\"elasticloadbalancing:RegisterTargets\\\",\\\"elasticloadbalancing:DeregisterTargets\\\"],\\\"Effect\\\":\\\"Allow\\\",\\\"Resource\\\":\\\"arn:aws:elasticloadbalancing:*:*:targetgroup/*/*\\\"}],\\\"Version\\\":\\\"2012-10-17\\\"}\"\n  tags = {\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Project = \"eks-gw-lab\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_iam_role.AmazonEKSLoadBalancerControllerRole",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "AmazonEKSLoadBalancerControllerRole",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/AmazonEKSLoadBalancerControllerRole",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:aud\":\"sts.amazonaws.com\",\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:sub\":\"system:serviceaccount:kube-system:aws-load-balancer-controller\"}},\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-08T21:33:53Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "AmazonEKSLoadBalancerControllerRole",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy"
+          ],
+          "max_session_duration": 3600,
+          "name": "AmazonEKSLoadBalancerControllerRole",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "unique_id": "AROA53L4UBEGQPRHOFMVN"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/AmazonEKSLoadBalancerControllerRole",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:aud\":\"sts.amazonaws.com\",\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:sub\":\"system:serviceaccount:kube-system:aws-load-balancer-controller\"}},\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-08T21:33:53Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "AmazonEKSLoadBalancerControllerRole",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy"
+          ],
+          "max_session_duration": 3600,
+          "name": "AmazonEKSLoadBalancerControllerRole",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "unique_id": "AROA53L4UBEGQPRHOFMVN"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "AmazonEKSLoadBalancerControllerRole"
+        },
+        "generated_config": "resource \"aws_iam_role\" \"AmazonEKSLoadBalancerControllerRole\" {\n  assume_role_policy    = \"{\\\"Statement\\\":[{\\\"Action\\\":\\\"sts:AssumeRoleWithWebIdentity\\\",\\\"Condition\\\":{\\\"StringEquals\\\":{\\\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:aud\\\":\\\"sts.amazonaws.com\\\",\\\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:sub\\\":\\\"system:serviceaccount:kube-system:aws-load-balancer-controller\\\"}},\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":{\\\"Federated\\\":\\\"arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972\\\"}}],\\\"Version\\\":\\\"2012-10-17\\\"}\"\n  description           = null\n  force_detach_policies = false\n  max_session_duration  = 3600\n  name                  = \"AmazonEKSLoadBalancerControllerRole\"\n  name_prefix           = null\n  path                  = \"/\"\n  permissions_boundary  = null\n  tags = {\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Project = \"eks-gw-lab\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_iam_role.eksgw-cluster-role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "eksgw-cluster-role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/eksgw-cluster-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-08T21:22:06Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "eksgw-cluster-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+          ],
+          "max_session_duration": 3600,
+          "name": "eksgw-cluster-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "unique_id": "AROA53L4UBEGQ5OGL7N4I"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/eksgw-cluster-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-08T21:22:06Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "eksgw-cluster-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+          ],
+          "max_session_duration": 3600,
+          "name": "eksgw-cluster-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "unique_id": "AROA53L4UBEGQ5OGL7N4I"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "eksgw-cluster-role"
+        },
+        "generated_config": "resource \"aws_iam_role\" \"eksgw-cluster-role\" {\n  assume_role_policy    = \"{\\\"Statement\\\":[{\\\"Action\\\":[\\\"sts:AssumeRole\\\",\\\"sts:TagSession\\\"],\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":{\\\"Service\\\":\\\"eks.amazonaws.com\\\"}}],\\\"Version\\\":\\\"2012-10-17\\\"}\"\n  description           = null\n  force_detach_policies = false\n  max_session_duration  = 3600\n  name                  = \"eksgw-cluster-role\"\n  name_prefix           = null\n  path                  = \"/\"\n  permissions_boundary  = null\n  tags = {\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Project = \"eks-gw-lab\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_iam_role.eksgw-node-role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "eksgw-node-role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/eksgw-node-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-08T21:22:10Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "eksgw-node-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+            "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+          ],
+          "max_session_duration": 3600,
+          "name": "eksgw-node-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "unique_id": "AROA53L4UBEGSI3O4CYOQ"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/eksgw-node-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-08T21:22:10Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "eksgw-node-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+            "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+          ],
+          "max_session_duration": 3600,
+          "name": "eksgw-node-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Project": "eks-gw-lab"
+          },
+          "unique_id": "AROA53L4UBEGSI3O4CYOQ"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false,
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false,
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "eksgw-node-role"
+        },
+        "generated_config": "resource \"aws_iam_role\" \"eksgw-node-role\" {\n  assume_role_policy    = \"{\\\"Statement\\\":[{\\\"Action\\\":\\\"sts:AssumeRole\\\",\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":{\\\"Service\\\":\\\"ec2.amazonaws.com\\\"}}],\\\"Version\\\":\\\"2012-10-17\\\"}\"\n  description           = null\n  force_detach_policies = false\n  max_session_duration  = 3600\n  name                  = \"eksgw-node-role\"\n  name_prefix           = null\n  path                  = \"/\"\n  permissions_boundary  = null\n  tags = {\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Project = \"eks-gw-lab\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_internet_gateway.eksgw-igw",
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "eksgw-igw",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-072d7a0fb243ad399",
+          "id": "igw-072d7a0fb243ad399",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "eksgw-igw",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-igw",
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-072d7a0fb243ad399",
+          "id": "igw-072d7a0fb243ad399",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "eksgw-igw",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-igw",
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "igw-072d7a0fb243ad399"
+        },
+        "generated_config": "resource \"aws_internet_gateway\" \"eksgw-igw\" {\n  region = \"us-west-2\"\n  tags = {\n    Name    = \"eksgw-igw\"\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Name    = \"eksgw-igw\"\n    Project = \"eks-gw-lab\"\n  }\n  vpc_id = \"vpc-0d79526bd9da71afb\"\n}"
+      }
+    },
+    {
+      "address": "aws_lb.eksgw-alb",
+      "mode": "managed",
+      "type": "aws_lb",
+      "name": "eksgw-alb",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "access_logs": [
+            {
+              "bucket": "",
+              "enabled": false,
+              "prefix": ""
+            }
+          ],
+          "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+          "arn_suffix": "app/eksgw-alb/1f709313d54a9928",
+          "client_keep_alive": 3600,
+          "connection_logs": [
+            {
+              "bucket": "",
+              "enabled": false,
+              "prefix": ""
+            }
+          ],
+          "customer_owned_ipv4_pool": "",
+          "desync_mitigation_mode": "defensive",
+          "dns_name": "eksgw-alb-1708466071.us-west-2.elb.amazonaws.com",
+          "dns_record_client_routing_policy": null,
+          "drop_invalid_header_fields": false,
+          "enable_cross_zone_load_balancing": true,
+          "enable_deletion_protection": false,
+          "enable_http2": true,
+          "enable_prefix_for_ipv6_source_nat": "off",
+          "enable_tls_version_and_cipher_suite_headers": false,
+          "enable_waf_fail_open": false,
+          "enable_xff_client_port": false,
+          "enable_zonal_shift": false,
+          "enforce_security_group_inbound_rules_on_private_link_traffic": "",
+          "health_check_logs": [
+            {
+              "bucket": "",
+              "enabled": false,
+              "prefix": ""
+            }
+          ],
+          "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+          "idle_timeout": 60,
+          "internal": false,
+          "ip_address_type": "ipv4",
+          "ipam_pools": [],
+          "load_balancer_type": "application",
+          "minimum_load_balancer_capacity": [],
+          "name": "eksgw-alb",
+          "name_prefix": "",
+          "preserve_host_header": false,
+          "region": "us-west-2",
+          "secondary_ips_auto_assigned_per_subnet": null,
+          "security_groups": [
+            "sg-050139307b9764720"
+          ],
+          "subnet_mapping": [
+            {
+              "allocation_id": "",
+              "ipv6_address": "",
+              "outpost_id": "",
+              "private_ipv4_address": "",
+              "subnet_id": "subnet-0368e087f31860f17"
+            },
+            {
+              "allocation_id": "",
+              "ipv6_address": "",
+              "outpost_id": "",
+              "private_ipv4_address": "",
+              "subnet_id": "subnet-0424de63cbf6d2b84"
+            }
+          ],
+          "subnets": [
+            "subnet-0368e087f31860f17",
+            "subnet-0424de63cbf6d2b84"
+          ],
+          "tags": {
+            "Name": "eksgw-alb",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-alb",
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb",
+          "xff_header_processing_mode": "append",
+          "zone_id": "Z1H1FL5HABSF5"
+        },
+        "after": {
+          "access_logs": [
+            {
+              "bucket": "",
+              "enabled": false,
+              "prefix": ""
+            }
+          ],
+          "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+          "arn_suffix": "app/eksgw-alb/1f709313d54a9928",
+          "client_keep_alive": 3600,
+          "connection_logs": [
+            {
+              "bucket": "",
+              "enabled": false,
+              "prefix": ""
+            }
+          ],
+          "customer_owned_ipv4_pool": "",
+          "desync_mitigation_mode": "defensive",
+          "dns_name": "eksgw-alb-1708466071.us-west-2.elb.amazonaws.com",
+          "dns_record_client_routing_policy": null,
+          "drop_invalid_header_fields": false,
+          "enable_cross_zone_load_balancing": true,
+          "enable_deletion_protection": false,
+          "enable_http2": true,
+          "enable_prefix_for_ipv6_source_nat": "off",
+          "enable_tls_version_and_cipher_suite_headers": false,
+          "enable_waf_fail_open": false,
+          "enable_xff_client_port": false,
+          "enable_zonal_shift": false,
+          "enforce_security_group_inbound_rules_on_private_link_traffic": "",
+          "health_check_logs": [
+            {
+              "bucket": "",
+              "enabled": false,
+              "prefix": ""
+            }
+          ],
+          "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+          "idle_timeout": 60,
+          "internal": false,
+          "ip_address_type": "ipv4",
+          "ipam_pools": [],
+          "load_balancer_type": "application",
+          "minimum_load_balancer_capacity": [],
+          "name": "eksgw-alb",
+          "name_prefix": "",
+          "preserve_host_header": false,
+          "region": "us-west-2",
+          "secondary_ips_auto_assigned_per_subnet": null,
+          "security_groups": [
+            "sg-050139307b9764720"
+          ],
+          "subnet_mapping": [
+            {
+              "allocation_id": "",
+              "ipv6_address": "",
+              "outpost_id": "",
+              "private_ipv4_address": "",
+              "subnet_id": "subnet-0368e087f31860f17"
+            },
+            {
+              "allocation_id": "",
+              "ipv6_address": "",
+              "outpost_id": "",
+              "private_ipv4_address": "",
+              "subnet_id": "subnet-0424de63cbf6d2b84"
+            }
+          ],
+          "subnets": [
+            "subnet-0368e087f31860f17",
+            "subnet-0424de63cbf6d2b84"
+          ],
+          "tags": {
+            "Name": "eksgw-alb",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-alb",
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb",
+          "xff_header_processing_mode": "append",
+          "zone_id": "Z1H1FL5HABSF5"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "access_logs": [
+            {}
+          ],
+          "connection_logs": [
+            {}
+          ],
+          "health_check_logs": [
+            {}
+          ],
+          "ipam_pools": [],
+          "minimum_load_balancer_capacity": [],
+          "security_groups": [
+            false
+          ],
+          "subnet_mapping": [
+            {},
+            {}
+          ],
+          "subnets": [
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "access_logs": [
+            {}
+          ],
+          "connection_logs": [
+            {}
+          ],
+          "health_check_logs": [
+            {}
+          ],
+          "ipam_pools": [],
+          "minimum_load_balancer_capacity": [],
+          "security_groups": [
+            false
+          ],
+          "subnet_mapping": [
+            {},
+            {}
+          ],
+          "subnets": [
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_lb\" \"eksgw-alb\" {\n  client_keep_alive                                            = 3600\n  customer_owned_ipv4_pool                                     = null\n  desync_mitigation_mode                                       = \"defensive\"\n  dns_record_client_routing_policy                             = null\n  drop_invalid_header_fields                                   = false\n  enable_cross_zone_load_balancing                             = true\n  enable_deletion_protection                                   = false\n  enable_http2                                                 = true\n  enable_prefix_for_ipv6_source_nat                            = \"off\"\n  enable_tls_version_and_cipher_suite_headers                  = false\n  enable_waf_fail_open                                         = false\n  enable_xff_client_port                                       = false\n  enable_zonal_shift                                           = false\n  enforce_security_group_inbound_rules_on_private_link_traffic = null\n  idle_timeout                                                 = 60\n  internal                                                     = false\n  ip_address_type                                              = \"ipv4\"\n  load_balancer_type                                           = \"application\"\n  name                                                         = \"eksgw-alb\"\n  name_prefix                                                  = null\n  preserve_host_header                                         = false\n  region                                                       = \"us-west-2\"\n  secondary_ips_auto_assigned_per_subnet                       = null\n  security_groups                                              = [\"sg-050139307b9764720\"]\n  subnets                                                      = [\"subnet-0368e087f31860f17\", \"subnet-0424de63cbf6d2b84\"]\n  tags = {\n    Name    = \"eksgw-alb\"\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Name    = \"eksgw-alb\"\n    Project = \"eks-gw-lab\"\n  }\n  xff_header_processing_mode = \"append\"\n  access_logs {\n    bucket  = \"\"\n    enabled = false\n    prefix  = null\n  }\n  connection_logs {\n    bucket  = \"\"\n    enabled = false\n    prefix  = null\n  }\n  health_check_logs {\n    bucket  = \"\"\n    enabled = false\n    prefix  = null\n  }\n  subnet_mapping {\n    allocation_id        = null\n    ipv6_address         = null\n    private_ipv4_address = null\n    subnet_id            = \"subnet-0368e087f31860f17\"\n  }\n  subnet_mapping {\n    allocation_id        = null\n    ipv6_address         = null\n    private_ipv4_address = null\n    subnet_id            = \"subnet-0424de63cbf6d2b84\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_lb_listener.eksgw-http",
+      "mode": "managed",
+      "type": "aws_lb_listener",
+      "name": "eksgw-http",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "alpn_policy": null,
+          "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:listener/app/eksgw-alb/1f709313d54a9928/f52f7861c5f1116e",
+          "certificate_arn": null,
+          "default_action": [
+            {
+              "authenticate_cognito": [],
+              "authenticate_oidc": [],
+              "fixed_response": [],
+              "forward": [
+                {
+                  "stickiness": [
+                    {
+                      "duration": 0,
+                      "enabled": false
+                    }
+                  ],
+                  "target_group": [
+                    {
+                      "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+                      "weight": 1
+                    }
+                  ]
+                }
+              ],
+              "jwt_validation": [],
+              "order": 0,
+              "redirect": [],
+              "target_group_arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+              "type": "forward"
+            }
+          ],
+          "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:listener/app/eksgw-alb/1f709313d54a9928/f52f7861c5f1116e",
+          "load_balancer_arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+          "mutual_authentication": [],
+          "port": 80,
+          "protocol": "HTTP",
+          "region": "us-west-2",
+          "routing_http_request_x_amzn_mtls_clientcert_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_issuer_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_leaf_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_subject_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_validity_header_name": null,
+          "routing_http_request_x_amzn_tls_cipher_suite_header_name": null,
+          "routing_http_request_x_amzn_tls_version_header_name": null,
+          "routing_http_response_access_control_allow_credentials_header_value": "",
+          "routing_http_response_access_control_allow_headers_header_value": "",
+          "routing_http_response_access_control_allow_methods_header_value": "",
+          "routing_http_response_access_control_allow_origin_header_value": "",
+          "routing_http_response_access_control_expose_headers_header_value": "",
+          "routing_http_response_access_control_max_age_header_value": "",
+          "routing_http_response_content_security_policy_header_value": "",
+          "routing_http_response_server_enabled": true,
+          "routing_http_response_strict_transport_security_header_value": "",
+          "routing_http_response_x_content_type_options_header_value": "",
+          "routing_http_response_x_frame_options_header_value": "",
+          "ssl_policy": "",
+          "tags": {
+            "Name": "eksgw-http",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-http",
+            "Project": "eks-gw-lab"
+          },
+          "tcp_idle_timeout_seconds": null,
+          "timeouts": null
+        },
+        "after": {
+          "alpn_policy": null,
+          "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:listener/app/eksgw-alb/1f709313d54a9928/f52f7861c5f1116e",
+          "certificate_arn": null,
+          "default_action": [
+            {
+              "authenticate_cognito": [],
+              "authenticate_oidc": [],
+              "fixed_response": [],
+              "forward": [
+                {
+                  "stickiness": [
+                    {
+                      "duration": 0,
+                      "enabled": false
+                    }
+                  ],
+                  "target_group": [
+                    {
+                      "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+                      "weight": 1
+                    }
+                  ]
+                }
+              ],
+              "jwt_validation": [],
+              "order": 0,
+              "redirect": [],
+              "target_group_arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+              "type": "forward"
+            }
+          ],
+          "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:listener/app/eksgw-alb/1f709313d54a9928/f52f7861c5f1116e",
+          "load_balancer_arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+          "mutual_authentication": [],
+          "port": 80,
+          "protocol": "HTTP",
+          "region": "us-west-2",
+          "routing_http_request_x_amzn_mtls_clientcert_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_issuer_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_leaf_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_subject_header_name": null,
+          "routing_http_request_x_amzn_mtls_clientcert_validity_header_name": null,
+          "routing_http_request_x_amzn_tls_cipher_suite_header_name": null,
+          "routing_http_request_x_amzn_tls_version_header_name": null,
+          "routing_http_response_access_control_allow_credentials_header_value": "",
+          "routing_http_response_access_control_allow_headers_header_value": "",
+          "routing_http_response_access_control_allow_methods_header_value": "",
+          "routing_http_response_access_control_allow_origin_header_value": "",
+          "routing_http_response_access_control_expose_headers_header_value": "",
+          "routing_http_response_access_control_max_age_header_value": "",
+          "routing_http_response_content_security_policy_header_value": "",
+          "routing_http_response_server_enabled": true,
+          "routing_http_response_strict_transport_security_header_value": "",
+          "routing_http_response_x_content_type_options_header_value": "",
+          "routing_http_response_x_frame_options_header_value": "",
+          "ssl_policy": "",
+          "tags": {
+            "Name": "eksgw-http",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-http",
+            "Project": "eks-gw-lab"
+          },
+          "tcp_idle_timeout_seconds": null,
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "default_action": [
+            {
+              "authenticate_cognito": [],
+              "authenticate_oidc": [],
+              "fixed_response": [],
+              "forward": [
+                {
+                  "stickiness": [
+                    {}
+                  ],
+                  "target_group": [
+                    {}
+                  ]
+                }
+              ],
+              "jwt_validation": [],
+              "redirect": []
+            }
+          ],
+          "mutual_authentication": [],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "default_action": [
+            {
+              "authenticate_cognito": [],
+              "authenticate_oidc": [],
+              "fixed_response": [],
+              "forward": [
+                {
+                  "stickiness": [
+                    {}
+                  ],
+                  "target_group": [
+                    {}
+                  ]
+                }
+              ],
+              "jwt_validation": [],
+              "redirect": []
+            }
+          ],
+          "mutual_authentication": [],
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_lb_listener\" \"eksgw-http\" {\n  alpn_policy                                                           = null\n  certificate_arn                                                       = null\n  load_balancer_arn                                                     = \"arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928\"\n  port                                                                  = 80\n  protocol                                                              = \"HTTP\"\n  region                                                                = \"us-west-2\"\n  routing_http_request_x_amzn_mtls_clientcert_header_name               = null\n  routing_http_request_x_amzn_mtls_clientcert_issuer_header_name        = null\n  routing_http_request_x_amzn_mtls_clientcert_leaf_header_name          = null\n  routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name = null\n  routing_http_request_x_amzn_mtls_clientcert_subject_header_name       = null\n  routing_http_request_x_amzn_mtls_clientcert_validity_header_name      = null\n  routing_http_request_x_amzn_tls_cipher_suite_header_name              = null\n  routing_http_request_x_amzn_tls_version_header_name                   = null\n  routing_http_response_access_control_allow_credentials_header_value   = null\n  routing_http_response_access_control_allow_headers_header_value       = null\n  routing_http_response_access_control_allow_methods_header_value       = null\n  routing_http_response_access_control_allow_origin_header_value        = null\n  routing_http_response_access_control_expose_headers_header_value      = null\n  routing_http_response_access_control_max_age_header_value             = null\n  routing_http_response_content_security_policy_header_value            = null\n  routing_http_response_server_enabled                                  = true\n  routing_http_response_strict_transport_security_header_value          = null\n  routing_http_response_x_content_type_options_header_value             = null\n  routing_http_response_x_frame_options_header_value                    = null\n  ssl_policy                                                            = null\n  tags = {\n    Name    = \"eksgw-http\"\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Name    = \"eksgw-http\"\n    Project = \"eks-gw-lab\"\n  }\n  tcp_idle_timeout_seconds = null\n  default_action {\n    order            = 0\n    target_group_arn = \"arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9\"\n    type             = \"forward\"\n    forward {\n      stickiness {\n        duration = 0\n        enabled  = false\n      }\n      target_group {\n        arn    = \"arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9\"\n        weight = 1\n      }\n    }\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_lb_target_group.eksgw-tg",
+      "mode": "managed",
+      "type": "aws_lb_target_group",
+      "name": "eksgw-tg",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+          "arn_suffix": "targetgroup/eksgw-tg/1f7f5c50a60492b9",
+          "connection_termination": null,
+          "deregistration_delay": "300",
+          "health_check": [
+            {
+              "enabled": true,
+              "healthy_threshold": 5,
+              "interval": 30,
+              "matcher": "200",
+              "path": "/",
+              "port": "traffic-port",
+              "protocol": "HTTP",
+              "timeout": 5,
+              "unhealthy_threshold": 2
+            }
+          ],
+          "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+          "ip_address_type": "ipv4",
+          "lambda_multi_value_headers_enabled": null,
+          "load_balancer_arns": [
+            "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928"
+          ],
+          "load_balancing_algorithm_type": "round_robin",
+          "load_balancing_anomaly_mitigation": "off",
+          "load_balancing_cross_zone_enabled": "use_load_balancer_configuration",
+          "name": "eksgw-tg",
+          "name_prefix": "",
+          "port": 80,
+          "preserve_client_ip": null,
+          "protocol": "HTTP",
+          "protocol_version": "HTTP1",
+          "proxy_protocol_v2": null,
+          "region": "us-west-2",
+          "slow_start": 0,
+          "stickiness": [
+            {
+              "cookie_duration": 86400,
+              "cookie_name": "",
+              "enabled": false,
+              "type": "lb_cookie"
+            }
+          ],
+          "tags": {
+            "Name": "eksgw-tg",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-tg",
+            "Project": "eks-gw-lab"
+          },
+          "target_control_port": 0,
+          "target_failover": [
+            {
+              "on_deregistration": null,
+              "on_unhealthy": null
+            }
+          ],
+          "target_group_health": [
+            {
+              "dns_failover": [
+                {
+                  "minimum_healthy_targets_count": "1",
+                  "minimum_healthy_targets_percentage": "off"
+                }
+              ],
+              "unhealthy_state_routing": [
+                {
+                  "minimum_healthy_targets_count": 1,
+                  "minimum_healthy_targets_percentage": "off"
+                }
+              ]
+            }
+          ],
+          "target_health_state": [
+            {
+              "enable_unhealthy_connection_termination": null,
+              "unhealthy_draining_interval": null
+            }
+          ],
+          "target_type": "ip",
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after": {
+          "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+          "arn_suffix": "targetgroup/eksgw-tg/1f7f5c50a60492b9",
+          "connection_termination": null,
+          "deregistration_delay": "300",
+          "health_check": [
+            {
+              "enabled": true,
+              "healthy_threshold": 5,
+              "interval": 30,
+              "matcher": "200",
+              "path": "/",
+              "port": "traffic-port",
+              "protocol": "HTTP",
+              "timeout": 5,
+              "unhealthy_threshold": 2
+            }
+          ],
+          "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+          "ip_address_type": "ipv4",
+          "lambda_multi_value_headers_enabled": null,
+          "load_balancer_arns": [
+            "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928"
+          ],
+          "load_balancing_algorithm_type": "round_robin",
+          "load_balancing_anomaly_mitigation": "off",
+          "load_balancing_cross_zone_enabled": "use_load_balancer_configuration",
+          "name": "eksgw-tg",
+          "name_prefix": "",
+          "port": 80,
+          "preserve_client_ip": null,
+          "protocol": "HTTP",
+          "protocol_version": "HTTP1",
+          "proxy_protocol_v2": null,
+          "region": "us-west-2",
+          "slow_start": 0,
+          "stickiness": [
+            {
+              "cookie_duration": 86400,
+              "cookie_name": "",
+              "enabled": false,
+              "type": "lb_cookie"
+            }
+          ],
+          "tags": {
+            "Name": "eksgw-tg",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-tg",
+            "Project": "eks-gw-lab"
+          },
+          "target_control_port": 0,
+          "target_failover": [
+            {
+              "on_deregistration": null,
+              "on_unhealthy": null
+            }
+          ],
+          "target_group_health": [
+            {
+              "dns_failover": [
+                {
+                  "minimum_healthy_targets_count": "1",
+                  "minimum_healthy_targets_percentage": "off"
+                }
+              ],
+              "unhealthy_state_routing": [
+                {
+                  "minimum_healthy_targets_count": 1,
+                  "minimum_healthy_targets_percentage": "off"
+                }
+              ]
+            }
+          ],
+          "target_health_state": [
+            {
+              "enable_unhealthy_connection_termination": null,
+              "unhealthy_draining_interval": null
+            }
+          ],
+          "target_type": "ip",
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "health_check": [
+            {}
+          ],
+          "load_balancer_arns": [
+            false
+          ],
+          "stickiness": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {},
+          "target_failover": [
+            {}
+          ],
+          "target_group_health": [
+            {
+              "dns_failover": [
+                {}
+              ],
+              "unhealthy_state_routing": [
+                {}
+              ]
+            }
+          ],
+          "target_health_state": [
+            {}
+          ]
+        },
+        "after_sensitive": {
+          "health_check": [
+            {}
+          ],
+          "load_balancer_arns": [
+            false
+          ],
+          "stickiness": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {},
+          "target_failover": [
+            {}
+          ],
+          "target_group_health": [
+            {
+              "dns_failover": [
+                {}
+              ],
+              "unhealthy_state_routing": [
+                {}
+              ]
+            }
+          ],
+          "target_health_state": [
+            {}
+          ]
+        },
+        "generated_config": "resource \"aws_lb_target_group\" \"eksgw-tg\" {\n  connection_termination             = null\n  deregistration_delay               = \"300\"\n  ip_address_type                    = \"ipv4\"\n  lambda_multi_value_headers_enabled = null\n  load_balancing_algorithm_type      = \"round_robin\"\n  load_balancing_anomaly_mitigation  = \"off\"\n  load_balancing_cross_zone_enabled  = \"use_load_balancer_configuration\"\n  name                               = \"eksgw-tg\"\n  name_prefix                        = null\n  port                               = 80\n  preserve_client_ip                 = null\n  protocol                           = \"HTTP\"\n  protocol_version                   = \"HTTP1\"\n  proxy_protocol_v2                  = null\n  region                             = \"us-west-2\"\n  slow_start                         = 0\n  tags = {\n    Name    = \"eksgw-tg\"\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Name    = \"eksgw-tg\"\n    Project = \"eks-gw-lab\"\n  }\n  target_control_port = 0\n  target_type         = \"ip\"\n  vpc_id              = \"vpc-0d79526bd9da71afb\"\n  health_check {\n    enabled             = true\n    healthy_threshold   = 5\n    interval            = 30\n    matcher             = \"200\"\n    path                = \"/\"\n    port                = \"traffic-port\"\n    protocol            = \"HTTP\"\n    timeout             = 5\n    unhealthy_threshold = 2\n  }\n  stickiness {\n    cookie_duration = 86400\n    cookie_name     = null\n    enabled         = false\n    type            = \"lb_cookie\"\n  }\n  target_failover {\n    on_deregistration = null\n    on_unhealthy      = null\n  }\n  target_group_health {\n    dns_failover {\n      minimum_healthy_targets_count      = \"1\"\n      minimum_healthy_targets_percentage = \"off\"\n    }\n    unhealthy_state_routing {\n      minimum_healthy_targets_count      = 1\n      minimum_healthy_targets_percentage = \"off\"\n    }\n  }\n  target_health_state {\n    enable_unhealthy_connection_termination = null\n    unhealthy_draining_interval             = null\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_route_table.eksgw-public-rt",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "eksgw-public-rt",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-04bc25c84f0627094",
+          "id": "rtb-04bc25c84f0627094",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "region": "us-west-2",
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "0.0.0.0/0",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "igw-072d7a0fb243ad399",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "odb_network_arn": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": ""
+            }
+          ],
+          "tags": {
+            "Name": "eksgw-public-rt",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-public-rt",
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-04bc25c84f0627094",
+          "id": "rtb-04bc25c84f0627094",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "region": "us-west-2",
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "0.0.0.0/0",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "igw-072d7a0fb243ad399",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "odb_network_arn": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": ""
+            }
+          ],
+          "tags": {
+            "Name": "eksgw-public-rt",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-public-rt",
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_route_table\" \"eksgw-public-rt\" {\n  propagating_vgws = []\n  region           = \"us-west-2\"\n  route = [{\n    carrier_gateway_id         = \"\"\n    cidr_block                 = \"0.0.0.0/0\"\n    core_network_arn           = \"\"\n    destination_prefix_list_id = \"\"\n    egress_only_gateway_id     = \"\"\n    gateway_id                 = \"igw-072d7a0fb243ad399\"\n    ipv6_cidr_block            = \"\"\n    local_gateway_id           = \"\"\n    nat_gateway_id             = \"\"\n    network_interface_id       = \"\"\n    odb_network_arn            = \"\"\n    transit_gateway_id         = \"\"\n    vpc_endpoint_id            = \"\"\n    vpc_peering_connection_id  = \"\"\n  }]\n  tags = {\n    Name    = \"eksgw-public-rt\"\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Name    = \"eksgw-public-rt\"\n    Project = \"eks-gw-lab\"\n  }\n  vpc_id = \"vpc-0d79526bd9da71afb\"\n}"
+      }
+    },
+    {
+      "address": "aws_route_table_association.subnet-0368e087f31860f17_rtb-04bc25c84f0627094",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "subnet-0368e087f31860f17_rtb-04bc25c84f0627094",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "gateway_id": "",
+          "id": "rtbassoc-032fac43abde21563",
+          "region": "us-west-2",
+          "route_table_id": "rtb-04bc25c84f0627094",
+          "subnet_id": "subnet-0368e087f31860f17",
+          "timeouts": null
+        },
+        "after": {
+          "gateway_id": "",
+          "id": "rtbassoc-032fac43abde21563",
+          "region": "us-west-2",
+          "route_table_id": "rtb-04bc25c84f0627094",
+          "subnet_id": "subnet-0368e087f31860f17",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "subnet-0368e087f31860f17/rtb-04bc25c84f0627094"
+        },
+        "generated_config": "resource \"aws_route_table_association\" \"subnet-0368e087f31860f17_rtb-04bc25c84f0627094\" {\n  gateway_id     = null\n  region         = \"us-west-2\"\n  route_table_id = \"rtb-04bc25c84f0627094\"\n  subnet_id      = \"subnet-0368e087f31860f17\"\n}"
+      }
+    },
+    {
+      "address": "aws_route_table_association.subnet-0424de63cbf6d2b84_rtb-04bc25c84f0627094",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "subnet-0424de63cbf6d2b84_rtb-04bc25c84f0627094",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "gateway_id": "",
+          "id": "rtbassoc-03ae1612e5dac787e",
+          "region": "us-west-2",
+          "route_table_id": "rtb-04bc25c84f0627094",
+          "subnet_id": "subnet-0424de63cbf6d2b84",
+          "timeouts": null
+        },
+        "after": {
+          "gateway_id": "",
+          "id": "rtbassoc-03ae1612e5dac787e",
+          "region": "us-west-2",
+          "route_table_id": "rtb-04bc25c84f0627094",
+          "subnet_id": "subnet-0424de63cbf6d2b84",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "subnet-0424de63cbf6d2b84/rtb-04bc25c84f0627094"
+        },
+        "generated_config": "resource \"aws_route_table_association\" \"subnet-0424de63cbf6d2b84_rtb-04bc25c84f0627094\" {\n  gateway_id     = null\n  region         = \"us-west-2\"\n  route_table_id = \"rtb-04bc25c84f0627094\"\n  subnet_id      = \"subnet-0424de63cbf6d2b84\"\n}"
+      }
+    },
+    {
+      "address": "aws_security_group.eksgw-alb-sg",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "eksgw-alb-sg",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:security-group/sg-050139307b9764720",
+          "description": "eksgw ALB: HTTP from the internet",
+          "egress": [
+            {
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "description": "",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [],
+              "self": false,
+              "to_port": 0
+            }
+          ],
+          "id": "sg-050139307b9764720",
+          "ingress": [
+            {
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "description": "HTTP",
+              "from_port": 80,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "tcp",
+              "security_groups": [],
+              "self": false,
+              "to_port": 80
+            }
+          ],
+          "name": "eksgw-alb-sg",
+          "name_prefix": "",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "revoke_rules_on_delete": null,
+          "tags": {
+            "Name": "eksgw-alb-sg",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-alb-sg",
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:security-group/sg-050139307b9764720",
+          "description": "eksgw ALB: HTTP from the internet",
+          "egress": [
+            {
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "description": "",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [],
+              "self": false,
+              "to_port": 0
+            }
+          ],
+          "id": "sg-050139307b9764720",
+          "ingress": [
+            {
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "description": "HTTP",
+              "from_port": 80,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "tcp",
+              "security_groups": [],
+              "self": false,
+              "to_port": 80
+            }
+          ],
+          "name": "eksgw-alb-sg",
+          "name_prefix": "",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "revoke_rules_on_delete": null,
+          "tags": {
+            "Name": "eksgw-alb-sg",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-alb-sg",
+            "Project": "eks-gw-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "egress": [
+            {
+              "cidr_blocks": [
+                false
+              ],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            }
+          ],
+          "ingress": [
+            {
+              "cidr_blocks": [
+                false
+              ],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            }
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "egress": [
+            {
+              "cidr_blocks": [
+                false
+              ],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            }
+          ],
+          "ingress": [
+            {
+              "cidr_blocks": [
+                false
+              ],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            }
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "sg-050139307b9764720"
+        },
+        "generated_config": "resource \"aws_security_group\" \"eksgw-alb-sg\" {\n  description = \"eksgw ALB: HTTP from the internet\"\n  egress = [{\n    cidr_blocks      = [\"0.0.0.0/0\"]\n    description      = \"\"\n    from_port        = 0\n    ipv6_cidr_blocks = []\n    prefix_list_ids  = []\n    protocol         = \"-1\"\n    security_groups  = []\n    self             = false\n    to_port          = 0\n  }]\n  ingress = [{\n    cidr_blocks      = [\"0.0.0.0/0\"]\n    description      = \"HTTP\"\n    from_port        = 80\n    ipv6_cidr_blocks = []\n    prefix_list_ids  = []\n    protocol         = \"tcp\"\n    security_groups  = []\n    self             = false\n    to_port          = 80\n  }]\n  name                   = \"eksgw-alb-sg\"\n  name_prefix            = null\n  region                 = \"us-west-2\"\n  revoke_rules_on_delete = null\n  tags = {\n    Name    = \"eksgw-alb-sg\"\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Name    = \"eksgw-alb-sg\"\n    Project = \"eks-gw-lab\"\n  }\n  vpc_id = \"vpc-0d79526bd9da71afb\"\n}"
+      }
+    },
+    {
+      "address": "aws_subnet.eksgw-public-us-west-2a",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "eksgw-public-us-west-2a",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0424de63cbf6d2b84",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2a",
+          "availability_zone_id": "usw2-az1",
+          "cidr_block": "10.78.1.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-0424de63cbf6d2b84",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_ipam_pool_id": null,
+          "ipv6_native": false,
+          "ipv6_netmask_length": null,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "eksgw-public-us-west-2a",
+            "Project": "eks-gw-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "eksgw-public-us-west-2a",
+            "Project": "eks-gw-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0424de63cbf6d2b84",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2a",
+          "availability_zone_id": "usw2-az1",
+          "cidr_block": "10.78.1.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-0424de63cbf6d2b84",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_ipam_pool_id": null,
+          "ipv6_native": false,
+          "ipv6_netmask_length": null,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "eksgw-public-us-west-2a",
+            "Project": "eks-gw-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "eksgw-public-us-west-2a",
+            "Project": "eks-gw-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_subnet\" \"eksgw-public-us-west-2a\" {\n  assign_ipv6_address_on_creation                = false\n  availability_zone                              = \"us-west-2a\"\n  availability_zone_id                           = \"usw2-az1\"\n  cidr_block                                     = \"10.78.1.0/24\"\n  customer_owned_ipv4_pool                       = null\n  enable_dns64                                   = false\n  enable_lni_at_device_index                     = 0\n  enable_resource_name_dns_a_record_on_launch    = false\n  enable_resource_name_dns_aaaa_record_on_launch = false\n  ipv4_ipam_pool_id                              = null\n  ipv4_netmask_length                            = null\n  ipv6_cidr_block                                = null\n  ipv6_ipam_pool_id                              = null\n  ipv6_native                                    = false\n  ipv6_netmask_length                            = null\n  map_customer_owned_ip_on_launch                = false\n  map_public_ip_on_launch                        = true\n  outpost_arn                                    = null\n  private_dns_hostname_type_on_launch            = \"ip-name\"\n  region                                         = \"us-west-2\"\n  tags = {\n    Name                     = \"eksgw-public-us-west-2a\"\n    Project                  = \"eks-gw-lab\"\n    \"kubernetes.io/role/elb\" = \"1\"\n  }\n  tags_all = {\n    Name                     = \"eksgw-public-us-west-2a\"\n    Project                  = \"eks-gw-lab\"\n    \"kubernetes.io/role/elb\" = \"1\"\n  }\n  vpc_id = \"vpc-0d79526bd9da71afb\"\n}"
+      }
+    },
+    {
+      "address": "aws_subnet.eksgw-public-us-west-2b",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "eksgw-public-us-west-2b",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0368e087f31860f17",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2b",
+          "availability_zone_id": "usw2-az2",
+          "cidr_block": "10.78.2.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-0368e087f31860f17",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_ipam_pool_id": null,
+          "ipv6_native": false,
+          "ipv6_netmask_length": null,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "eksgw-public-us-west-2b",
+            "Project": "eks-gw-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "eksgw-public-us-west-2b",
+            "Project": "eks-gw-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0368e087f31860f17",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2b",
+          "availability_zone_id": "usw2-az2",
+          "cidr_block": "10.78.2.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-0368e087f31860f17",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_ipam_pool_id": null,
+          "ipv6_native": false,
+          "ipv6_netmask_length": null,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "eksgw-public-us-west-2b",
+            "Project": "eks-gw-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "eksgw-public-us-west-2b",
+            "Project": "eks-gw-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0d79526bd9da71afb"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_subnet\" \"eksgw-public-us-west-2b\" {\n  assign_ipv6_address_on_creation                = false\n  availability_zone                              = \"us-west-2b\"\n  availability_zone_id                           = \"usw2-az2\"\n  cidr_block                                     = \"10.78.2.0/24\"\n  customer_owned_ipv4_pool                       = null\n  enable_dns64                                   = false\n  enable_lni_at_device_index                     = 0\n  enable_resource_name_dns_a_record_on_launch    = false\n  enable_resource_name_dns_aaaa_record_on_launch = false\n  ipv4_ipam_pool_id                              = null\n  ipv4_netmask_length                            = null\n  ipv6_cidr_block                                = null\n  ipv6_ipam_pool_id                              = null\n  ipv6_native                                    = false\n  ipv6_netmask_length                            = null\n  map_customer_owned_ip_on_launch                = false\n  map_public_ip_on_launch                        = true\n  outpost_arn                                    = null\n  private_dns_hostname_type_on_launch            = \"ip-name\"\n  region                                         = \"us-west-2\"\n  tags = {\n    Name                     = \"eksgw-public-us-west-2b\"\n    Project                  = \"eks-gw-lab\"\n    \"kubernetes.io/role/elb\" = \"1\"\n  }\n  tags_all = {\n    Name                     = \"eksgw-public-us-west-2b\"\n    Project                  = \"eks-gw-lab\"\n    \"kubernetes.io/role/elb\" = \"1\"\n  }\n  vpc_id = \"vpc-0d79526bd9da71afb\"\n}"
+      }
+    },
+    {
+      "address": "aws_vpc.eksgw-vpc",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "eksgw-vpc",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-0d79526bd9da71afb",
+          "assign_generated_ipv6_cidr_block": false,
+          "cidr_block": "10.78.0.0/16",
+          "default_network_acl_id": "acl-04361bf514b5d04e7",
+          "default_route_table_id": "rtb-095267da87a8f8ac8",
+          "default_security_group_id": "sg-00e30449b72e6c7ec",
+          "dhcp_options_id": "dopt-03b17c556ffb1011e",
+          "enable_dns_hostnames": true,
+          "enable_dns_support": true,
+          "enable_network_address_usage_metrics": false,
+          "id": "vpc-0d79526bd9da71afb",
+          "instance_tenancy": "default",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_association_id": "",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_network_border_group": "",
+          "ipv6_ipam_pool_id": "",
+          "ipv6_netmask_length": 0,
+          "main_route_table_id": "rtb-095267da87a8f8ac8",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "eksgw-vpc",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-vpc",
+            "Project": "eks-gw-lab"
+          }
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-0d79526bd9da71afb",
+          "assign_generated_ipv6_cidr_block": false,
+          "cidr_block": "10.78.0.0/16",
+          "default_network_acl_id": "acl-04361bf514b5d04e7",
+          "default_route_table_id": "rtb-095267da87a8f8ac8",
+          "default_security_group_id": "sg-00e30449b72e6c7ec",
+          "dhcp_options_id": "dopt-03b17c556ffb1011e",
+          "enable_dns_hostnames": true,
+          "enable_dns_support": true,
+          "enable_network_address_usage_metrics": false,
+          "id": "vpc-0d79526bd9da71afb",
+          "instance_tenancy": "default",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_association_id": "",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_network_border_group": "",
+          "ipv6_ipam_pool_id": "",
+          "ipv6_netmask_length": 0,
+          "main_route_table_id": "rtb-095267da87a8f8ac8",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "eksgw-vpc",
+            "Project": "eks-gw-lab"
+          },
+          "tags_all": {
+            "Name": "eksgw-vpc",
+            "Project": "eks-gw-lab"
+          }
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_vpc\" \"eksgw-vpc\" {\n  assign_generated_ipv6_cidr_block     = false\n  cidr_block                           = \"10.78.0.0/16\"\n  enable_dns_hostnames                 = true\n  enable_dns_support                   = true\n  enable_network_address_usage_metrics = false\n  instance_tenancy                     = \"default\"\n  ipv4_ipam_pool_id                    = null\n  ipv4_netmask_length                  = null\n  ipv6_cidr_block                      = null\n  ipv6_cidr_block_network_border_group = null\n  ipv6_ipam_pool_id                    = null\n  ipv6_netmask_length                  = 0\n  region                               = \"us-west-2\"\n  tags = {\n    Name    = \"eksgw-vpc\"\n    Project = \"eks-gw-lab\"\n  }\n  tags_all = {\n    Name    = \"eksgw-vpc\"\n    Project = \"eks-gw-lab\"\n  }\n}"
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.5.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_eks_cluster.eksgw-cluster",
+            "mode": "managed",
+            "type": "aws_eks_cluster",
+            "name": "eksgw-cluster",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "access_config": [
+                {
+                  "authentication_mode": "API_AND_CONFIG_MAP",
+                  "bootstrap_cluster_creator_admin_permissions": true
+                }
+              ],
+              "arn": "arn:aws:eks:us-west-2:952133486861:cluster/eksgw-cluster",
+              "bootstrap_self_managed_addons": true,
+              "certificate_authority": [
+                {
+                  "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNakNDQWhxZ0F3SUJBZ0lSQUlXQmhER25Eai81M1oxdW1STEwzbE13RFFZSktvWklodmNOQVFFTEJRQXcKSnpFUU1BNEdBMVVFQ2hNSFFWZFRJRVZMVXpFVE1CRUdBMVVFQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TmpFeApNRGd5TVRJeU5ESmFGdzB6TVRFeE1EY3lNVEl5TkRKYU1DY3hFREFPQmdOVkJBb1RCMEZYVXlCRlMxTXhFekFSCkJnTlZCQU1UQ210MVltVnlibVYwWlhNd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUIKQVFDNVdqL3dWQytnQy9iUmh3Smh2b3VDY0dKYythTHhJY2d1WC9PS3Q4YVpwNlFqYVdjOGl5am01OXZxM2QrQQpXUEhJUzhOK0pHbVhqNVN3cEtPNmNXT3Eyczl0Tlg2eHNOUEdPclZvL2ppcm9RRENjMHl0NVQ5Wi9laVpaY3RrCkNnSENzV2dJOWF2d3BpTEh1Tjl2ZjdKY2RNY0VQaVpVZFNqSW1aYmZBem1MR1hxWjlrUTZVVWh4VWpqVU4yMlUKTkpGRTdUN051MGdQbmVneCtJRjJ6ZzJJSU9RK1dzaEczMk1Cb0hvQmdNWDAzajVUS1Vac2ZpRXN6NVcxM0VydgpEWmdSRkQramQzUy9NWHU3RUZwQmJnRnI3THZ6TC8wSW5tRkdxL2JlVXQxcXFNYlptQmthNnY5WWhpV3RmWXo0CmdaWEY5WHlZbVY0ZHdhMm1uRytWMHI2WkFnTUJBQUdqV1RCWE1BNEdBMVVkRHdFQi93UUVBd0lDcERBUEJnTlYKSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUWQ2TzdGYWdOR0F6T0hnelZGRnJMYitYTmxxekFWQmdOVgpIUkVFRGpBTWdncHJkV0psY201bGRHVnpNQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUJaekhqQW1jMlZ5WGNECkpQcWNNSDBkVXpVTFArUmg3aEkxdlUwMklRRWd5TGFuQjRPRU5ZYWsydFZmd2NyTWIvelljN1F1N0JmWWQraEEKYkNyM1BwYi9NNy9hbkxuSWNJZldwWWM5a2NSRVZhdGVpTFhiZjA2bHJacWYwNVQxeGNBTkxZL092emRmYVJNbApVd1VlRDJwMitkL0w1OGFYQWtqNTZwWm94bkVEQ0E2cWhtN1Z6VUgwQ1FVU05WUHA4d3BteEg1R0k1UFFxaGM4Ckl4OFdSMXpzT0pqVDdUNTQ0QVVDNWdqUU40amJDZm54WEF5Mnp6MjZlNjR1cDRSQU9CZWJDZzB5eGZ3OFdKc3UKS0pZZ05wdUZNWTdsQWtoZFJyMVhpZnFlWWVXN01FQjhHeTRmeitsNk9SM2ttNnE3bUc2dUFxTWVjeEtBRjVVeQp3THBPWStJKwotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+                }
+              ],
+              "cluster_id": null,
+              "compute_config": [],
+              "control_plane_scaling_config": [
+                {
+                  "tier": "standard"
+                }
+              ],
+              "created_at": "2026-11-08T21:22:34Z",
+              "deletion_protection": false,
+              "enabled_cluster_log_types": [],
+              "encryption_config": [],
+              "endpoint": "https://A127BE1594BA3FBC505E05E910331972.gr7.us-west-2.eks.amazonaws.com",
+              "force_update_version": null,
+              "id": "eksgw-cluster",
+              "identity": [
+                {
+                  "oidc": [
+                    {
+                      "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972"
+                    }
+                  ]
+                }
+              ],
+              "kube_api_server_config": [
+                {
+                  "event_ttl": "60m",
+                  "service_node_port_range": [
+                    {
+                      "max_port": 32767,
+                      "min_port": 30000
+                    }
+                  ]
+                }
+              ],
+              "kube_controller_manager_config": [
+                {
+                  "horizontal_pod_autoscaler_controller_config": [
+                    {
+                      "horizontal_pod_autoscaler_sync_period": "15s"
+                    }
+                  ],
+                  "pod_gc_controller_config": [
+                    {
+                      "terminated_pod_gc_threshold": 12500
+                    }
+                  ]
+                }
+              ],
+              "kube_scheduler_config": [
+                {
+                  "node_resources_fit": [
+                    {
+                      "scoring_strategy": [
+                        {
+                          "resource": [
+                            {
+                              "name": "cpu",
+                              "weight": 1
+                            },
+                            {
+                              "name": "memory",
+                              "weight": 1
+                            }
+                          ],
+                          "type": "LeastAllocated"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "kubernetes_network_config": [
+                {
+                  "elastic_load_balancing": [
+                    {
+                      "enabled": false
+                    }
+                  ],
+                  "ip_family": "ipv4",
+                  "service_ipv4_cidr": "172.20.0.0/16",
+                  "service_ipv6_cidr": ""
+                }
+              ],
+              "name": "eksgw-cluster",
+              "outpost_config": [],
+              "platform_version": "eks.7",
+              "region": "us-west-2",
+              "remote_network_config": [],
+              "role_arn": "arn:aws:iam::952133486861:role/eksgw-cluster-role",
+              "status": "ACTIVE",
+              "storage_config": [],
+              "tags": {
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Project": "eks-gw-lab"
+              },
+              "timeouts": null,
+              "upgrade_policy": [
+                {
+                  "support_type": "EXTENDED"
+                }
+              ],
+              "version": "1.37",
+              "vpc_config": [
+                {
+                  "cluster_security_group_id": "sg-0d20513747bcffe86",
+                  "control_plane_egress_mode": "AWS_MANAGED",
+                  "endpoint_private_access": true,
+                  "endpoint_public_access": true,
+                  "public_access_cidrs": [
+                    "0.0.0.0/0"
+                  ],
+                  "security_group_ids": [],
+                  "subnet_ids": [
+                    "subnet-0368e087f31860f17",
+                    "subnet-0424de63cbf6d2b84"
+                  ],
+                  "vpc_id": "vpc-0d79526bd9da71afb"
+                }
+              ],
+              "zonal_shift_config": []
+            },
+            "sensitive_values": {
+              "access_config": [
+                {}
+              ],
+              "certificate_authority": [
+                {}
+              ],
+              "compute_config": [],
+              "control_plane_scaling_config": [
+                {}
+              ],
+              "enabled_cluster_log_types": [],
+              "encryption_config": [],
+              "identity": [
+                {
+                  "oidc": [
+                    {}
+                  ]
+                }
+              ],
+              "kube_api_server_config": [
+                {
+                  "service_node_port_range": [
+                    {}
+                  ]
+                }
+              ],
+              "kube_controller_manager_config": [
+                {
+                  "horizontal_pod_autoscaler_controller_config": [
+                    {}
+                  ],
+                  "pod_gc_controller_config": [
+                    {}
+                  ]
+                }
+              ],
+              "kube_scheduler_config": [
+                {
+                  "node_resources_fit": [
+                    {
+                      "scoring_strategy": [
+                        {
+                          "resource": [
+                            {},
+                            {}
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "kubernetes_network_config": [
+                {
+                  "elastic_load_balancing": [
+                    {}
+                  ]
+                }
+              ],
+              "outpost_config": [],
+              "remote_network_config": [],
+              "storage_config": [],
+              "tags": {},
+              "tags_all": {},
+              "upgrade_policy": [
+                {}
+              ],
+              "vpc_config": [
+                {
+                  "public_access_cidrs": [
+                    false
+                  ],
+                  "security_group_ids": [],
+                  "subnet_ids": [
+                    false,
+                    false
+                  ]
+                }
+              ],
+              "zonal_shift_config": []
+            }
+          },
+          {
+            "address": "aws_eks_node_group.eksgw-ng",
+            "mode": "managed",
+            "type": "aws_eks_node_group",
+            "name": "eksgw-ng",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "ami_type": "AL2023_x86_64_STANDARD",
+              "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/eksgw-cluster/eksgw-ng/54d0de8a-7010-3543-498a-a8f44db5f759",
+              "capacity_type": "ON_DEMAND",
+              "cluster_name": "eksgw-cluster",
+              "disk_size": 20,
+              "force_update_version": null,
+              "id": "eksgw-cluster:eksgw-ng",
+              "instance_types": [
+                "t3.small"
+              ],
+              "labels": {},
+              "launch_template": [],
+              "node_group_name": "eksgw-ng",
+              "node_group_name_prefix": "",
+              "node_repair_config": [],
+              "node_role_arn": "arn:aws:iam::952133486861:role/eksgw-node-role",
+              "region": "us-west-2",
+              "release_version": "1.37.1-20261031",
+              "remote_access": [],
+              "resources": [
+                {
+                  "autoscaling_groups": [
+                    {
+                      "name": "eks-eksgw-ng-54d0de8a-7010-3543-498a-a8f44db5f759"
+                    }
+                  ],
+                  "remote_access_security_group_id": ""
+                }
+              ],
+              "scaling_config": [
+                {
+                  "desired_size": 2,
+                  "max_size": 3,
+                  "min_size": 1
+                }
+              ],
+              "status": "ACTIVE",
+              "subnet_ids": [
+                "subnet-0368e087f31860f17",
+                "subnet-0424de63cbf6d2b84"
+              ],
+              "tags": {
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Project": "eks-gw-lab"
+              },
+              "taint": [],
+              "timeouts": null,
+              "update_config": [
+                {
+                  "max_unavailable": 1,
+                  "max_unavailable_percentage": 0,
+                  "update_strategy": ""
+                }
+              ],
+              "version": "1.37",
+              "warm_pool_config": []
+            },
+            "sensitive_values": {
+              "instance_types": [
+                false
+              ],
+              "labels": {},
+              "launch_template": [],
+              "node_repair_config": [],
+              "remote_access": [],
+              "resources": [
+                {
+                  "autoscaling_groups": [
+                    {}
+                  ]
+                }
+              ],
+              "scaling_config": [
+                {}
+              ],
+              "subnet_ids": [
+                false,
+                false
+              ],
+              "tags": {},
+              "tags_all": {},
+              "taint": [],
+              "update_config": [
+                {}
+              ],
+              "warm_pool_config": []
+            }
+          },
+          {
+            "address": "aws_iam_openid_connect_provider.oidc_eks_us-west-2_amazonaws_com_id_A127BE1594BA3FBC505E05E910331972",
+            "mode": "managed",
+            "type": "aws_iam_openid_connect_provider",
+            "name": "oidc_eks_us-west-2_amazonaws_com_id_A127BE1594BA3FBC505E05E910331972",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972",
+              "client_id_list": [
+                "sts.amazonaws.com"
+              ],
+              "id": "arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972",
+              "tags": {
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Project": "eks-gw-lab"
+              },
+              "thumbprint_list": [
+                "06b25927c42a721631c1efd9431e648fa62e1e39"
+              ],
+              "url": "oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972"
+            },
+            "sensitive_values": {
+              "client_id_list": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {},
+              "thumbprint_list": [
+                false
+              ]
+            }
+          },
+          {
+            "address": "aws_iam_policy.AWSLoadBalancerControllerIAMPolicy",
+            "mode": "managed",
+            "type": "aws_iam_policy",
+            "name": "AWSLoadBalancerControllerIAMPolicy",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy",
+              "attachment_count": 1,
+              "delay_after_policy_creation_in_ms": null,
+              "description": "",
+              "id": "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy",
+              "name": "AWSLoadBalancerControllerIAMPolicy",
+              "name_prefix": "",
+              "path": "/",
+              "policy": "{\"Statement\":[{\"Action\":[\"ec2:DescribeAccountAttributes\",\"ec2:DescribeAddresses\",\"ec2:DescribeAvailabilityZones\",\"ec2:DescribeInternetGateways\",\"ec2:DescribeVpcs\",\"ec2:DescribeSubnets\",\"ec2:DescribeSecurityGroups\",\"ec2:DescribeInstances\",\"ec2:DescribeNetworkInterfaces\",\"ec2:DescribeTags\",\"ec2:DescribeRouteTables\",\"ec2:GetSecurityGroupsForVpc\",\"elasticloadbalancing:DescribeLoadBalancers\",\"elasticloadbalancing:DescribeTargetGroups\",\"elasticloadbalancing:DescribeTargetHealth\",\"elasticloadbalancing:DescribeListeners\",\"elasticloadbalancing:DescribeTags\",\"elasticloadbalancing:DescribeTargetGroupAttributes\",\"elasticloadbalancing:DescribeLoadBalancerAttributes\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"elasticloadbalancing:RegisterTargets\",\"elasticloadbalancing:DeregisterTargets\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:elasticloadbalancing:*:*:targetgroup/*/*\"}],\"Version\":\"2012-10-17\"}",
+              "policy_id": "ANPA53L4UBEGR3ZLUD5DL",
+              "tags": {
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Project": "eks-gw-lab"
+              }
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.AmazonEKSLoadBalancerControllerRole",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "AmazonEKSLoadBalancerControllerRole",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/AmazonEKSLoadBalancerControllerRole",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:aud\":\"sts.amazonaws.com\",\"oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972:sub\":\"system:serviceaccount:kube-system:aws-load-balancer-controller\"}},\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"arn:aws:iam::952133486861:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/A127BE1594BA3FBC505E05E910331972\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-11-08T21:33:53Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "AmazonEKSLoadBalancerControllerRole",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::952133486861:policy/AWSLoadBalancerControllerIAMPolicy"
+              ],
+              "max_session_duration": 3600,
+              "name": "AmazonEKSLoadBalancerControllerRole",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Project": "eks-gw-lab"
+              },
+              "unique_id": "AROA53L4UBEGQPRHOFMVN"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.eksgw-cluster-role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "eksgw-cluster-role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/eksgw-cluster-role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-11-08T21:22:06Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "eksgw-cluster-role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+              ],
+              "max_session_duration": 3600,
+              "name": "eksgw-cluster-role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Project": "eks-gw-lab"
+              },
+              "unique_id": "AROA53L4UBEGQ5OGL7N4I"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.eksgw-node-role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "eksgw-node-role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/eksgw-node-role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-11-08T21:22:10Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "eksgw-node-role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+                "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+                "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+              ],
+              "max_session_duration": 3600,
+              "name": "eksgw-node-role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Project": "eks-gw-lab"
+              },
+              "unique_id": "AROA53L4UBEGSI3O4CYOQ"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false,
+                false,
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_internet_gateway.eksgw-igw",
+            "mode": "managed",
+            "type": "aws_internet_gateway",
+            "name": "eksgw-igw",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-072d7a0fb243ad399",
+              "id": "igw-072d7a0fb243ad399",
+              "owner_id": "952133486861",
+              "region": "us-west-2",
+              "tags": {
+                "Name": "eksgw-igw",
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Name": "eksgw-igw",
+                "Project": "eks-gw-lab"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0d79526bd9da71afb"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_lb.eksgw-alb",
+            "mode": "managed",
+            "type": "aws_lb",
+            "name": "eksgw-alb",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "access_logs": [
+                {
+                  "bucket": "",
+                  "enabled": false,
+                  "prefix": ""
+                }
+              ],
+              "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+              "arn_suffix": "app/eksgw-alb/1f709313d54a9928",
+              "client_keep_alive": 3600,
+              "connection_logs": [
+                {
+                  "bucket": "",
+                  "enabled": false,
+                  "prefix": ""
+                }
+              ],
+              "customer_owned_ipv4_pool": "",
+              "desync_mitigation_mode": "defensive",
+              "dns_name": "eksgw-alb-1708466071.us-west-2.elb.amazonaws.com",
+              "dns_record_client_routing_policy": null,
+              "drop_invalid_header_fields": false,
+              "enable_cross_zone_load_balancing": true,
+              "enable_deletion_protection": false,
+              "enable_http2": true,
+              "enable_prefix_for_ipv6_source_nat": "off",
+              "enable_tls_version_and_cipher_suite_headers": false,
+              "enable_waf_fail_open": false,
+              "enable_xff_client_port": false,
+              "enable_zonal_shift": false,
+              "enforce_security_group_inbound_rules_on_private_link_traffic": "",
+              "health_check_logs": [
+                {
+                  "bucket": "",
+                  "enabled": false,
+                  "prefix": ""
+                }
+              ],
+              "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+              "idle_timeout": 60,
+              "internal": false,
+              "ip_address_type": "ipv4",
+              "ipam_pools": [],
+              "load_balancer_type": "application",
+              "minimum_load_balancer_capacity": [],
+              "name": "eksgw-alb",
+              "name_prefix": "",
+              "preserve_host_header": false,
+              "region": "us-west-2",
+              "secondary_ips_auto_assigned_per_subnet": null,
+              "security_groups": [
+                "sg-050139307b9764720"
+              ],
+              "subnet_mapping": [
+                {
+                  "allocation_id": "",
+                  "ipv6_address": "",
+                  "outpost_id": "",
+                  "private_ipv4_address": "",
+                  "subnet_id": "subnet-0368e087f31860f17"
+                },
+                {
+                  "allocation_id": "",
+                  "ipv6_address": "",
+                  "outpost_id": "",
+                  "private_ipv4_address": "",
+                  "subnet_id": "subnet-0424de63cbf6d2b84"
+                }
+              ],
+              "subnets": [
+                "subnet-0368e087f31860f17",
+                "subnet-0424de63cbf6d2b84"
+              ],
+              "tags": {
+                "Name": "eksgw-alb",
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Name": "eksgw-alb",
+                "Project": "eks-gw-lab"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0d79526bd9da71afb",
+              "xff_header_processing_mode": "append",
+              "zone_id": "Z1H1FL5HABSF5"
+            },
+            "sensitive_values": {
+              "access_logs": [
+                {}
+              ],
+              "connection_logs": [
+                {}
+              ],
+              "health_check_logs": [
+                {}
+              ],
+              "ipam_pools": [],
+              "minimum_load_balancer_capacity": [],
+              "security_groups": [
+                false
+              ],
+              "subnet_mapping": [
+                {},
+                {}
+              ],
+              "subnets": [
+                false,
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_lb_listener.eksgw-http",
+            "mode": "managed",
+            "type": "aws_lb_listener",
+            "name": "eksgw-http",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "alpn_policy": null,
+              "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:listener/app/eksgw-alb/1f709313d54a9928/f52f7861c5f1116e",
+              "certificate_arn": null,
+              "default_action": [
+                {
+                  "authenticate_cognito": [],
+                  "authenticate_oidc": [],
+                  "fixed_response": [],
+                  "forward": [
+                    {
+                      "stickiness": [
+                        {
+                          "duration": 0,
+                          "enabled": false
+                        }
+                      ],
+                      "target_group": [
+                        {
+                          "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+                          "weight": 1
+                        }
+                      ]
+                    }
+                  ],
+                  "jwt_validation": [],
+                  "order": 0,
+                  "redirect": [],
+                  "target_group_arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+                  "type": "forward"
+                }
+              ],
+              "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:listener/app/eksgw-alb/1f709313d54a9928/f52f7861c5f1116e",
+              "load_balancer_arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928",
+              "mutual_authentication": [],
+              "port": 80,
+              "protocol": "HTTP",
+              "region": "us-west-2",
+              "routing_http_request_x_amzn_mtls_clientcert_header_name": null,
+              "routing_http_request_x_amzn_mtls_clientcert_issuer_header_name": null,
+              "routing_http_request_x_amzn_mtls_clientcert_leaf_header_name": null,
+              "routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name": null,
+              "routing_http_request_x_amzn_mtls_clientcert_subject_header_name": null,
+              "routing_http_request_x_amzn_mtls_clientcert_validity_header_name": null,
+              "routing_http_request_x_amzn_tls_cipher_suite_header_name": null,
+              "routing_http_request_x_amzn_tls_version_header_name": null,
+              "routing_http_response_access_control_allow_credentials_header_value": "",
+              "routing_http_response_access_control_allow_headers_header_value": "",
+              "routing_http_response_access_control_allow_methods_header_value": "",
+              "routing_http_response_access_control_allow_origin_header_value": "",
+              "routing_http_response_access_control_expose_headers_header_value": "",
+              "routing_http_response_access_control_max_age_header_value": "",
+              "routing_http_response_content_security_policy_header_value": "",
+              "routing_http_response_server_enabled": true,
+              "routing_http_response_strict_transport_security_header_value": "",
+              "routing_http_response_x_content_type_options_header_value": "",
+              "routing_http_response_x_frame_options_header_value": "",
+              "ssl_policy": "",
+              "tags": {
+                "Name": "eksgw-http",
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Name": "eksgw-http",
+                "Project": "eks-gw-lab"
+              },
+              "tcp_idle_timeout_seconds": null,
+              "timeouts": null
+            },
+            "sensitive_values": {
+              "default_action": [
+                {
+                  "authenticate_cognito": [],
+                  "authenticate_oidc": [],
+                  "fixed_response": [],
+                  "forward": [
+                    {
+                      "stickiness": [
+                        {}
+                      ],
+                      "target_group": [
+                        {}
+                      ]
+                    }
+                  ],
+                  "jwt_validation": [],
+                  "redirect": []
+                }
+              ],
+              "mutual_authentication": [],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_lb_target_group.eksgw-tg",
+            "mode": "managed",
+            "type": "aws_lb_target_group",
+            "name": "eksgw-tg",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+              "arn_suffix": "targetgroup/eksgw-tg/1f7f5c50a60492b9",
+              "connection_termination": null,
+              "deregistration_delay": "300",
+              "health_check": [
+                {
+                  "enabled": true,
+                  "healthy_threshold": 5,
+                  "interval": 30,
+                  "matcher": "200",
+                  "path": "/",
+                  "port": "traffic-port",
+                  "protocol": "HTTP",
+                  "timeout": 5,
+                  "unhealthy_threshold": 2
+                }
+              ],
+              "id": "arn:aws:elasticloadbalancing:us-west-2:952133486861:targetgroup/eksgw-tg/1f7f5c50a60492b9",
+              "ip_address_type": "ipv4",
+              "lambda_multi_value_headers_enabled": null,
+              "load_balancer_arns": [
+                "arn:aws:elasticloadbalancing:us-west-2:952133486861:loadbalancer/app/eksgw-alb/1f709313d54a9928"
+              ],
+              "load_balancing_algorithm_type": "round_robin",
+              "load_balancing_anomaly_mitigation": "off",
+              "load_balancing_cross_zone_enabled": "use_load_balancer_configuration",
+              "name": "eksgw-tg",
+              "name_prefix": "",
+              "port": 80,
+              "preserve_client_ip": null,
+              "protocol": "HTTP",
+              "protocol_version": "HTTP1",
+              "proxy_protocol_v2": null,
+              "region": "us-west-2",
+              "slow_start": 0,
+              "stickiness": [
+                {
+                  "cookie_duration": 86400,
+                  "cookie_name": "",
+                  "enabled": false,
+                  "type": "lb_cookie"
+                }
+              ],
+              "tags": {
+                "Name": "eksgw-tg",
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Name": "eksgw-tg",
+                "Project": "eks-gw-lab"
+              },
+              "target_control_port": 0,
+              "target_failover": [
+                {
+                  "on_deregistration": null,
+                  "on_unhealthy": null
+                }
+              ],
+              "target_group_health": [
+                {
+                  "dns_failover": [
+                    {
+                      "minimum_healthy_targets_count": "1",
+                      "minimum_healthy_targets_percentage": "off"
+                    }
+                  ],
+                  "unhealthy_state_routing": [
+                    {
+                      "minimum_healthy_targets_count": 1,
+                      "minimum_healthy_targets_percentage": "off"
+                    }
+                  ]
+                }
+              ],
+              "target_health_state": [
+                {
+                  "enable_unhealthy_connection_termination": null,
+                  "unhealthy_draining_interval": null
+                }
+              ],
+              "target_type": "ip",
+              "vpc_id": "vpc-0d79526bd9da71afb"
+            },
+            "sensitive_values": {
+              "health_check": [
+                {}
+              ],
+              "load_balancer_arns": [
+                false
+              ],
+              "stickiness": [
+                {}
+              ],
+              "tags": {},
+              "tags_all": {},
+              "target_failover": [
+                {}
+              ],
+              "target_group_health": [
+                {
+                  "dns_failover": [
+                    {}
+                  ],
+                  "unhealthy_state_routing": [
+                    {}
+                  ]
+                }
+              ],
+              "target_health_state": [
+                {}
+              ]
+            }
+          },
+          {
+            "address": "aws_route_table.eksgw-public-rt",
+            "mode": "managed",
+            "type": "aws_route_table",
+            "name": "eksgw-public-rt",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-04bc25c84f0627094",
+              "id": "rtb-04bc25c84f0627094",
+              "owner_id": "952133486861",
+              "propagating_vgws": [],
+              "region": "us-west-2",
+              "route": [
+                {
+                  "carrier_gateway_id": "",
+                  "cidr_block": "0.0.0.0/0",
+                  "core_network_arn": "",
+                  "destination_prefix_list_id": "",
+                  "egress_only_gateway_id": "",
+                  "gateway_id": "igw-072d7a0fb243ad399",
+                  "ipv6_cidr_block": "",
+                  "local_gateway_id": "",
+                  "nat_gateway_id": "",
+                  "network_interface_id": "",
+                  "odb_network_arn": "",
+                  "transit_gateway_id": "",
+                  "vpc_endpoint_id": "",
+                  "vpc_peering_connection_id": ""
+                }
+              ],
+              "tags": {
+                "Name": "eksgw-public-rt",
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Name": "eksgw-public-rt",
+                "Project": "eks-gw-lab"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0d79526bd9da71afb"
+            },
+            "sensitive_values": {
+              "propagating_vgws": [],
+              "route": [
+                {}
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_route_table_association.subnet-0368e087f31860f17_rtb-04bc25c84f0627094",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "subnet-0368e087f31860f17_rtb-04bc25c84f0627094",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "gateway_id": "",
+              "id": "rtbassoc-032fac43abde21563",
+              "region": "us-west-2",
+              "route_table_id": "rtb-04bc25c84f0627094",
+              "subnet_id": "subnet-0368e087f31860f17",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_route_table_association.subnet-0424de63cbf6d2b84_rtb-04bc25c84f0627094",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "subnet-0424de63cbf6d2b84_rtb-04bc25c84f0627094",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "gateway_id": "",
+              "id": "rtbassoc-03ae1612e5dac787e",
+              "region": "us-west-2",
+              "route_table_id": "rtb-04bc25c84f0627094",
+              "subnet_id": "subnet-0424de63cbf6d2b84",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_security_group.eksgw-alb-sg",
+            "mode": "managed",
+            "type": "aws_security_group",
+            "name": "eksgw-alb-sg",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:security-group/sg-050139307b9764720",
+              "description": "eksgw ALB: HTTP from the internet",
+              "egress": [
+                {
+                  "cidr_blocks": [
+                    "0.0.0.0/0"
+                  ],
+                  "description": "",
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [],
+                  "self": false,
+                  "to_port": 0
+                }
+              ],
+              "id": "sg-050139307b9764720",
+              "ingress": [
+                {
+                  "cidr_blocks": [
+                    "0.0.0.0/0"
+                  ],
+                  "description": "HTTP",
+                  "from_port": 80,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "tcp",
+                  "security_groups": [],
+                  "self": false,
+                  "to_port": 80
+                }
+              ],
+              "name": "eksgw-alb-sg",
+              "name_prefix": "",
+              "owner_id": "952133486861",
+              "region": "us-west-2",
+              "revoke_rules_on_delete": null,
+              "tags": {
+                "Name": "eksgw-alb-sg",
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Name": "eksgw-alb-sg",
+                "Project": "eks-gw-lab"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0d79526bd9da71afb"
+            },
+            "sensitive_values": {
+              "egress": [
+                {
+                  "cidr_blocks": [
+                    false
+                  ],
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "security_groups": []
+                }
+              ],
+              "ingress": [
+                {
+                  "cidr_blocks": [
+                    false
+                  ],
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "security_groups": []
+                }
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_subnet.eksgw-public-us-west-2a",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "eksgw-public-us-west-2a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0424de63cbf6d2b84",
+              "assign_ipv6_address_on_creation": false,
+              "availability_zone": "us-west-2a",
+              "availability_zone_id": "usw2-az1",
+              "cidr_block": "10.78.1.0/24",
+              "customer_owned_ipv4_pool": "",
+              "enable_dns64": false,
+              "enable_lni_at_device_index": 0,
+              "enable_resource_name_dns_a_record_on_launch": false,
+              "enable_resource_name_dns_aaaa_record_on_launch": false,
+              "id": "subnet-0424de63cbf6d2b84",
+              "ipv4_ipam_pool_id": null,
+              "ipv4_netmask_length": null,
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_association_id": "",
+              "ipv6_ipam_pool_id": null,
+              "ipv6_native": false,
+              "ipv6_netmask_length": null,
+              "map_customer_owned_ip_on_launch": false,
+              "map_public_ip_on_launch": true,
+              "outpost_arn": "",
+              "owner_id": "952133486861",
+              "private_dns_hostname_type_on_launch": "ip-name",
+              "region": "us-west-2",
+              "tags": {
+                "Name": "eksgw-public-us-west-2a",
+                "Project": "eks-gw-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "tags_all": {
+                "Name": "eksgw-public-us-west-2a",
+                "Project": "eks-gw-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0d79526bd9da71afb"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_subnet.eksgw-public-us-west-2b",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "eksgw-public-us-west-2b",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0368e087f31860f17",
+              "assign_ipv6_address_on_creation": false,
+              "availability_zone": "us-west-2b",
+              "availability_zone_id": "usw2-az2",
+              "cidr_block": "10.78.2.0/24",
+              "customer_owned_ipv4_pool": "",
+              "enable_dns64": false,
+              "enable_lni_at_device_index": 0,
+              "enable_resource_name_dns_a_record_on_launch": false,
+              "enable_resource_name_dns_aaaa_record_on_launch": false,
+              "id": "subnet-0368e087f31860f17",
+              "ipv4_ipam_pool_id": null,
+              "ipv4_netmask_length": null,
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_association_id": "",
+              "ipv6_ipam_pool_id": null,
+              "ipv6_native": false,
+              "ipv6_netmask_length": null,
+              "map_customer_owned_ip_on_launch": false,
+              "map_public_ip_on_launch": true,
+              "outpost_arn": "",
+              "owner_id": "952133486861",
+              "private_dns_hostname_type_on_launch": "ip-name",
+              "region": "us-west-2",
+              "tags": {
+                "Name": "eksgw-public-us-west-2b",
+                "Project": "eks-gw-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "tags_all": {
+                "Name": "eksgw-public-us-west-2b",
+                "Project": "eks-gw-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0d79526bd9da71afb"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_vpc.eksgw-vpc",
+            "mode": "managed",
+            "type": "aws_vpc",
+            "name": "eksgw-vpc",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-0d79526bd9da71afb",
+              "assign_generated_ipv6_cidr_block": false,
+              "cidr_block": "10.78.0.0/16",
+              "default_network_acl_id": "acl-04361bf514b5d04e7",
+              "default_route_table_id": "rtb-095267da87a8f8ac8",
+              "default_security_group_id": "sg-00e30449b72e6c7ec",
+              "dhcp_options_id": "dopt-03b17c556ffb1011e",
+              "enable_dns_hostnames": true,
+              "enable_dns_support": true,
+              "enable_network_address_usage_metrics": false,
+              "id": "vpc-0d79526bd9da71afb",
+              "instance_tenancy": "default",
+              "ipv4_ipam_pool_id": null,
+              "ipv4_netmask_length": null,
+              "ipv6_association_id": "",
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_network_border_group": "",
+              "ipv6_ipam_pool_id": "",
+              "ipv6_netmask_length": 0,
+              "main_route_table_id": "rtb-095267da87a8f8ac8",
+              "owner_id": "952133486861",
+              "region": "us-west-2",
+              "tags": {
+                "Name": "eksgw-vpc",
+                "Project": "eks-gw-lab"
+              },
+              "tags_all": {
+                "Name": "eksgw-vpc",
+                "Project": "eks-gw-lab"
+              }
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "expressions": {
+          "region": {
+            "constant_value": "us-west-2"
+          }
+        }
+      }
+    },
+    "root_module": {}
+  },
+  "timestamp": "2026-11-08T21:47:15Z",
+  "redacted_attributes": []
+}
