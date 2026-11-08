@@ -3,17 +3,17 @@
 
 import {
   to = aws_internet_gateway.eksimp-igw
-  id = "igw-0a27e0d4e9c40f49d"
+  id = "igw-00404185e448da031"
 }
 
 import {
   to = aws_route_table.eksimp-public-rt
-  id = "rtb-053fd938369f62762"
+  id = "rtb-0e5fe870113b02e99"
 }
 
 import {
   to = aws_subnet.eksimp-public-us-west-2a
-  id = "subnet-0e0898d0f2fa11b08"
+  id = "subnet-0a2948275a7a3053f"
 }
 
 import {
@@ -28,12 +28,12 @@ import {
 
 import {
   to = aws_subnet.eksimp-public-us-west-2b
-  id = "subnet-07b95e5c701dac606"
+  id = "subnet-02aedfa58617eae9c"
 }
 
 import {
   to = aws_vpc.eksimp-vpc
-  id = "vpc-098bd3aa686b060d5"
+  id = "vpc-0012adb0d8108977a"
 }
 
 import {
@@ -68,15 +68,15 @@ import {
 
 import {
   to = aws_route.route_eksimp-public-rt_to_eksimp-igw_ipv4
-  id = "rtb-053fd938369f62762_0.0.0.0/0"
+  id = "rtb-0e5fe870113b02e99_0.0.0.0/0"
 }
 
 import {
   to = aws_route_table_association.aws_route_table_association_eksimp_public_us_west_2a_eksimp_public_rt
-  id = "subnet-0e0898d0f2fa11b08/rtb-053fd938369f62762"
+  id = "subnet-0a2948275a7a3053f/rtb-0e5fe870113b02e99"
 }
 
 import {
   to = aws_route_table_association.aws_route_table_association_eksimp_public_us_west_2b_eksimp_public_rt
-  id = "subnet-07b95e5c701dac606/rtb-053fd938369f62762"
+  id = "subnet-02aedfa58617eae9c/rtb-0e5fe870113b02e99"
 }

@@ -1,28 +1,3 @@
-resource "aws_eks_addon" "coredns_eksimp-cluster" {
-  addon_name                  = "coredns"
-  cluster_name                = aws_eks_cluster.eksimp-cluster.name
-  resolve_conflicts_on_create = "OVERWRITE"
-  resolve_conflicts_on_update = "OVERWRITE"
-  depends_on                  = [aws_eks_node_group.eksimp-ng]
-}
-
-resource "aws_eks_addon" "kube_proxy_eksimp-cluster" {
-  addon_name                  = "kube-proxy"
-  cluster_name                = aws_eks_cluster.eksimp-cluster.name
-  resolve_conflicts_on_create = "OVERWRITE"
-  resolve_conflicts_on_update = "OVERWRITE"
-  depends_on                  = [aws_eks_node_group.eksimp-ng]
-}
-
-resource "aws_eks_addon" "vpc_cni_eksimp-cluster" {
-  addon_name                  = "vpc-cni"
-  cluster_name                = aws_eks_cluster.eksimp-cluster.name
-  configuration_values        = jsonencode({"env": {"ENABLE_PREFIX_DELEGATION": "true", "WARM_PREFIX_TARGET": "1"}})
-  resolve_conflicts_on_create = "OVERWRITE"
-  resolve_conflicts_on_update = "OVERWRITE"
-  depends_on                  = [aws_eks_node_group.eksimp-ng]
-}
-
 resource "aws_eks_cluster" "eksimp-cluster" {
   version                       = "1.37"
   name                          = "eksimp-cluster"

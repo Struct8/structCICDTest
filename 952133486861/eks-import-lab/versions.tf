@@ -11,9 +11,6 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.0"
     }
-    tls = {
-      source = "hashicorp/tls"
-    }
   }
 
   backend "s3" {
