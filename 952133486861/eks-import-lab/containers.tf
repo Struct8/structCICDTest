@@ -26,7 +26,7 @@ resource "aws_eks_addon" "vpc_cni_eksimp-cluster" {
 resource "aws_eks_cluster" "eksimp-cluster" {
   version                       = "1.37"
   name                          = "eksimp-cluster"
-  bootstrap_self_managed_addons = false
+  bootstrap_self_managed_addons = true
   deletion_protection           = false
   role_arn                      = aws_iam_role.eksimp-cluster-role.arn
   access_config {
