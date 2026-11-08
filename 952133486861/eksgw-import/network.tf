@@ -4,8 +4,8 @@ resource "aws_vpc" "eksgw-vpc" {
   enable_dns_support   = true
   instance_tenancy     = "default"
   tags = {
-    Name           = "eksgw-vpc"
     Project        = "eks-gw-lab"
+    Name           = "eksgw-vpc"
     State          = "eksgw-import"
     Struct8Creator = "rmay struct"
   }
@@ -18,10 +18,10 @@ resource "aws_subnet" "eksgw-public-us-west-2a" {
   map_public_ip_on_launch             = true
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
-    Name                                  = "eksgw-public-us-west-2a"
     Project                               = "eks-gw-lab"
     "kubernetes.io/role/elb"              = "1"
     "kubernetes.io/cluster/eksgw-cluster" = "shared"
+    Name                                  = "eksgw-public-us-west-2a"
     State                                 = "eksgw-import"
     Struct8Creator                        = "rmay struct"
   }
@@ -34,10 +34,10 @@ resource "aws_subnet" "eksgw-public-us-west-2b" {
   map_public_ip_on_launch             = true
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
-    Name                                  = "eksgw-public-us-west-2b"
     Project                               = "eks-gw-lab"
     "kubernetes.io/role/elb"              = "1"
     "kubernetes.io/cluster/eksgw-cluster" = "shared"
+    Name                                  = "eksgw-public-us-west-2b"
     State                                 = "eksgw-import"
     Struct8Creator                        = "rmay struct"
   }
@@ -46,8 +46,8 @@ resource "aws_subnet" "eksgw-public-us-west-2b" {
 resource "aws_internet_gateway" "eksgw-igw" {
   vpc_id = aws_vpc.eksgw-vpc.id
   tags = {
-    Name           = "eksgw-igw"
     Project        = "eks-gw-lab"
+    Name           = "eksgw-igw"
     State          = "eksgw-import"
     Struct8Creator = "rmay struct"
   }
@@ -62,8 +62,8 @@ resource "aws_route" "route_eksgw-public-rt_to_eksgw-igw_ipv4" {
 resource "aws_route_table" "eksgw-public-rt" {
   vpc_id = aws_vpc.eksgw-vpc.id
   tags = {
-    Name           = "eksgw-public-rt"
     Project        = "eks-gw-lab"
+    Name           = "eksgw-public-rt"
     State          = "eksgw-import"
     Struct8Creator = "rmay struct"
   }
@@ -83,9 +83,6 @@ resource "aws_security_group" "eksgw-alb-sg" {
   name        = "eksgw-alb-sg"
   vpc_id      = aws_vpc.eksgw-vpc.id
   description = "eksgw ALB: HTTP from the internet"
-  lifecycle {
-    ignore_changes = [revoke_rules_on_delete]
-  }
   tags = {
     Name           = "eksgw-alb-sg"
     Project        = "eks-gw-lab"
@@ -121,8 +118,8 @@ resource "aws_lb" "eksgw-alb" {
   security_groups                  = [aws_security_group.eksgw-alb-sg.id]
   subnets                          = [aws_subnet.eksgw-public-us-west-2a.id, aws_subnet.eksgw-public-us-west-2b.id]
   tags = {
-    Name           = "eksgw-alb"
     Project        = "eks-gw-lab"
+    Name           = "eksgw-alb"
     State          = "eksgw-import"
     Struct8Creator = "rmay struct"
   }
@@ -144,8 +141,8 @@ resource "aws_lb_listener" "eksgw-http" {
     }
   }
   tags = {
-    Name           = "eksgw-http"
     Project        = "eks-gw-lab"
+    Name           = "eksgw-http"
     State          = "eksgw-import"
     Struct8Creator = "rmay struct"
   }
@@ -180,8 +177,8 @@ resource "aws_lb_target_group" "eksgw-tg" {
     type            = "lb_cookie"
   }
   tags = {
-    Name           = "eksgw-tg"
     Project        = "eks-gw-lab"
+    Name           = "eksgw-tg"
     State          = "eksgw-import"
     Struct8Creator = "rmay struct"
   }
