@@ -1,0 +1,2259 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.5.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_eks_cluster.eksimp-cluster",
+          "mode": "managed",
+          "type": "aws_eks_cluster",
+          "name": "eksimp-cluster",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "access_config": [
+              {
+                "authentication_mode": "API_AND_CONFIG_MAP",
+                "bootstrap_cluster_creator_admin_permissions": true
+              }
+            ],
+            "arn": "arn:aws:eks:us-west-2:952133486861:cluster/eksimp-cluster",
+            "bootstrap_self_managed_addons": false,
+            "certificate_authority": [
+              {
+                "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lRY0FtR1gyaFpuRS81U2t0VUJmYTZvREFOQmdrcWhraUc5dzBCQVFzRkFEQW4KTVJBd0RnWURWUVFLRXdkQlYxTWdSVXRUTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEkyTVRFdwpOekl5TkRrd09Wb1hEVE14TVRFd05qSXlORGt3T1Zvd0p6RVFNQTRHQTFVRUNoTUhRVmRUSUVWTFV6RVRNQkVHCkExVUVBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUIKQU9YUlV5RmR3SlN2L1kxUVh3MStWMFcvKzBPRmhzdU1PdldHQzltV3BVY3dmeENKZ0UzY2ZnV2RWVWkwckJ3cwpJR2drUTM3d1JwRURUTXBSQkd0cTQrUjlOUmF0LzE4NXNwemdqdStXRXliMGdTOHRRb3BMbHJkTXZIWWZrbWZOCmxhdWh6QWF1azZMSkY5MEx1ejMwQWVRQUNQWEk3THhBZE15SVlpVXgybWN0SktqbmhMTTA4SExRQjFTMkt2NU0KcGdkcjV5UnRydlZDbDdqbUx5bmRrdnJsUnN2R05aeWM1TWhsMVZ0bU1PNlFreWNtTVRJeUViN2Z5M2ZnN2tOQwpVcTgyM1FkSm1HbkJ4K1kzamcyaHhUL3ZDbTBuU3gvQVI0WnlmRzU1TUoxYmRhazJvQTJSZVROOEtWSmZrdjFlCjcxUm4ySnBCdmQ4Q2Fkb0d2dC82U2VrQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZLSld5NVNmcjlsejBhS2xtNVI5ZTltV2pXd29NQlVHQTFVZApFUVFPTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBQStvTjRXeFBhR3JZY1FxCjBmMFcyMTNKODdEZTZ2SzUrT2dyQ3RKeGRkRlNXUXVOY3lSd3hGUXJyejRBMG1YVkxCbXBNQ014ZHdHTzZoMUYKaTQwWE4zZ1VjbGQwWHFWblBmWlZtdDNRS1VLUGxKYmJJT3NTdVVqK2twdzB6KzkzcmZiMkZBbDdHRG1GQkFkSgphRTM2UXJTUHVOZURtZURjVVRZdlhMc1lib0ZkdVF5UldyNGFzMW1UWkpwaVExaU9TOE1Majd6RFpnbUJHWXdtCitPcFZRQWQ2T1BRQ1NwbGIyZ1h1ckRUYkh2cmNHMEdzem5HWFU5c0VUSWxma3Z0NXJGYlk2TWZGc0ZwaXB2ME0KeElaZXpvOHdWcWo0ZHhkNm5FY2JUZEZjYjlxTkQ1THpuVktGc3FCUzZHSGhEOXc1aXN4OW5DUk1kelZBaGRMVgpOV29EVm9jPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+              }
+            ],
+            "cluster_id": null,
+            "compute_config": [],
+            "created_at": "2026-11-07T22:48:52Z",
+            "enabled_cluster_log_types": [],
+            "encryption_config": [],
+            "endpoint": "https://0C308F5A00163DCC9C7D2DCF04B05B5C.gr7.us-west-2.eks.amazonaws.com",
+            "force_update_version": null,
+            "id": "eksimp-cluster",
+            "identity": [
+              {
+                "oidc": [
+                  {
+                    "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/0C308F5A00163DCC9C7D2DCF04B05B5C"
+                  }
+                ]
+              }
+            ],
+            "kubernetes_network_config": [
+              {
+                "elastic_load_balancing": [
+                  {
+                    "enabled": false
+                  }
+                ],
+                "ip_family": "ipv4",
+                "service_ipv4_cidr": "172.20.0.0/16",
+                "service_ipv6_cidr": ""
+              }
+            ],
+            "name": "eksimp-cluster",
+            "outpost_config": [],
+            "platform_version": "eks.7",
+            "remote_network_config": [],
+            "role_arn": "arn:aws:iam::952133486861:role/eksimp-cluster-role",
+            "status": "ACTIVE",
+            "storage_config": [],
+            "tags": {
+              "Project": "eks-import-lab"
+            },
+            "tags_all": {
+              "Project": "eks-import-lab"
+            },
+            "timeouts": null,
+            "upgrade_policy": [
+              {
+                "support_type": "EXTENDED"
+              }
+            ],
+            "version": "1.37",
+            "vpc_config": [
+              {
+                "cluster_security_group_id": "sg-0c6d4f75fe1960792",
+                "endpoint_private_access": false,
+                "endpoint_public_access": true,
+                "public_access_cidrs": [
+                  "0.0.0.0/0"
+                ],
+                "security_group_ids": [],
+                "subnet_ids": [
+                  "subnet-07b95e5c701dac606",
+                  "subnet-0e0898d0f2fa11b08"
+                ],
+                "vpc_id": "vpc-098bd3aa686b060d5"
+              }
+            ],
+            "zonal_shift_config": []
+          },
+          "sensitive_values": {
+            "access_config": [
+              {}
+            ],
+            "certificate_authority": [
+              {}
+            ],
+            "compute_config": [],
+            "enabled_cluster_log_types": [],
+            "encryption_config": [],
+            "identity": [
+              {
+                "oidc": [
+                  {}
+                ]
+              }
+            ],
+            "kubernetes_network_config": [
+              {
+                "elastic_load_balancing": [
+                  {}
+                ]
+              }
+            ],
+            "outpost_config": [],
+            "remote_network_config": [],
+            "storage_config": [],
+            "tags": {},
+            "tags_all": {},
+            "upgrade_policy": [
+              {}
+            ],
+            "vpc_config": [
+              {
+                "public_access_cidrs": [
+                  false
+                ],
+                "security_group_ids": [],
+                "subnet_ids": [
+                  false,
+                  false
+                ]
+              }
+            ],
+            "zonal_shift_config": []
+          }
+        },
+        {
+          "address": "aws_eks_node_group.eksimp-ng",
+          "mode": "managed",
+          "type": "aws_eks_node_group",
+          "name": "eksimp-ng",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "ami_type": "AL2023_x86_64_STANDARD",
+            "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/eksimp-cluster/eksimp-ng/a2d0dc1d-327f-4a73-fe98-98470320e4e6",
+            "capacity_type": "ON_DEMAND",
+            "cluster_name": "eksimp-cluster",
+            "disk_size": 20,
+            "force_update_version": null,
+            "id": "eksimp-cluster:eksimp-ng",
+            "instance_types": [
+              "t3.medium"
+            ],
+            "labels": {
+              "role": "general"
+            },
+            "launch_template": [],
+            "node_group_name": "eksimp-ng",
+            "node_group_name_prefix": "",
+            "node_repair_config": [],
+            "node_role_arn": "arn:aws:iam::952133486861:role/eksimp-node-role",
+            "release_version": "1.37.1-20261031",
+            "remote_access": [],
+            "resources": [
+              {
+                "autoscaling_groups": [
+                  {
+                    "name": "eks-eksimp-ng-a2d0dc1d-327f-4a73-fe98-98470320e4e6"
+                  }
+                ],
+                "remote_access_security_group_id": ""
+              }
+            ],
+            "scaling_config": [
+              {
+                "desired_size": 2,
+                "max_size": 3,
+                "min_size": 1
+              }
+            ],
+            "status": "ACTIVE",
+            "subnet_ids": [
+              "subnet-07b95e5c701dac606",
+              "subnet-0e0898d0f2fa11b08"
+            ],
+            "tags": {
+              "Project": "eks-import-lab"
+            },
+            "tags_all": {
+              "Project": "eks-import-lab"
+            },
+            "taint": [],
+            "timeouts": null,
+            "update_config": [
+              {
+                "max_unavailable": 1,
+                "max_unavailable_percentage": 0
+              }
+            ],
+            "version": "1.37"
+          },
+          "sensitive_values": {
+            "instance_types": [
+              false
+            ],
+            "labels": {},
+            "launch_template": [],
+            "node_repair_config": [],
+            "remote_access": [],
+            "resources": [
+              {
+                "autoscaling_groups": [
+                  {}
+                ]
+              }
+            ],
+            "scaling_config": [
+              {}
+            ],
+            "subnet_ids": [
+              false,
+              false
+            ],
+            "tags": {},
+            "tags_all": {},
+            "taint": [],
+            "update_config": [
+              {}
+            ]
+          }
+        },
+        {
+          "address": "aws_iam_role.eksimp-cluster-role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "eksimp-cluster-role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/eksimp-cluster-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-11-07T22:48:24Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "eksimp-cluster-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+            ],
+            "max_session_duration": 3600,
+            "name": "eksimp-cluster-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "eks-import-lab"
+            },
+            "tags_all": {
+              "Project": "eks-import-lab"
+            },
+            "unique_id": "AROA53L4UBEG7MQPWCMWL"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.eksimp-node-role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "eksimp-node-role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/eksimp-node-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-11-07T22:48:28Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "eksimp-node-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+              "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+              "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+            ],
+            "max_session_duration": 3600,
+            "name": "eksimp-node-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "eks-import-lab"
+            },
+            "tags_all": {
+              "Project": "eks-import-lab"
+            },
+            "unique_id": "AROA53L4UBEG3SLDGN3TY"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false,
+              false,
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_internet_gateway.eksimp-igw",
+          "mode": "managed",
+          "type": "aws_internet_gateway",
+          "name": "eksimp-igw",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-0a27e0d4e9c40f49d",
+            "id": "igw-0a27e0d4e9c40f49d",
+            "owner_id": "952133486861",
+            "tags": {
+              "Name": "eksimp-igw",
+              "Project": "eks-import-lab"
+            },
+            "tags_all": {
+              "Name": "eksimp-igw",
+              "Project": "eks-import-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-098bd3aa686b060d5"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_route_table.eksimp-public-rt",
+          "mode": "managed",
+          "type": "aws_route_table",
+          "name": "eksimp-public-rt",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-053fd938369f62762",
+            "id": "rtb-053fd938369f62762",
+            "owner_id": "952133486861",
+            "propagating_vgws": [],
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "igw-0a27e0d4e9c40f49d",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Name": "eksimp-public-rt",
+              "Project": "eks-import-lab"
+            },
+            "tags_all": {
+              "Name": "eksimp-public-rt",
+              "Project": "eks-import-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-098bd3aa686b060d5"
+          },
+          "sensitive_values": {
+            "propagating_vgws": [],
+            "route": [
+              {}
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_route_table_association.subnet-07b95e5c701dac606_rtb-053fd938369f62762",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-07b95e5c701dac606_rtb-053fd938369f62762",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "gateway_id": "",
+            "id": "rtbassoc-061b027edc0603172",
+            "route_table_id": "rtb-053fd938369f62762",
+            "subnet_id": "subnet-07b95e5c701dac606",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_route_table_association.subnet-0e0898d0f2fa11b08_rtb-053fd938369f62762",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-0e0898d0f2fa11b08_rtb-053fd938369f62762",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "gateway_id": "",
+            "id": "rtbassoc-09b7ab17221d7e309",
+            "route_table_id": "rtb-053fd938369f62762",
+            "subnet_id": "subnet-0e0898d0f2fa11b08",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_subnet.eksimp-public-us-west-2a",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "eksimp-public-us-west-2a",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0e0898d0f2fa11b08",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-west-2a",
+            "availability_zone_id": "usw2-az1",
+            "cidr_block": "10.77.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0e0898d0f2fa11b08",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "952133486861",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "tags": {
+              "Name": "eksimp-public-us-west-2a",
+              "Project": "eks-import-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Name": "eksimp-public-us-west-2a",
+              "Project": "eks-import-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-098bd3aa686b060d5"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_subnet.eksimp-public-us-west-2b",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "eksimp-public-us-west-2b",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-07b95e5c701dac606",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-west-2b",
+            "availability_zone_id": "usw2-az2",
+            "cidr_block": "10.77.2.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-07b95e5c701dac606",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "952133486861",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "tags": {
+              "Name": "eksimp-public-us-west-2b",
+              "Project": "eks-import-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Name": "eksimp-public-us-west-2b",
+              "Project": "eks-import-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-098bd3aa686b060d5"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_vpc.eksimp-vpc",
+          "mode": "managed",
+          "type": "aws_vpc",
+          "name": "eksimp-vpc",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-098bd3aa686b060d5",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.77.0.0/16",
+            "default_network_acl_id": "acl-06cdda0559935d450",
+            "default_route_table_id": "rtb-03f2a2a78ebfb97a1",
+            "default_security_group_id": "sg-064b6bb6f5074df7c",
+            "dhcp_options_id": "dopt-03b17c556ffb1011e",
+            "enable_dns_hostnames": true,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-098bd3aa686b060d5",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-03f2a2a78ebfb97a1",
+            "owner_id": "952133486861",
+            "tags": {
+              "Name": "eksimp-vpc",
+              "Project": "eks-import-lab"
+            },
+            "tags_all": {
+              "Name": "eksimp-vpc",
+              "Project": "eks-import-lab"
+            }
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_eks_cluster.eksimp-cluster",
+      "mode": "managed",
+      "type": "aws_eks_cluster",
+      "name": "eksimp-cluster",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "access_config": [
+            {
+              "authentication_mode": "API_AND_CONFIG_MAP",
+              "bootstrap_cluster_creator_admin_permissions": true
+            }
+          ],
+          "arn": "arn:aws:eks:us-west-2:952133486861:cluster/eksimp-cluster",
+          "bootstrap_self_managed_addons": false,
+          "certificate_authority": [
+            {
+              "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lRY0FtR1gyaFpuRS81U2t0VUJmYTZvREFOQmdrcWhraUc5dzBCQVFzRkFEQW4KTVJBd0RnWURWUVFLRXdkQlYxTWdSVXRUTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEkyTVRFdwpOekl5TkRrd09Wb1hEVE14TVRFd05qSXlORGt3T1Zvd0p6RVFNQTRHQTFVRUNoTUhRVmRUSUVWTFV6RVRNQkVHCkExVUVBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUIKQU9YUlV5RmR3SlN2L1kxUVh3MStWMFcvKzBPRmhzdU1PdldHQzltV3BVY3dmeENKZ0UzY2ZnV2RWVWkwckJ3cwpJR2drUTM3d1JwRURUTXBSQkd0cTQrUjlOUmF0LzE4NXNwemdqdStXRXliMGdTOHRRb3BMbHJkTXZIWWZrbWZOCmxhdWh6QWF1azZMSkY5MEx1ejMwQWVRQUNQWEk3THhBZE15SVlpVXgybWN0SktqbmhMTTA4SExRQjFTMkt2NU0KcGdkcjV5UnRydlZDbDdqbUx5bmRrdnJsUnN2R05aeWM1TWhsMVZ0bU1PNlFreWNtTVRJeUViN2Z5M2ZnN2tOQwpVcTgyM1FkSm1HbkJ4K1kzamcyaHhUL3ZDbTBuU3gvQVI0WnlmRzU1TUoxYmRhazJvQTJSZVROOEtWSmZrdjFlCjcxUm4ySnBCdmQ4Q2Fkb0d2dC82U2VrQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZLSld5NVNmcjlsejBhS2xtNVI5ZTltV2pXd29NQlVHQTFVZApFUVFPTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBQStvTjRXeFBhR3JZY1FxCjBmMFcyMTNKODdEZTZ2SzUrT2dyQ3RKeGRkRlNXUXVOY3lSd3hGUXJyejRBMG1YVkxCbXBNQ014ZHdHTzZoMUYKaTQwWE4zZ1VjbGQwWHFWblBmWlZtdDNRS1VLUGxKYmJJT3NTdVVqK2twdzB6KzkzcmZiMkZBbDdHRG1GQkFkSgphRTM2UXJTUHVOZURtZURjVVRZdlhMc1lib0ZkdVF5UldyNGFzMW1UWkpwaVExaU9TOE1Majd6RFpnbUJHWXdtCitPcFZRQWQ2T1BRQ1NwbGIyZ1h1ckRUYkh2cmNHMEdzem5HWFU5c0VUSWxma3Z0NXJGYlk2TWZGc0ZwaXB2ME0KeElaZXpvOHdWcWo0ZHhkNm5FY2JUZEZjYjlxTkQ1THpuVktGc3FCUzZHSGhEOXc1aXN4OW5DUk1kelZBaGRMVgpOV29EVm9jPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+            }
+          ],
+          "cluster_id": null,
+          "compute_config": [],
+          "created_at": "2026-11-07T22:48:52Z",
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "endpoint": "https://0C308F5A00163DCC9C7D2DCF04B05B5C.gr7.us-west-2.eks.amazonaws.com",
+          "force_update_version": null,
+          "id": "eksimp-cluster",
+          "identity": [
+            {
+              "oidc": [
+                {
+                  "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/0C308F5A00163DCC9C7D2DCF04B05B5C"
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {
+                  "enabled": false
+                }
+              ],
+              "ip_family": "ipv4",
+              "service_ipv4_cidr": "172.20.0.0/16",
+              "service_ipv6_cidr": ""
+            }
+          ],
+          "name": "eksimp-cluster",
+          "outpost_config": [],
+          "platform_version": "eks.7",
+          "remote_network_config": [],
+          "role_arn": "arn:aws:iam::952133486861:role/eksimp-cluster-role",
+          "status": "ACTIVE",
+          "storage_config": [],
+          "tags": {
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Project": "eks-import-lab"
+          },
+          "timeouts": null,
+          "upgrade_policy": [
+            {
+              "support_type": "EXTENDED"
+            }
+          ],
+          "version": "1.37",
+          "vpc_config": [
+            {
+              "cluster_security_group_id": "sg-0c6d4f75fe1960792",
+              "endpoint_private_access": false,
+              "endpoint_public_access": true,
+              "public_access_cidrs": [
+                "0.0.0.0/0"
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                "subnet-07b95e5c701dac606",
+                "subnet-0e0898d0f2fa11b08"
+              ],
+              "vpc_id": "vpc-098bd3aa686b060d5"
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after": {
+          "access_config": [
+            {
+              "authentication_mode": "API_AND_CONFIG_MAP",
+              "bootstrap_cluster_creator_admin_permissions": true
+            }
+          ],
+          "arn": "arn:aws:eks:us-west-2:952133486861:cluster/eksimp-cluster",
+          "bootstrap_self_managed_addons": false,
+          "certificate_authority": [
+            {
+              "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lRY0FtR1gyaFpuRS81U2t0VUJmYTZvREFOQmdrcWhraUc5dzBCQVFzRkFEQW4KTVJBd0RnWURWUVFLRXdkQlYxTWdSVXRUTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEkyTVRFdwpOekl5TkRrd09Wb1hEVE14TVRFd05qSXlORGt3T1Zvd0p6RVFNQTRHQTFVRUNoTUhRVmRUSUVWTFV6RVRNQkVHCkExVUVBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUIKQU9YUlV5RmR3SlN2L1kxUVh3MStWMFcvKzBPRmhzdU1PdldHQzltV3BVY3dmeENKZ0UzY2ZnV2RWVWkwckJ3cwpJR2drUTM3d1JwRURUTXBSQkd0cTQrUjlOUmF0LzE4NXNwemdqdStXRXliMGdTOHRRb3BMbHJkTXZIWWZrbWZOCmxhdWh6QWF1azZMSkY5MEx1ejMwQWVRQUNQWEk3THhBZE15SVlpVXgybWN0SktqbmhMTTA4SExRQjFTMkt2NU0KcGdkcjV5UnRydlZDbDdqbUx5bmRrdnJsUnN2R05aeWM1TWhsMVZ0bU1PNlFreWNtTVRJeUViN2Z5M2ZnN2tOQwpVcTgyM1FkSm1HbkJ4K1kzamcyaHhUL3ZDbTBuU3gvQVI0WnlmRzU1TUoxYmRhazJvQTJSZVROOEtWSmZrdjFlCjcxUm4ySnBCdmQ4Q2Fkb0d2dC82U2VrQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZLSld5NVNmcjlsejBhS2xtNVI5ZTltV2pXd29NQlVHQTFVZApFUVFPTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBQStvTjRXeFBhR3JZY1FxCjBmMFcyMTNKODdEZTZ2SzUrT2dyQ3RKeGRkRlNXUXVOY3lSd3hGUXJyejRBMG1YVkxCbXBNQ014ZHdHTzZoMUYKaTQwWE4zZ1VjbGQwWHFWblBmWlZtdDNRS1VLUGxKYmJJT3NTdVVqK2twdzB6KzkzcmZiMkZBbDdHRG1GQkFkSgphRTM2UXJTUHVOZURtZURjVVRZdlhMc1lib0ZkdVF5UldyNGFzMW1UWkpwaVExaU9TOE1Majd6RFpnbUJHWXdtCitPcFZRQWQ2T1BRQ1NwbGIyZ1h1ckRUYkh2cmNHMEdzem5HWFU5c0VUSWxma3Z0NXJGYlk2TWZGc0ZwaXB2ME0KeElaZXpvOHdWcWo0ZHhkNm5FY2JUZEZjYjlxTkQ1THpuVktGc3FCUzZHSGhEOXc1aXN4OW5DUk1kelZBaGRMVgpOV29EVm9jPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+            }
+          ],
+          "cluster_id": null,
+          "compute_config": [],
+          "created_at": "2026-11-07T22:48:52Z",
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "endpoint": "https://0C308F5A00163DCC9C7D2DCF04B05B5C.gr7.us-west-2.eks.amazonaws.com",
+          "force_update_version": null,
+          "id": "eksimp-cluster",
+          "identity": [
+            {
+              "oidc": [
+                {
+                  "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/0C308F5A00163DCC9C7D2DCF04B05B5C"
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {
+                  "enabled": false
+                }
+              ],
+              "ip_family": "ipv4",
+              "service_ipv4_cidr": "172.20.0.0/16",
+              "service_ipv6_cidr": ""
+            }
+          ],
+          "name": "eksimp-cluster",
+          "outpost_config": [],
+          "platform_version": "eks.7",
+          "remote_network_config": [],
+          "role_arn": "arn:aws:iam::952133486861:role/eksimp-cluster-role",
+          "status": "ACTIVE",
+          "storage_config": [],
+          "tags": {
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Project": "eks-import-lab"
+          },
+          "timeouts": null,
+          "upgrade_policy": [
+            {
+              "support_type": "EXTENDED"
+            }
+          ],
+          "version": "1.37",
+          "vpc_config": [
+            {
+              "cluster_security_group_id": "sg-0c6d4f75fe1960792",
+              "endpoint_private_access": false,
+              "endpoint_public_access": true,
+              "public_access_cidrs": [
+                "0.0.0.0/0"
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                "subnet-07b95e5c701dac606",
+                "subnet-0e0898d0f2fa11b08"
+              ],
+              "vpc_id": "vpc-098bd3aa686b060d5"
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "access_config": [
+            {}
+          ],
+          "certificate_authority": [
+            {}
+          ],
+          "compute_config": [],
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "identity": [
+            {
+              "oidc": [
+                {}
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {}
+              ]
+            }
+          ],
+          "outpost_config": [],
+          "remote_network_config": [],
+          "storage_config": [],
+          "tags": {},
+          "tags_all": {},
+          "upgrade_policy": [
+            {}
+          ],
+          "vpc_config": [
+            {
+              "public_access_cidrs": [
+                false
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                false,
+                false
+              ]
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after_sensitive": {
+          "access_config": [
+            {}
+          ],
+          "certificate_authority": [
+            {}
+          ],
+          "compute_config": [],
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "identity": [
+            {
+              "oidc": [
+                {}
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {}
+              ]
+            }
+          ],
+          "outpost_config": [],
+          "remote_network_config": [],
+          "storage_config": [],
+          "tags": {},
+          "tags_all": {},
+          "upgrade_policy": [
+            {}
+          ],
+          "vpc_config": [
+            {
+              "public_access_cidrs": [
+                false
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                false,
+                false
+              ]
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "importing": {
+          "id": "eksimp-cluster"
+        },
+        "generated_config": "resource \"aws_eks_cluster\" \"eksimp-cluster\" {\n  bootstrap_self_managed_addons = false\n  enabled_cluster_log_types     = []\n  force_update_version          = null\n  name                          = \"eksimp-cluster\"\n  role_arn                      = \"arn:aws:iam::952133486861:role/eksimp-cluster-role\"\n  tags = {\n    Project = \"eks-import-lab\"\n  }\n  tags_all = {\n    Project = \"eks-import-lab\"\n  }\n  version = \"1.37\"\n  access_config {\n    authentication_mode                         = \"API_AND_CONFIG_MAP\"\n    bootstrap_cluster_creator_admin_permissions = true\n  }\n  kubernetes_network_config {\n    ip_family         = \"ipv4\"\n    service_ipv4_cidr = \"172.20.0.0/16\"\n    elastic_load_balancing {\n      enabled = false\n    }\n  }\n  upgrade_policy {\n    support_type = \"EXTENDED\"\n  }\n  vpc_config {\n    endpoint_private_access = false\n    endpoint_public_access  = true\n    public_access_cidrs     = [\"0.0.0.0/0\"]\n    security_group_ids      = []\n    subnet_ids              = [\"subnet-07b95e5c701dac606\", \"subnet-0e0898d0f2fa11b08\"]\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_eks_node_group.eksimp-ng",
+      "mode": "managed",
+      "type": "aws_eks_node_group",
+      "name": "eksimp-ng",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "ami_type": "AL2023_x86_64_STANDARD",
+          "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/eksimp-cluster/eksimp-ng/a2d0dc1d-327f-4a73-fe98-98470320e4e6",
+          "capacity_type": "ON_DEMAND",
+          "cluster_name": "eksimp-cluster",
+          "disk_size": 20,
+          "force_update_version": null,
+          "id": "eksimp-cluster:eksimp-ng",
+          "instance_types": [
+            "t3.medium"
+          ],
+          "labels": {
+            "role": "general"
+          },
+          "launch_template": [],
+          "node_group_name": "eksimp-ng",
+          "node_group_name_prefix": "",
+          "node_repair_config": [],
+          "node_role_arn": "arn:aws:iam::952133486861:role/eksimp-node-role",
+          "release_version": "1.37.1-20261031",
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {
+                  "name": "eks-eksimp-ng-a2d0dc1d-327f-4a73-fe98-98470320e4e6"
+                }
+              ],
+              "remote_access_security_group_id": ""
+            }
+          ],
+          "scaling_config": [
+            {
+              "desired_size": 2,
+              "max_size": 3,
+              "min_size": 1
+            }
+          ],
+          "status": "ACTIVE",
+          "subnet_ids": [
+            "subnet-07b95e5c701dac606",
+            "subnet-0e0898d0f2fa11b08"
+          ],
+          "tags": {
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Project": "eks-import-lab"
+          },
+          "taint": [],
+          "timeouts": null,
+          "update_config": [
+            {
+              "max_unavailable": 1,
+              "max_unavailable_percentage": 0
+            }
+          ],
+          "version": "1.37"
+        },
+        "after": {
+          "ami_type": "AL2023_x86_64_STANDARD",
+          "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/eksimp-cluster/eksimp-ng/a2d0dc1d-327f-4a73-fe98-98470320e4e6",
+          "capacity_type": "ON_DEMAND",
+          "cluster_name": "eksimp-cluster",
+          "disk_size": 20,
+          "force_update_version": null,
+          "id": "eksimp-cluster:eksimp-ng",
+          "instance_types": [
+            "t3.medium"
+          ],
+          "labels": {
+            "role": "general"
+          },
+          "launch_template": [],
+          "node_group_name": "eksimp-ng",
+          "node_group_name_prefix": "",
+          "node_repair_config": [],
+          "node_role_arn": "arn:aws:iam::952133486861:role/eksimp-node-role",
+          "release_version": "1.37.1-20261031",
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {
+                  "name": "eks-eksimp-ng-a2d0dc1d-327f-4a73-fe98-98470320e4e6"
+                }
+              ],
+              "remote_access_security_group_id": ""
+            }
+          ],
+          "scaling_config": [
+            {
+              "desired_size": 2,
+              "max_size": 3,
+              "min_size": 1
+            }
+          ],
+          "status": "ACTIVE",
+          "subnet_ids": [
+            "subnet-07b95e5c701dac606",
+            "subnet-0e0898d0f2fa11b08"
+          ],
+          "tags": {
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Project": "eks-import-lab"
+          },
+          "taint": [],
+          "timeouts": null,
+          "update_config": [
+            {
+              "max_unavailable": 1,
+              "max_unavailable_percentage": 0
+            }
+          ],
+          "version": "1.37"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "instance_types": [
+            false
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_repair_config": [],
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {}
+              ]
+            }
+          ],
+          "scaling_config": [
+            {}
+          ],
+          "subnet_ids": [
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {},
+          "taint": [],
+          "update_config": [
+            {}
+          ]
+        },
+        "after_sensitive": {
+          "instance_types": [
+            false
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_repair_config": [],
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {}
+              ]
+            }
+          ],
+          "scaling_config": [
+            {}
+          ],
+          "subnet_ids": [
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {},
+          "taint": [],
+          "update_config": [
+            {}
+          ]
+        },
+        "generated_config": "resource \"aws_eks_node_group\" \"eksimp-ng\" {\n  ami_type             = \"AL2023_x86_64_STANDARD\"\n  capacity_type        = \"ON_DEMAND\"\n  cluster_name         = \"eksimp-cluster\"\n  disk_size            = 20\n  force_update_version = null\n  instance_types       = [\"t3.medium\"]\n  labels = {\n    role = \"general\"\n  }\n  node_group_name        = \"eksimp-ng\"\n  node_group_name_prefix = null\n  node_role_arn          = \"arn:aws:iam::952133486861:role/eksimp-node-role\"\n  release_version        = \"1.37.1-20261031\"\n  subnet_ids             = [\"subnet-07b95e5c701dac606\", \"subnet-0e0898d0f2fa11b08\"]\n  tags = {\n    Project = \"eks-import-lab\"\n  }\n  tags_all = {\n    Project = \"eks-import-lab\"\n  }\n  version = \"1.37\"\n  scaling_config {\n    desired_size = 2\n    max_size     = 3\n    min_size     = 1\n  }\n  update_config {\n    max_unavailable            = 1\n    max_unavailable_percentage = 0\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_iam_role.eksimp-cluster-role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "eksimp-cluster-role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/eksimp-cluster-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-07T22:48:24Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "eksimp-cluster-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+          ],
+          "max_session_duration": 3600,
+          "name": "eksimp-cluster-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Project": "eks-import-lab"
+          },
+          "unique_id": "AROA53L4UBEG7MQPWCMWL"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/eksimp-cluster-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-07T22:48:24Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "eksimp-cluster-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+          ],
+          "max_session_duration": 3600,
+          "name": "eksimp-cluster-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Project": "eks-import-lab"
+          },
+          "unique_id": "AROA53L4UBEG7MQPWCMWL"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "eksimp-cluster-role"
+        },
+        "generated_config": "resource \"aws_iam_role\" \"eksimp-cluster-role\" {\n  assume_role_policy    = \"{\\\"Statement\\\":[{\\\"Action\\\":[\\\"sts:AssumeRole\\\",\\\"sts:TagSession\\\"],\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":{\\\"Service\\\":\\\"eks.amazonaws.com\\\"}}],\\\"Version\\\":\\\"2012-10-17\\\"}\"\n  description           = null\n  force_detach_policies = false\n  max_session_duration  = 3600\n  name                  = \"eksimp-cluster-role\"\n  name_prefix           = null\n  path                  = \"/\"\n  permissions_boundary  = null\n  tags = {\n    Project = \"eks-import-lab\"\n  }\n  tags_all = {\n    Project = \"eks-import-lab\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_iam_role.eksimp-node-role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "eksimp-node-role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/eksimp-node-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-07T22:48:28Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "eksimp-node-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+            "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+          ],
+          "max_session_duration": 3600,
+          "name": "eksimp-node-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Project": "eks-import-lab"
+          },
+          "unique_id": "AROA53L4UBEG3SLDGN3TY"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/eksimp-node-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-07T22:48:28Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "eksimp-node-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+            "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+          ],
+          "max_session_duration": 3600,
+          "name": "eksimp-node-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Project": "eks-import-lab"
+          },
+          "unique_id": "AROA53L4UBEG3SLDGN3TY"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false,
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false,
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "eksimp-node-role"
+        },
+        "generated_config": "resource \"aws_iam_role\" \"eksimp-node-role\" {\n  assume_role_policy    = \"{\\\"Statement\\\":[{\\\"Action\\\":\\\"sts:AssumeRole\\\",\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":{\\\"Service\\\":\\\"ec2.amazonaws.com\\\"}}],\\\"Version\\\":\\\"2012-10-17\\\"}\"\n  description           = null\n  force_detach_policies = false\n  max_session_duration  = 3600\n  name                  = \"eksimp-node-role\"\n  name_prefix           = null\n  path                  = \"/\"\n  permissions_boundary  = null\n  tags = {\n    Project = \"eks-import-lab\"\n  }\n  tags_all = {\n    Project = \"eks-import-lab\"\n  }\n}"
+      }
+    },
+    {
+      "address": "aws_internet_gateway.eksimp-igw",
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "eksimp-igw",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-0a27e0d4e9c40f49d",
+          "id": "igw-0a27e0d4e9c40f49d",
+          "owner_id": "952133486861",
+          "tags": {
+            "Name": "eksimp-igw",
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Name": "eksimp-igw",
+            "Project": "eks-import-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-098bd3aa686b060d5"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-0a27e0d4e9c40f49d",
+          "id": "igw-0a27e0d4e9c40f49d",
+          "owner_id": "952133486861",
+          "tags": {
+            "Name": "eksimp-igw",
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Name": "eksimp-igw",
+            "Project": "eks-import-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-098bd3aa686b060d5"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "igw-0a27e0d4e9c40f49d"
+        },
+        "generated_config": "resource \"aws_internet_gateway\" \"eksimp-igw\" {\n  tags = {\n    Name    = \"eksimp-igw\"\n    Project = \"eks-import-lab\"\n  }\n  tags_all = {\n    Name    = \"eksimp-igw\"\n    Project = \"eks-import-lab\"\n  }\n  vpc_id = \"vpc-098bd3aa686b060d5\"\n}"
+      }
+    },
+    {
+      "address": "aws_route_table.eksimp-public-rt",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "eksimp-public-rt",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-053fd938369f62762",
+          "id": "rtb-053fd938369f62762",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "0.0.0.0/0",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "igw-0a27e0d4e9c40f49d",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": ""
+            }
+          ],
+          "tags": {
+            "Name": "eksimp-public-rt",
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Name": "eksimp-public-rt",
+            "Project": "eks-import-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-098bd3aa686b060d5"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-053fd938369f62762",
+          "id": "rtb-053fd938369f62762",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "0.0.0.0/0",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "igw-0a27e0d4e9c40f49d",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": ""
+            }
+          ],
+          "tags": {
+            "Name": "eksimp-public-rt",
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Name": "eksimp-public-rt",
+            "Project": "eks-import-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-098bd3aa686b060d5"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_route_table\" \"eksimp-public-rt\" {\n  propagating_vgws = []\n  route = [{\n    carrier_gateway_id         = \"\"\n    cidr_block                 = \"0.0.0.0/0\"\n    core_network_arn           = \"\"\n    destination_prefix_list_id = \"\"\n    egress_only_gateway_id     = \"\"\n    gateway_id                 = \"igw-0a27e0d4e9c40f49d\"\n    ipv6_cidr_block            = \"\"\n    local_gateway_id           = \"\"\n    nat_gateway_id             = \"\"\n    network_interface_id       = \"\"\n    transit_gateway_id         = \"\"\n    vpc_endpoint_id            = \"\"\n    vpc_peering_connection_id  = \"\"\n  }]\n  tags = {\n    Name    = \"eksimp-public-rt\"\n    Project = \"eks-import-lab\"\n  }\n  tags_all = {\n    Name    = \"eksimp-public-rt\"\n    Project = \"eks-import-lab\"\n  }\n  vpc_id = \"vpc-098bd3aa686b060d5\"\n}"
+      }
+    },
+    {
+      "address": "aws_route_table_association.subnet-07b95e5c701dac606_rtb-053fd938369f62762",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "subnet-07b95e5c701dac606_rtb-053fd938369f62762",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "gateway_id": "",
+          "id": "rtbassoc-061b027edc0603172",
+          "route_table_id": "rtb-053fd938369f62762",
+          "subnet_id": "subnet-07b95e5c701dac606",
+          "timeouts": null
+        },
+        "after": {
+          "gateway_id": "",
+          "id": "rtbassoc-061b027edc0603172",
+          "route_table_id": "rtb-053fd938369f62762",
+          "subnet_id": "subnet-07b95e5c701dac606",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "subnet-07b95e5c701dac606/rtb-053fd938369f62762"
+        },
+        "generated_config": "resource \"aws_route_table_association\" \"subnet-07b95e5c701dac606_rtb-053fd938369f62762\" {\n  gateway_id     = null\n  route_table_id = \"rtb-053fd938369f62762\"\n  subnet_id      = \"subnet-07b95e5c701dac606\"\n}"
+      }
+    },
+    {
+      "address": "aws_route_table_association.subnet-0e0898d0f2fa11b08_rtb-053fd938369f62762",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "subnet-0e0898d0f2fa11b08_rtb-053fd938369f62762",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "gateway_id": "",
+          "id": "rtbassoc-09b7ab17221d7e309",
+          "route_table_id": "rtb-053fd938369f62762",
+          "subnet_id": "subnet-0e0898d0f2fa11b08",
+          "timeouts": null
+        },
+        "after": {
+          "gateway_id": "",
+          "id": "rtbassoc-09b7ab17221d7e309",
+          "route_table_id": "rtb-053fd938369f62762",
+          "subnet_id": "subnet-0e0898d0f2fa11b08",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "subnet-0e0898d0f2fa11b08/rtb-053fd938369f62762"
+        },
+        "generated_config": "resource \"aws_route_table_association\" \"subnet-0e0898d0f2fa11b08_rtb-053fd938369f62762\" {\n  gateway_id     = null\n  route_table_id = \"rtb-053fd938369f62762\"\n  subnet_id      = \"subnet-0e0898d0f2fa11b08\"\n}"
+      }
+    },
+    {
+      "address": "aws_subnet.eksimp-public-us-west-2a",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "eksimp-public-us-west-2a",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0e0898d0f2fa11b08",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2a",
+          "availability_zone_id": "usw2-az1",
+          "cidr_block": "10.77.1.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-0e0898d0f2fa11b08",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_native": false,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "tags": {
+            "Name": "eksimp-public-us-west-2a",
+            "Project": "eks-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "eksimp-public-us-west-2a",
+            "Project": "eks-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-098bd3aa686b060d5"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0e0898d0f2fa11b08",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2a",
+          "availability_zone_id": "usw2-az1",
+          "cidr_block": "10.77.1.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-0e0898d0f2fa11b08",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_native": false,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "tags": {
+            "Name": "eksimp-public-us-west-2a",
+            "Project": "eks-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "eksimp-public-us-west-2a",
+            "Project": "eks-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-098bd3aa686b060d5"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_subnet\" \"eksimp-public-us-west-2a\" {\n  assign_ipv6_address_on_creation                = false\n  availability_zone                              = \"us-west-2a\"\n  availability_zone_id                           = \"usw2-az1\"\n  cidr_block                                     = \"10.77.1.0/24\"\n  customer_owned_ipv4_pool                       = null\n  enable_dns64                                   = false\n  enable_lni_at_device_index                     = 0\n  enable_resource_name_dns_a_record_on_launch    = false\n  enable_resource_name_dns_aaaa_record_on_launch = false\n  ipv6_cidr_block                                = null\n  ipv6_native                                    = false\n  map_customer_owned_ip_on_launch                = false\n  map_public_ip_on_launch                        = true\n  outpost_arn                                    = null\n  private_dns_hostname_type_on_launch            = \"ip-name\"\n  tags = {\n    Name                     = \"eksimp-public-us-west-2a\"\n    Project                  = \"eks-import-lab\"\n    \"kubernetes.io/role/elb\" = \"1\"\n  }\n  tags_all = {\n    Name                     = \"eksimp-public-us-west-2a\"\n    Project                  = \"eks-import-lab\"\n    \"kubernetes.io/role/elb\" = \"1\"\n  }\n  vpc_id = \"vpc-098bd3aa686b060d5\"\n}"
+      }
+    },
+    {
+      "address": "aws_subnet.eksimp-public-us-west-2b",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "eksimp-public-us-west-2b",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-07b95e5c701dac606",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2b",
+          "availability_zone_id": "usw2-az2",
+          "cidr_block": "10.77.2.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-07b95e5c701dac606",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_native": false,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "tags": {
+            "Name": "eksimp-public-us-west-2b",
+            "Project": "eks-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "eksimp-public-us-west-2b",
+            "Project": "eks-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-098bd3aa686b060d5"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-07b95e5c701dac606",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2b",
+          "availability_zone_id": "usw2-az2",
+          "cidr_block": "10.77.2.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-07b95e5c701dac606",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_native": false,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "tags": {
+            "Name": "eksimp-public-us-west-2b",
+            "Project": "eks-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "eksimp-public-us-west-2b",
+            "Project": "eks-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-098bd3aa686b060d5"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_subnet\" \"eksimp-public-us-west-2b\" {\n  assign_ipv6_address_on_creation                = false\n  availability_zone                              = \"us-west-2b\"\n  availability_zone_id                           = \"usw2-az2\"\n  cidr_block                                     = \"10.77.2.0/24\"\n  customer_owned_ipv4_pool                       = null\n  enable_dns64                                   = false\n  enable_lni_at_device_index                     = 0\n  enable_resource_name_dns_a_record_on_launch    = false\n  enable_resource_name_dns_aaaa_record_on_launch = false\n  ipv6_cidr_block                                = null\n  ipv6_native                                    = false\n  map_customer_owned_ip_on_launch                = false\n  map_public_ip_on_launch                        = true\n  outpost_arn                                    = null\n  private_dns_hostname_type_on_launch            = \"ip-name\"\n  tags = {\n    Name                     = \"eksimp-public-us-west-2b\"\n    Project                  = \"eks-import-lab\"\n    \"kubernetes.io/role/elb\" = \"1\"\n  }\n  tags_all = {\n    Name                     = \"eksimp-public-us-west-2b\"\n    Project                  = \"eks-import-lab\"\n    \"kubernetes.io/role/elb\" = \"1\"\n  }\n  vpc_id = \"vpc-098bd3aa686b060d5\"\n}"
+      }
+    },
+    {
+      "address": "aws_vpc.eksimp-vpc",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "eksimp-vpc",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-098bd3aa686b060d5",
+          "assign_generated_ipv6_cidr_block": false,
+          "cidr_block": "10.77.0.0/16",
+          "default_network_acl_id": "acl-06cdda0559935d450",
+          "default_route_table_id": "rtb-03f2a2a78ebfb97a1",
+          "default_security_group_id": "sg-064b6bb6f5074df7c",
+          "dhcp_options_id": "dopt-03b17c556ffb1011e",
+          "enable_dns_hostnames": true,
+          "enable_dns_support": true,
+          "enable_network_address_usage_metrics": false,
+          "id": "vpc-098bd3aa686b060d5",
+          "instance_tenancy": "default",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_association_id": "",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_network_border_group": "",
+          "ipv6_ipam_pool_id": "",
+          "ipv6_netmask_length": 0,
+          "main_route_table_id": "rtb-03f2a2a78ebfb97a1",
+          "owner_id": "952133486861",
+          "tags": {
+            "Name": "eksimp-vpc",
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Name": "eksimp-vpc",
+            "Project": "eks-import-lab"
+          }
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-098bd3aa686b060d5",
+          "assign_generated_ipv6_cidr_block": false,
+          "cidr_block": "10.77.0.0/16",
+          "default_network_acl_id": "acl-06cdda0559935d450",
+          "default_route_table_id": "rtb-03f2a2a78ebfb97a1",
+          "default_security_group_id": "sg-064b6bb6f5074df7c",
+          "dhcp_options_id": "dopt-03b17c556ffb1011e",
+          "enable_dns_hostnames": true,
+          "enable_dns_support": true,
+          "enable_network_address_usage_metrics": false,
+          "id": "vpc-098bd3aa686b060d5",
+          "instance_tenancy": "default",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_association_id": "",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_network_border_group": "",
+          "ipv6_ipam_pool_id": "",
+          "ipv6_netmask_length": 0,
+          "main_route_table_id": "rtb-03f2a2a78ebfb97a1",
+          "owner_id": "952133486861",
+          "tags": {
+            "Name": "eksimp-vpc",
+            "Project": "eks-import-lab"
+          },
+          "tags_all": {
+            "Name": "eksimp-vpc",
+            "Project": "eks-import-lab"
+          }
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "generated_config": "resource \"aws_vpc\" \"eksimp-vpc\" {\n  assign_generated_ipv6_cidr_block     = false\n  cidr_block                           = \"10.77.0.0/16\"\n  enable_dns_hostnames                 = true\n  enable_dns_support                   = true\n  enable_network_address_usage_metrics = false\n  instance_tenancy                     = \"default\"\n  ipv4_ipam_pool_id                    = null\n  ipv4_netmask_length                  = null\n  ipv6_cidr_block                      = null\n  ipv6_cidr_block_network_border_group = null\n  ipv6_ipam_pool_id                    = null\n  ipv6_netmask_length                  = 0\n  tags = {\n    Name    = \"eksimp-vpc\"\n    Project = \"eks-import-lab\"\n  }\n  tags_all = {\n    Name    = \"eksimp-vpc\"\n    Project = \"eks-import-lab\"\n  }\n}"
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.5.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_eks_cluster.eksimp-cluster",
+            "mode": "managed",
+            "type": "aws_eks_cluster",
+            "name": "eksimp-cluster",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "access_config": [
+                {
+                  "authentication_mode": "API_AND_CONFIG_MAP",
+                  "bootstrap_cluster_creator_admin_permissions": true
+                }
+              ],
+              "arn": "arn:aws:eks:us-west-2:952133486861:cluster/eksimp-cluster",
+              "bootstrap_self_managed_addons": false,
+              "certificate_authority": [
+                {
+                  "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lRY0FtR1gyaFpuRS81U2t0VUJmYTZvREFOQmdrcWhraUc5dzBCQVFzRkFEQW4KTVJBd0RnWURWUVFLRXdkQlYxTWdSVXRUTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEkyTVRFdwpOekl5TkRrd09Wb1hEVE14TVRFd05qSXlORGt3T1Zvd0p6RVFNQTRHQTFVRUNoTUhRVmRUSUVWTFV6RVRNQkVHCkExVUVBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUIKQU9YUlV5RmR3SlN2L1kxUVh3MStWMFcvKzBPRmhzdU1PdldHQzltV3BVY3dmeENKZ0UzY2ZnV2RWVWkwckJ3cwpJR2drUTM3d1JwRURUTXBSQkd0cTQrUjlOUmF0LzE4NXNwemdqdStXRXliMGdTOHRRb3BMbHJkTXZIWWZrbWZOCmxhdWh6QWF1azZMSkY5MEx1ejMwQWVRQUNQWEk3THhBZE15SVlpVXgybWN0SktqbmhMTTA4SExRQjFTMkt2NU0KcGdkcjV5UnRydlZDbDdqbUx5bmRrdnJsUnN2R05aeWM1TWhsMVZ0bU1PNlFreWNtTVRJeUViN2Z5M2ZnN2tOQwpVcTgyM1FkSm1HbkJ4K1kzamcyaHhUL3ZDbTBuU3gvQVI0WnlmRzU1TUoxYmRhazJvQTJSZVROOEtWSmZrdjFlCjcxUm4ySnBCdmQ4Q2Fkb0d2dC82U2VrQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZLSld5NVNmcjlsejBhS2xtNVI5ZTltV2pXd29NQlVHQTFVZApFUVFPTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBQStvTjRXeFBhR3JZY1FxCjBmMFcyMTNKODdEZTZ2SzUrT2dyQ3RKeGRkRlNXUXVOY3lSd3hGUXJyejRBMG1YVkxCbXBNQ014ZHdHTzZoMUYKaTQwWE4zZ1VjbGQwWHFWblBmWlZtdDNRS1VLUGxKYmJJT3NTdVVqK2twdzB6KzkzcmZiMkZBbDdHRG1GQkFkSgphRTM2UXJTUHVOZURtZURjVVRZdlhMc1lib0ZkdVF5UldyNGFzMW1UWkpwaVExaU9TOE1Majd6RFpnbUJHWXdtCitPcFZRQWQ2T1BRQ1NwbGIyZ1h1ckRUYkh2cmNHMEdzem5HWFU5c0VUSWxma3Z0NXJGYlk2TWZGc0ZwaXB2ME0KeElaZXpvOHdWcWo0ZHhkNm5FY2JUZEZjYjlxTkQ1THpuVktGc3FCUzZHSGhEOXc1aXN4OW5DUk1kelZBaGRMVgpOV29EVm9jPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+                }
+              ],
+              "cluster_id": null,
+              "compute_config": [],
+              "created_at": "2026-11-07T22:48:52Z",
+              "enabled_cluster_log_types": [],
+              "encryption_config": [],
+              "endpoint": "https://0C308F5A00163DCC9C7D2DCF04B05B5C.gr7.us-west-2.eks.amazonaws.com",
+              "force_update_version": null,
+              "id": "eksimp-cluster",
+              "identity": [
+                {
+                  "oidc": [
+                    {
+                      "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/0C308F5A00163DCC9C7D2DCF04B05B5C"
+                    }
+                  ]
+                }
+              ],
+              "kubernetes_network_config": [
+                {
+                  "elastic_load_balancing": [
+                    {
+                      "enabled": false
+                    }
+                  ],
+                  "ip_family": "ipv4",
+                  "service_ipv4_cidr": "172.20.0.0/16",
+                  "service_ipv6_cidr": ""
+                }
+              ],
+              "name": "eksimp-cluster",
+              "outpost_config": [],
+              "platform_version": "eks.7",
+              "remote_network_config": [],
+              "role_arn": "arn:aws:iam::952133486861:role/eksimp-cluster-role",
+              "status": "ACTIVE",
+              "storage_config": [],
+              "tags": {
+                "Project": "eks-import-lab"
+              },
+              "tags_all": {
+                "Project": "eks-import-lab"
+              },
+              "timeouts": null,
+              "upgrade_policy": [
+                {
+                  "support_type": "EXTENDED"
+                }
+              ],
+              "version": "1.37",
+              "vpc_config": [
+                {
+                  "cluster_security_group_id": "sg-0c6d4f75fe1960792",
+                  "endpoint_private_access": false,
+                  "endpoint_public_access": true,
+                  "public_access_cidrs": [
+                    "0.0.0.0/0"
+                  ],
+                  "security_group_ids": [],
+                  "subnet_ids": [
+                    "subnet-07b95e5c701dac606",
+                    "subnet-0e0898d0f2fa11b08"
+                  ],
+                  "vpc_id": "vpc-098bd3aa686b060d5"
+                }
+              ],
+              "zonal_shift_config": []
+            },
+            "sensitive_values": {
+              "access_config": [
+                {}
+              ],
+              "certificate_authority": [
+                {}
+              ],
+              "compute_config": [],
+              "enabled_cluster_log_types": [],
+              "encryption_config": [],
+              "identity": [
+                {
+                  "oidc": [
+                    {}
+                  ]
+                }
+              ],
+              "kubernetes_network_config": [
+                {
+                  "elastic_load_balancing": [
+                    {}
+                  ]
+                }
+              ],
+              "outpost_config": [],
+              "remote_network_config": [],
+              "storage_config": [],
+              "tags": {},
+              "tags_all": {},
+              "upgrade_policy": [
+                {}
+              ],
+              "vpc_config": [
+                {
+                  "public_access_cidrs": [
+                    false
+                  ],
+                  "security_group_ids": [],
+                  "subnet_ids": [
+                    false,
+                    false
+                  ]
+                }
+              ],
+              "zonal_shift_config": []
+            }
+          },
+          {
+            "address": "aws_eks_node_group.eksimp-ng",
+            "mode": "managed",
+            "type": "aws_eks_node_group",
+            "name": "eksimp-ng",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "ami_type": "AL2023_x86_64_STANDARD",
+              "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/eksimp-cluster/eksimp-ng/a2d0dc1d-327f-4a73-fe98-98470320e4e6",
+              "capacity_type": "ON_DEMAND",
+              "cluster_name": "eksimp-cluster",
+              "disk_size": 20,
+              "force_update_version": null,
+              "id": "eksimp-cluster:eksimp-ng",
+              "instance_types": [
+                "t3.medium"
+              ],
+              "labels": {
+                "role": "general"
+              },
+              "launch_template": [],
+              "node_group_name": "eksimp-ng",
+              "node_group_name_prefix": "",
+              "node_repair_config": [],
+              "node_role_arn": "arn:aws:iam::952133486861:role/eksimp-node-role",
+              "release_version": "1.37.1-20261031",
+              "remote_access": [],
+              "resources": [
+                {
+                  "autoscaling_groups": [
+                    {
+                      "name": "eks-eksimp-ng-a2d0dc1d-327f-4a73-fe98-98470320e4e6"
+                    }
+                  ],
+                  "remote_access_security_group_id": ""
+                }
+              ],
+              "scaling_config": [
+                {
+                  "desired_size": 2,
+                  "max_size": 3,
+                  "min_size": 1
+                }
+              ],
+              "status": "ACTIVE",
+              "subnet_ids": [
+                "subnet-07b95e5c701dac606",
+                "subnet-0e0898d0f2fa11b08"
+              ],
+              "tags": {
+                "Project": "eks-import-lab"
+              },
+              "tags_all": {
+                "Project": "eks-import-lab"
+              },
+              "taint": [],
+              "timeouts": null,
+              "update_config": [
+                {
+                  "max_unavailable": 1,
+                  "max_unavailable_percentage": 0
+                }
+              ],
+              "version": "1.37"
+            },
+            "sensitive_values": {
+              "instance_types": [
+                false
+              ],
+              "labels": {},
+              "launch_template": [],
+              "node_repair_config": [],
+              "remote_access": [],
+              "resources": [
+                {
+                  "autoscaling_groups": [
+                    {}
+                  ]
+                }
+              ],
+              "scaling_config": [
+                {}
+              ],
+              "subnet_ids": [
+                false,
+                false
+              ],
+              "tags": {},
+              "tags_all": {},
+              "taint": [],
+              "update_config": [
+                {}
+              ]
+            }
+          },
+          {
+            "address": "aws_iam_role.eksimp-cluster-role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "eksimp-cluster-role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/eksimp-cluster-role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-11-07T22:48:24Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "eksimp-cluster-role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+              ],
+              "max_session_duration": 3600,
+              "name": "eksimp-cluster-role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Project": "eks-import-lab"
+              },
+              "tags_all": {
+                "Project": "eks-import-lab"
+              },
+              "unique_id": "AROA53L4UBEG7MQPWCMWL"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.eksimp-node-role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "eksimp-node-role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/eksimp-node-role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-11-07T22:48:28Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "eksimp-node-role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+                "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+                "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+              ],
+              "max_session_duration": 3600,
+              "name": "eksimp-node-role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Project": "eks-import-lab"
+              },
+              "tags_all": {
+                "Project": "eks-import-lab"
+              },
+              "unique_id": "AROA53L4UBEG3SLDGN3TY"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false,
+                false,
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_internet_gateway.eksimp-igw",
+            "mode": "managed",
+            "type": "aws_internet_gateway",
+            "name": "eksimp-igw",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-0a27e0d4e9c40f49d",
+              "id": "igw-0a27e0d4e9c40f49d",
+              "owner_id": "952133486861",
+              "tags": {
+                "Name": "eksimp-igw",
+                "Project": "eks-import-lab"
+              },
+              "tags_all": {
+                "Name": "eksimp-igw",
+                "Project": "eks-import-lab"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-098bd3aa686b060d5"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_route_table.eksimp-public-rt",
+            "mode": "managed",
+            "type": "aws_route_table",
+            "name": "eksimp-public-rt",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-053fd938369f62762",
+              "id": "rtb-053fd938369f62762",
+              "owner_id": "952133486861",
+              "propagating_vgws": [],
+              "route": [
+                {
+                  "carrier_gateway_id": "",
+                  "cidr_block": "0.0.0.0/0",
+                  "core_network_arn": "",
+                  "destination_prefix_list_id": "",
+                  "egress_only_gateway_id": "",
+                  "gateway_id": "igw-0a27e0d4e9c40f49d",
+                  "ipv6_cidr_block": "",
+                  "local_gateway_id": "",
+                  "nat_gateway_id": "",
+                  "network_interface_id": "",
+                  "transit_gateway_id": "",
+                  "vpc_endpoint_id": "",
+                  "vpc_peering_connection_id": ""
+                }
+              ],
+              "tags": {
+                "Name": "eksimp-public-rt",
+                "Project": "eks-import-lab"
+              },
+              "tags_all": {
+                "Name": "eksimp-public-rt",
+                "Project": "eks-import-lab"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-098bd3aa686b060d5"
+            },
+            "sensitive_values": {
+              "propagating_vgws": [],
+              "route": [
+                {}
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_route_table_association.subnet-07b95e5c701dac606_rtb-053fd938369f62762",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "subnet-07b95e5c701dac606_rtb-053fd938369f62762",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "gateway_id": "",
+              "id": "rtbassoc-061b027edc0603172",
+              "route_table_id": "rtb-053fd938369f62762",
+              "subnet_id": "subnet-07b95e5c701dac606",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_route_table_association.subnet-0e0898d0f2fa11b08_rtb-053fd938369f62762",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "subnet-0e0898d0f2fa11b08_rtb-053fd938369f62762",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "gateway_id": "",
+              "id": "rtbassoc-09b7ab17221d7e309",
+              "route_table_id": "rtb-053fd938369f62762",
+              "subnet_id": "subnet-0e0898d0f2fa11b08",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_subnet.eksimp-public-us-west-2a",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "eksimp-public-us-west-2a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0e0898d0f2fa11b08",
+              "assign_ipv6_address_on_creation": false,
+              "availability_zone": "us-west-2a",
+              "availability_zone_id": "usw2-az1",
+              "cidr_block": "10.77.1.0/24",
+              "customer_owned_ipv4_pool": "",
+              "enable_dns64": false,
+              "enable_lni_at_device_index": 0,
+              "enable_resource_name_dns_a_record_on_launch": false,
+              "enable_resource_name_dns_aaaa_record_on_launch": false,
+              "id": "subnet-0e0898d0f2fa11b08",
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_association_id": "",
+              "ipv6_native": false,
+              "map_customer_owned_ip_on_launch": false,
+              "map_public_ip_on_launch": true,
+              "outpost_arn": "",
+              "owner_id": "952133486861",
+              "private_dns_hostname_type_on_launch": "ip-name",
+              "tags": {
+                "Name": "eksimp-public-us-west-2a",
+                "Project": "eks-import-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "tags_all": {
+                "Name": "eksimp-public-us-west-2a",
+                "Project": "eks-import-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-098bd3aa686b060d5"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_subnet.eksimp-public-us-west-2b",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "eksimp-public-us-west-2b",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-07b95e5c701dac606",
+              "assign_ipv6_address_on_creation": false,
+              "availability_zone": "us-west-2b",
+              "availability_zone_id": "usw2-az2",
+              "cidr_block": "10.77.2.0/24",
+              "customer_owned_ipv4_pool": "",
+              "enable_dns64": false,
+              "enable_lni_at_device_index": 0,
+              "enable_resource_name_dns_a_record_on_launch": false,
+              "enable_resource_name_dns_aaaa_record_on_launch": false,
+              "id": "subnet-07b95e5c701dac606",
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_association_id": "",
+              "ipv6_native": false,
+              "map_customer_owned_ip_on_launch": false,
+              "map_public_ip_on_launch": true,
+              "outpost_arn": "",
+              "owner_id": "952133486861",
+              "private_dns_hostname_type_on_launch": "ip-name",
+              "tags": {
+                "Name": "eksimp-public-us-west-2b",
+                "Project": "eks-import-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "tags_all": {
+                "Name": "eksimp-public-us-west-2b",
+                "Project": "eks-import-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-098bd3aa686b060d5"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_vpc.eksimp-vpc",
+            "mode": "managed",
+            "type": "aws_vpc",
+            "name": "eksimp-vpc",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-098bd3aa686b060d5",
+              "assign_generated_ipv6_cidr_block": false,
+              "cidr_block": "10.77.0.0/16",
+              "default_network_acl_id": "acl-06cdda0559935d450",
+              "default_route_table_id": "rtb-03f2a2a78ebfb97a1",
+              "default_security_group_id": "sg-064b6bb6f5074df7c",
+              "dhcp_options_id": "dopt-03b17c556ffb1011e",
+              "enable_dns_hostnames": true,
+              "enable_dns_support": true,
+              "enable_network_address_usage_metrics": false,
+              "id": "vpc-098bd3aa686b060d5",
+              "instance_tenancy": "default",
+              "ipv4_ipam_pool_id": null,
+              "ipv4_netmask_length": null,
+              "ipv6_association_id": "",
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_network_border_group": "",
+              "ipv6_ipam_pool_id": "",
+              "ipv6_netmask_length": 0,
+              "main_route_table_id": "rtb-03f2a2a78ebfb97a1",
+              "owner_id": "952133486861",
+              "tags": {
+                "Name": "eksimp-vpc",
+                "Project": "eks-import-lab"
+              },
+              "tags_all": {
+                "Name": "eksimp-vpc",
+                "Project": "eks-import-lab"
+              }
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "version_constraint": "~> 5.0",
+        "expressions": {
+          "region": {
+            "constant_value": "us-west-2"
+          }
+        }
+      }
+    },
+    "root_module": {}
+  },
+  "timestamp": "2026-11-08T00:39:02Z",
+  "redacted_attributes": []
+}
