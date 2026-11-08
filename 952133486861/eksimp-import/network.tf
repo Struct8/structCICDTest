@@ -215,7 +215,6 @@ resource "aws_lb_listener" "eksimp-http" {
   protocol                             = "HTTP"
   routing_http_response_server_enabled = true
   default_action {
-    order            = 0
     target_group_arn = aws_lb_target_group.eksimp-tg.arn
     type             = "forward"
     forward {
