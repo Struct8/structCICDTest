@@ -4,8 +4,8 @@ resource "aws_vpc" "eksimp-vpc" {
   enable_dns_support   = true
   instance_tenancy     = "default"
   tags = {
-    Name           = "eksimp-vpc"
     Project        = "eks-import-lab"
+    Name           = "eksimp-vpc"
     State          = "eks-import-lab"
     Struct8Creator = "rmay struct"
   }
@@ -18,10 +18,10 @@ resource "aws_subnet" "eksimp-public-us-west-2a" {
   map_public_ip_on_launch             = true
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
-    Name                                   = "eksimp-public-us-west-2a"
     Project                                = "eks-import-lab"
     "kubernetes.io/role/elb"               = "1"
     "kubernetes.io/cluster/eksimp-cluster" = "shared"
+    Name                                   = "eksimp-public-us-west-2a"
     State                                  = "eks-import-lab"
     Struct8Creator                         = "rmay struct"
   }
@@ -34,10 +34,10 @@ resource "aws_subnet" "eksimp-public-us-west-2b" {
   map_public_ip_on_launch             = true
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
-    Name                                   = "eksimp-public-us-west-2b"
     Project                                = "eks-import-lab"
     "kubernetes.io/role/elb"               = "1"
     "kubernetes.io/cluster/eksimp-cluster" = "shared"
+    Name                                   = "eksimp-public-us-west-2b"
     State                                  = "eks-import-lab"
     Struct8Creator                         = "rmay struct"
   }
@@ -46,8 +46,8 @@ resource "aws_subnet" "eksimp-public-us-west-2b" {
 resource "aws_internet_gateway" "eksimp-igw" {
   vpc_id = aws_vpc.eksimp-vpc.id
   tags = {
-    Name           = "eksimp-igw"
     Project        = "eks-import-lab"
+    Name           = "eksimp-igw"
     State          = "eks-import-lab"
     Struct8Creator = "rmay struct"
   }
@@ -62,8 +62,8 @@ resource "aws_route" "route_eksimp-public-rt_to_eksimp-igw_ipv4" {
 resource "aws_route_table" "eksimp-public-rt" {
   vpc_id = aws_vpc.eksimp-vpc.id
   tags = {
-    Name           = "eksimp-public-rt"
     Project        = "eks-import-lab"
+    Name           = "eksimp-public-rt"
     State          = "eks-import-lab"
     Struct8Creator = "rmay struct"
   }
