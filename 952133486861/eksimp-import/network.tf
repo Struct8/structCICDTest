@@ -4,8 +4,8 @@ resource "aws_vpc" "eksimp-vpc" {
   enable_dns_support   = true
   instance_tenancy     = "default"
   tags = {
-    Name           = "eksimp-vpc"
     Project        = "eks-import-lab"
+    Name           = "eksimp-vpc"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
@@ -18,10 +18,10 @@ resource "aws_subnet" "eksimp-private-us-west-2a" {
   map_public_ip_on_launch             = false
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
-    Name                                   = "eksimp-private-us-west-2a"
     Project                                = "eks-import-lab"
     "kubernetes.io/role/internal-elb"      = "1"
     "kubernetes.io/cluster/eksimp-cluster" = "shared"
+    Name                                   = "eksimp-private-us-west-2a"
     State                                  = "eksimp-import"
     Struct8Creator                         = "rmay struct"
   }
@@ -34,10 +34,10 @@ resource "aws_subnet" "eksimp-private-us-west-2b" {
   map_public_ip_on_launch             = false
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
-    Name                                   = "eksimp-private-us-west-2b"
     Project                                = "eks-import-lab"
     "kubernetes.io/role/internal-elb"      = "1"
     "kubernetes.io/cluster/eksimp-cluster" = "shared"
+    Name                                   = "eksimp-private-us-west-2b"
     State                                  = "eksimp-import"
     Struct8Creator                         = "rmay struct"
   }
@@ -50,9 +50,9 @@ resource "aws_subnet" "eksimp-public-us-west-2a" {
   map_public_ip_on_launch             = false
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
-    Name                     = "eksimp-public-us-west-2a"
     Project                  = "eks-import-lab"
     "kubernetes.io/role/elb" = "1"
+    Name                     = "eksimp-public-us-west-2a"
     State                    = "eksimp-import"
     Struct8Creator           = "rmay struct"
   }
@@ -65,9 +65,9 @@ resource "aws_subnet" "eksimp-public-us-west-2b" {
   map_public_ip_on_launch             = false
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
-    Name                     = "eksimp-public-us-west-2b"
     Project                  = "eks-import-lab"
     "kubernetes.io/role/elb" = "1"
+    Name                     = "eksimp-public-us-west-2b"
     State                    = "eksimp-import"
     Struct8Creator           = "rmay struct"
   }
@@ -76,8 +76,8 @@ resource "aws_subnet" "eksimp-public-us-west-2b" {
 resource "aws_internet_gateway" "eksimp-igw" {
   vpc_id = aws_vpc.eksimp-vpc.id
   tags = {
-    Name           = "eksimp-igw"
     Project        = "eks-import-lab"
+    Name           = "eksimp-igw"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
@@ -89,8 +89,8 @@ resource "aws_nat_gateway" "eksimp-nat" {
   availability_mode = "zonal"
   private_ip        = "10.77.1.5"
   tags = {
-    Name           = "eksimp-nat"
     Project        = "eks-import-lab"
+    Name           = "eksimp-nat"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
@@ -112,8 +112,8 @@ resource "aws_route" "route_eksimp-public-rt_to_eksimp-igw_ipv4" {
 resource "aws_route_table" "eksimp-private-rt" {
   vpc_id = aws_vpc.eksimp-vpc.id
   tags = {
-    Name           = "eksimp-private-rt"
     Project        = "eks-import-lab"
+    Name           = "eksimp-private-rt"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
@@ -122,8 +122,8 @@ resource "aws_route_table" "eksimp-private-rt" {
 resource "aws_route_table" "eksimp-public-rt" {
   vpc_id = aws_vpc.eksimp-vpc.id
   tags = {
-    Name           = "eksimp-public-rt"
     Project        = "eks-import-lab"
+    Name           = "eksimp-public-rt"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
@@ -153,9 +153,6 @@ resource "aws_security_group" "eksimp-alb-sg" {
   name        = "eksimp-alb-sg"
   vpc_id      = aws_vpc.eksimp-vpc.id
   description = "eksimp ALB: HTTP from the internet"
-  lifecycle {
-    ignore_changes = [revoke_rules_on_delete]
-  }
   tags = {
     Name           = "eksimp-alb-sg"
     Project        = "eks-import-lab"
@@ -187,8 +184,8 @@ resource "aws_eip" "eksimp-nat-eip" {
   network_border_group = "us-west-2"
   public_ipv4_pool     = "amazon"
   tags = {
-    Name           = "eksimp-nat-eip"
     Project        = "eks-import-lab"
+    Name           = "eksimp-nat-eip"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
@@ -202,8 +199,8 @@ resource "aws_lb" "eksimp-alb" {
   security_groups                  = [aws_security_group.eksimp-alb-sg.id]
   subnets                          = [aws_subnet.eksimp-public-us-west-2a.id, aws_subnet.eksimp-public-us-west-2b.id]
   tags = {
-    Name           = "eksimp-alb"
     Project        = "eks-import-lab"
+    Name           = "eksimp-alb"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
@@ -225,8 +222,8 @@ resource "aws_lb_listener" "eksimp-http" {
     }
   }
   tags = {
-    Name           = "eksimp-http"
     Project        = "eks-import-lab"
+    Name           = "eksimp-http"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
@@ -261,8 +258,8 @@ resource "aws_lb_target_group" "eksimp-tg" {
     type            = "lb_cookie"
   }
   tags = {
-    Name           = "eksimp-tg"
     Project        = "eks-import-lab"
+    Name           = "eksimp-tg"
     State          = "eksimp-import"
     Struct8Creator = "rmay struct"
   }
