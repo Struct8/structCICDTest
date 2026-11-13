@@ -12,21 +12,6 @@ resource "helm_release" "helm_argocd" {
   depends_on       = [kubernetes_namespace.argocd]
 }
 
-resource "kubernetes_manifest" "netpol-default-deny-app-a" {
-  manifest = {
-    apiVersion = "networking.k8s.io/v1"
-    kind       = "NetworkPolicy"
-    metadata = {
-      name      = "default-deny-ingress-app-a"
-      namespace = kubernetes_namespace.app-a.metadata[0].name
-    }
-    spec = {
-      podSelector = {}
-      policyTypes = ["Ingress"]
-    }
-  }
-}
-
 resource "kubernetes_namespace" "app-a" {
   metadata {
     name = "app-a"
