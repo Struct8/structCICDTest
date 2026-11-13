@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "platform": "eks",
+  "cluster": "k8simp-cluster",
+  "region": "us-west-2",
+  "requestId": "c4ee644f-8585-4239-819a-7fbbfa00b0b4",
+  "releases": [
+    {
+      "name": "argocd",
+      "namespace": "argocd",
+      "chart": "argo-cd",
+      "version": "10.18.0",
+      "appVersion": "v3.6.1",
+      "status": "deployed"
+    },
+    {
+      "name": "csi-secrets-store",
+      "namespace": "kube-system",
+      "chart": "secrets-store-csi-driver",
+      "version": "1.6.2",
+      "appVersion": "1.6.2",
+      "status": "deployed"
+    },
+    {
+      "name": "external-secrets",
+      "namespace": "external-secrets",
+      "chart": "external-secrets",
+      "version": "2.15.0",
+      "appVersion": "v2.15.0",
+      "status": "deployed"
+    },
+    {
+      "name": "metrics-server",
+      "namespace": "kube-system",
+      "chart": "metrics-server",
+      "version": "3.14.0",
+      "appVersion": "0.9.0",
+      "status": "deployed"
+    }
+  ],
+  "namespaces": [
+    {
+      "metadata": {
+        "name": "app-a",
+        "labels": {
+          "kubernetes.io/metadata.name": "app-a"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "argocd",
+        "labels": {
+          "kubernetes.io/metadata.name": "argocd",
+          "name": "argocd"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "default",
+        "labels": {
+          "kubernetes.io/metadata.name": "default"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "external-secrets",
+        "labels": {
+          "kubernetes.io/metadata.name": "external-secrets",
+          "name": "external-secrets"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-node-lease",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-node-lease"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-public",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-public"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-system",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-system"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+  ],
+  "errors": []
+}
