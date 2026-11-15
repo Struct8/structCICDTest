@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-files
+  labels:
+    app.kubernetes.io/name: web-files
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: app-a
+    cloudman.io/creator: rmay-struct
+  namespace: app-a
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+data:
+  app.conf: |
+    greeting=hello
