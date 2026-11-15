@@ -36,7 +36,7 @@ resource "helm_release" "argocd_applications" {
         }
       })
   ]
-  depends_on = [helm_release.argocd_projects, helm_release.helm_argocd, kubernetes_namespace.argocd]
+  depends_on = [helm_release.argocd_projects, helm_release.helm_argocd, kubernetes_namespace.app-a, kubernetes_namespace.argocd]
 }
 
 resource "helm_release" "argocd_projects" {
@@ -70,7 +70,7 @@ resource "helm_release" "argocd_projects" {
         }
       })
   ]
-  depends_on = [helm_release.helm_argocd, kubernetes_namespace.argocd]
+  depends_on = [helm_release.helm_argocd, kubernetes_namespace.app-a, kubernetes_namespace.argocd]
 }
 
 resource "helm_release" "helm_argocd" {
@@ -98,6 +98,12 @@ resource "helm_release" "helm_argocd" {
       })
   ]
   depends_on = [kubernetes_namespace.argocd]
+}
+
+resource "kubernetes_namespace" "app-a" {
+  metadata {
+    name = "app-a"
+  }
 }
 
 resource "kubernetes_namespace" "argocd" {
