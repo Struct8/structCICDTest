@@ -4,7 +4,7 @@
   "cluster": "k8simp12-cluster",
   "region": "us-west-2",
   "namespace": "svc-lab",
-  "requestId": "c2165b31-32f4-4116-84a1-efe95e7d234d",
+  "requestId": "b9fb0234-63bc-4012-ab39-de450abd3be1",
   "objects": [
     {
       "file": "templates/deployment-api.yaml",
@@ -12,26 +12,7 @@
       "kind": "Deployment",
       "name": "api",
       "namespace": "svc-lab",
-      "status": "different",
-      "restartsPods": false,
-      "onlyAddsLabels": true,
-      "changes": [
-        {
-          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
-          "change": "added",
-          "after": "0"
-        },
-        {
-          "path": "metadata.labels",
-          "change": "added",
-          "after": {
-            "app.kubernetes.io/instance": "svc-lab",
-            "app.kubernetes.io/managed-by": "struct8",
-            "app.kubernetes.io/name": "api",
-            "cloudman.io/creator": "rmay-struct"
-          }
-        }
-      ]
+      "status": "same"
     },
     {
       "file": "templates/deployment-web.yaml",
@@ -39,26 +20,7 @@
       "kind": "Deployment",
       "name": "web",
       "namespace": "svc-lab",
-      "status": "different",
-      "restartsPods": false,
-      "onlyAddsLabels": true,
-      "changes": [
-        {
-          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
-          "change": "added",
-          "after": "0"
-        },
-        {
-          "path": "metadata.labels",
-          "change": "added",
-          "after": {
-            "app.kubernetes.io/instance": "svc-lab",
-            "app.kubernetes.io/managed-by": "struct8",
-            "app.kubernetes.io/name": "web",
-            "cloudman.io/creator": "rmay-struct"
-          }
-        }
-      ]
+      "status": "same"
     },
     {
       "file": "templates/deployment-worker.yaml",
@@ -66,26 +28,7 @@
       "kind": "Deployment",
       "name": "worker",
       "namespace": "svc-lab",
-      "status": "different",
-      "restartsPods": false,
-      "onlyAddsLabels": true,
-      "changes": [
-        {
-          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
-          "change": "added",
-          "after": "0"
-        },
-        {
-          "path": "metadata.labels",
-          "change": "added",
-          "after": {
-            "app.kubernetes.io/instance": "svc-lab",
-            "app.kubernetes.io/managed-by": "struct8",
-            "app.kubernetes.io/name": "worker",
-            "cloudman.io/creator": "rmay-struct"
-          }
-        }
-      ]
+      "status": "same"
     },
     {
       "file": "templates/service-api-public.yaml",
@@ -93,26 +36,7 @@
       "kind": "Service",
       "name": "api-public",
       "namespace": "svc-lab",
-      "status": "different",
-      "restartsPods": false,
-      "onlyAddsLabels": true,
-      "changes": [
-        {
-          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
-          "change": "added",
-          "after": "0"
-        },
-        {
-          "path": "metadata.labels",
-          "change": "added",
-          "after": {
-            "app.kubernetes.io/instance": "svc-lab",
-            "app.kubernetes.io/managed-by": "struct8",
-            "app.kubernetes.io/name": "api-public",
-            "cloudman.io/creator": "rmay-struct"
-          }
-        }
-      ]
+      "status": "same"
     },
     {
       "file": "templates/service-web.yaml",
@@ -120,26 +44,7 @@
       "kind": "Service",
       "name": "web",
       "namespace": "svc-lab",
-      "status": "different",
-      "restartsPods": false,
-      "onlyAddsLabels": true,
-      "changes": [
-        {
-          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
-          "change": "added",
-          "after": "0"
-        },
-        {
-          "path": "metadata.labels",
-          "change": "added",
-          "after": {
-            "app.kubernetes.io/instance": "svc-lab",
-            "app.kubernetes.io/managed-by": "struct8",
-            "app.kubernetes.io/name": "web",
-            "cloudman.io/creator": "rmay-struct"
-          }
-        }
-      ]
+      "status": "same"
     },
     {
       "file": "templates/service-worker.yaml",
@@ -147,28 +52,7 @@
       "kind": "Service",
       "name": "worker",
       "namespace": "svc-lab",
-      "status": "different",
-      "restartsPods": false,
-      "onlyAddsLabels": true,
-      "changes": [
-        {
-          "path": "metadata.annotations",
-          "change": "added",
-          "after": {
-            "argocd.argoproj.io/sync-wave": "0"
-          }
-        },
-        {
-          "path": "metadata.labels",
-          "change": "added",
-          "after": {
-            "app.kubernetes.io/instance": "svc-lab",
-            "app.kubernetes.io/managed-by": "struct8",
-            "app.kubernetes.io/name": "worker",
-            "cloudman.io/creator": "rmay-struct"
-          }
-        }
-      ]
+      "status": "same"
     }
   ],
   "errors": []
