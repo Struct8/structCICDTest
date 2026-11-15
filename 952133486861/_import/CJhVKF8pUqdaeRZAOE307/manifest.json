@@ -1,7 +1,7 @@
 {
   "external_repositories": [],
-  "action": "compare_chart",
-  "trigger_id": "1794713819391",
+  "action": "scan_cluster",
+  "trigger_id": "1794713898889",
   "triggered_by": "rmay struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
@@ -13,7 +13,7 @@
   },
   "pipeline_stages": [
     {
-      "stage_name": "Import: compare_chart us-west-2",
+      "stage_name": "Import: scan_cluster us-west-2",
       "parallel_execution": false,
       "states": [
         {
