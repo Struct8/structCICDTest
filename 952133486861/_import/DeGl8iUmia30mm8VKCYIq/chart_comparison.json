@@ -1,0 +1,298 @@
+{
+  "version": 1,
+  "platform": "eks",
+  "cluster": "k8simp10-cluster",
+  "region": "us-west-2",
+  "namespace": "app-a",
+  "requestId": "9a369ff5-f3e8-498d-8841-1fcde2f6fdec",
+  "objects": [
+    {
+      "file": "templates/configmap-web-config.yaml",
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "name": "web-config",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/instance\"]",
+          "change": "added",
+          "after": "app-a"
+        },
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/managed-by\"]",
+          "change": "added",
+          "after": "struct8"
+        },
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/name\"]",
+          "change": "added",
+          "after": "web-config"
+        },
+        {
+          "path": "metadata.labels[\"cloudman.io/creator\"]",
+          "change": "added",
+          "after": "rmay-struct"
+        },
+        {
+          "path": "metadata.annotations",
+          "change": "added",
+          "after": {
+            "argocd.argoproj.io/sync-wave": "-5"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/configmap-web-files.yaml",
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "name": "web-files",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations",
+          "change": "added",
+          "after": {
+            "argocd.argoproj.io/sync-wave": "-5"
+          }
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "app-a",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "web-files",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/deployment-tuned.yaml",
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "name": "tuned",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
+          "change": "added",
+          "after": "0"
+        },
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/instance\"]",
+          "change": "added",
+          "after": "app-a"
+        },
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/managed-by\"]",
+          "change": "added",
+          "after": "struct8"
+        },
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/name\"]",
+          "change": "added",
+          "after": "tuned"
+        },
+        {
+          "path": "metadata.labels[\"cloudman.io/creator\"]",
+          "change": "added",
+          "after": "rmay-struct"
+        }
+      ]
+    },
+    {
+      "file": "templates/deployment-web.yaml",
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "name": "web",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
+          "change": "added",
+          "after": "0"
+        },
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/instance\"]",
+          "change": "added",
+          "after": "app-a"
+        },
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/managed-by\"]",
+          "change": "added",
+          "after": "struct8"
+        },
+        {
+          "path": "metadata.labels[\"app.kubernetes.io/name\"]",
+          "change": "added",
+          "after": "web"
+        },
+        {
+          "path": "metadata.labels[\"cloudman.io/creator\"]",
+          "change": "added",
+          "after": "rmay-struct"
+        }
+      ]
+    },
+    {
+      "file": "templates/horizontalpodautoscaler-web.yaml",
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler",
+      "name": "web",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations",
+          "change": "added",
+          "after": {
+            "argocd.argoproj.io/sync-wave": "1"
+          }
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "app-a",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "web",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/service-db.yaml",
+      "apiVersion": "v1",
+      "kind": "Service",
+      "name": "db",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations",
+          "change": "added",
+          "after": {
+            "argocd.argoproj.io/sync-wave": "0"
+          }
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "app-a",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "db",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/service-web.yaml",
+      "apiVersion": "v1",
+      "kind": "Service",
+      "name": "web",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations",
+          "change": "added",
+          "after": {
+            "argocd.argoproj.io/sync-wave": "0"
+          }
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "app-a",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "web",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/serviceaccount-web.yaml",
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "name": "web",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations",
+          "change": "added",
+          "after": {
+            "argocd.argoproj.io/sync-wave": "-10"
+          }
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "app-a",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "web",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/statefulset-db.yaml",
+      "apiVersion": "apps/v1",
+      "kind": "StatefulSet",
+      "name": "db",
+      "namespace": "app-a",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations",
+          "change": "added",
+          "after": {
+            "argocd.argoproj.io/sync-wave": "0"
+          }
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "app-a",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "db",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": []
+}
