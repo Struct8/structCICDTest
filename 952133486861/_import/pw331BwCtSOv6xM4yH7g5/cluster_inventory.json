@@ -1,0 +1,584 @@
+{
+  "version": 2,
+  "platform": "eks",
+  "cluster": "k8simp12-cluster",
+  "region": "us-west-2",
+  "requestId": "d94f602e-a15a-497c-b577-57525705cd4f",
+  "releases": [
+    {
+      "name": "argocd",
+      "namespace": "argocd",
+      "chart": "argo-cd",
+      "version": "10.18.0",
+      "appVersion": "v3.6.1",
+      "status": "deployed"
+    }
+  ],
+  "namespaces": [
+    {
+      "metadata": {
+        "name": "argocd",
+        "labels": {
+          "kubernetes.io/metadata.name": "argocd",
+          "name": "argocd"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "default",
+        "labels": {
+          "kubernetes.io/metadata.name": "default"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-node-lease",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-node-lease"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-public",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-public"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-system",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-system"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "svc-lab",
+        "labels": {
+          "kubernetes.io/metadata.name": "svc-lab"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+  ],
+  "kinds": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "StatefulSet",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "configuration.konghq.com/v1",
+      "kind": "KongClusterPlugin",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway-operator.konghq.com/v1beta1",
+      "kind": "GatewayConfiguration",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "kind": "Gateway",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "kind": "HTTPRoute",
+      "served": false
+    },
+    {
+      "apiVersion": "grafana.integreatly.org/v1beta1",
+      "kind": "Grafana",
+      "served": false
+    },
+    {
+      "apiVersion": "k8s.keycloak.org/v2beta1",
+      "kind": "Keycloak",
+      "served": false
+    },
+    {
+      "apiVersion": "monitoring.coreos.com/v1",
+      "kind": "Prometheus",
+      "served": false
+    },
+    {
+      "apiVersion": "monitoring.coreos.com/v1",
+      "kind": "ServiceMonitor",
+      "served": false
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "rabbitmq.com/v1beta1",
+      "kind": "Queue",
+      "served": false
+    },
+    {
+      "apiVersion": "storage.k8s.io/v1",
+      "kind": "StorageClass",
+      "served": true,
+      "namespaced": false
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "LimitRange",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolume",
+      "served": true,
+      "namespaced": false
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ResourceQuota",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Secret",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "served": true,
+      "namespaced": true
+    }
+  ],
+  "objects": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "api",
+        "namespace": "svc-lab",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "api"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "api"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "image": "nginxinc/nginx-unprivileged:1.27-alpine",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "api",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+                    "name": "http",
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "20m",
+                    "memory": "32Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "web",
+        "namespace": "svc-lab",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 2,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "web"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "web"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "image": "nginxinc/nginx-unprivileged:1.27-alpine",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "web",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+                    "name": "http",
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "20m",
+                    "memory": "32Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "worker",
+        "namespace": "svc-lab",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchExpressions": [
+            {
+              "key": "tier",
+              "operator": "In",
+              "values": [
+                "backend",
+                "batch"
+              ]
+            }
+          ],
+          "matchLabels": {
+            "app": "worker"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "worker",
+              "tier": "backend"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "image": "nginxinc/nginx-unprivileged:1.27-alpine",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "worker",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+                    "name": "http",
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "20m",
+                    "memory": "32Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "storage.k8s.io/v1",
+      "kind": "StorageClass",
+      "metadata": {
+        "name": "gp2"
+      },
+      "parameters": {
+        "fsType": "ext4",
+        "type": "gp2"
+      },
+      "provisioner": "kubernetes.io/aws-ebs",
+      "reclaimPolicy": "Delete",
+      "volumeBindingMode": "WaitForFirstConsumer"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "kube-root-ca.crt",
+        "namespace": "svc-lab",
+        "annotations": {
+          "kubernetes.io/description": "Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubernetes.default.svc. No other usage is guaranteed across distributions of Kubernetes clusters."
+        }
+      },
+      "data": {
+        "ca.crt": "-----BEGIN CERTIFICATE-----\nMIIDMTCCAhmgAwIBAgIQSqVr9rk9Z4Xe1ll+lNNGIzANBgkqhkiG9w0BAQsFADAn\nMRAwDgYDVQQKEwdBV1MgRUtTMRMwEQYDVQQDEwprdWJlcm5ldGVzMB4XDTI2MTEx\nNTEzMTI0NloXDTMxMTExNDEzMTI0NlowJzEQMA4GA1UEChMHQVdTIEVLUzETMBEG\nA1UEAxMKa3ViZXJuZXRlczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nALsvNqzTT/qmheMTGacbNQDWqhgytURkI9UwI6AE4N0/r7UZhhVONsvAtvufBnRf\nRRNbfnqE1r6Jh7ieespoHyqiSpBXYXQBVuVU3g6ami5BhS9w7bKCEMj48OX+AW5g\nBDahvihvmKMRjdbwmgpK6XRAElN/+29RJlVFrI08dZgubM3vgh9euk9AqmZ79vrS\nCJOir/bDTTdqm3/Vjornm+mXtdjV3JYZHLhiqRN5wH6gk8T/GRhvCL6FacqHH2kO\ny4fiH4nElSuFkQNmN57mttL8D/0SWijK5707yDb4NNk9wD5H3XenqnI/Fewnn6hj\n9RIwPmo54O8SHXZfB71RalECAwEAAaNZMFcwDgYDVR0PAQH/BAQDAgKkMA8GA1Ud\nEwEB/wQFMAMBAf8wHQYDVR0OBBYEFKq9LuV+qcMYKn7vqxfI3PQh2b+dMBUGA1Ud\nEQQOMAyCCmt1YmVybmV0ZXMwDQYJKoZIhvcNAQELBQADggEBAEEwOWFhl6xRVYeD\nRth/2igaDvELBkkzIyvfsDCUKNUBTbR8CXLSehRoYJ+7Gwfwaw9kBEsljq4g1plH\nb28CfO/Txx6Ofhlu4zgXIJAb36sINo2PfUZ9NrS76dFERa6TDPPVoEITHcpqzf0S\n3AdFzaWp3ytU5Sh5htAmtMiBlWGjqLxHBD5jYzzwl9hO/kWFNsEVLuc9k1f8eHjS\n7E4VeKGcN0qhSGWNGYGXOnNbY0gkHr8qQr8egcBtgT/ByZ2PyMQtpfeA4ZacS/Sv\n1yO+UkkvlJL2TySrEzsGTWDgK51WgtGsS4H8nSky2cYJ2snf0xo6TdHfrlwP8fi8\njX3u5DA=\n-----END CERTIFICATE-----\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "name": "api-public",
+        "namespace": "svc-lab",
+        "annotations": {
+          "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout": "120"
+        },
+        "appliedKeys": {
+          "labels": [],
+          "annotations": [
+            "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout"
+          ]
+        }
+      },
+      "spec": {
+        "allocateLoadBalancerNodePorts": true,
+        "clusterIP": "172.20.24.198",
+        "clusterIPs": [
+          "172.20.24.198"
+        ],
+        "externalTrafficPolicy": "Local",
+        "healthCheckNodePort": 31338,
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "name": "http",
+            "nodePort": 30624,
+            "port": 80,
+            "protocol": "TCP",
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "app": "api"
+        },
+        "sessionAffinity": "None",
+        "type": "LoadBalancer"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "name": "web",
+        "namespace": "svc-lab",
+        "annotations": {
+          "example.com/owner": "shop"
+        },
+        "appliedKeys": {
+          "labels": [],
+          "annotations": [
+            "example.com/owner"
+          ]
+        }
+      },
+      "spec": {
+        "clusterIP": "172.20.109.56",
+        "clusterIPs": [
+          "172.20.109.56"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "name": "http",
+            "port": 80,
+            "protocol": "TCP",
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "app": "web"
+        },
+        "sessionAffinity": "ClientIP",
+        "sessionAffinityConfig": {
+          "clientIP": {
+            "timeoutSeconds": 10800
+          }
+        },
+        "type": "ClusterIP"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "name": "worker",
+        "namespace": "svc-lab"
+      },
+      "spec": {
+        "clusterIP": "172.20.106.53",
+        "clusterIPs": [
+          "172.20.106.53"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "name": "queue",
+            "port": 9000,
+            "protocol": "TCP",
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "app": "worker",
+          "tier": "backend"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "default",
+        "namespace": "svc-lab"
+      }
+    }
+  ],
+  "applications": [],
+  "errors": []
+}
