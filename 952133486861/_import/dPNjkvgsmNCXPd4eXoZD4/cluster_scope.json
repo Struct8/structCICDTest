@@ -1,0 +1,6 @@
+{
+  "platform": "eks",
+  "cluster": "k8simp10-cluster",
+  "region": "us-west-2",
+  "requestId": "f1301c21-e651-460b-94a1-e7fcf50bc4c3"
+}
