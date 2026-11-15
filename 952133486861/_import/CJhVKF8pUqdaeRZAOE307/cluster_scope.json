@@ -2,7 +2,7 @@
   "platform": "eks",
   "cluster": "k8simp11-cluster",
   "region": "us-west-2",
-  "requestId": "a0e38bf7-15f8-471a-8f69-f5ab3eb304c6",
+  "requestId": "b02cd0df-4fb0-4821-9b8c-8d78aa200410",
   "namespaces": [
     "app-b"
   ],
