@@ -2,7 +2,7 @@
   "platform": "eks",
   "cluster": "k8simp12-cluster",
   "region": "us-west-2",
-  "requestId": "d94f602e-a15a-497c-b577-57525705cd4f",
+  "requestId": "f1d980da-301f-4abe-82cf-ec2e88084456",
   "namespaces": [
     "svc-lab"
   ],
