@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  labels:
+    app: web
+    app.kubernetes.io/name: web-config
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: app-a-2
+    cloudman.io/creator: rmay-struct
+  namespace: app-a
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+data:
+  MODE: prod
