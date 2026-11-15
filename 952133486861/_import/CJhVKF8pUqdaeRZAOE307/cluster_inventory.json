@@ -3,7 +3,7 @@
   "platform": "eks",
   "cluster": "k8simp11-cluster",
   "region": "us-west-2",
-  "requestId": "cbfc0a87-1b04-4ad3-a2f9-2d7f8fe71802",
+  "requestId": "a0e38bf7-15f8-471a-8f69-f5ab3eb304c6",
   "releases": [
     {
       "name": "argocd",
@@ -42,6 +42,17 @@
         "name": "app-a",
         "labels": {
           "kubernetes.io/metadata.name": "app-a"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "app-b",
+        "labels": {
+          "kubernetes.io/metadata.name": "app-b"
         }
       },
       "status": {
@@ -242,31 +253,18 @@
       "kind": "Deployment",
       "metadata": {
         "name": "tuned",
-        "namespace": "app-a",
+        "namespace": "app-b",
         "labels": {
-          "app": "tuned",
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "tuned",
-          "cloudman.io/creator": "rmay-struct"
+          "app": "tuned"
         },
         "annotations": {
-          "argocd.argoproj.io/sync-wave": "0",
-          "argocd.argoproj.io/tracking-id": "app-a-2:apps/Deployment:app-a/tuned",
           "deployment.kubernetes.io/revision": "1"
         },
         "appliedKeys": {
           "labels": [
-            "app",
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
+            "app"
           ],
-          "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id"
-          ]
+          "annotations": []
         }
       },
       "spec": {
@@ -377,32 +375,19 @@
       "kind": "Deployment",
       "metadata": {
         "name": "web",
-        "namespace": "app-a",
+        "namespace": "app-b",
         "labels": {
-          "app": "web",
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "web",
-          "cloudman.io/creator": "rmay-struct",
-          "team": "shop"
+          "app": "web"
         },
         "annotations": {
-          "argocd.argoproj.io/sync-wave": "0",
-          "argocd.argoproj.io/tracking-id": "app-a-2:apps/Deployment:app-a/web",
           "deployment.kubernetes.io/revision": "1",
           "example.com/owner": "shop"
         },
         "appliedKeys": {
           "labels": [
-            "app",
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
+            "app"
           ],
           "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id",
             "example.com/owner"
           ]
         }
@@ -522,29 +507,7 @@
       "kind": "StatefulSet",
       "metadata": {
         "name": "db",
-        "namespace": "app-a",
-        "labels": {
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "db",
-          "cloudman.io/creator": "rmay-struct"
-        },
-        "annotations": {
-          "argocd.argoproj.io/sync-wave": "0",
-          "argocd.argoproj.io/tracking-id": "app-a-2:apps/StatefulSet:app-a/db"
-        },
-        "appliedKeys": {
-          "labels": [
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
-          ],
-          "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id"
-          ]
-        }
+        "namespace": "app-b"
       },
       "spec": {
         "persistentVolumeClaimRetentionPolicy": {
@@ -639,29 +602,7 @@
       "kind": "HorizontalPodAutoscaler",
       "metadata": {
         "name": "web",
-        "namespace": "app-a",
-        "labels": {
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "web",
-          "cloudman.io/creator": "rmay-struct"
-        },
-        "annotations": {
-          "argocd.argoproj.io/sync-wave": "1",
-          "argocd.argoproj.io/tracking-id": "app-a-2:autoscaling/HorizontalPodAutoscaler:app-a/web"
-        },
-        "appliedKeys": {
-          "labels": [
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
-          ],
-          "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id"
-          ]
-        }
+        "namespace": "app-b"
       },
       "spec": {
         "maxReplicas": 4,
@@ -717,7 +658,7 @@
       "kind": "ConfigMap",
       "metadata": {
         "name": "kube-root-ca.crt",
-        "namespace": "app-a",
+        "namespace": "app-b",
         "annotations": {
           "kubernetes.io/description": "Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubernetes.default.svc. No other usage is guaranteed across distributions of Kubernetes clusters."
         }
@@ -731,30 +672,15 @@
       "kind": "ConfigMap",
       "metadata": {
         "name": "web-config",
-        "namespace": "app-a",
+        "namespace": "app-b",
         "labels": {
-          "app": "web",
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "web-config",
-          "cloudman.io/creator": "rmay-struct"
-        },
-        "annotations": {
-          "argocd.argoproj.io/sync-wave": "-5",
-          "argocd.argoproj.io/tracking-id": "app-a-2:/ConfigMap:app-a/web-config"
+          "app": "web"
         },
         "appliedKeys": {
           "labels": [
-            "app",
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
+            "app"
           ],
-          "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id"
-          ]
+          "annotations": []
         }
       },
       "data": {
@@ -766,32 +692,66 @@
       "kind": "ConfigMap",
       "metadata": {
         "name": "web-files",
-        "namespace": "app-a",
-        "labels": {
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "web-files",
-          "cloudman.io/creator": "rmay-struct"
-        },
-        "annotations": {
-          "argocd.argoproj.io/sync-wave": "-5",
-          "argocd.argoproj.io/tracking-id": "app-a-2:/ConfigMap:app-a/web-files"
-        },
-        "appliedKeys": {
-          "labels": [
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
-          ],
-          "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id"
-          ]
-        }
+        "namespace": "app-b"
       },
       "data": {
         "app.conf": "greeting=hello\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolume",
+      "metadata": {
+        "name": "pvc-31b9ae95-725b-4047-9af2-bdd21bee8f3d",
+        "annotations": {
+          "pv.kubernetes.io/provisioned-by": "ebs.csi.aws.com",
+          "volume.kubernetes.io/provisioner-deletion-secret-name": "",
+          "volume.kubernetes.io/provisioner-deletion-secret-namespace": ""
+        }
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "capacity": {
+          "storage": "1Gi"
+        },
+        "claimRef": {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "name": "data-db-0",
+          "namespace": "app-b",
+          "resourceVersion": "10132",
+          "uid": "31b9ae95-725b-4047-9af2-bdd21bee8f3d"
+        },
+        "csi": {
+          "driver": "ebs.csi.aws.com",
+          "fsType": "ext4",
+          "volumeAttributes": {
+            "storage.kubernetes.io/csiProvisionerIdentity": "1794712029455-1870-ebs.csi.aws.com"
+          },
+          "volumeHandle": "vol-01e51791f1049e45b"
+        },
+        "nodeAffinity": {
+          "required": {
+            "nodeSelectorTerms": [
+              {
+                "matchExpressions": [
+                  {
+                    "key": "topology.kubernetes.io/zone",
+                    "operator": "In",
+                    "values": [
+                      "us-west-2b"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "persistentVolumeReclaimPolicy": "Delete",
+        "storageClassName": "lab-gp3",
+        "volumeMode": "Filesystem"
       }
     },
     {
@@ -855,7 +815,7 @@
       "kind": "PersistentVolumeClaim",
       "metadata": {
         "name": "data-db-0",
-        "namespace": "app-a",
+        "namespace": "app-b",
         "labels": {
           "app": "db"
         },
@@ -878,7 +838,7 @@
         },
         "storageClassName": "lab-gp3",
         "volumeMode": "Filesystem",
-        "volumeName": "pvc-800951a6-1045-4139-98de-d24522831959"
+        "volumeName": "pvc-31b9ae95-725b-4047-9af2-bdd21bee8f3d"
       }
     },
     {
@@ -886,7 +846,7 @@
       "kind": "Secret",
       "metadata": {
         "name": "web-secret",
-        "namespace": "app-a"
+        "namespace": "app-b"
       },
       "type": "Opaque",
       "keys": [
@@ -899,29 +859,7 @@
       "kind": "Service",
       "metadata": {
         "name": "db",
-        "namespace": "app-a",
-        "labels": {
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "db",
-          "cloudman.io/creator": "rmay-struct"
-        },
-        "annotations": {
-          "argocd.argoproj.io/sync-wave": "0",
-          "argocd.argoproj.io/tracking-id": "app-a-2:/Service:app-a/db"
-        },
-        "appliedKeys": {
-          "labels": [
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
-          ],
-          "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id"
-          ]
-        }
+        "namespace": "app-b"
       },
       "spec": {
         "clusterIP": "None",
@@ -953,34 +891,12 @@
       "kind": "Service",
       "metadata": {
         "name": "web",
-        "namespace": "app-a",
-        "labels": {
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "web",
-          "cloudman.io/creator": "rmay-struct"
-        },
-        "annotations": {
-          "argocd.argoproj.io/sync-wave": "0",
-          "argocd.argoproj.io/tracking-id": "app-a-2:/Service:app-a/web"
-        },
-        "appliedKeys": {
-          "labels": [
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
-          ],
-          "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id"
-          ]
-        }
+        "namespace": "app-b"
       },
       "spec": {
-        "clusterIP": "172.20.115.189",
+        "clusterIP": "172.20.154.30",
         "clusterIPs": [
-          "172.20.115.189"
+          "172.20.154.30"
         ],
         "internalTrafficPolicy": "Cluster",
         "ipFamilies": [
@@ -1006,7 +922,7 @@
       "kind": "ServiceAccount",
       "metadata": {
         "name": "default",
-        "namespace": "app-a"
+        "namespace": "app-b"
       }
     },
     {
@@ -1014,29 +930,7 @@
       "kind": "ServiceAccount",
       "metadata": {
         "name": "web",
-        "namespace": "app-a",
-        "labels": {
-          "app.kubernetes.io/instance": "app-a-2",
-          "app.kubernetes.io/managed-by": "struct8",
-          "app.kubernetes.io/name": "web",
-          "cloudman.io/creator": "rmay-struct"
-        },
-        "annotations": {
-          "argocd.argoproj.io/sync-wave": "-10",
-          "argocd.argoproj.io/tracking-id": "app-a-2:/ServiceAccount:app-a/web"
-        },
-        "appliedKeys": {
-          "labels": [
-            "app.kubernetes.io/instance",
-            "app.kubernetes.io/managed-by",
-            "app.kubernetes.io/name",
-            "cloudman.io/creator"
-          ],
-          "annotations": [
-            "argocd.argoproj.io/sync-wave",
-            "argocd.argoproj.io/tracking-id"
-          ]
-        }
+        "namespace": "app-b"
       }
     }
   ],
