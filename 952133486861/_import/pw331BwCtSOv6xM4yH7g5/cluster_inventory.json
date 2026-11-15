@@ -3,7 +3,7 @@
   "platform": "eks",
   "cluster": "k8simp12-cluster",
   "region": "us-west-2",
-  "requestId": "d94f602e-a15a-497c-b577-57525705cd4f",
+  "requestId": "f1d980da-301f-4abe-82cf-ec2e88084456",
   "releases": [
     {
       "name": "argocd",
@@ -11,6 +11,20 @@
       "chart": "argo-cd",
       "version": "10.18.0",
       "appVersion": "v3.6.1",
+      "status": "deployed"
+    },
+    {
+      "name": "argocd-apps",
+      "namespace": "argocd",
+      "chart": "argocd-apps",
+      "version": "1.4.1",
+      "status": "deployed"
+    },
+    {
+      "name": "argocd-projects",
+      "namespace": "argocd",
+      "chart": "argocd-apps",
+      "version": "1.4.1",
       "status": "deployed"
     }
   ],
@@ -221,8 +235,28 @@
       "metadata": {
         "name": "api",
         "namespace": "svc-lab",
+        "labels": {
+          "app.kubernetes.io/instance": "svc-lab",
+          "app.kubernetes.io/managed-by": "struct8",
+          "app.kubernetes.io/name": "api",
+          "cloudman.io/creator": "rmay-struct"
+        },
         "annotations": {
+          "argocd.argoproj.io/sync-wave": "0",
+          "argocd.argoproj.io/tracking-id": "svc-lab:apps/Deployment:svc-lab/api",
           "deployment.kubernetes.io/revision": "1"
+        },
+        "appliedKeys": {
+          "labels": [
+            "app.kubernetes.io/instance",
+            "app.kubernetes.io/managed-by",
+            "app.kubernetes.io/name",
+            "cloudman.io/creator"
+          ],
+          "annotations": [
+            "argocd.argoproj.io/sync-wave",
+            "argocd.argoproj.io/tracking-id"
+          ]
         }
       },
       "spec": {
@@ -285,8 +319,28 @@
       "metadata": {
         "name": "web",
         "namespace": "svc-lab",
+        "labels": {
+          "app.kubernetes.io/instance": "svc-lab",
+          "app.kubernetes.io/managed-by": "struct8",
+          "app.kubernetes.io/name": "web",
+          "cloudman.io/creator": "rmay-struct"
+        },
         "annotations": {
+          "argocd.argoproj.io/sync-wave": "0",
+          "argocd.argoproj.io/tracking-id": "svc-lab:apps/Deployment:svc-lab/web",
           "deployment.kubernetes.io/revision": "1"
+        },
+        "appliedKeys": {
+          "labels": [
+            "app.kubernetes.io/instance",
+            "app.kubernetes.io/managed-by",
+            "app.kubernetes.io/name",
+            "cloudman.io/creator"
+          ],
+          "annotations": [
+            "argocd.argoproj.io/sync-wave",
+            "argocd.argoproj.io/tracking-id"
+          ]
         }
       },
       "spec": {
@@ -349,8 +403,28 @@
       "metadata": {
         "name": "worker",
         "namespace": "svc-lab",
+        "labels": {
+          "app.kubernetes.io/instance": "svc-lab",
+          "app.kubernetes.io/managed-by": "struct8",
+          "app.kubernetes.io/name": "worker",
+          "cloudman.io/creator": "rmay-struct"
+        },
         "annotations": {
+          "argocd.argoproj.io/sync-wave": "0",
+          "argocd.argoproj.io/tracking-id": "svc-lab:apps/Deployment:svc-lab/worker",
           "deployment.kubernetes.io/revision": "1"
+        },
+        "appliedKeys": {
+          "labels": [
+            "app.kubernetes.io/instance",
+            "app.kubernetes.io/managed-by",
+            "app.kubernetes.io/name",
+            "cloudman.io/creator"
+          ],
+          "annotations": [
+            "argocd.argoproj.io/sync-wave",
+            "argocd.argoproj.io/tracking-id"
+          ]
         }
       },
       "spec": {
@@ -452,12 +526,27 @@
       "metadata": {
         "name": "api-public",
         "namespace": "svc-lab",
+        "labels": {
+          "app.kubernetes.io/instance": "svc-lab",
+          "app.kubernetes.io/managed-by": "struct8",
+          "app.kubernetes.io/name": "api-public",
+          "cloudman.io/creator": "rmay-struct"
+        },
         "annotations": {
+          "argocd.argoproj.io/sync-wave": "0",
+          "argocd.argoproj.io/tracking-id": "svc-lab:/Service:svc-lab/api-public",
           "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout": "120"
         },
         "appliedKeys": {
-          "labels": [],
+          "labels": [
+            "app.kubernetes.io/instance",
+            "app.kubernetes.io/managed-by",
+            "app.kubernetes.io/name",
+            "cloudman.io/creator"
+          ],
           "annotations": [
+            "argocd.argoproj.io/sync-wave",
+            "argocd.argoproj.io/tracking-id",
             "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout"
           ]
         }
@@ -497,12 +586,27 @@
       "metadata": {
         "name": "web",
         "namespace": "svc-lab",
+        "labels": {
+          "app.kubernetes.io/instance": "svc-lab",
+          "app.kubernetes.io/managed-by": "struct8",
+          "app.kubernetes.io/name": "web",
+          "cloudman.io/creator": "rmay-struct"
+        },
         "annotations": {
+          "argocd.argoproj.io/sync-wave": "0",
+          "argocd.argoproj.io/tracking-id": "svc-lab:/Service:svc-lab/web",
           "example.com/owner": "shop"
         },
         "appliedKeys": {
-          "labels": [],
+          "labels": [
+            "app.kubernetes.io/instance",
+            "app.kubernetes.io/managed-by",
+            "app.kubernetes.io/name",
+            "cloudman.io/creator"
+          ],
           "annotations": [
+            "argocd.argoproj.io/sync-wave",
+            "argocd.argoproj.io/tracking-id",
             "example.com/owner"
           ]
         }
@@ -542,7 +646,29 @@
       "kind": "Service",
       "metadata": {
         "name": "worker",
-        "namespace": "svc-lab"
+        "namespace": "svc-lab",
+        "labels": {
+          "app.kubernetes.io/instance": "svc-lab",
+          "app.kubernetes.io/managed-by": "struct8",
+          "app.kubernetes.io/name": "worker",
+          "cloudman.io/creator": "rmay-struct"
+        },
+        "annotations": {
+          "argocd.argoproj.io/sync-wave": "0",
+          "argocd.argoproj.io/tracking-id": "svc-lab:/Service:svc-lab/worker"
+        },
+        "appliedKeys": {
+          "labels": [
+            "app.kubernetes.io/instance",
+            "app.kubernetes.io/managed-by",
+            "app.kubernetes.io/name",
+            "cloudman.io/creator"
+          ],
+          "annotations": [
+            "argocd.argoproj.io/sync-wave",
+            "argocd.argoproj.io/tracking-id"
+          ]
+        }
       },
       "spec": {
         "clusterIP": "172.20.106.53",
@@ -579,6 +705,136 @@
       }
     }
   ],
-  "applications": [],
+  "applications": [
+    {
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "metadata": {
+        "name": "argocd-root-struct8-structcicdtest",
+        "namespace": "argocd",
+        "labels": {
+          "app.kubernetes.io/managed-by": "Helm"
+        },
+        "annotations": {
+          "meta.helm.sh/release-name": "argocd-apps",
+          "meta.helm.sh/release-namespace": "argocd"
+        }
+      },
+      "spec": {
+        "project": "default",
+        "destination": {
+          "namespace": "argocd",
+          "server": "https://kubernetes.default.svc"
+        },
+        "source": {
+          "repoURL": "https://github.com/Struct8/structCICDTest.git",
+          "path": ".",
+          "targetRevision": "HEAD"
+        },
+        "syncPolicy": {
+          "automated": {
+            "prune": true,
+            "selfHeal": true
+          }
+        }
+      },
+      "status": {
+        "resources": [
+          {
+            "group": "argoproj.io",
+            "version": "v1alpha1",
+            "kind": "Application",
+            "namespace": "argocd",
+            "name": "svc-lab"
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "metadata": {
+        "name": "svc-lab",
+        "namespace": "argocd",
+        "labels": {
+          "app.kubernetes.io/instance": "svc-lab",
+          "app.kubernetes.io/managed-by": "struct8",
+          "app.kubernetes.io/name": "svc-lab",
+          "cloudman.io/creator": "rmay-struct"
+        },
+        "annotations": {
+          "argocd.argoproj.io/sync-wave": "-10",
+          "argocd.argoproj.io/tracking-id": "argocd-root-struct8-structcicdtest:argoproj.io/Application:argocd/svc-lab"
+        },
+        "appliedKeys": {
+          "labels": [
+            "app.kubernetes.io/instance",
+            "app.kubernetes.io/managed-by",
+            "app.kubernetes.io/name",
+            "cloudman.io/creator"
+          ],
+          "annotations": [
+            "argocd.argoproj.io/sync-wave",
+            "argocd.argoproj.io/tracking-id"
+          ]
+        }
+      },
+      "spec": {
+        "project": "k8simp12",
+        "destination": {
+          "namespace": "svc-lab",
+          "server": "https://kubernetes.default.svc"
+        },
+        "source": {
+          "repoURL": "https://github.com/Struct8/structCICDTest.git",
+          "path": "952133486861/svc-lab/templates",
+          "targetRevision": "HEAD"
+        }
+      },
+      "status": {
+        "resources": [
+          {
+            "version": "v1",
+            "kind": "Service",
+            "namespace": "svc-lab",
+            "name": "api-public"
+          },
+          {
+            "version": "v1",
+            "kind": "Service",
+            "namespace": "svc-lab",
+            "name": "web"
+          },
+          {
+            "version": "v1",
+            "kind": "Service",
+            "namespace": "svc-lab",
+            "name": "worker"
+          },
+          {
+            "group": "apps",
+            "version": "v1",
+            "kind": "Deployment",
+            "namespace": "svc-lab",
+            "name": "api"
+          },
+          {
+            "group": "apps",
+            "version": "v1",
+            "kind": "Deployment",
+            "namespace": "svc-lab",
+            "name": "web"
+          },
+          {
+            "group": "apps",
+            "version": "v1",
+            "kind": "Deployment",
+            "namespace": "svc-lab",
+            "name": "worker"
+          }
+        ]
+      }
+    }
+  ],
   "errors": []
 }
