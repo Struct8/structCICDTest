@@ -3,7 +3,7 @@
   "platform": "eks",
   "cluster": "k8simp11-cluster",
   "region": "us-west-2",
-  "requestId": "b02cd0df-4fb0-4821-9b8c-8d78aa200410",
+  "requestId": "e40447ee-3eec-4455-b7ec-69e5ece29eb2",
   "releases": [
     {
       "name": "argocd",
@@ -374,6 +374,128 @@
       "apiVersion": "apps/v1",
       "kind": "Deployment",
       "metadata": {
+        "name": "tunedb",
+        "namespace": "app-b",
+        "labels": {
+          "app": "tunedb"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        },
+        "appliedKeys": {
+          "labels": [
+            "app"
+          ],
+          "annotations": []
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "tunedb"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "annotations": {
+              "example.com/restarted-at": "2026-11-01"
+            },
+            "labels": {
+              "app": "tunedb",
+              "tier": "back"
+            }
+          },
+          "spec": {
+            "affinity": {
+              "nodeAffinity": {
+                "requiredDuringSchedulingIgnoredDuringExecution": {
+                  "nodeSelectorTerms": [
+                    {
+                      "matchExpressions": [
+                        {
+                          "key": "zone",
+                          "operator": "In",
+                          "values": [
+                            "a"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "containers": [
+              {
+                "command": [
+                  "sh",
+                  "-c",
+                  "while true; do sleep 3600; done"
+                ],
+                "image": "busybox:1.36",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "app",
+                "resources": {
+                  "requests": {
+                    "cpu": "10m"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "initContainers": [
+              {
+                "command": [
+                  "sh",
+                  "-c",
+                  "true"
+                ],
+                "image": "busybox:1.36",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "init",
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "nodeSelector": {
+              "kubernetes.io/os": "linux"
+            },
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+              "runAsNonRoot": true,
+              "runAsUser": 1000
+            },
+            "terminationGracePeriodSeconds": 60,
+            "tolerations": [
+              {
+                "effect": "NoSchedule",
+                "key": "dedicated",
+                "operator": "Equal",
+                "value": "core"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
         "name": "web",
         "namespace": "app-b",
         "labels": {
@@ -504,6 +626,138 @@
     },
     {
       "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "webb",
+        "namespace": "app-b",
+        "labels": {
+          "app": "webb"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "example.com/owner": "shop"
+        },
+        "appliedKeys": {
+          "labels": [
+            "app"
+          ],
+          "annotations": [
+            "example.com/owner"
+          ]
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 2,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "webb"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "webb"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "env": [
+                  {
+                    "name": "GREETING",
+                    "value": "hello"
+                  }
+                ],
+                "envFrom": [
+                  {
+                    "configMapRef": {
+                      "name": "webb-config"
+                    }
+                  },
+                  {
+                    "secretRef": {
+                      "name": "webb-secret"
+                    }
+                  }
+                ],
+                "image": "nginx:1.27-alpine",
+                "imagePullPolicy": "IfNotPresent",
+                "livenessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/",
+                    "port": 80,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                },
+                "name": "webb",
+                "ports": [
+                  {
+                    "containerPort": 80,
+                    "protocol": "TCP"
+                  }
+                ],
+                "readinessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/",
+                    "port": 80,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                },
+                "resources": {
+                  "requests": {
+                    "cpu": "50m",
+                    "memory": "64Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/etc/app",
+                    "name": "files"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "serviceAccount": "webb",
+            "serviceAccountName": "webb",
+            "terminationGracePeriodSeconds": 30,
+            "volumes": [
+              {
+                "configMap": {
+                  "defaultMode": 420,
+                  "name": "webb-files"
+                },
+                "name": "files"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
       "kind": "StatefulSet",
       "metadata": {
         "name": "db",
@@ -598,6 +852,101 @@
       }
     },
     {
+      "apiVersion": "apps/v1",
+      "kind": "StatefulSet",
+      "metadata": {
+        "name": "dbb",
+        "namespace": "app-b"
+      },
+      "spec": {
+        "persistentVolumeClaimRetentionPolicy": {
+          "whenDeleted": "Retain",
+          "whenScaled": "Retain"
+        },
+        "podManagementPolicy": "OrderedReady",
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "dbb"
+          }
+        },
+        "serviceName": "dbb",
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "dbb"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "image": "redis:7-alpine",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "dbb",
+                "ports": [
+                  {
+                    "containerPort": 6379,
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "50m",
+                    "memory": "64Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/data",
+                    "name": "data"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30
+          }
+        },
+        "updateStrategy": {
+          "rollingUpdate": {
+            "maxUnavailable": 1,
+            "partition": 0
+          },
+          "type": "RollingUpdate"
+        },
+        "volumeClaimTemplates": [
+          {
+            "apiVersion": "v1",
+            "kind": "PersistentVolumeClaim",
+            "metadata": {
+              "name": "data"
+            },
+            "spec": {
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "resources": {
+                "requests": {
+                  "storage": "1Gi"
+                }
+              },
+              "storageClassName": "lab-gp3",
+              "volumeMode": "Filesystem"
+            },
+            "status": {
+              "phase": "Pending"
+            }
+          }
+        ]
+      }
+    },
+    {
       "apiVersion": "autoscaling/v2",
       "kind": "HorizontalPodAutoscaler",
       "metadata": {
@@ -623,6 +972,35 @@
           "apiVersion": "apps/v1",
           "kind": "Deployment",
           "name": "web"
+        }
+      }
+    },
+    {
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler",
+      "metadata": {
+        "name": "webb",
+        "namespace": "app-b"
+      },
+      "spec": {
+        "maxReplicas": 4,
+        "metrics": [
+          {
+            "resource": {
+              "name": "cpu",
+              "target": {
+                "averageUtilization": 70,
+                "type": "Utilization"
+              }
+            },
+            "type": "Resource"
+          }
+        ],
+        "minReplicas": 2,
+        "scaleTargetRef": {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "name": "webb"
         }
       }
     },
@@ -692,6 +1070,37 @@
       "kind": "ConfigMap",
       "metadata": {
         "name": "web-files",
+        "namespace": "app-b"
+      },
+      "data": {
+        "app.conf": "greeting=hello\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "webb-config",
+        "namespace": "app-b",
+        "labels": {
+          "app": "webb"
+        },
+        "appliedKeys": {
+          "labels": [
+            "app"
+          ],
+          "annotations": []
+        }
+      },
+      "data": {
+        "MODE": "prod"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "webb-files",
         "namespace": "app-b"
       },
       "data": {
@@ -843,9 +1252,45 @@
     },
     {
       "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "metadata": {
+        "name": "data-dbb-0",
+        "namespace": "app-b",
+        "labels": {
+          "app": "dbb"
+        }
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "1Gi"
+          }
+        },
+        "storageClassName": "lab-gp3",
+        "volumeMode": "Filesystem"
+      }
+    },
+    {
+      "apiVersion": "v1",
       "kind": "Secret",
       "metadata": {
         "name": "web-secret",
+        "namespace": "app-b"
+      },
+      "type": "Opaque",
+      "keys": [
+        "DB_PASSWORD",
+        "DB_USER"
+      ]
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Secret",
+      "metadata": {
+        "name": "webb-secret",
         "namespace": "app-b"
       },
       "type": "Opaque",
@@ -890,6 +1335,38 @@
       "apiVersion": "v1",
       "kind": "Service",
       "metadata": {
+        "name": "dbb",
+        "namespace": "app-b"
+      },
+      "spec": {
+        "clusterIP": "None",
+        "clusterIPs": [
+          "None"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "name": "redis",
+            "port": 6379,
+            "protocol": "TCP",
+            "targetPort": 6379
+          }
+        ],
+        "selector": {
+          "app": "dbb"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
         "name": "web",
         "namespace": "app-b"
       },
@@ -919,6 +1396,37 @@
     },
     {
       "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "name": "webb",
+        "namespace": "app-b"
+      },
+      "spec": {
+        "clusterIP": "172.20.110.161",
+        "clusterIPs": [
+          "172.20.110.161"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "port": 80,
+            "protocol": "TCP",
+            "targetPort": 80
+          }
+        ],
+        "selector": {
+          "app": "webb"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      }
+    },
+    {
+      "apiVersion": "v1",
       "kind": "ServiceAccount",
       "metadata": {
         "name": "default",
@@ -930,6 +1438,14 @@
       "kind": "ServiceAccount",
       "metadata": {
         "name": "web",
+        "namespace": "app-b"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "webb",
         "namespace": "app-b"
       }
     }
