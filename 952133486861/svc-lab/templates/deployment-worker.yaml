@@ -16,11 +16,11 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchExpressions:
-      key: tier
-      operator: In
-      values:
-        - backend
-        - batch
+      - key: tier
+        operator: In
+        values:
+          - backend
+          - batch
     matchLabels:
       app: worker
   strategy:
