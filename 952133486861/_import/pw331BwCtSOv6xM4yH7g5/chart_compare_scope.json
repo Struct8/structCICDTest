@@ -2,7 +2,7 @@
   "platform": "eks",
   "cluster": "k8simp12-cluster",
   "region": "us-west-2",
-  "requestId": "3bb3ae92-c772-4821-9078-afe46f9f3191",
+  "requestId": "c2165b31-32f4-4116-84a1-efe95e7d234d",
   "namespace": "svc-lab",
   "manifests": "manifests"
 }
