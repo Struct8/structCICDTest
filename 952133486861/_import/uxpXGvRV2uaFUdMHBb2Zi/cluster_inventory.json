@@ -1,0 +1,120 @@
+{
+  "version": 2,
+  "platform": "eks",
+  "cluster": "k8simp11-cluster",
+  "region": "us-west-2",
+  "requestId": "79f22bfa-bed2-4236-be3a-e5b8a972f198",
+  "releases": [
+    {
+      "name": "argocd",
+      "namespace": "argocd",
+      "chart": "argo-cd",
+      "version": "10.18.0",
+      "appVersion": "v3.6.1",
+      "status": "deployed"
+    },
+    {
+      "name": "argocd-apps",
+      "namespace": "argocd",
+      "chart": "argocd-apps",
+      "version": "1.4.1",
+      "status": "deployed"
+    },
+    {
+      "name": "argocd-projects",
+      "namespace": "argocd",
+      "chart": "argocd-apps",
+      "version": "1.4.1",
+      "status": "deployed"
+    },
+    {
+      "name": "metrics-server",
+      "namespace": "kube-system",
+      "chart": "metrics-server",
+      "version": "3.14.0",
+      "appVersion": "0.9.0",
+      "status": "deployed"
+    }
+  ],
+  "namespaces": [
+    {
+      "metadata": {
+        "name": "app-a",
+        "labels": {
+          "kubernetes.io/metadata.name": "app-a"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "app-b",
+        "labels": {
+          "kubernetes.io/metadata.name": "app-b"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "argocd",
+        "labels": {
+          "kubernetes.io/metadata.name": "argocd",
+          "name": "argocd"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "default",
+        "labels": {
+          "kubernetes.io/metadata.name": "default"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-node-lease",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-node-lease"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-public",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-public"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-system",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-system"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+  ],
+  "errors": []
+}
