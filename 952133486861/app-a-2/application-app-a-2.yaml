@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-a-2
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app.kubernetes.io/name: app-a-2
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: app-a-2
+    cloudman.io/creator: rmay-struct
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+spec:
+  project: k8simp11
+  source:
+    repoURL: "https://github.com/Struct8/structCICDTest.git"
+    targetRevision: HEAD
+    path: 952133486861/app-a-2/templates
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: app-a
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      name: web
+      jsonPointers:
+        - /spec/replicas
+  syncPolicy:
+    syncOptions:
+      - RespectIgnoreDifferences=true
