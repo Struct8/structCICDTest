@@ -1,0 +1,3942 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.5.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_eks_cluster.k8simp12-cluster",
+          "mode": "managed",
+          "type": "aws_eks_cluster",
+          "name": "k8simp12-cluster",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "access_config": [
+              {
+                "authentication_mode": "API_AND_CONFIG_MAP",
+                "bootstrap_cluster_creator_admin_permissions": true
+              }
+            ],
+            "arn": "arn:aws:eks:us-west-2:952133486861:cluster/k8simp12-cluster",
+            "bootstrap_self_managed_addons": true,
+            "certificate_authority": [
+              {
+                "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lRU3FWcjlyazlaNFhlMWxsK2xOTkdJekFOQmdrcWhraUc5dzBCQVFzRkFEQW4KTVJBd0RnWURWUVFLRXdkQlYxTWdSVXRUTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEkyTVRFeApOVEV6TVRJME5sb1hEVE14TVRFeE5ERXpNVEkwTmxvd0p6RVFNQTRHQTFVRUNoTUhRVmRUSUVWTFV6RVRNQkVHCkExVUVBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUIKQUxzdk5xelRUL3FtaGVNVEdhY2JOUURXcWhneXRVUmtJOVV3STZBRTROMC9yN1VaaGhWT05zdkF0dnVmQm5SZgpSUk5iZm5xRTFyNkpoN2llZXNwb0h5cWlTcEJYWVhRQlZ1VlUzZzZhbWk1QmhTOXc3YktDRU1qNDhPWCtBVzVnCkJEYWh2aWh2bUtNUmpkYndtZ3BLNlhSQUVsTi8rMjlSSmxWRnJJMDhkWmd1Yk0zdmdoOWV1azlBcW1aNzl2clMKQ0pPaXIvYkRUVGRxbTMvVmpvcm5tK21YdGRqVjNKWVpITGhpcVJONXdINmdrOFQvR1JodkNMNkZhY3FISDJrTwp5NGZpSDRuRWxTdUZrUU5tTjU3bXR0TDhELzBTV2lqSzU3MDd5RGI0Tk5rOXdENUgzWGVucW5JL0Zld25uNmhqCjlSSXdQbW81NE84U0hYWmZCNzFSYWxFQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZLcTlMdVYrcWNNWUtuN3ZxeGZJM1BRaDJiK2RNQlVHQTFVZApFUVFPTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBRUV3T1dGaGw2eFJWWWVEClJ0aC8yaWdhRHZFTEJra3pJeXZmc0RDVUtOVUJUYlI4Q1hMU2VoUm9ZSis3R3dmd2F3OWtCRXNsanE0ZzFwbEgKYjI4Q2ZPL1R4eDZPZmhsdTR6Z1hJSkFiMzZzSU5vMlBmVVo5TnJTNzZkRkVSYTZURFBQVm9FSVRIY3BxemYwUwozQWRGemFXcDN5dFU1U2g1aHRBbXRNaUJsV0dqcUx4SEJENWpZenp3bDloTy9rV0ZOc0VWTHVjOWsxZjhlSGpTCjdFNFZlS0djTjBxaFNHV05HWUdYT25OYlkwZ2tIcjhxUXI4ZWdjQnRnVC9CeVoyUHlNUXRwZmVBNFphY1MvU3YKMXlPK1Vra3ZsSkwyVHlTckV6c0dUV0RnSzUxV2d0R3NTNEg4blNreTJjWUoyc25mMHhvNlRkSGZybHdQOGZpOApqWDN1NURBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+              }
+            ],
+            "cluster_id": null,
+            "compute_config": [],
+            "control_plane_scaling_config": [
+              {
+                "tier": "standard"
+              }
+            ],
+            "created_at": "2026-11-15T13:12:40Z",
+            "deletion_protection": false,
+            "enabled_cluster_log_types": [],
+            "encryption_config": [],
+            "endpoint": "https://A19330479B5FB0FAA9DBE71E7C4EB986.gr7.us-west-2.eks.amazonaws.com",
+            "force_update_version": null,
+            "id": "k8simp12-cluster",
+            "identity": [
+              {
+                "oidc": [
+                  {
+                    "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/A19330479B5FB0FAA9DBE71E7C4EB986"
+                  }
+                ]
+              }
+            ],
+            "kube_api_server_config": [
+              {
+                "event_ttl": "60m",
+                "service_node_port_range": [
+                  {
+                    "max_port": 32767,
+                    "min_port": 30000
+                  }
+                ]
+              }
+            ],
+            "kube_controller_manager_config": [
+              {
+                "horizontal_pod_autoscaler_controller_config": [
+                  {
+                    "horizontal_pod_autoscaler_sync_period": "15s"
+                  }
+                ],
+                "pod_gc_controller_config": [
+                  {
+                    "terminated_pod_gc_threshold": 12500
+                  }
+                ]
+              }
+            ],
+            "kube_scheduler_config": [
+              {
+                "node_resources_fit": [
+                  {
+                    "scoring_strategy": [
+                      {
+                        "resource": [
+                          {
+                            "name": "cpu",
+                            "weight": 1
+                          },
+                          {
+                            "name": "memory",
+                            "weight": 1
+                          }
+                        ],
+                        "type": "LeastAllocated"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "kubernetes_network_config": [
+              {
+                "elastic_load_balancing": [
+                  {
+                    "enabled": false
+                  }
+                ],
+                "ip_family": "ipv4",
+                "service_ipv4_cidr": "172.20.0.0/16",
+                "service_ipv6_cidr": ""
+              }
+            ],
+            "name": "k8simp12-cluster",
+            "outpost_config": [],
+            "platform_version": "eks.9",
+            "region": "us-west-2",
+            "remote_network_config": [],
+            "role_arn": "arn:aws:iam::952133486861:role/k8simp12-cluster-role",
+            "status": "ACTIVE",
+            "storage_config": [],
+            "tags": {
+              "Project": "k8s-import-lab"
+            },
+            "tags_all": {
+              "Project": "k8s-import-lab"
+            },
+            "timeouts": null,
+            "upgrade_policy": [
+              {
+                "support_type": "EXTENDED"
+              }
+            ],
+            "version": "1.37",
+            "vpc_config": [
+              {
+                "cluster_security_group_id": "sg-096c3edc7c922bc7e",
+                "control_plane_egress_mode": "AWS_MANAGED",
+                "endpoint_private_access": true,
+                "endpoint_public_access": true,
+                "public_access_cidrs": [
+                  "0.0.0.0/0"
+                ],
+                "security_group_ids": [],
+                "subnet_ids": [
+                  "subnet-06f68666197048326",
+                  "subnet-0fb605fde475f66ec"
+                ],
+                "vpc_id": "vpc-0adb7d2b501fb4439"
+              }
+            ],
+            "zonal_shift_config": []
+          },
+          "sensitive_values": {
+            "access_config": [
+              {}
+            ],
+            "certificate_authority": [
+              {}
+            ],
+            "compute_config": [],
+            "control_plane_scaling_config": [
+              {}
+            ],
+            "enabled_cluster_log_types": [],
+            "encryption_config": [],
+            "identity": [
+              {
+                "oidc": [
+                  {}
+                ]
+              }
+            ],
+            "kube_api_server_config": [
+              {
+                "service_node_port_range": [
+                  {}
+                ]
+              }
+            ],
+            "kube_controller_manager_config": [
+              {
+                "horizontal_pod_autoscaler_controller_config": [
+                  {}
+                ],
+                "pod_gc_controller_config": [
+                  {}
+                ]
+              }
+            ],
+            "kube_scheduler_config": [
+              {
+                "node_resources_fit": [
+                  {
+                    "scoring_strategy": [
+                      {
+                        "resource": [
+                          {},
+                          {}
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "kubernetes_network_config": [
+              {
+                "elastic_load_balancing": [
+                  {}
+                ]
+              }
+            ],
+            "outpost_config": [],
+            "remote_network_config": [],
+            "storage_config": [],
+            "tags": {},
+            "tags_all": {},
+            "upgrade_policy": [
+              {}
+            ],
+            "vpc_config": [
+              {
+                "public_access_cidrs": [
+                  false
+                ],
+                "security_group_ids": [],
+                "subnet_ids": [
+                  false,
+                  false
+                ]
+              }
+            ],
+            "zonal_shift_config": []
+          }
+        },
+        {
+          "address": "aws_eks_node_group.k8simp12-ng",
+          "mode": "managed",
+          "type": "aws_eks_node_group",
+          "name": "k8simp12-ng",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "ami_type": "AL2023_x86_64_STANDARD",
+            "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/k8simp12-cluster/k8simp12-ng/e6d0efaf-8c56-cfc9-1d5d-47bb6f941ef7",
+            "capacity_type": "ON_DEMAND",
+            "cluster_name": "k8simp12-cluster",
+            "disk_size": 20,
+            "force_update_version": null,
+            "id": "k8simp12-cluster:k8simp12-ng",
+            "instance_types": [
+              "t3.medium"
+            ],
+            "labels": {},
+            "launch_template": [],
+            "node_group_name": "k8simp12-ng",
+            "node_group_name_prefix": "",
+            "node_repair_config": [],
+            "node_role_arn": "arn:aws:iam::952133486861:role/k8simp12-node-role",
+            "region": "us-west-2",
+            "release_version": "1.37.1-20261112",
+            "remote_access": [],
+            "resources": [
+              {
+                "autoscaling_groups": [
+                  {
+                    "name": "eks-k8simp12-ng-e6d0efaf-8c56-cfc9-1d5d-47bb6f941ef7"
+                  }
+                ],
+                "remote_access_security_group_id": ""
+              }
+            ],
+            "scaling_config": [
+              {
+                "desired_size": 2,
+                "max_size": 2,
+                "min_size": 2
+              }
+            ],
+            "status": "ACTIVE",
+            "subnet_ids": [
+              "subnet-06f68666197048326",
+              "subnet-0fb605fde475f66ec"
+            ],
+            "tags": {
+              "Project": "k8s-import-lab"
+            },
+            "tags_all": {
+              "Project": "k8s-import-lab"
+            },
+            "taint": [],
+            "timeouts": null,
+            "update_config": [
+              {
+                "max_unavailable": 1,
+                "max_unavailable_percentage": 0,
+                "update_strategy": ""
+              }
+            ],
+            "version": "1.37",
+            "warm_pool_config": []
+          },
+          "sensitive_values": {
+            "instance_types": [
+              false
+            ],
+            "labels": {},
+            "launch_template": [],
+            "node_repair_config": [],
+            "remote_access": [],
+            "resources": [
+              {
+                "autoscaling_groups": [
+                  {}
+                ]
+              }
+            ],
+            "scaling_config": [
+              {}
+            ],
+            "subnet_ids": [
+              false,
+              false
+            ],
+            "tags": {},
+            "tags_all": {},
+            "taint": [],
+            "update_config": [
+              {}
+            ],
+            "warm_pool_config": []
+          }
+        },
+        {
+          "address": "aws_iam_role.k8simp12-cluster-role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "k8simp12-cluster-role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/k8simp12-cluster-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-11-15T13:12:20Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "k8simp12-cluster-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+            ],
+            "max_session_duration": 3600,
+            "name": "k8simp12-cluster-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "k8s-import-lab"
+            },
+            "tags_all": {
+              "Project": "k8s-import-lab"
+            },
+            "unique_id": "AROA53L4UBEGRW7RMMYH5"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_iam_role.k8simp12-node-role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "k8simp12-node-role",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:iam::952133486861:role/k8simp12-node-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-11-15T13:12:22Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "k8simp12-node-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+              "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+              "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+            ],
+            "max_session_duration": 3600,
+            "name": "k8simp12-node-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Project": "k8s-import-lab"
+            },
+            "tags_all": {
+              "Project": "k8s-import-lab"
+            },
+            "unique_id": "AROA53L4UBEGYNYNSBUAX"
+          },
+          "sensitive_values": {
+            "inline_policy": [],
+            "managed_policy_arns": [
+              false,
+              false,
+              false
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_internet_gateway.k8simp12-igw",
+          "mode": "managed",
+          "type": "aws_internet_gateway",
+          "name": "k8simp12-igw",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-07918ac1f6c6ba9ca",
+            "id": "igw-07918ac1f6c6ba9ca",
+            "owner_id": "952133486861",
+            "region": "us-west-2",
+            "tags": {
+              "Name": "k8simp12-igw",
+              "Project": "k8s-import-lab"
+            },
+            "tags_all": {
+              "Name": "k8simp12-igw",
+              "Project": "k8s-import-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0adb7d2b501fb4439"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_route_table.k8simp12-public-rt",
+          "mode": "managed",
+          "type": "aws_route_table",
+          "name": "k8simp12-public-rt",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-00ecfbc0ed6458b68",
+            "id": "rtb-00ecfbc0ed6458b68",
+            "owner_id": "952133486861",
+            "propagating_vgws": [],
+            "region": "us-west-2",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "igw-07918ac1f6c6ba9ca",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "odb_network_arn": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Name": "k8simp12-public-rt",
+              "Project": "k8s-import-lab"
+            },
+            "tags_all": {
+              "Name": "k8simp12-public-rt",
+              "Project": "k8s-import-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0adb7d2b501fb4439"
+          },
+          "sensitive_values": {
+            "propagating_vgws": [],
+            "route": [
+              {}
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_route_table_association.subnet-06f68666197048326_rtb-00ecfbc0ed6458b68",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-06f68666197048326_rtb-00ecfbc0ed6458b68",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "gateway_id": "",
+            "id": "rtbassoc-07137e408d270ad1f",
+            "region": "us-west-2",
+            "route_table_id": "rtb-00ecfbc0ed6458b68",
+            "subnet_id": "subnet-06f68666197048326",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_route_table_association.subnet-0fb605fde475f66ec_rtb-00ecfbc0ed6458b68",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-0fb605fde475f66ec_rtb-00ecfbc0ed6458b68",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "gateway_id": "",
+            "id": "rtbassoc-09d82b5199225c86d",
+            "region": "us-west-2",
+            "route_table_id": "rtb-00ecfbc0ed6458b68",
+            "subnet_id": "subnet-0fb605fde475f66ec",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "aws_security_group.eks-cluster-sg-k8simp12-cluster-754704396",
+          "mode": "managed",
+          "type": "aws_security_group",
+          "name": "eks-cluster-sg-k8simp12-cluster-754704396",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:security-group/sg-096c3edc7c922bc7e",
+            "description": "EKS created security group applied to ENI that is attached to EKS Control Plane master nodes, as well as any managed workloads.",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              },
+              {
+                "cidr_blocks": [],
+                "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": true,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-096c3edc7c922bc7e",
+            "ingress": [
+              {
+                "cidr_blocks": [],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [
+                  "sg-0d41792d3645068f6"
+                ],
+                "self": false,
+                "to_port": 0
+              },
+              {
+                "cidr_blocks": [],
+                "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": true,
+                "to_port": 0
+              }
+            ],
+            "name": "eks-cluster-sg-k8simp12-cluster-754704396",
+            "name_prefix": "",
+            "owner_id": "952133486861",
+            "region": "us-west-2",
+            "revoke_rules_on_delete": null,
+            "tags": {
+              "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+              "kubernetes.io/cluster/k8simp12-cluster": "owned"
+            },
+            "tags_all": {
+              "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+              "kubernetes.io/cluster/k8simp12-cluster": "owned"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0adb7d2b501fb4439"
+          },
+          "sensitive_values": {
+            "egress": [
+              {
+                "cidr_blocks": [
+                  false
+                ],
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "security_groups": []
+              },
+              {
+                "cidr_blocks": [],
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "security_groups": []
+              }
+            ],
+            "ingress": [
+              {
+                "cidr_blocks": [],
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "security_groups": [
+                  false
+                ]
+              },
+              {
+                "cidr_blocks": [],
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "security_groups": []
+              }
+            ],
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_subnet.k8simp12-public-us-west-2a",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "k8simp12-public-us-west-2a",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-06f68666197048326",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-west-2a",
+            "availability_zone_id": "usw2-az1",
+            "cidr_block": "10.87.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-06f68666197048326",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "952133486861",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-west-2",
+            "tags": {
+              "Name": "k8simp12-public-us-west-2a",
+              "Project": "k8s-import-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Name": "k8simp12-public-us-west-2a",
+              "Project": "k8s-import-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0adb7d2b501fb4439"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_subnet.k8simp12-public-us-west-2b",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "k8simp12-public-us-west-2b",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0fb605fde475f66ec",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-west-2b",
+            "availability_zone_id": "usw2-az2",
+            "cidr_block": "10.87.2.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0fb605fde475f66ec",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "952133486861",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-west-2",
+            "tags": {
+              "Name": "k8simp12-public-us-west-2b",
+              "Project": "k8s-import-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Name": "k8simp12-public-us-west-2b",
+              "Project": "k8s-import-lab",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0adb7d2b501fb4439"
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_vpc.k8simp12-vpc",
+          "mode": "managed",
+          "type": "aws_vpc",
+          "name": "k8simp12-vpc",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 1,
+          "values": {
+            "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-0adb7d2b501fb4439",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.87.0.0/16",
+            "default_network_acl_id": "acl-07581e6de1bae1b6b",
+            "default_route_table_id": "rtb-0c8486d911c6ec963",
+            "default_security_group_id": "sg-0bbd52d2cffd628d5",
+            "dhcp_options_id": "dopt-03b17c556ffb1011e",
+            "enable_dns_hostnames": true,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-0adb7d2b501fb4439",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-0c8486d911c6ec963",
+            "owner_id": "952133486861",
+            "region": "us-west-2",
+            "tags": {
+              "Name": "k8simp12-vpc",
+              "Project": "k8s-import-lab"
+            },
+            "tags_all": {
+              "Name": "k8simp12-vpc",
+              "Project": "k8s-import-lab"
+            }
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "aws_eks_cluster.k8simp12-cluster",
+      "mode": "managed",
+      "type": "aws_eks_cluster",
+      "name": "k8simp12-cluster",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "access_config": [
+            {
+              "authentication_mode": "API_AND_CONFIG_MAP",
+              "bootstrap_cluster_creator_admin_permissions": true
+            }
+          ],
+          "arn": "arn:aws:eks:us-west-2:952133486861:cluster/k8simp12-cluster",
+          "bootstrap_self_managed_addons": true,
+          "certificate_authority": [
+            {
+              "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lRU3FWcjlyazlaNFhlMWxsK2xOTkdJekFOQmdrcWhraUc5dzBCQVFzRkFEQW4KTVJBd0RnWURWUVFLRXdkQlYxTWdSVXRUTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEkyTVRFeApOVEV6TVRJME5sb1hEVE14TVRFeE5ERXpNVEkwTmxvd0p6RVFNQTRHQTFVRUNoTUhRVmRUSUVWTFV6RVRNQkVHCkExVUVBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUIKQUxzdk5xelRUL3FtaGVNVEdhY2JOUURXcWhneXRVUmtJOVV3STZBRTROMC9yN1VaaGhWT05zdkF0dnVmQm5SZgpSUk5iZm5xRTFyNkpoN2llZXNwb0h5cWlTcEJYWVhRQlZ1VlUzZzZhbWk1QmhTOXc3YktDRU1qNDhPWCtBVzVnCkJEYWh2aWh2bUtNUmpkYndtZ3BLNlhSQUVsTi8rMjlSSmxWRnJJMDhkWmd1Yk0zdmdoOWV1azlBcW1aNzl2clMKQ0pPaXIvYkRUVGRxbTMvVmpvcm5tK21YdGRqVjNKWVpITGhpcVJONXdINmdrOFQvR1JodkNMNkZhY3FISDJrTwp5NGZpSDRuRWxTdUZrUU5tTjU3bXR0TDhELzBTV2lqSzU3MDd5RGI0Tk5rOXdENUgzWGVucW5JL0Zld25uNmhqCjlSSXdQbW81NE84U0hYWmZCNzFSYWxFQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZLcTlMdVYrcWNNWUtuN3ZxeGZJM1BRaDJiK2RNQlVHQTFVZApFUVFPTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBRUV3T1dGaGw2eFJWWWVEClJ0aC8yaWdhRHZFTEJra3pJeXZmc0RDVUtOVUJUYlI4Q1hMU2VoUm9ZSis3R3dmd2F3OWtCRXNsanE0ZzFwbEgKYjI4Q2ZPL1R4eDZPZmhsdTR6Z1hJSkFiMzZzSU5vMlBmVVo5TnJTNzZkRkVSYTZURFBQVm9FSVRIY3BxemYwUwozQWRGemFXcDN5dFU1U2g1aHRBbXRNaUJsV0dqcUx4SEJENWpZenp3bDloTy9rV0ZOc0VWTHVjOWsxZjhlSGpTCjdFNFZlS0djTjBxaFNHV05HWUdYT25OYlkwZ2tIcjhxUXI4ZWdjQnRnVC9CeVoyUHlNUXRwZmVBNFphY1MvU3YKMXlPK1Vra3ZsSkwyVHlTckV6c0dUV0RnSzUxV2d0R3NTNEg4blNreTJjWUoyc25mMHhvNlRkSGZybHdQOGZpOApqWDN1NURBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+            }
+          ],
+          "cluster_id": null,
+          "compute_config": [],
+          "control_plane_scaling_config": [
+            {
+              "tier": "standard"
+            }
+          ],
+          "created_at": "2026-11-15T13:12:40Z",
+          "deletion_protection": false,
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "endpoint": "https://A19330479B5FB0FAA9DBE71E7C4EB986.gr7.us-west-2.eks.amazonaws.com",
+          "force_update_version": null,
+          "id": "k8simp12-cluster",
+          "identity": [
+            {
+              "oidc": [
+                {
+                  "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/A19330479B5FB0FAA9DBE71E7C4EB986"
+                }
+              ]
+            }
+          ],
+          "kube_api_server_config": [
+            {
+              "event_ttl": "60m",
+              "service_node_port_range": [
+                {
+                  "max_port": 32767,
+                  "min_port": 30000
+                }
+              ]
+            }
+          ],
+          "kube_controller_manager_config": [
+            {
+              "horizontal_pod_autoscaler_controller_config": [
+                {
+                  "horizontal_pod_autoscaler_sync_period": "15s"
+                }
+              ],
+              "pod_gc_controller_config": [
+                {
+                  "terminated_pod_gc_threshold": 12500
+                }
+              ]
+            }
+          ],
+          "kube_scheduler_config": [
+            {
+              "node_resources_fit": [
+                {
+                  "scoring_strategy": [
+                    {
+                      "resource": [
+                        {
+                          "name": "cpu",
+                          "weight": 1
+                        },
+                        {
+                          "name": "memory",
+                          "weight": 1
+                        }
+                      ],
+                      "type": "LeastAllocated"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {
+                  "enabled": false
+                }
+              ],
+              "ip_family": "ipv4",
+              "service_ipv4_cidr": "172.20.0.0/16",
+              "service_ipv6_cidr": ""
+            }
+          ],
+          "name": "k8simp12-cluster",
+          "outpost_config": [],
+          "platform_version": "eks.9",
+          "region": "us-west-2",
+          "remote_network_config": [],
+          "role_arn": "arn:aws:iam::952133486861:role/k8simp12-cluster-role",
+          "status": "ACTIVE",
+          "storage_config": [],
+          "tags": {
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Project": "k8s-import-lab"
+          },
+          "timeouts": null,
+          "upgrade_policy": [
+            {
+              "support_type": "EXTENDED"
+            }
+          ],
+          "version": "1.37",
+          "vpc_config": [
+            {
+              "cluster_security_group_id": "sg-096c3edc7c922bc7e",
+              "control_plane_egress_mode": "AWS_MANAGED",
+              "endpoint_private_access": true,
+              "endpoint_public_access": true,
+              "public_access_cidrs": [
+                "0.0.0.0/0"
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                "subnet-06f68666197048326",
+                "subnet-0fb605fde475f66ec"
+              ],
+              "vpc_id": "vpc-0adb7d2b501fb4439"
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after": {
+          "access_config": [
+            {
+              "authentication_mode": "API_AND_CONFIG_MAP",
+              "bootstrap_cluster_creator_admin_permissions": true
+            }
+          ],
+          "arn": "arn:aws:eks:us-west-2:952133486861:cluster/k8simp12-cluster",
+          "bootstrap_self_managed_addons": true,
+          "certificate_authority": [
+            {
+              "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lRU3FWcjlyazlaNFhlMWxsK2xOTkdJekFOQmdrcWhraUc5dzBCQVFzRkFEQW4KTVJBd0RnWURWUVFLRXdkQlYxTWdSVXRUTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEkyTVRFeApOVEV6TVRJME5sb1hEVE14TVRFeE5ERXpNVEkwTmxvd0p6RVFNQTRHQTFVRUNoTUhRVmRUSUVWTFV6RVRNQkVHCkExVUVBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUIKQUxzdk5xelRUL3FtaGVNVEdhY2JOUURXcWhneXRVUmtJOVV3STZBRTROMC9yN1VaaGhWT05zdkF0dnVmQm5SZgpSUk5iZm5xRTFyNkpoN2llZXNwb0h5cWlTcEJYWVhRQlZ1VlUzZzZhbWk1QmhTOXc3YktDRU1qNDhPWCtBVzVnCkJEYWh2aWh2bUtNUmpkYndtZ3BLNlhSQUVsTi8rMjlSSmxWRnJJMDhkWmd1Yk0zdmdoOWV1azlBcW1aNzl2clMKQ0pPaXIvYkRUVGRxbTMvVmpvcm5tK21YdGRqVjNKWVpITGhpcVJONXdINmdrOFQvR1JodkNMNkZhY3FISDJrTwp5NGZpSDRuRWxTdUZrUU5tTjU3bXR0TDhELzBTV2lqSzU3MDd5RGI0Tk5rOXdENUgzWGVucW5JL0Zld25uNmhqCjlSSXdQbW81NE84U0hYWmZCNzFSYWxFQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZLcTlMdVYrcWNNWUtuN3ZxeGZJM1BRaDJiK2RNQlVHQTFVZApFUVFPTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBRUV3T1dGaGw2eFJWWWVEClJ0aC8yaWdhRHZFTEJra3pJeXZmc0RDVUtOVUJUYlI4Q1hMU2VoUm9ZSis3R3dmd2F3OWtCRXNsanE0ZzFwbEgKYjI4Q2ZPL1R4eDZPZmhsdTR6Z1hJSkFiMzZzSU5vMlBmVVo5TnJTNzZkRkVSYTZURFBQVm9FSVRIY3BxemYwUwozQWRGemFXcDN5dFU1U2g1aHRBbXRNaUJsV0dqcUx4SEJENWpZenp3bDloTy9rV0ZOc0VWTHVjOWsxZjhlSGpTCjdFNFZlS0djTjBxaFNHV05HWUdYT25OYlkwZ2tIcjhxUXI4ZWdjQnRnVC9CeVoyUHlNUXRwZmVBNFphY1MvU3YKMXlPK1Vra3ZsSkwyVHlTckV6c0dUV0RnSzUxV2d0R3NTNEg4blNreTJjWUoyc25mMHhvNlRkSGZybHdQOGZpOApqWDN1NURBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+            }
+          ],
+          "cluster_id": null,
+          "compute_config": [],
+          "control_plane_scaling_config": [
+            {
+              "tier": "standard"
+            }
+          ],
+          "created_at": "2026-11-15T13:12:40Z",
+          "deletion_protection": false,
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "endpoint": "https://A19330479B5FB0FAA9DBE71E7C4EB986.gr7.us-west-2.eks.amazonaws.com",
+          "force_update_version": null,
+          "id": "k8simp12-cluster",
+          "identity": [
+            {
+              "oidc": [
+                {
+                  "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/A19330479B5FB0FAA9DBE71E7C4EB986"
+                }
+              ]
+            }
+          ],
+          "kube_api_server_config": [
+            {
+              "event_ttl": "60m",
+              "service_node_port_range": [
+                {
+                  "max_port": 32767,
+                  "min_port": 30000
+                }
+              ]
+            }
+          ],
+          "kube_controller_manager_config": [
+            {
+              "horizontal_pod_autoscaler_controller_config": [
+                {
+                  "horizontal_pod_autoscaler_sync_period": "15s"
+                }
+              ],
+              "pod_gc_controller_config": [
+                {
+                  "terminated_pod_gc_threshold": 12500
+                }
+              ]
+            }
+          ],
+          "kube_scheduler_config": [
+            {
+              "node_resources_fit": [
+                {
+                  "scoring_strategy": [
+                    {
+                      "resource": [
+                        {
+                          "name": "cpu",
+                          "weight": 1
+                        },
+                        {
+                          "name": "memory",
+                          "weight": 1
+                        }
+                      ],
+                      "type": "LeastAllocated"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {
+                  "enabled": false
+                }
+              ],
+              "ip_family": "ipv4",
+              "service_ipv4_cidr": "172.20.0.0/16",
+              "service_ipv6_cidr": ""
+            }
+          ],
+          "name": "k8simp12-cluster",
+          "outpost_config": [],
+          "platform_version": "eks.9",
+          "region": "us-west-2",
+          "remote_network_config": [],
+          "role_arn": "arn:aws:iam::952133486861:role/k8simp12-cluster-role",
+          "status": "ACTIVE",
+          "storage_config": [],
+          "tags": {
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Project": "k8s-import-lab"
+          },
+          "timeouts": null,
+          "upgrade_policy": [
+            {
+              "support_type": "EXTENDED"
+            }
+          ],
+          "version": "1.37",
+          "vpc_config": [
+            {
+              "cluster_security_group_id": "sg-096c3edc7c922bc7e",
+              "control_plane_egress_mode": "AWS_MANAGED",
+              "endpoint_private_access": true,
+              "endpoint_public_access": true,
+              "public_access_cidrs": [
+                "0.0.0.0/0"
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                "subnet-06f68666197048326",
+                "subnet-0fb605fde475f66ec"
+              ],
+              "vpc_id": "vpc-0adb7d2b501fb4439"
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "access_config": [
+            {}
+          ],
+          "certificate_authority": [
+            {}
+          ],
+          "compute_config": [],
+          "control_plane_scaling_config": [
+            {}
+          ],
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "identity": [
+            {
+              "oidc": [
+                {}
+              ]
+            }
+          ],
+          "kube_api_server_config": [
+            {
+              "service_node_port_range": [
+                {}
+              ]
+            }
+          ],
+          "kube_controller_manager_config": [
+            {
+              "horizontal_pod_autoscaler_controller_config": [
+                {}
+              ],
+              "pod_gc_controller_config": [
+                {}
+              ]
+            }
+          ],
+          "kube_scheduler_config": [
+            {
+              "node_resources_fit": [
+                {
+                  "scoring_strategy": [
+                    {
+                      "resource": [
+                        {},
+                        {}
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {}
+              ]
+            }
+          ],
+          "outpost_config": [],
+          "remote_network_config": [],
+          "storage_config": [],
+          "tags": {},
+          "tags_all": {},
+          "upgrade_policy": [
+            {}
+          ],
+          "vpc_config": [
+            {
+              "public_access_cidrs": [
+                false
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                false,
+                false
+              ]
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "after_sensitive": {
+          "access_config": [
+            {}
+          ],
+          "certificate_authority": [
+            {}
+          ],
+          "compute_config": [],
+          "control_plane_scaling_config": [
+            {}
+          ],
+          "enabled_cluster_log_types": [],
+          "encryption_config": [],
+          "identity": [
+            {
+              "oidc": [
+                {}
+              ]
+            }
+          ],
+          "kube_api_server_config": [
+            {
+              "service_node_port_range": [
+                {}
+              ]
+            }
+          ],
+          "kube_controller_manager_config": [
+            {
+              "horizontal_pod_autoscaler_controller_config": [
+                {}
+              ],
+              "pod_gc_controller_config": [
+                {}
+              ]
+            }
+          ],
+          "kube_scheduler_config": [
+            {
+              "node_resources_fit": [
+                {
+                  "scoring_strategy": [
+                    {
+                      "resource": [
+                        {},
+                        {}
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kubernetes_network_config": [
+            {
+              "elastic_load_balancing": [
+                {}
+              ]
+            }
+          ],
+          "outpost_config": [],
+          "remote_network_config": [],
+          "storage_config": [],
+          "tags": {},
+          "tags_all": {},
+          "upgrade_policy": [
+            {}
+          ],
+          "vpc_config": [
+            {
+              "public_access_cidrs": [
+                false
+              ],
+              "security_group_ids": [],
+              "subnet_ids": [
+                false,
+                false
+              ]
+            }
+          ],
+          "zonal_shift_config": []
+        },
+        "importing": {
+          "id": "k8simp12-cluster"
+        }
+      }
+    },
+    {
+      "address": "aws_eks_node_group.k8simp12-ng",
+      "mode": "managed",
+      "type": "aws_eks_node_group",
+      "name": "k8simp12-ng",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "ami_type": "AL2023_x86_64_STANDARD",
+          "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/k8simp12-cluster/k8simp12-ng/e6d0efaf-8c56-cfc9-1d5d-47bb6f941ef7",
+          "capacity_type": "ON_DEMAND",
+          "cluster_name": "k8simp12-cluster",
+          "disk_size": 20,
+          "force_update_version": null,
+          "id": "k8simp12-cluster:k8simp12-ng",
+          "instance_types": [
+            "t3.medium"
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_group_name": "k8simp12-ng",
+          "node_group_name_prefix": "",
+          "node_repair_config": [],
+          "node_role_arn": "arn:aws:iam::952133486861:role/k8simp12-node-role",
+          "region": "us-west-2",
+          "release_version": "1.37.1-20261112",
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {
+                  "name": "eks-k8simp12-ng-e6d0efaf-8c56-cfc9-1d5d-47bb6f941ef7"
+                }
+              ],
+              "remote_access_security_group_id": ""
+            }
+          ],
+          "scaling_config": [
+            {
+              "desired_size": 2,
+              "max_size": 2,
+              "min_size": 2
+            }
+          ],
+          "status": "ACTIVE",
+          "subnet_ids": [
+            "subnet-06f68666197048326",
+            "subnet-0fb605fde475f66ec"
+          ],
+          "tags": {
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Project": "k8s-import-lab"
+          },
+          "taint": [],
+          "timeouts": null,
+          "update_config": [
+            {
+              "max_unavailable": 1,
+              "max_unavailable_percentage": 0,
+              "update_strategy": ""
+            }
+          ],
+          "version": "1.37",
+          "warm_pool_config": []
+        },
+        "after": {
+          "ami_type": "AL2023_x86_64_STANDARD",
+          "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/k8simp12-cluster/k8simp12-ng/e6d0efaf-8c56-cfc9-1d5d-47bb6f941ef7",
+          "capacity_type": "ON_DEMAND",
+          "cluster_name": "k8simp12-cluster",
+          "disk_size": 20,
+          "force_update_version": null,
+          "id": "k8simp12-cluster:k8simp12-ng",
+          "instance_types": [
+            "t3.medium"
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_group_name": "k8simp12-ng",
+          "node_group_name_prefix": "",
+          "node_repair_config": [],
+          "node_role_arn": "arn:aws:iam::952133486861:role/k8simp12-node-role",
+          "region": "us-west-2",
+          "release_version": "1.37.1-20261112",
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {
+                  "name": "eks-k8simp12-ng-e6d0efaf-8c56-cfc9-1d5d-47bb6f941ef7"
+                }
+              ],
+              "remote_access_security_group_id": ""
+            }
+          ],
+          "scaling_config": [
+            {
+              "desired_size": 2,
+              "max_size": 2,
+              "min_size": 2
+            }
+          ],
+          "status": "ACTIVE",
+          "subnet_ids": [
+            "subnet-06f68666197048326",
+            "subnet-0fb605fde475f66ec"
+          ],
+          "tags": {
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Project": "k8s-import-lab"
+          },
+          "taint": [],
+          "timeouts": null,
+          "update_config": [
+            {
+              "max_unavailable": 1,
+              "max_unavailable_percentage": 0,
+              "update_strategy": ""
+            }
+          ],
+          "version": "1.37",
+          "warm_pool_config": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "instance_types": [
+            false
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_repair_config": [],
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {}
+              ]
+            }
+          ],
+          "scaling_config": [
+            {}
+          ],
+          "subnet_ids": [
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {},
+          "taint": [],
+          "update_config": [
+            {}
+          ],
+          "warm_pool_config": []
+        },
+        "after_sensitive": {
+          "instance_types": [
+            false
+          ],
+          "labels": {},
+          "launch_template": [],
+          "node_repair_config": [],
+          "remote_access": [],
+          "resources": [
+            {
+              "autoscaling_groups": [
+                {}
+              ]
+            }
+          ],
+          "scaling_config": [
+            {}
+          ],
+          "subnet_ids": [
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {},
+          "taint": [],
+          "update_config": [
+            {}
+          ],
+          "warm_pool_config": []
+        },
+        "importing": {
+          "id": "k8simp12-cluster:k8simp12-ng"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.k8simp12-cluster-role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "k8simp12-cluster-role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/k8simp12-cluster-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-15T13:12:20Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "k8simp12-cluster-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+          ],
+          "max_session_duration": 3600,
+          "name": "k8simp12-cluster-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Project": "k8s-import-lab"
+          },
+          "unique_id": "AROA53L4UBEGRW7RMMYH5"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/k8simp12-cluster-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-15T13:12:20Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "k8simp12-cluster-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+          ],
+          "max_session_duration": 3600,
+          "name": "k8simp12-cluster-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Project": "k8s-import-lab"
+          },
+          "unique_id": "AROA53L4UBEGRW7RMMYH5"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "k8simp12-cluster-role"
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role.k8simp12-node-role",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "k8simp12-node-role",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::952133486861:role/k8simp12-node-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-15T13:12:22Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "k8simp12-node-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+            "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+          ],
+          "max_session_duration": 3600,
+          "name": "k8simp12-node-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Project": "k8s-import-lab"
+          },
+          "unique_id": "AROA53L4UBEGYNYNSBUAX"
+        },
+        "after": {
+          "arn": "arn:aws:iam::952133486861:role/k8simp12-node-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-11-15T13:12:22Z",
+          "description": "",
+          "force_detach_policies": false,
+          "id": "k8simp12-node-role",
+          "inline_policy": [],
+          "managed_policy_arns": [
+            "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+            "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+          ],
+          "max_session_duration": 3600,
+          "name": "k8simp12-node-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Project": "k8s-import-lab"
+          },
+          "unique_id": "AROA53L4UBEGYNYNSBUAX"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false,
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [],
+          "managed_policy_arns": [
+            false,
+            false,
+            false
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "k8simp12-node-role"
+        }
+      }
+    },
+    {
+      "address": "aws_internet_gateway.k8simp12-igw",
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "k8simp12-igw",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-07918ac1f6c6ba9ca",
+          "id": "igw-07918ac1f6c6ba9ca",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "k8simp12-igw",
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Name": "k8simp12-igw",
+            "Project": "k8s-import-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-07918ac1f6c6ba9ca",
+          "id": "igw-07918ac1f6c6ba9ca",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "k8simp12-igw",
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Name": "k8simp12-igw",
+            "Project": "k8s-import-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "igw-07918ac1f6c6ba9ca"
+        }
+      }
+    },
+    {
+      "address": "aws_route_table.k8simp12-public-rt",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "k8simp12-public-rt",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-00ecfbc0ed6458b68",
+          "id": "rtb-00ecfbc0ed6458b68",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "region": "us-west-2",
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "0.0.0.0/0",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "igw-07918ac1f6c6ba9ca",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "odb_network_arn": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": ""
+            }
+          ],
+          "tags": {
+            "Name": "k8simp12-public-rt",
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Name": "k8simp12-public-rt",
+            "Project": "k8s-import-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-00ecfbc0ed6458b68",
+          "id": "rtb-00ecfbc0ed6458b68",
+          "owner_id": "952133486861",
+          "propagating_vgws": [],
+          "region": "us-west-2",
+          "route": [
+            {
+              "carrier_gateway_id": "",
+              "cidr_block": "0.0.0.0/0",
+              "core_network_arn": "",
+              "destination_prefix_list_id": "",
+              "egress_only_gateway_id": "",
+              "gateway_id": "igw-07918ac1f6c6ba9ca",
+              "ipv6_cidr_block": "",
+              "local_gateway_id": "",
+              "nat_gateway_id": "",
+              "network_interface_id": "",
+              "odb_network_arn": "",
+              "transit_gateway_id": "",
+              "vpc_endpoint_id": "",
+              "vpc_peering_connection_id": ""
+            }
+          ],
+          "tags": {
+            "Name": "k8simp12-public-rt",
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Name": "k8simp12-public-rt",
+            "Project": "k8s-import-lab"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "propagating_vgws": [],
+          "route": [
+            {}
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "rtb-00ecfbc0ed6458b68"
+        }
+      }
+    },
+    {
+      "address": "aws_route_table_association.subnet-06f68666197048326_rtb-00ecfbc0ed6458b68",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "subnet-06f68666197048326_rtb-00ecfbc0ed6458b68",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "gateway_id": "",
+          "id": "rtbassoc-07137e408d270ad1f",
+          "region": "us-west-2",
+          "route_table_id": "rtb-00ecfbc0ed6458b68",
+          "subnet_id": "subnet-06f68666197048326",
+          "timeouts": null
+        },
+        "after": {
+          "gateway_id": "",
+          "id": "rtbassoc-07137e408d270ad1f",
+          "region": "us-west-2",
+          "route_table_id": "rtb-00ecfbc0ed6458b68",
+          "subnet_id": "subnet-06f68666197048326",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "subnet-06f68666197048326/rtb-00ecfbc0ed6458b68"
+        }
+      }
+    },
+    {
+      "address": "aws_route_table_association.subnet-0fb605fde475f66ec_rtb-00ecfbc0ed6458b68",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "subnet-0fb605fde475f66ec_rtb-00ecfbc0ed6458b68",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "gateway_id": "",
+          "id": "rtbassoc-09d82b5199225c86d",
+          "region": "us-west-2",
+          "route_table_id": "rtb-00ecfbc0ed6458b68",
+          "subnet_id": "subnet-0fb605fde475f66ec",
+          "timeouts": null
+        },
+        "after": {
+          "gateway_id": "",
+          "id": "rtbassoc-09d82b5199225c86d",
+          "region": "us-west-2",
+          "route_table_id": "rtb-00ecfbc0ed6458b68",
+          "subnet_id": "subnet-0fb605fde475f66ec",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {},
+        "importing": {
+          "id": "subnet-0fb605fde475f66ec/rtb-00ecfbc0ed6458b68"
+        }
+      }
+    },
+    {
+      "address": "aws_security_group.eks-cluster-sg-k8simp12-cluster-754704396",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "eks-cluster-sg-k8simp12-cluster-754704396",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:security-group/sg-096c3edc7c922bc7e",
+          "description": "EKS created security group applied to ENI that is attached to EKS Control Plane master nodes, as well as any managed workloads.",
+          "egress": [
+            {
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "description": "",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [],
+              "self": false,
+              "to_port": 0
+            },
+            {
+              "cidr_blocks": [],
+              "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [],
+              "self": true,
+              "to_port": 0
+            }
+          ],
+          "id": "sg-096c3edc7c922bc7e",
+          "ingress": [
+            {
+              "cidr_blocks": [],
+              "description": "",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [
+                "sg-0d41792d3645068f6"
+              ],
+              "self": false,
+              "to_port": 0
+            },
+            {
+              "cidr_blocks": [],
+              "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [],
+              "self": true,
+              "to_port": 0
+            }
+          ],
+          "name": "eks-cluster-sg-k8simp12-cluster-754704396",
+          "name_prefix": "",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "revoke_rules_on_delete": null,
+          "tags": {
+            "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+            "kubernetes.io/cluster/k8simp12-cluster": "owned"
+          },
+          "tags_all": {
+            "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+            "kubernetes.io/cluster/k8simp12-cluster": "owned"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:security-group/sg-096c3edc7c922bc7e",
+          "description": "EKS created security group applied to ENI that is attached to EKS Control Plane master nodes, as well as any managed workloads.",
+          "egress": [
+            {
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "description": "",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [],
+              "self": false,
+              "to_port": 0
+            },
+            {
+              "cidr_blocks": [],
+              "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [],
+              "self": true,
+              "to_port": 0
+            }
+          ],
+          "id": "sg-096c3edc7c922bc7e",
+          "ingress": [
+            {
+              "cidr_blocks": [],
+              "description": "",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [
+                "sg-0d41792d3645068f6"
+              ],
+              "self": false,
+              "to_port": 0
+            },
+            {
+              "cidr_blocks": [],
+              "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+              "from_port": 0,
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "protocol": "-1",
+              "security_groups": [],
+              "self": true,
+              "to_port": 0
+            }
+          ],
+          "name": "eks-cluster-sg-k8simp12-cluster-754704396",
+          "name_prefix": "",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "revoke_rules_on_delete": null,
+          "tags": {
+            "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+            "kubernetes.io/cluster/k8simp12-cluster": "owned"
+          },
+          "tags_all": {
+            "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+            "kubernetes.io/cluster/k8simp12-cluster": "owned"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "egress": [
+            {
+              "cidr_blocks": [
+                false
+              ],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            },
+            {
+              "cidr_blocks": [],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            }
+          ],
+          "ingress": [
+            {
+              "cidr_blocks": [],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": [
+                false
+              ]
+            },
+            {
+              "cidr_blocks": [],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            }
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "egress": [
+            {
+              "cidr_blocks": [
+                false
+              ],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            },
+            {
+              "cidr_blocks": [],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            }
+          ],
+          "ingress": [
+            {
+              "cidr_blocks": [],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": [
+                false
+              ]
+            },
+            {
+              "cidr_blocks": [],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": []
+            }
+          ],
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "sg-096c3edc7c922bc7e"
+        }
+      }
+    },
+    {
+      "address": "aws_subnet.k8simp12-public-us-west-2a",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "k8simp12-public-us-west-2a",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-06f68666197048326",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2a",
+          "availability_zone_id": "usw2-az1",
+          "cidr_block": "10.87.1.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-06f68666197048326",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_ipam_pool_id": null,
+          "ipv6_native": false,
+          "ipv6_netmask_length": null,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "k8simp12-public-us-west-2a",
+            "Project": "k8s-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "k8simp12-public-us-west-2a",
+            "Project": "k8s-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-06f68666197048326",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2a",
+          "availability_zone_id": "usw2-az1",
+          "cidr_block": "10.87.1.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-06f68666197048326",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_ipam_pool_id": null,
+          "ipv6_native": false,
+          "ipv6_netmask_length": null,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "k8simp12-public-us-west-2a",
+            "Project": "k8s-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "k8simp12-public-us-west-2a",
+            "Project": "k8s-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "subnet-06f68666197048326"
+        }
+      }
+    },
+    {
+      "address": "aws_subnet.k8simp12-public-us-west-2b",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "k8simp12-public-us-west-2b",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0fb605fde475f66ec",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2b",
+          "availability_zone_id": "usw2-az2",
+          "cidr_block": "10.87.2.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-0fb605fde475f66ec",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_ipam_pool_id": null,
+          "ipv6_native": false,
+          "ipv6_netmask_length": null,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "k8simp12-public-us-west-2b",
+            "Project": "k8s-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "k8simp12-public-us-west-2b",
+            "Project": "k8s-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0fb605fde475f66ec",
+          "assign_ipv6_address_on_creation": false,
+          "availability_zone": "us-west-2b",
+          "availability_zone_id": "usw2-az2",
+          "cidr_block": "10.87.2.0/24",
+          "customer_owned_ipv4_pool": "",
+          "enable_dns64": false,
+          "enable_lni_at_device_index": 0,
+          "enable_resource_name_dns_a_record_on_launch": false,
+          "enable_resource_name_dns_aaaa_record_on_launch": false,
+          "id": "subnet-0fb605fde475f66ec",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_association_id": "",
+          "ipv6_ipam_pool_id": null,
+          "ipv6_native": false,
+          "ipv6_netmask_length": null,
+          "map_customer_owned_ip_on_launch": false,
+          "map_public_ip_on_launch": true,
+          "outpost_arn": "",
+          "owner_id": "952133486861",
+          "private_dns_hostname_type_on_launch": "ip-name",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "k8simp12-public-us-west-2b",
+            "Project": "k8s-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "tags_all": {
+            "Name": "k8simp12-public-us-west-2b",
+            "Project": "k8s-import-lab",
+            "kubernetes.io/role/elb": "1"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-0adb7d2b501fb4439"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "subnet-0fb605fde475f66ec"
+        }
+      }
+    },
+    {
+      "address": "aws_vpc.k8simp12-vpc",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "k8simp12-vpc",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-0adb7d2b501fb4439",
+          "assign_generated_ipv6_cidr_block": false,
+          "cidr_block": "10.87.0.0/16",
+          "default_network_acl_id": "acl-07581e6de1bae1b6b",
+          "default_route_table_id": "rtb-0c8486d911c6ec963",
+          "default_security_group_id": "sg-0bbd52d2cffd628d5",
+          "dhcp_options_id": "dopt-03b17c556ffb1011e",
+          "enable_dns_hostnames": true,
+          "enable_dns_support": true,
+          "enable_network_address_usage_metrics": false,
+          "id": "vpc-0adb7d2b501fb4439",
+          "instance_tenancy": "default",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_association_id": "",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_network_border_group": "",
+          "ipv6_ipam_pool_id": "",
+          "ipv6_netmask_length": 0,
+          "main_route_table_id": "rtb-0c8486d911c6ec963",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "k8simp12-vpc",
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Name": "k8simp12-vpc",
+            "Project": "k8s-import-lab"
+          }
+        },
+        "after": {
+          "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-0adb7d2b501fb4439",
+          "assign_generated_ipv6_cidr_block": false,
+          "cidr_block": "10.87.0.0/16",
+          "default_network_acl_id": "acl-07581e6de1bae1b6b",
+          "default_route_table_id": "rtb-0c8486d911c6ec963",
+          "default_security_group_id": "sg-0bbd52d2cffd628d5",
+          "dhcp_options_id": "dopt-03b17c556ffb1011e",
+          "enable_dns_hostnames": true,
+          "enable_dns_support": true,
+          "enable_network_address_usage_metrics": false,
+          "id": "vpc-0adb7d2b501fb4439",
+          "instance_tenancy": "default",
+          "ipv4_ipam_pool_id": null,
+          "ipv4_netmask_length": null,
+          "ipv6_association_id": "",
+          "ipv6_cidr_block": "",
+          "ipv6_cidr_block_network_border_group": "",
+          "ipv6_ipam_pool_id": "",
+          "ipv6_netmask_length": 0,
+          "main_route_table_id": "rtb-0c8486d911c6ec963",
+          "owner_id": "952133486861",
+          "region": "us-west-2",
+          "tags": {
+            "Name": "k8simp12-vpc",
+            "Project": "k8s-import-lab"
+          },
+          "tags_all": {
+            "Name": "k8simp12-vpc",
+            "Project": "k8s-import-lab"
+          }
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "importing": {
+          "id": "vpc-0adb7d2b501fb4439"
+        }
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.5.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_eks_cluster.k8simp12-cluster",
+            "mode": "managed",
+            "type": "aws_eks_cluster",
+            "name": "k8simp12-cluster",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "access_config": [
+                {
+                  "authentication_mode": "API_AND_CONFIG_MAP",
+                  "bootstrap_cluster_creator_admin_permissions": true
+                }
+              ],
+              "arn": "arn:aws:eks:us-west-2:952133486861:cluster/k8simp12-cluster",
+              "bootstrap_self_managed_addons": true,
+              "certificate_authority": [
+                {
+                  "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lRU3FWcjlyazlaNFhlMWxsK2xOTkdJekFOQmdrcWhraUc5dzBCQVFzRkFEQW4KTVJBd0RnWURWUVFLRXdkQlYxTWdSVXRUTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEkyTVRFeApOVEV6TVRJME5sb1hEVE14TVRFeE5ERXpNVEkwTmxvd0p6RVFNQTRHQTFVRUNoTUhRVmRUSUVWTFV6RVRNQkVHCkExVUVBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUIKQUxzdk5xelRUL3FtaGVNVEdhY2JOUURXcWhneXRVUmtJOVV3STZBRTROMC9yN1VaaGhWT05zdkF0dnVmQm5SZgpSUk5iZm5xRTFyNkpoN2llZXNwb0h5cWlTcEJYWVhRQlZ1VlUzZzZhbWk1QmhTOXc3YktDRU1qNDhPWCtBVzVnCkJEYWh2aWh2bUtNUmpkYndtZ3BLNlhSQUVsTi8rMjlSSmxWRnJJMDhkWmd1Yk0zdmdoOWV1azlBcW1aNzl2clMKQ0pPaXIvYkRUVGRxbTMvVmpvcm5tK21YdGRqVjNKWVpITGhpcVJONXdINmdrOFQvR1JodkNMNkZhY3FISDJrTwp5NGZpSDRuRWxTdUZrUU5tTjU3bXR0TDhELzBTV2lqSzU3MDd5RGI0Tk5rOXdENUgzWGVucW5JL0Zld25uNmhqCjlSSXdQbW81NE84U0hYWmZCNzFSYWxFQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZLcTlMdVYrcWNNWUtuN3ZxeGZJM1BRaDJiK2RNQlVHQTFVZApFUVFPTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBRUV3T1dGaGw2eFJWWWVEClJ0aC8yaWdhRHZFTEJra3pJeXZmc0RDVUtOVUJUYlI4Q1hMU2VoUm9ZSis3R3dmd2F3OWtCRXNsanE0ZzFwbEgKYjI4Q2ZPL1R4eDZPZmhsdTR6Z1hJSkFiMzZzSU5vMlBmVVo5TnJTNzZkRkVSYTZURFBQVm9FSVRIY3BxemYwUwozQWRGemFXcDN5dFU1U2g1aHRBbXRNaUJsV0dqcUx4SEJENWpZenp3bDloTy9rV0ZOc0VWTHVjOWsxZjhlSGpTCjdFNFZlS0djTjBxaFNHV05HWUdYT25OYlkwZ2tIcjhxUXI4ZWdjQnRnVC9CeVoyUHlNUXRwZmVBNFphY1MvU3YKMXlPK1Vra3ZsSkwyVHlTckV6c0dUV0RnSzUxV2d0R3NTNEg4blNreTJjWUoyc25mMHhvNlRkSGZybHdQOGZpOApqWDN1NURBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+                }
+              ],
+              "cluster_id": null,
+              "compute_config": [],
+              "control_plane_scaling_config": [
+                {
+                  "tier": "standard"
+                }
+              ],
+              "created_at": "2026-11-15T13:12:40Z",
+              "deletion_protection": false,
+              "enabled_cluster_log_types": [],
+              "encryption_config": [],
+              "endpoint": "https://A19330479B5FB0FAA9DBE71E7C4EB986.gr7.us-west-2.eks.amazonaws.com",
+              "force_update_version": null,
+              "id": "k8simp12-cluster",
+              "identity": [
+                {
+                  "oidc": [
+                    {
+                      "issuer": "https://oidc.eks.us-west-2.amazonaws.com/id/A19330479B5FB0FAA9DBE71E7C4EB986"
+                    }
+                  ]
+                }
+              ],
+              "kube_api_server_config": [
+                {
+                  "event_ttl": "60m",
+                  "service_node_port_range": [
+                    {
+                      "max_port": 32767,
+                      "min_port": 30000
+                    }
+                  ]
+                }
+              ],
+              "kube_controller_manager_config": [
+                {
+                  "horizontal_pod_autoscaler_controller_config": [
+                    {
+                      "horizontal_pod_autoscaler_sync_period": "15s"
+                    }
+                  ],
+                  "pod_gc_controller_config": [
+                    {
+                      "terminated_pod_gc_threshold": 12500
+                    }
+                  ]
+                }
+              ],
+              "kube_scheduler_config": [
+                {
+                  "node_resources_fit": [
+                    {
+                      "scoring_strategy": [
+                        {
+                          "resource": [
+                            {
+                              "name": "cpu",
+                              "weight": 1
+                            },
+                            {
+                              "name": "memory",
+                              "weight": 1
+                            }
+                          ],
+                          "type": "LeastAllocated"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "kubernetes_network_config": [
+                {
+                  "elastic_load_balancing": [
+                    {
+                      "enabled": false
+                    }
+                  ],
+                  "ip_family": "ipv4",
+                  "service_ipv4_cidr": "172.20.0.0/16",
+                  "service_ipv6_cidr": ""
+                }
+              ],
+              "name": "k8simp12-cluster",
+              "outpost_config": [],
+              "platform_version": "eks.9",
+              "region": "us-west-2",
+              "remote_network_config": [],
+              "role_arn": "arn:aws:iam::952133486861:role/k8simp12-cluster-role",
+              "status": "ACTIVE",
+              "storage_config": [],
+              "tags": {
+                "Project": "k8s-import-lab"
+              },
+              "tags_all": {
+                "Project": "k8s-import-lab"
+              },
+              "timeouts": null,
+              "upgrade_policy": [
+                {
+                  "support_type": "EXTENDED"
+                }
+              ],
+              "version": "1.37",
+              "vpc_config": [
+                {
+                  "cluster_security_group_id": "sg-096c3edc7c922bc7e",
+                  "control_plane_egress_mode": "AWS_MANAGED",
+                  "endpoint_private_access": true,
+                  "endpoint_public_access": true,
+                  "public_access_cidrs": [
+                    "0.0.0.0/0"
+                  ],
+                  "security_group_ids": [],
+                  "subnet_ids": [
+                    "subnet-06f68666197048326",
+                    "subnet-0fb605fde475f66ec"
+                  ],
+                  "vpc_id": "vpc-0adb7d2b501fb4439"
+                }
+              ],
+              "zonal_shift_config": []
+            },
+            "sensitive_values": {
+              "access_config": [
+                {}
+              ],
+              "certificate_authority": [
+                {}
+              ],
+              "compute_config": [],
+              "control_plane_scaling_config": [
+                {}
+              ],
+              "enabled_cluster_log_types": [],
+              "encryption_config": [],
+              "identity": [
+                {
+                  "oidc": [
+                    {}
+                  ]
+                }
+              ],
+              "kube_api_server_config": [
+                {
+                  "service_node_port_range": [
+                    {}
+                  ]
+                }
+              ],
+              "kube_controller_manager_config": [
+                {
+                  "horizontal_pod_autoscaler_controller_config": [
+                    {}
+                  ],
+                  "pod_gc_controller_config": [
+                    {}
+                  ]
+                }
+              ],
+              "kube_scheduler_config": [
+                {
+                  "node_resources_fit": [
+                    {
+                      "scoring_strategy": [
+                        {
+                          "resource": [
+                            {},
+                            {}
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "kubernetes_network_config": [
+                {
+                  "elastic_load_balancing": [
+                    {}
+                  ]
+                }
+              ],
+              "outpost_config": [],
+              "remote_network_config": [],
+              "storage_config": [],
+              "tags": {},
+              "tags_all": {},
+              "upgrade_policy": [
+                {}
+              ],
+              "vpc_config": [
+                {
+                  "public_access_cidrs": [
+                    false
+                  ],
+                  "security_group_ids": [],
+                  "subnet_ids": [
+                    false,
+                    false
+                  ]
+                }
+              ],
+              "zonal_shift_config": []
+            }
+          },
+          {
+            "address": "aws_eks_node_group.k8simp12-ng",
+            "mode": "managed",
+            "type": "aws_eks_node_group",
+            "name": "k8simp12-ng",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "ami_type": "AL2023_x86_64_STANDARD",
+              "arn": "arn:aws:eks:us-west-2:952133486861:nodegroup/k8simp12-cluster/k8simp12-ng/e6d0efaf-8c56-cfc9-1d5d-47bb6f941ef7",
+              "capacity_type": "ON_DEMAND",
+              "cluster_name": "k8simp12-cluster",
+              "disk_size": 20,
+              "force_update_version": null,
+              "id": "k8simp12-cluster:k8simp12-ng",
+              "instance_types": [
+                "t3.medium"
+              ],
+              "labels": {},
+              "launch_template": [],
+              "node_group_name": "k8simp12-ng",
+              "node_group_name_prefix": "",
+              "node_repair_config": [],
+              "node_role_arn": "arn:aws:iam::952133486861:role/k8simp12-node-role",
+              "region": "us-west-2",
+              "release_version": "1.37.1-20261112",
+              "remote_access": [],
+              "resources": [
+                {
+                  "autoscaling_groups": [
+                    {
+                      "name": "eks-k8simp12-ng-e6d0efaf-8c56-cfc9-1d5d-47bb6f941ef7"
+                    }
+                  ],
+                  "remote_access_security_group_id": ""
+                }
+              ],
+              "scaling_config": [
+                {
+                  "desired_size": 2,
+                  "max_size": 2,
+                  "min_size": 2
+                }
+              ],
+              "status": "ACTIVE",
+              "subnet_ids": [
+                "subnet-06f68666197048326",
+                "subnet-0fb605fde475f66ec"
+              ],
+              "tags": {
+                "Project": "k8s-import-lab"
+              },
+              "tags_all": {
+                "Project": "k8s-import-lab"
+              },
+              "taint": [],
+              "timeouts": null,
+              "update_config": [
+                {
+                  "max_unavailable": 1,
+                  "max_unavailable_percentage": 0,
+                  "update_strategy": ""
+                }
+              ],
+              "version": "1.37",
+              "warm_pool_config": []
+            },
+            "sensitive_values": {
+              "instance_types": [
+                false
+              ],
+              "labels": {},
+              "launch_template": [],
+              "node_repair_config": [],
+              "remote_access": [],
+              "resources": [
+                {
+                  "autoscaling_groups": [
+                    {}
+                  ]
+                }
+              ],
+              "scaling_config": [
+                {}
+              ],
+              "subnet_ids": [
+                false,
+                false
+              ],
+              "tags": {},
+              "tags_all": {},
+              "taint": [],
+              "update_config": [
+                {}
+              ],
+              "warm_pool_config": []
+            }
+          },
+          {
+            "address": "aws_iam_role.k8simp12-cluster-role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "k8simp12-cluster-role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/k8simp12-cluster-role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-11-15T13:12:20Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "k8simp12-cluster-role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+              ],
+              "max_session_duration": 3600,
+              "name": "k8simp12-cluster-role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Project": "k8s-import-lab"
+              },
+              "tags_all": {
+                "Project": "k8s-import-lab"
+              },
+              "unique_id": "AROA53L4UBEGRW7RMMYH5"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_iam_role.k8simp12-node-role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "k8simp12-node-role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:iam::952133486861:role/k8simp12-node-role",
+              "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+              "create_date": "2026-11-15T13:12:22Z",
+              "description": "",
+              "force_detach_policies": false,
+              "id": "k8simp12-node-role",
+              "inline_policy": [],
+              "managed_policy_arns": [
+                "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+                "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+                "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+              ],
+              "max_session_duration": 3600,
+              "name": "k8simp12-node-role",
+              "name_prefix": "",
+              "path": "/",
+              "permissions_boundary": "",
+              "tags": {
+                "Project": "k8s-import-lab"
+              },
+              "tags_all": {
+                "Project": "k8s-import-lab"
+              },
+              "unique_id": "AROA53L4UBEGYNYNSBUAX"
+            },
+            "sensitive_values": {
+              "inline_policy": [],
+              "managed_policy_arns": [
+                false,
+                false,
+                false
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_internet_gateway.k8simp12-igw",
+            "mode": "managed",
+            "type": "aws_internet_gateway",
+            "name": "k8simp12-igw",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:internet-gateway/igw-07918ac1f6c6ba9ca",
+              "id": "igw-07918ac1f6c6ba9ca",
+              "owner_id": "952133486861",
+              "region": "us-west-2",
+              "tags": {
+                "Name": "k8simp12-igw",
+                "Project": "k8s-import-lab"
+              },
+              "tags_all": {
+                "Name": "k8simp12-igw",
+                "Project": "k8s-import-lab"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0adb7d2b501fb4439"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_route_table.k8simp12-public-rt",
+            "mode": "managed",
+            "type": "aws_route_table",
+            "name": "k8simp12-public-rt",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:route-table/rtb-00ecfbc0ed6458b68",
+              "id": "rtb-00ecfbc0ed6458b68",
+              "owner_id": "952133486861",
+              "propagating_vgws": [],
+              "region": "us-west-2",
+              "route": [
+                {
+                  "carrier_gateway_id": "",
+                  "cidr_block": "0.0.0.0/0",
+                  "core_network_arn": "",
+                  "destination_prefix_list_id": "",
+                  "egress_only_gateway_id": "",
+                  "gateway_id": "igw-07918ac1f6c6ba9ca",
+                  "ipv6_cidr_block": "",
+                  "local_gateway_id": "",
+                  "nat_gateway_id": "",
+                  "network_interface_id": "",
+                  "odb_network_arn": "",
+                  "transit_gateway_id": "",
+                  "vpc_endpoint_id": "",
+                  "vpc_peering_connection_id": ""
+                }
+              ],
+              "tags": {
+                "Name": "k8simp12-public-rt",
+                "Project": "k8s-import-lab"
+              },
+              "tags_all": {
+                "Name": "k8simp12-public-rt",
+                "Project": "k8s-import-lab"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0adb7d2b501fb4439"
+            },
+            "sensitive_values": {
+              "propagating_vgws": [],
+              "route": [
+                {}
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_route_table_association.subnet-06f68666197048326_rtb-00ecfbc0ed6458b68",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "subnet-06f68666197048326_rtb-00ecfbc0ed6458b68",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "gateway_id": "",
+              "id": "rtbassoc-07137e408d270ad1f",
+              "region": "us-west-2",
+              "route_table_id": "rtb-00ecfbc0ed6458b68",
+              "subnet_id": "subnet-06f68666197048326",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_route_table_association.subnet-0fb605fde475f66ec_rtb-00ecfbc0ed6458b68",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "subnet-0fb605fde475f66ec_rtb-00ecfbc0ed6458b68",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "gateway_id": "",
+              "id": "rtbassoc-09d82b5199225c86d",
+              "region": "us-west-2",
+              "route_table_id": "rtb-00ecfbc0ed6458b68",
+              "subnet_id": "subnet-0fb605fde475f66ec",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "aws_security_group.eks-cluster-sg-k8simp12-cluster-754704396",
+            "mode": "managed",
+            "type": "aws_security_group",
+            "name": "eks-cluster-sg-k8simp12-cluster-754704396",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:security-group/sg-096c3edc7c922bc7e",
+              "description": "EKS created security group applied to ENI that is attached to EKS Control Plane master nodes, as well as any managed workloads.",
+              "egress": [
+                {
+                  "cidr_blocks": [
+                    "0.0.0.0/0"
+                  ],
+                  "description": "",
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [],
+                  "self": false,
+                  "to_port": 0
+                },
+                {
+                  "cidr_blocks": [],
+                  "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [],
+                  "self": true,
+                  "to_port": 0
+                }
+              ],
+              "id": "sg-096c3edc7c922bc7e",
+              "ingress": [
+                {
+                  "cidr_blocks": [],
+                  "description": "",
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [
+                    "sg-0d41792d3645068f6"
+                  ],
+                  "self": false,
+                  "to_port": 0
+                },
+                {
+                  "cidr_blocks": [],
+                  "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [],
+                  "self": true,
+                  "to_port": 0
+                }
+              ],
+              "name": "eks-cluster-sg-k8simp12-cluster-754704396",
+              "name_prefix": "",
+              "owner_id": "952133486861",
+              "region": "us-west-2",
+              "revoke_rules_on_delete": null,
+              "tags": {
+                "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+                "kubernetes.io/cluster/k8simp12-cluster": "owned"
+              },
+              "tags_all": {
+                "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+                "kubernetes.io/cluster/k8simp12-cluster": "owned"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0adb7d2b501fb4439"
+            },
+            "sensitive_values": {
+              "egress": [
+                {
+                  "cidr_blocks": [
+                    false
+                  ],
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "security_groups": []
+                },
+                {
+                  "cidr_blocks": [],
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "security_groups": []
+                }
+              ],
+              "ingress": [
+                {
+                  "cidr_blocks": [],
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "security_groups": [
+                    false
+                  ]
+                },
+                {
+                  "cidr_blocks": [],
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "security_groups": []
+                }
+              ],
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_subnet.k8simp12-public-us-west-2a",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "k8simp12-public-us-west-2a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-06f68666197048326",
+              "assign_ipv6_address_on_creation": false,
+              "availability_zone": "us-west-2a",
+              "availability_zone_id": "usw2-az1",
+              "cidr_block": "10.87.1.0/24",
+              "customer_owned_ipv4_pool": "",
+              "enable_dns64": false,
+              "enable_lni_at_device_index": 0,
+              "enable_resource_name_dns_a_record_on_launch": false,
+              "enable_resource_name_dns_aaaa_record_on_launch": false,
+              "id": "subnet-06f68666197048326",
+              "ipv4_ipam_pool_id": null,
+              "ipv4_netmask_length": null,
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_association_id": "",
+              "ipv6_ipam_pool_id": null,
+              "ipv6_native": false,
+              "ipv6_netmask_length": null,
+              "map_customer_owned_ip_on_launch": false,
+              "map_public_ip_on_launch": true,
+              "outpost_arn": "",
+              "owner_id": "952133486861",
+              "private_dns_hostname_type_on_launch": "ip-name",
+              "region": "us-west-2",
+              "tags": {
+                "Name": "k8simp12-public-us-west-2a",
+                "Project": "k8s-import-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "tags_all": {
+                "Name": "k8simp12-public-us-west-2a",
+                "Project": "k8s-import-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0adb7d2b501fb4439"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_subnet.k8simp12-public-us-west-2b",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "k8simp12-public-us-west-2b",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:subnet/subnet-0fb605fde475f66ec",
+              "assign_ipv6_address_on_creation": false,
+              "availability_zone": "us-west-2b",
+              "availability_zone_id": "usw2-az2",
+              "cidr_block": "10.87.2.0/24",
+              "customer_owned_ipv4_pool": "",
+              "enable_dns64": false,
+              "enable_lni_at_device_index": 0,
+              "enable_resource_name_dns_a_record_on_launch": false,
+              "enable_resource_name_dns_aaaa_record_on_launch": false,
+              "id": "subnet-0fb605fde475f66ec",
+              "ipv4_ipam_pool_id": null,
+              "ipv4_netmask_length": null,
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_association_id": "",
+              "ipv6_ipam_pool_id": null,
+              "ipv6_native": false,
+              "ipv6_netmask_length": null,
+              "map_customer_owned_ip_on_launch": false,
+              "map_public_ip_on_launch": true,
+              "outpost_arn": "",
+              "owner_id": "952133486861",
+              "private_dns_hostname_type_on_launch": "ip-name",
+              "region": "us-west-2",
+              "tags": {
+                "Name": "k8simp12-public-us-west-2b",
+                "Project": "k8s-import-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "tags_all": {
+                "Name": "k8simp12-public-us-west-2b",
+                "Project": "k8s-import-lab",
+                "kubernetes.io/role/elb": "1"
+              },
+              "timeouts": null,
+              "vpc_id": "vpc-0adb7d2b501fb4439"
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_vpc.k8simp12-vpc",
+            "mode": "managed",
+            "type": "aws_vpc",
+            "name": "k8simp12-vpc",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 1,
+            "values": {
+              "arn": "arn:aws:ec2:us-west-2:952133486861:vpc/vpc-0adb7d2b501fb4439",
+              "assign_generated_ipv6_cidr_block": false,
+              "cidr_block": "10.87.0.0/16",
+              "default_network_acl_id": "acl-07581e6de1bae1b6b",
+              "default_route_table_id": "rtb-0c8486d911c6ec963",
+              "default_security_group_id": "sg-0bbd52d2cffd628d5",
+              "dhcp_options_id": "dopt-03b17c556ffb1011e",
+              "enable_dns_hostnames": true,
+              "enable_dns_support": true,
+              "enable_network_address_usage_metrics": false,
+              "id": "vpc-0adb7d2b501fb4439",
+              "instance_tenancy": "default",
+              "ipv4_ipam_pool_id": null,
+              "ipv4_netmask_length": null,
+              "ipv6_association_id": "",
+              "ipv6_cidr_block": "",
+              "ipv6_cidr_block_network_border_group": "",
+              "ipv6_ipam_pool_id": "",
+              "ipv6_netmask_length": 0,
+              "main_route_table_id": "rtb-0c8486d911c6ec963",
+              "owner_id": "952133486861",
+              "region": "us-west-2",
+              "tags": {
+                "Name": "k8simp12-vpc",
+                "Project": "k8s-import-lab"
+              },
+              "tags_all": {
+                "Name": "k8simp12-vpc",
+                "Project": "k8s-import-lab"
+              }
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "expressions": {
+          "region": {
+            "constant_value": "us-west-2"
+          }
+        }
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_eks_cluster.k8simp12-cluster",
+          "mode": "managed",
+          "type": "aws_eks_cluster",
+          "name": "k8simp12-cluster",
+          "provider_config_key": "aws",
+          "expressions": {
+            "access_config": [
+              {
+                "authentication_mode": {
+                  "constant_value": "API_AND_CONFIG_MAP"
+                },
+                "bootstrap_cluster_creator_admin_permissions": {
+                  "constant_value": true
+                }
+              }
+            ],
+            "bootstrap_self_managed_addons": {
+              "constant_value": true
+            },
+            "control_plane_scaling_config": [
+              {
+                "tier": {
+                  "constant_value": "standard"
+                }
+              }
+            ],
+            "deletion_protection": {
+              "constant_value": false
+            },
+            "force_update_version": {
+              "constant_value": null
+            },
+            "kube_api_server_config": [
+              {
+                "event_ttl": {
+                  "constant_value": "60m"
+                },
+                "service_node_port_range": [
+                  {
+                    "max_port": {
+                      "constant_value": 32767
+                    },
+                    "min_port": {
+                      "constant_value": 30000
+                    }
+                  }
+                ]
+              }
+            ],
+            "kube_controller_manager_config": [
+              {
+                "horizontal_pod_autoscaler_controller_config": [
+                  {
+                    "horizontal_pod_autoscaler_sync_period": {
+                      "constant_value": "15s"
+                    }
+                  }
+                ],
+                "pod_gc_controller_config": [
+                  {
+                    "terminated_pod_gc_threshold": {
+                      "constant_value": 12500
+                    }
+                  }
+                ]
+              }
+            ],
+            "kube_scheduler_config": [
+              {
+                "node_resources_fit": [
+                  {
+                    "scoring_strategy": [
+                      {
+                        "resource": [
+                          {
+                            "name": {
+                              "constant_value": "cpu"
+                            },
+                            "weight": {
+                              "constant_value": 1
+                            }
+                          },
+                          {
+                            "name": {
+                              "constant_value": "memory"
+                            },
+                            "weight": {
+                              "constant_value": 1
+                            }
+                          }
+                        ],
+                        "type": {
+                          "constant_value": "LeastAllocated"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "kubernetes_network_config": [
+              {
+                "elastic_load_balancing": [
+                  {
+                    "enabled": {
+                      "constant_value": false
+                    }
+                  }
+                ],
+                "ip_family": {
+                  "constant_value": "ipv4"
+                },
+                "service_ipv4_cidr": {
+                  "constant_value": "172.20.0.0/16"
+                }
+              }
+            ],
+            "name": {
+              "constant_value": "k8simp12-cluster"
+            },
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "role_arn": {
+              "constant_value": "arn:aws:iam::952133486861:role/k8simp12-cluster-role"
+            },
+            "tags": {
+              "constant_value": {
+                "Project": "k8s-import-lab"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Project": "k8s-import-lab"
+              }
+            },
+            "upgrade_policy": [
+              {
+                "support_type": {
+                  "constant_value": "EXTENDED"
+                }
+              }
+            ],
+            "version": {
+              "constant_value": "1.37"
+            },
+            "vpc_config": [
+              {
+                "control_plane_egress_mode": {
+                  "constant_value": "AWS_MANAGED"
+                },
+                "endpoint_private_access": {
+                  "constant_value": true
+                },
+                "endpoint_public_access": {
+                  "constant_value": true
+                },
+                "public_access_cidrs": {
+                  "constant_value": [
+                    "0.0.0.0/0"
+                  ]
+                },
+                "subnet_ids": {
+                  "constant_value": [
+                    "subnet-06f68666197048326",
+                    "subnet-0fb605fde475f66ec"
+                  ]
+                }
+              }
+            ]
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "aws_eks_node_group.k8simp12-ng",
+          "mode": "managed",
+          "type": "aws_eks_node_group",
+          "name": "k8simp12-ng",
+          "provider_config_key": "aws",
+          "expressions": {
+            "ami_type": {
+              "constant_value": "AL2023_x86_64_STANDARD"
+            },
+            "capacity_type": {
+              "constant_value": "ON_DEMAND"
+            },
+            "cluster_name": {
+              "constant_value": "k8simp12-cluster"
+            },
+            "disk_size": {
+              "constant_value": 20
+            },
+            "force_update_version": {
+              "constant_value": null
+            },
+            "instance_types": {
+              "constant_value": [
+                "t3.medium"
+              ]
+            },
+            "node_group_name": {
+              "constant_value": "k8simp12-ng"
+            },
+            "node_group_name_prefix": {
+              "constant_value": null
+            },
+            "node_role_arn": {
+              "constant_value": "arn:aws:iam::952133486861:role/k8simp12-node-role"
+            },
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "release_version": {
+              "constant_value": "1.37.1-20261112"
+            },
+            "scaling_config": [
+              {
+                "desired_size": {
+                  "constant_value": 2
+                },
+                "max_size": {
+                  "constant_value": 2
+                },
+                "min_size": {
+                  "constant_value": 2
+                }
+              }
+            ],
+            "subnet_ids": {
+              "constant_value": [
+                "subnet-06f68666197048326",
+                "subnet-0fb605fde475f66ec"
+              ]
+            },
+            "tags": {
+              "constant_value": {
+                "Project": "k8s-import-lab"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Project": "k8s-import-lab"
+              }
+            },
+            "update_config": [
+              {
+                "max_unavailable": {
+                  "constant_value": 1
+                },
+                "update_strategy": {
+                  "constant_value": null
+                }
+              }
+            ],
+            "version": {
+              "constant_value": "1.37"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.k8simp12-cluster-role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "k8simp12-cluster-role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "k8simp12-cluster-role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Project": "k8s-import-lab"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Project": "k8s-import-lab"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_iam_role.k8simp12-node-role",
+          "mode": "managed",
+          "type": "aws_iam_role",
+          "name": "k8simp12-node-role",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assume_role_policy": {
+              "constant_value": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+            },
+            "description": {
+              "constant_value": null
+            },
+            "force_detach_policies": {
+              "constant_value": false
+            },
+            "max_session_duration": {
+              "constant_value": 3600
+            },
+            "name": {
+              "constant_value": "k8simp12-node-role"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "permissions_boundary": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Project": "k8s-import-lab"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Project": "k8s-import-lab"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_internet_gateway.k8simp12-igw",
+          "mode": "managed",
+          "type": "aws_internet_gateway",
+          "name": "k8simp12-igw",
+          "provider_config_key": "aws",
+          "expressions": {
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "k8simp12-igw",
+                "Project": "k8s-import-lab"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "k8simp12-igw",
+                "Project": "k8s-import-lab"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0adb7d2b501fb4439"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_route_table.k8simp12-public-rt",
+          "mode": "managed",
+          "type": "aws_route_table",
+          "name": "k8simp12-public-rt",
+          "provider_config_key": "aws",
+          "expressions": {
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "route": {
+              "constant_value": [
+                {
+                  "carrier_gateway_id": null,
+                  "cidr_block": "0.0.0.0/0",
+                  "core_network_arn": null,
+                  "destination_prefix_list_id": null,
+                  "egress_only_gateway_id": null,
+                  "gateway_id": "igw-07918ac1f6c6ba9ca",
+                  "ipv6_cidr_block": null,
+                  "local_gateway_id": null,
+                  "nat_gateway_id": null,
+                  "network_interface_id": null,
+                  "odb_network_arn": null,
+                  "transit_gateway_id": null,
+                  "vpc_endpoint_id": null,
+                  "vpc_peering_connection_id": null
+                }
+              ]
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "k8simp12-public-rt",
+                "Project": "k8s-import-lab"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "k8simp12-public-rt",
+                "Project": "k8s-import-lab"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0adb7d2b501fb4439"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_route_table_association.subnet-06f68666197048326_rtb-00ecfbc0ed6458b68",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-06f68666197048326_rtb-00ecfbc0ed6458b68",
+          "provider_config_key": "aws",
+          "expressions": {
+            "gateway_id": {
+              "constant_value": null
+            },
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "route_table_id": {
+              "constant_value": "rtb-00ecfbc0ed6458b68"
+            },
+            "subnet_id": {
+              "constant_value": "subnet-06f68666197048326"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_route_table_association.subnet-0fb605fde475f66ec_rtb-00ecfbc0ed6458b68",
+          "mode": "managed",
+          "type": "aws_route_table_association",
+          "name": "subnet-0fb605fde475f66ec_rtb-00ecfbc0ed6458b68",
+          "provider_config_key": "aws",
+          "expressions": {
+            "gateway_id": {
+              "constant_value": null
+            },
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "route_table_id": {
+              "constant_value": "rtb-00ecfbc0ed6458b68"
+            },
+            "subnet_id": {
+              "constant_value": "subnet-0fb605fde475f66ec"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_security_group.eks-cluster-sg-k8simp12-cluster-754704396",
+          "mode": "managed",
+          "type": "aws_security_group",
+          "name": "eks-cluster-sg-k8simp12-cluster-754704396",
+          "provider_config_key": "aws",
+          "expressions": {
+            "description": {
+              "constant_value": "EKS created security group applied to ENI that is attached to EKS Control Plane master nodes, as well as any managed workloads."
+            },
+            "egress": {
+              "constant_value": [
+                {
+                  "cidr_blocks": [
+                    "0.0.0.0/0"
+                  ],
+                  "description": null,
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [],
+                  "self": false,
+                  "to_port": 0
+                },
+                {
+                  "cidr_blocks": [],
+                  "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [],
+                  "self": true,
+                  "to_port": 0
+                }
+              ]
+            },
+            "ingress": {
+              "constant_value": [
+                {
+                  "cidr_blocks": [],
+                  "description": null,
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [
+                    "sg-0d41792d3645068f6"
+                  ],
+                  "self": false,
+                  "to_port": 0
+                },
+                {
+                  "cidr_blocks": [],
+                  "description": "Allows EFA traffic, which is not matched by CIDR rules.",
+                  "from_port": 0,
+                  "ipv6_cidr_blocks": [],
+                  "prefix_list_ids": [],
+                  "protocol": "-1",
+                  "security_groups": [],
+                  "self": true,
+                  "to_port": 0
+                }
+              ]
+            },
+            "name": {
+              "constant_value": "eks-cluster-sg-k8simp12-cluster-754704396"
+            },
+            "name_prefix": {
+              "constant_value": null
+            },
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "revoke_rules_on_delete": {
+              "constant_value": null
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+                "kubernetes.io/cluster/k8simp12-cluster": "owned"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "eks-cluster-sg-k8simp12-cluster-754704396",
+                "kubernetes.io/cluster/k8simp12-cluster": "owned"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0adb7d2b501fb4439"
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "aws_subnet.k8simp12-public-us-west-2a",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "k8simp12-public-us-west-2a",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assign_ipv6_address_on_creation": {
+              "constant_value": false
+            },
+            "cidr_block": {
+              "constant_value": "10.87.1.0/24"
+            },
+            "customer_owned_ipv4_pool": {
+              "constant_value": null
+            },
+            "enable_dns64": {
+              "constant_value": false
+            },
+            "enable_resource_name_dns_a_record_on_launch": {
+              "constant_value": false
+            },
+            "enable_resource_name_dns_aaaa_record_on_launch": {
+              "constant_value": false
+            },
+            "ipv4_ipam_pool_id": {
+              "constant_value": null
+            },
+            "ipv4_netmask_length": {
+              "constant_value": null
+            },
+            "ipv6_cidr_block": {
+              "constant_value": null
+            },
+            "ipv6_ipam_pool_id": {
+              "constant_value": null
+            },
+            "ipv6_native": {
+              "constant_value": false
+            },
+            "ipv6_netmask_length": {
+              "constant_value": null
+            },
+            "map_public_ip_on_launch": {
+              "constant_value": true
+            },
+            "outpost_arn": {
+              "constant_value": null
+            },
+            "private_dns_hostname_type_on_launch": {
+              "constant_value": "ip-name"
+            },
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "k8simp12-public-us-west-2a",
+                "Project": "k8s-import-lab",
+                "kubernetes.io/role/elb": "1"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "k8simp12-public-us-west-2a",
+                "Project": "k8s-import-lab",
+                "kubernetes.io/role/elb": "1"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0adb7d2b501fb4439"
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "aws_subnet.k8simp12-public-us-west-2b",
+          "mode": "managed",
+          "type": "aws_subnet",
+          "name": "k8simp12-public-us-west-2b",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assign_ipv6_address_on_creation": {
+              "constant_value": false
+            },
+            "cidr_block": {
+              "constant_value": "10.87.2.0/24"
+            },
+            "customer_owned_ipv4_pool": {
+              "constant_value": null
+            },
+            "enable_dns64": {
+              "constant_value": false
+            },
+            "enable_resource_name_dns_a_record_on_launch": {
+              "constant_value": false
+            },
+            "enable_resource_name_dns_aaaa_record_on_launch": {
+              "constant_value": false
+            },
+            "ipv4_ipam_pool_id": {
+              "constant_value": null
+            },
+            "ipv4_netmask_length": {
+              "constant_value": null
+            },
+            "ipv6_cidr_block": {
+              "constant_value": null
+            },
+            "ipv6_ipam_pool_id": {
+              "constant_value": null
+            },
+            "ipv6_native": {
+              "constant_value": false
+            },
+            "ipv6_netmask_length": {
+              "constant_value": null
+            },
+            "map_public_ip_on_launch": {
+              "constant_value": true
+            },
+            "outpost_arn": {
+              "constant_value": null
+            },
+            "private_dns_hostname_type_on_launch": {
+              "constant_value": "ip-name"
+            },
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "k8simp12-public-us-west-2b",
+                "Project": "k8s-import-lab",
+                "kubernetes.io/role/elb": "1"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "k8simp12-public-us-west-2b",
+                "Project": "k8s-import-lab",
+                "kubernetes.io/role/elb": "1"
+              }
+            },
+            "vpc_id": {
+              "constant_value": "vpc-0adb7d2b501fb4439"
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "aws_vpc.k8simp12-vpc",
+          "mode": "managed",
+          "type": "aws_vpc",
+          "name": "k8simp12-vpc",
+          "provider_config_key": "aws",
+          "expressions": {
+            "assign_generated_ipv6_cidr_block": {
+              "constant_value": false
+            },
+            "cidr_block": {
+              "constant_value": "10.87.0.0/16"
+            },
+            "enable_dns_hostnames": {
+              "constant_value": true
+            },
+            "enable_dns_support": {
+              "constant_value": true
+            },
+            "enable_network_address_usage_metrics": {
+              "constant_value": false
+            },
+            "instance_tenancy": {
+              "constant_value": "default"
+            },
+            "ipv4_ipam_pool_id": {
+              "constant_value": null
+            },
+            "ipv4_netmask_length": {
+              "constant_value": null
+            },
+            "ipv6_cidr_block": {
+              "constant_value": null
+            },
+            "ipv6_cidr_block_network_border_group": {
+              "constant_value": null
+            },
+            "ipv6_ipam_pool_id": {
+              "constant_value": null
+            },
+            "region": {
+              "constant_value": "us-west-2"
+            },
+            "tags": {
+              "constant_value": {
+                "Name": "k8simp12-vpc",
+                "Project": "k8s-import-lab"
+              }
+            },
+            "tags_all": {
+              "constant_value": {
+                "Name": "k8simp12-vpc",
+                "Project": "k8s-import-lab"
+              }
+            }
+          },
+          "schema_version": 1
+        }
+      ]
+    }
+  },
+  "timestamp": "2026-11-15T13:40:00Z",
+  "redacted_attributes": []
+}
