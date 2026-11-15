@@ -4,7 +4,7 @@
   "cluster": "k8simp12-cluster",
   "region": "us-west-2",
   "namespace": "svc-lab",
-  "requestId": "3bb3ae92-c772-4821-9078-afe46f9f3191",
+  "requestId": "c2165b31-32f4-4116-84a1-efe95e7d234d",
   "objects": [
     {
       "file": "templates/deployment-api.yaml",
@@ -66,8 +66,26 @@
       "kind": "Deployment",
       "name": "worker",
       "namespace": "svc-lab",
-      "status": "refused",
-      "message": "The request is invalid: patch: Invalid value: \"map[metadata:map[annotations:map[argocd.argoproj.io/sync-wave:0 kubectl.kubernetes.io/last-applied-configuration:{\\\"apiVersion\\\":\\\"apps/v1\\\",\\\"kind\\\":\\\"Deployment\\\",\\\"metadata\\\":{\\\"annotations\\\":{\\\"argocd.argoproj.io/sync-wave\\\":\\\"0\\\"},\\\"labels\\\":{\\\"app.kubernetes.io/instance\\\":\\\"svc-lab\\\",\\\"app.kubernetes.io/managed-by\\\":\\\"struct8\\\",\\\"app.kubernetes.io/name\\\":\\\"worker\\\",\\\"cloudman.io/creator\\\":\\\"rmay-struct\\\"},\\\"name\\\":\\\"worker\\\",\\\"namespace\\\":\\\"svc-lab\\\"},\\\"spec\\\":{\\\"progressDeadlineSeconds\\\":600,\\\"replicas\\\":1,\\\"revisionHistoryLimit\\\":10,\\\"selector\\\":{\\\"matchExpressions\\\":{\\\"key\\\":\\\"tier\\\",\\\"operator\\\":\\\"In\\\",\\\"values\\\":[\\\"backend\\\",\\\"batch\\\"]},\\\"matchLabels\\\":{\\\"app\\\":\\\"worker\\\"}},\\\"strategy\\\":{\\\"rollingUpdate\\\":{\\\"maxSurge\\\":\\\"25%\\\",\\\"maxUnavailable\\\":\\\"25%\\\"},\\\"type\\\":\\\"RollingUpdate\\\"},\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"app\\\":\\\"worker\\\",\\\"tier\\\":\\\"backend\\\"}},\\\"spec\\\":{\\\"containers\\\":[{\\\"image\\\":\\\"nginxinc/nginx-unprivileged:1.27-alpine\\\",\\\"imagePullPolicy\\\":\\\"IfNotPresent\\\",\\\"name\\\":\\\"worker\\\",\\\"ports\\\":[{\\\"containerPort\\\":8080,\\\"name\\\":\\\"http\\\",\\\"protocol\\\":\\\"TCP\\\"}],\\\"resources\\\":{\\\"requests\\\":{\\\"cpu\\\":\\\"20m\\\",\\\"memory\\\":\\\"32Mi\\\"}},\\\"terminationMessagePath\\\":\\\"/dev/termination-log\\\",\\\"terminationMessagePolicy\\\":\\\"File\\\"}],\\\"dnsPolicy\\\":\\\"ClusterFirst\\\",\\\"restartPolicy\\\":\\\"Always\\\",\\\"schedulerName\\\":\\\"default-scheduler\\\",\\\"terminationGracePeriodSeconds\\\":30}}}}\\n] labels:map[app.kubernetes.io/instance:svc-lab app.kubernetes.io/managed-by:struct8 app.kubernetes.io/name:worker cloudman.io/creator:rmay-struct]] spec:map[selector:map[matchExpressions:map[key:tier operator:In values:[backend batch]]]]]\": cannot restore slice from map"
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
+          "change": "added",
+          "after": "0"
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "svc-lab",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "worker",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
     },
     {
       "file": "templates/service-api-public.yaml",
