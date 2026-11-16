@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "doc_perm_role_irsa_shop_b_web" {
     resources = [data.aws_secretsmanager_secret.k8simp13-db.arn]
   }
   statement {
-    sid       = "AllowSecretRead"
+    sid       = "AllowSecretReadApi"
     effect    = "Allow"
     actions   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
     resources = [data.aws_secretsmanager_secret.k8simp13-api.arn]
