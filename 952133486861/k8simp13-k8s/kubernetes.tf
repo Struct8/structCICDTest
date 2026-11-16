@@ -1,4 +1,5 @@
 resource "helm_release" "app_secrets_store_csi_driver_provider_aws" {
+  version          = "1.0.1"
   name             = "secrets-store-csi-driver-provider-aws"
   atomic           = true
   chart            = "secrets-store-csi-driver-provider-aws"
