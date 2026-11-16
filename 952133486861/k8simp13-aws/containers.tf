@@ -17,7 +17,7 @@ resource "aws_eks_addon" "kube_proxy_k8simp13-eks" {
 resource "aws_eks_addon" "vpc_cni_k8simp13-eks" {
   addon_name                  = "vpc-cni"
   cluster_name                = aws_eks_cluster.k8simp13-eks.name
-  configuration_values        = jsonencode({"env": {"ENABLE_PREFIX_DELEGATION": "true", "WARM_PREFIX_TARGET": "1"}})
+  configuration_values        = jsonencode({"env": {"ENABLE_PREFIX_DELEGATION": "true", "WARM_PREFIX_TARGET": "1", "ENABLE_POD_ENI": "true", "POD_SECURITY_GROUP_ENFORCING_MODE": "standard"}})
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
   depends_on                  = [aws_eks_node_group.k8simp13-ng]
@@ -46,7 +46,7 @@ resource "aws_eks_cluster" "k8simp13-eks" {
     public_access_cidrs     = ["0.0.0.0/0"]
     subnet_ids              = [aws_subnet.k8simp13-public-a.id, aws_subnet.k8simp13-public-b.id]
   }
-  depends_on = [aws_iam_role_policy_attachment.AmazonEKSClusterPolicy_to_k8simp13-eks_attach]
+  depends_on = [aws_iam_role_policy_attachment.AmazonEKSClusterPolicy_to_k8simp13-eks_attach, aws_iam_role_policy_attachment.AmazonEKSVPCResourceController_to_k8simp13-eks_attach]
 }
 
 resource "aws_eks_node_group" "k8simp13-ng" {

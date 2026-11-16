@@ -83,8 +83,28 @@ resource "aws_security_group" "eks_node_group_k8simp13-ng_group" {
   }
 }
 
+resource "aws_security_group" "instance_k8simp13-backend_group" {
+  name                   = "instance_k8simp13-backend_group"
+  vpc_id                 = aws_vpc.k8simp13-vpc.id
+  revoke_rules_on_delete = false
+  tags = {
+    Name           = "instance_k8simp13-backend_group"
+    State          = "k8simp13-aws"
+    Struct8Creator = "rmay struct"
+  }
+}
+
 resource "aws_security_group_rule" "rule_eks_node_group_k8simp13_ng_group_egress_all_protocols" {
   security_group_id = aws_security_group.eks_node_group_k8simp13-ng_group.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  protocol          = "-1"
+  to_port           = 0
+  type              = "egress"
+}
+
+resource "aws_security_group_rule" "rule_instance_k8simp13_backend_group_egress_all_protocols" {
+  security_group_id = aws_security_group.instance_k8simp13-backend_group.id
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 0
   protocol          = "-1"
