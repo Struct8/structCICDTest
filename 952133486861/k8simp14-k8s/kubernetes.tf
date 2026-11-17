@@ -35,7 +35,7 @@ resource "helm_release" "argocd_applications" {
               path           = "."
               directory = {
                 recurse = true
-                include = "{**/application-*.djkvtb77nm2q5jexewnfs.yaml,**/imageupdater-*.djkvtb77nm2q5jexewnfs.yaml}"
+                include = "{**/application-*.yaml,**/imageupdater-*.yaml}"
               }
             }
             destination = {
