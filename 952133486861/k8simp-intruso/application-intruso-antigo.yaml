@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: intruso-untagged
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/Struct8/structCICDTest.git"
+    targetRevision: HEAD
+    path: 952133486861/k8simp-intruso/does-not-exist
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: intruso
