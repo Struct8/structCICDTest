@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8simp14-shop-b
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app.kubernetes.io/name: k8simp14-shop-b
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: k8simp14-shop-b
+    cloudman.io/creator: rmay-struct
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+spec:
+  project: k8simp14
+  source:
+    repoURL: "https://github.com/Struct8/structCICDTest.git"
+    targetRevision: HEAD
+    path: 952133486861/k8simp14-shop-b/templates
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: shop-b
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
