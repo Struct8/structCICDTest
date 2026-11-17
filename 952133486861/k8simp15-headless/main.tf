@@ -12,11 +12,18 @@ terraform {
       version = "~> 2.0"
     }
   }
+
+  backend "s3" {
+    bucket  = "pro112-teste-cicd"
+    key     = "952133486861/k8simp15-headless/main.tfstate"
+    region  = "us-east-1"
+    encrypt = true
+  }
 }
 
 # --- Main Cloud Provider ---
 provider "aws" {
-  region = "null"
+  region = "us-west-2"
 }
 
 data "aws_caller_identity" "current" {}
@@ -124,7 +131,7 @@ resource "aws_vpc" "k8simp15-vpc" {
 
 resource "aws_subnet" "k8simp15-public-us-west-2a" {
   vpc_id                              = aws_vpc.k8simp15-vpc.id
-  availability_zone                   = "a"
+  availability_zone                   = "us-west-2a"
   cidr_block                          = "10.88.1.0/24"
   map_public_ip_on_launch             = true
   private_dns_hostname_type_on_launch = "ip-name"
@@ -140,7 +147,7 @@ resource "aws_subnet" "k8simp15-public-us-west-2a" {
 
 resource "aws_subnet" "k8simp15-public-us-west-2b" {
   vpc_id                              = aws_vpc.k8simp15-vpc.id
-  availability_zone                   = "b"
+  availability_zone                   = "us-west-2b"
   cidr_block                          = "10.88.2.0/24"
   map_public_ip_on_launch             = true
   private_dns_hostname_type_on_launch = "ip-name"
