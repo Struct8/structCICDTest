@@ -378,7 +378,7 @@ EOFUData
     ipv6_address_count = 0
     ipv6_prefix_count  = 0
     network_card_index = 0
-    security_groups    = aws_security_group.eks-cluster-sg-k8simp15-cluster-1882100489.id
+    security_groups    = [aws_security_group.eks-cluster-sg-k8simp15-cluster-1882100489.id]
   }
   tags = {
     "eks:cluster-name"   = "k8simp15-cluster"
