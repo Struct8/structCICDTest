@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "platform": "eks",
+  "cluster": "k8simp15-cluster",
+  "region": "us-west-2",
+  "namespace": "shop",
+  "requestId": "392a502b-3a5f-4000-8dd3-d8b9b2723310",
+  "objects": [
+    {
+      "file": "templates/deployment-api.yaml",
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "name": "api",
+      "namespace": "shop",
+      "status": "different",
+      "restartsPods": true,
+      "onlyAddsLabels": false,
+      "changes": [
+        {
+          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
+          "change": "added",
+          "after": "0"
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "shop",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "api",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        },
+        {
+          "path": "spec.template.spec.containers[name=api].env[name=PGPASSWORD].valueFrom",
+          "change": "removed",
+          "before": {
+            "secretKeyRef": {
+              "key": "password",
+              "name": "db-creds"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/deployment-reports.yaml",
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "name": "reports",
+      "namespace": "shop",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
+          "change": "added",
+          "after": "0"
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "shop",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "reports",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/deployment-worker.yaml",
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "name": "worker",
+      "namespace": "shop",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
+          "change": "added",
+          "after": "0"
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "shop",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "worker",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/serviceaccount-reports.yaml",
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "name": "reports",
+      "namespace": "shop",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations",
+          "change": "added",
+          "after": {
+            "argocd.argoproj.io/sync-wave": "-10"
+          }
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "shop",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "reports",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    },
+    {
+      "file": "templates/serviceaccount-worker.yaml",
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "name": "worker",
+      "namespace": "shop",
+      "status": "different",
+      "restartsPods": false,
+      "onlyAddsLabels": true,
+      "changes": [
+        {
+          "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
+          "change": "added",
+          "after": "-10"
+        },
+        {
+          "path": "metadata.labels",
+          "change": "added",
+          "after": {
+            "app.kubernetes.io/instance": "shop",
+            "app.kubernetes.io/managed-by": "struct8",
+            "app.kubernetes.io/name": "worker",
+            "cloudman.io/creator": "rmay-struct"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": []
+}
