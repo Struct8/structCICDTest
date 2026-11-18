@@ -1,0 +1,146 @@
+{
+  "version": 2,
+  "platform": "eks",
+  "cluster": "k8simp15-cluster",
+  "region": "us-west-2",
+  "requestId": "21cece7f-cc45-4742-89dd-551606fef99f",
+  "releases": [
+    {
+      "name": "argocd",
+      "namespace": "argocd",
+      "chart": "argo-cd",
+      "version": "10.18.0",
+      "appVersion": "v3.6.1",
+      "status": "deployed"
+    },
+    {
+      "name": "argocd-image-updater",
+      "namespace": "argocd",
+      "chart": "argocd-image-updater",
+      "version": "1.5.0",
+      "appVersion": "v1.5.0",
+      "status": "deployed"
+    },
+    {
+      "name": "grafana-operator",
+      "namespace": "grafana-operator",
+      "chart": "grafana-operator",
+      "version": "5.26.0",
+      "appVersion": "v5.26.0",
+      "status": "deployed"
+    },
+    {
+      "name": "kube-prometheus-stack",
+      "namespace": "monitoring",
+      "chart": "kube-prometheus-stack",
+      "version": "93.3.1",
+      "appVersion": "v0.95.2",
+      "status": "deployed"
+    }
+  ],
+  "namespaces": [
+    {
+      "metadata": {
+        "name": "argocd",
+        "labels": {
+          "kubernetes.io/metadata.name": "argocd",
+          "name": "argocd"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "default",
+        "labels": {
+          "kubernetes.io/metadata.name": "default"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "grafana-operator",
+        "labels": {
+          "kubernetes.io/metadata.name": "grafana-operator",
+          "name": "grafana-operator"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-node-lease",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-node-lease"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-public",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-public"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-system",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-system"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "legacy",
+        "labels": {
+          "kubernetes.io/metadata.name": "legacy"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "monitoring",
+        "labels": {
+          "kubernetes.io/metadata.name": "monitoring",
+          "name": "monitoring"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "shop",
+        "labels": {
+          "kubernetes.io/metadata.name": "shop"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+  ],
+  "errors": []
+}
