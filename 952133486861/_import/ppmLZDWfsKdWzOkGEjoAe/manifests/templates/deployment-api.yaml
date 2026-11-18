@@ -55,6 +55,10 @@ spec:
             - name: PGCONNECT_TIMEOUT
               value: "5"
             - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-creds
+                  key: password
           resources:
             requests:
               cpu: "20m"
