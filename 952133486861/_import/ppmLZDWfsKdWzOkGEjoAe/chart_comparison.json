@@ -4,7 +4,7 @@
   "cluster": "k8simp15-cluster",
   "region": "us-west-2",
   "namespace": "shop",
-  "requestId": "392a502b-3a5f-4000-8dd3-d8b9b2723310",
+  "requestId": "bc54bcc4-0566-4386-98b9-c5afdbafe1df",
   "objects": [
     {
       "file": "templates/deployment-api.yaml",
@@ -13,8 +13,8 @@
       "name": "api",
       "namespace": "shop",
       "status": "different",
-      "restartsPods": true,
-      "onlyAddsLabels": false,
+      "restartsPods": false,
+      "onlyAddsLabels": true,
       "changes": [
         {
           "path": "metadata.annotations[\"argocd.argoproj.io/sync-wave\"]",
@@ -29,16 +29,6 @@
             "app.kubernetes.io/managed-by": "struct8",
             "app.kubernetes.io/name": "api",
             "cloudman.io/creator": "rmay-struct"
-          }
-        },
-        {
-          "path": "spec.template.spec.containers[name=api].env[name=PGPASSWORD].valueFrom",
-          "change": "removed",
-          "before": {
-            "secretKeyRef": {
-              "key": "password",
-              "name": "db-creds"
-            }
           }
         }
       ]
