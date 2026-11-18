@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  labels:
+    app.kubernetes.io/name: worker
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: shop
+    cloudman.io/creator: rmay-struct
+  namespace: shop
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: worker
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      serviceAccount: worker
+      terminationGracePeriodSeconds: 30
+      containers:
+        - args:
+            - |
+              while true; do
+                ts=$(date -u +%FT%TZ)
+                if out=$(echo "$ts" | aws s3 cp - "s3://$BUCKET/probe/$HOSTNAME.txt" 2>&1) && role=$(aws sts get-caller-identity --query Arn --output text 2>&1); then echo "OK $ts s3 role=${role#*:assumed-role/}"; else echo "FAIL $ts $(echo "$out $role" | head -c 200 | tr '\n' ' ')"; fi
+                sleep 30
+              done
+          command:
+            - bash
+            - "-c"
+          image: "amazon/aws-cli:2.17.0"
+          imagePullPolicy: IfNotPresent
+          name: worker
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          env:
+            - name: BUCKET
+              value: "k8simp15-data-d052021737"
+            - name: AWS_REGION
+              value: "us-west-2"
+          resources:
+            requests:
+              cpu: "20m"
+              memory: "64Mi"
+      serviceAccountName: worker
+    metadata:
+      labels:
+        app: worker
