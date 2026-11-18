@@ -237,9 +237,8 @@ resource "aws_security_group_rule" "rule_eks_cluster_sg_k8simp16_cluster_6054123
 ### CATEGORY: COMPUTE ###
 
 resource "aws_launch_template" "k8simp16-nodes-lt" {
-  name                   = "k8simp16-nodes-lt"
-  default_version        = 1
-  vpc_security_group_ids = [aws_eks_cluster.k8simp16-cluster.vpc_config[0].cluster_security_group_id]
+  name            = "k8simp16-nodes-lt"
+  default_version = 1
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
