@@ -1,0 +1,804 @@
+{
+  "version": 2,
+  "platform": "eks",
+  "cluster": "k8simp15-cluster",
+  "region": "us-west-2",
+  "requestId": "5b693c7e-073b-4988-b894-6db7ebba30cd",
+  "releases": [
+    {
+      "name": "argocd",
+      "namespace": "argocd",
+      "chart": "argo-cd",
+      "version": "10.18.0",
+      "appVersion": "v3.6.1",
+      "status": "deployed"
+    },
+    {
+      "name": "argocd-image-updater",
+      "namespace": "argocd",
+      "chart": "argocd-image-updater",
+      "version": "1.5.0",
+      "appVersion": "v1.5.0",
+      "status": "deployed"
+    },
+    {
+      "name": "grafana-operator",
+      "namespace": "grafana-operator",
+      "chart": "grafana-operator",
+      "version": "5.26.0",
+      "appVersion": "v5.26.0",
+      "status": "deployed"
+    },
+    {
+      "name": "kube-prometheus-stack",
+      "namespace": "monitoring",
+      "chart": "kube-prometheus-stack",
+      "version": "93.3.1",
+      "appVersion": "v0.95.2",
+      "status": "deployed"
+    }
+  ],
+  "namespaces": [
+    {
+      "metadata": {
+        "name": "argocd",
+        "labels": {
+          "kubernetes.io/metadata.name": "argocd",
+          "name": "argocd"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "default",
+        "labels": {
+          "kubernetes.io/metadata.name": "default"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "grafana-operator",
+        "labels": {
+          "kubernetes.io/metadata.name": "grafana-operator",
+          "name": "grafana-operator"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-node-lease",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-node-lease"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-public",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-public"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-system",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-system"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "legacy",
+        "labels": {
+          "kubernetes.io/metadata.name": "legacy"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "monitoring",
+        "labels": {
+          "kubernetes.io/metadata.name": "monitoring",
+          "name": "monitoring"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "shop",
+        "labels": {
+          "kubernetes.io/metadata.name": "shop"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+  ],
+  "kinds": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "StatefulSet",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "configuration.konghq.com/v1",
+      "kind": "KongClusterPlugin",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway-operator.konghq.com/v1beta1",
+      "kind": "GatewayConfiguration",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "kind": "Gateway",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "kind": "HTTPRoute",
+      "served": false
+    },
+    {
+      "apiVersion": "grafana.integreatly.org/v1beta1",
+      "kind": "Grafana",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "k8s.keycloak.org/v2beta1",
+      "kind": "Keycloak",
+      "served": false
+    },
+    {
+      "apiVersion": "monitoring.coreos.com/v1",
+      "kind": "Prometheus",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "monitoring.coreos.com/v1",
+      "kind": "ServiceMonitor",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "rabbitmq.com/v1beta1",
+      "kind": "Queue",
+      "served": false
+    },
+    {
+      "apiVersion": "storage.k8s.io/v1",
+      "kind": "StorageClass",
+      "served": true,
+      "namespaced": false
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "LimitRange",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolume",
+      "served": true,
+      "namespaced": false
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ResourceQuota",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Secret",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "served": true,
+      "namespaced": true
+    }
+  ],
+  "objects": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "api",
+        "namespace": "shop",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "api"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "api"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "args": [
+                  "while true; do\n  if psql -tAc 'select 1' >/dev/null 2>/tmp/err; then echo \"OK $(date -u +%FT%TZ) db\"; else echo \"FAIL $(date -u +%FT%TZ) $(head -c 200 /tmp/err | tr '\\n' ' ')\"; fi\n  sleep 30\ndone\n"
+                ],
+                "command": [
+                  "sh",
+                  "-c"
+                ],
+                "env": [
+                  {
+                    "name": "PGHOST",
+                    "value": "k8simp15-pg.c9g6oy6oylb0.us-west-2.rds.amazonaws.com"
+                  },
+                  {
+                    "name": "PGUSER",
+                    "value": "labadmin"
+                  },
+                  {
+                    "name": "PGDATABASE",
+                    "value": "postgres"
+                  },
+                  {
+                    "name": "PGSSLMODE",
+                    "value": "require"
+                  },
+                  {
+                    "name": "PGCONNECT_TIMEOUT",
+                    "value": "5"
+                  },
+                  {
+                    "name": "PGPASSWORD",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "key": "password",
+                        "name": "db-creds"
+                      }
+                    }
+                  }
+                ],
+                "image": "postgres:17-alpine",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "api",
+                "resources": {
+                  "requests": {
+                    "cpu": "20m",
+                    "memory": "32Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "reports",
+        "namespace": "shop",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "reports"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "reports"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "args": [
+                  "while true; do\n  ts=$(date -u +%FT%TZ)\n  if out=$(echo \"$ts\" | aws s3 cp - \"s3://$BUCKET/probe/$HOSTNAME.txt\" 2>&1) && role=$(aws sts get-caller-identity --query Arn --output text 2>&1); then echo \"OK $ts s3 role=${role#*:assumed-role/}\"; else echo \"FAIL $ts $(echo \"$out $role\" | head -c 200 | tr '\\n' ' ')\"; fi\n  sleep 30\ndone\n"
+                ],
+                "command": [
+                  "bash",
+                  "-c"
+                ],
+                "env": [
+                  {
+                    "name": "BUCKET",
+                    "value": "k8simp15-data-d052021737"
+                  },
+                  {
+                    "name": "AWS_REGION",
+                    "value": "us-west-2"
+                  }
+                ],
+                "image": "amazon/aws-cli:2.17.0",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "reports",
+                "resources": {
+                  "requests": {
+                    "cpu": "20m",
+                    "memory": "64Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "serviceAccount": "reports",
+            "serviceAccountName": "reports",
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "worker",
+        "namespace": "shop",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "worker"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "worker"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "args": [
+                  "while true; do\n  ts=$(date -u +%FT%TZ)\n  if out=$(echo \"$ts\" | aws s3 cp - \"s3://$BUCKET/probe/$HOSTNAME.txt\" 2>&1) && role=$(aws sts get-caller-identity --query Arn --output text 2>&1); then echo \"OK $ts s3 role=${role#*:assumed-role/}\"; else echo \"FAIL $ts $(echo \"$out $role\" | head -c 200 | tr '\\n' ' ')\"; fi\n  sleep 30\ndone\n"
+                ],
+                "command": [
+                  "bash",
+                  "-c"
+                ],
+                "env": [
+                  {
+                    "name": "BUCKET",
+                    "value": "k8simp15-data-d052021737"
+                  },
+                  {
+                    "name": "AWS_REGION",
+                    "value": "us-west-2"
+                  }
+                ],
+                "image": "amazon/aws-cli:2.17.0",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "worker",
+                "resources": {
+                  "requests": {
+                    "cpu": "20m",
+                    "memory": "64Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "serviceAccount": "worker",
+            "serviceAccountName": "worker",
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "guestbook-ui",
+        "namespace": "legacy",
+        "annotations": {
+          "argocd.argoproj.io/tracking-id": "legacy-guestbook:apps/Deployment:legacy/guestbook-ui",
+          "deployment.kubernetes.io/revision": "1"
+        },
+        "appliedKeys": {
+          "labels": [],
+          "annotations": [
+            "argocd.argoproj.io/tracking-id"
+          ]
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "guestbook-ui"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "guestbook-ui"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "image": "gcr.io/google-samples/gb-frontend:v5",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "guestbook-ui",
+                "ports": [
+                  {
+                    "containerPort": 80,
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "name": "api-from-namespace",
+        "namespace": "shop"
+      },
+      "spec": {
+        "ingress": [
+          {
+            "from": [
+              {
+                "podSelector": {}
+              }
+            ]
+          }
+        ],
+        "podSelector": {
+          "matchLabels": {
+            "app": "api"
+          }
+        },
+        "policyTypes": [
+          "Ingress"
+        ]
+      }
+    },
+    {
+      "apiVersion": "storage.k8s.io/v1",
+      "kind": "StorageClass",
+      "metadata": {
+        "name": "gp2"
+      },
+      "parameters": {
+        "fsType": "ext4",
+        "type": "gp2"
+      },
+      "provisioner": "kubernetes.io/aws-ebs",
+      "reclaimPolicy": "Delete",
+      "volumeBindingMode": "WaitForFirstConsumer"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "kube-root-ca.crt",
+        "namespace": "shop",
+        "annotations": {
+          "kubernetes.io/description": "Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubernetes.default.svc. No other usage is guaranteed across distributions of Kubernetes clusters."
+        }
+      },
+      "data": {
+        "ca.crt": "-----BEGIN CERTIFICATE-----\nMIIDMjCCAhqgAwIBAgIRAP29WC+muLX4fyQbS3CFlFcwDQYJKoZIhvcNAQELBQAw\nJzEQMA4GA1UEChMHQVdTIEVLUzETMBEGA1UEAxMKa3ViZXJuZXRlczAeFw0yNjEx\nMTcxOTQ0NDFaFw0zMTExMTYxOTQ0NDFaMCcxEDAOBgNVBAoTB0FXUyBFS1MxEzAR\nBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQCtZ6oHyce326HuUj3K0dQjse+inn1w3NhBApdZcfdVfABBMMeYAFzSZQ+Lr5Xj\nB6OtbYnI74v7qWaa4jpQmVu/segQAPJ8d7S9yXs1o3D3yuFPOKdH3B/RKnphodjX\nfipNPpdvNKL9woBAhBBPCiuX9n1ci4copz2nuPA9mzTtX4PHCsf7hkX+VH5wcdkl\njbul0UICuLCHG86vz8Eovh9GFfkLrwKUJbKzpPXfWm2fPYL2sIrbNpFsWA5i62jI\nyUv39NKhvRAxWb+6PWbOd3dtOKKxcDLqutN9Fc+w2er5ediodo6BFnzdCyljolgd\noPBcNs/M1MfWmCwCZaTqZWmpAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAPBgNV\nHRMBAf8EBTADAQH/MB0GA1UdDgQWBBQUtnO0fc5ofqTznolgHzGpcf7Q9DAVBgNV\nHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQBpLa/uI6igLdAi\nqkTSZjm90fe+L8Og8XAg6EONtreWzY4Iu+jnDzArLo04ssmcMa+AaUOszx0YumrB\niM8lL8qEOI7GSL4pPaiK+8jJL1v0zZpu2wt9JnBeeE5Q337M+3ByF0Zb8JsaCciQ\n9NpT1NXaycGnMcS9K/wCFAtPkdTKbqHI2PFe0m9tLqfGSZP+7jm3N1DUg5R2XP09\nTazuEcikCnP9wVj0qLfnjJUp5sHWWEGgEzpIWHN1M8DL/qj74/7rSFAsez2sUp66\ny5cFceAtFFWpd2AT0EZAEa7wAS2R1veFI+QP7qrGBjeiDEj8n1zP/OHGaUHi6lnM\nhoClW7wf\n-----END CERTIFICATE-----\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "kube-root-ca.crt",
+        "namespace": "legacy",
+        "annotations": {
+          "kubernetes.io/description": "Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubernetes.default.svc. No other usage is guaranteed across distributions of Kubernetes clusters."
+        }
+      },
+      "data": {
+        "ca.crt": "-----BEGIN CERTIFICATE-----\nMIIDMjCCAhqgAwIBAgIRAP29WC+muLX4fyQbS3CFlFcwDQYJKoZIhvcNAQELBQAw\nJzEQMA4GA1UEChMHQVdTIEVLUzETMBEGA1UEAxMKa3ViZXJuZXRlczAeFw0yNjEx\nMTcxOTQ0NDFaFw0zMTExMTYxOTQ0NDFaMCcxEDAOBgNVBAoTB0FXUyBFS1MxEzAR\nBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQCtZ6oHyce326HuUj3K0dQjse+inn1w3NhBApdZcfdVfABBMMeYAFzSZQ+Lr5Xj\nB6OtbYnI74v7qWaa4jpQmVu/segQAPJ8d7S9yXs1o3D3yuFPOKdH3B/RKnphodjX\nfipNPpdvNKL9woBAhBBPCiuX9n1ci4copz2nuPA9mzTtX4PHCsf7hkX+VH5wcdkl\njbul0UICuLCHG86vz8Eovh9GFfkLrwKUJbKzpPXfWm2fPYL2sIrbNpFsWA5i62jI\nyUv39NKhvRAxWb+6PWbOd3dtOKKxcDLqutN9Fc+w2er5ediodo6BFnzdCyljolgd\noPBcNs/M1MfWmCwCZaTqZWmpAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAPBgNV\nHRMBAf8EBTADAQH/MB0GA1UdDgQWBBQUtnO0fc5ofqTznolgHzGpcf7Q9DAVBgNV\nHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQBpLa/uI6igLdAi\nqkTSZjm90fe+L8Og8XAg6EONtreWzY4Iu+jnDzArLo04ssmcMa+AaUOszx0YumrB\niM8lL8qEOI7GSL4pPaiK+8jJL1v0zZpu2wt9JnBeeE5Q337M+3ByF0Zb8JsaCciQ\n9NpT1NXaycGnMcS9K/wCFAtPkdTKbqHI2PFe0m9tLqfGSZP+7jm3N1DUg5R2XP09\nTazuEcikCnP9wVj0qLfnjJUp5sHWWEGgEzpIWHN1M8DL/qj74/7rSFAsez2sUp66\ny5cFceAtFFWpd2AT0EZAEa7wAS2R1veFI+QP7qrGBjeiDEj8n1zP/OHGaUHi6lnM\nhoClW7wf\n-----END CERTIFICATE-----\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Secret",
+      "metadata": {
+        "name": "db-creds",
+        "namespace": "shop"
+      },
+      "type": "Opaque",
+      "keys": [
+        "password"
+      ]
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "name": "guestbook-ui",
+        "namespace": "legacy",
+        "annotations": {
+          "argocd.argoproj.io/tracking-id": "legacy-guestbook:/Service:legacy/guestbook-ui"
+        },
+        "appliedKeys": {
+          "labels": [],
+          "annotations": [
+            "argocd.argoproj.io/tracking-id"
+          ]
+        }
+      },
+      "spec": {
+        "clusterIP": "172.20.128.165",
+        "clusterIPs": [
+          "172.20.128.165"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "port": 80,
+            "protocol": "TCP",
+            "targetPort": 80
+          }
+        ],
+        "selector": {
+          "app": "guestbook-ui"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "default",
+        "namespace": "shop"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "reports",
+        "namespace": "shop"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "worker",
+        "namespace": "shop",
+        "annotations": {
+          "eks.amazonaws.com/role-arn": "arn:aws:iam::952133486861:role/k8simp15-worker-s3"
+        },
+        "appliedKeys": {
+          "labels": [],
+          "annotations": [
+            "eks.amazonaws.com/role-arn"
+          ]
+        }
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "default",
+        "namespace": "legacy"
+      }
+    }
+  ],
+  "applications": [
+    {
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "metadata": {
+        "name": "legacy-guestbook",
+        "namespace": "argocd"
+      },
+      "spec": {
+        "project": "default",
+        "destination": {
+          "namespace": "legacy",
+          "server": "https://kubernetes.default.svc"
+        },
+        "source": {
+          "repoURL": "https://github.com/argoproj/argocd-example-apps",
+          "path": "guestbook",
+          "targetRevision": "HEAD"
+        },
+        "syncPolicy": {
+          "automated": {
+            "prune": true,
+            "selfHeal": true
+          },
+          "syncOptions": [
+            "CreateNamespace=true"
+          ]
+        }
+      },
+      "status": {
+        "resources": [
+          {
+            "version": "v1",
+            "kind": "Service",
+            "namespace": "legacy",
+            "name": "guestbook-ui"
+          },
+          {
+            "group": "apps",
+            "version": "v1",
+            "kind": "Deployment",
+            "namespace": "legacy",
+            "name": "guestbook-ui"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": []
+}
