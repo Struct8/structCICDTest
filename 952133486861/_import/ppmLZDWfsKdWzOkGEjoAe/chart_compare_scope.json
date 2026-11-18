@@ -1,0 +1,8 @@
+{
+  "platform": "eks",
+  "cluster": "k8simp15-cluster",
+  "region": "us-west-2",
+  "requestId": "392a502b-3a5f-4000-8dd3-d8b9b2723310",
+  "namespace": "shop",
+  "manifests": "manifests"
+}

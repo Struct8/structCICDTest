@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    app.kubernetes.io/name: api
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: shop
+    cloudman.io/creator: rmay-struct
+  namespace: shop
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      containers:
+        - args:
+            - |
+              while true; do
+                if psql -tAc 'select 1' >/dev/null 2>/tmp/err; then echo "OK $(date -u +%FT%TZ) db"; else echo "FAIL $(date -u +%FT%TZ) $(head -c 200 /tmp/err | tr '\n' ' ')"; fi
+                sleep 30
+              done
+          command:
+            - sh
+            - "-c"
+          image: "postgres:17-alpine"
+          imagePullPolicy: IfNotPresent
+          name: api
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          env:
+            - name: PGHOST
+              value: "k8simp15-pg.c9g6oy6oylb0.us-west-2.rds.amazonaws.com"
+            - name: PGUSER
+              value: "labadmin"
+            - name: PGDATABASE
+              value: "postgres"
+            - name: PGSSLMODE
+              value: "require"
+            - name: PGCONNECT_TIMEOUT
+              value: "5"
+            - name: PGPASSWORD
+          resources:
+            requests:
+              cpu: "20m"
+              memory: "32Mi"
+    metadata:
+      labels:
+        app: api
