@@ -76,6 +76,7 @@ resource "aws_eks_cluster" "k8simp18-cluster" {
     bootstrap_cluster_creator_admin_permissions = true
   }
   encryption_config {
+    resources = ["secrets"]
     provider {
       key_arn = aws_kms_key.c9b5aad2-3fb4-4feb-a112-7518a6dd7c29.arn
     }
