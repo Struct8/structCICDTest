@@ -218,17 +218,6 @@ resource "aws_route_table_association" "aws_route_table_association_k8simp17_pub
   subnet_id      = aws_subnet.k8simp17-public-b.id
 }
 
-resource "aws_security_group" "eks_node_group_k8simp17-ng_group" {
-  name                   = "eks_node_group_k8simp17-ng_group"
-  vpc_id                 = aws_vpc.k8simp17-vpc.id
-  revoke_rules_on_delete = false
-  tags = {
-    Name           = "eks_node_group_k8simp17-ng_group"
-    State          = "k8simp17-ngsg"
-    Struct8Creator = "Unknown"
-  }
-}
-
 resource "aws_security_group" "lb_k8simp17-alb_group" {
   name                   = "lb_k8simp17-alb_group"
   vpc_id                 = aws_vpc.k8simp17-vpc.id
@@ -238,65 +227,6 @@ resource "aws_security_group" "lb_k8simp17-alb_group" {
     State          = "k8simp17-ngsg"
     Struct8Creator = "Unknown"
   }
-}
-
-resource "aws_security_group_rule" "rule_eks_node_group_k8simp17_ng_group_egress_all_protocols" {
-  security_group_id = aws_security_group.eks_node_group_k8simp17-ng_group.id
-  cidr_blocks       = ["0.0.0.0/0"]
-  from_port         = 0
-  protocol          = "-1"
-  to_port           = 0
-  type              = "egress"
-}
-
-resource "aws_security_group_rule" "rule_k8simp17-ng_ingress_cluster_to_node_dns_tcp" {
-  security_group_id        = aws_security_group.eks_node_group_k8simp17-ng_group.id
-  source_security_group_id = aws_eks_cluster.k8simp17-eks.vpc_config[0].cluster_security_group_id
-  description              = "Allow Control Plane to DNS pods (TCP)"
-  from_port                = 53
-  protocol                 = "tcp"
-  to_port                  = 53
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_k8simp17-ng_ingress_cluster_to_node_dns_udp" {
-  security_group_id        = aws_security_group.eks_node_group_k8simp17-ng_group.id
-  source_security_group_id = aws_eks_cluster.k8simp17-eks.vpc_config[0].cluster_security_group_id
-  description              = "Allow Control Plane to DNS pods (UDP)"
-  from_port                = 53
-  protocol                 = "udp"
-  to_port                  = 53
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_k8simp17-ng_ingress_cluster_to_node_kubelet" {
-  security_group_id        = aws_security_group.eks_node_group_k8simp17-ng_group.id
-  source_security_group_id = aws_eks_cluster.k8simp17-eks.vpc_config[0].cluster_security_group_id
-  description              = "Allow Control Plane to Kubelet (logs/exec)"
-  from_port                = 10250
-  protocol                 = "tcp"
-  to_port                  = 10250
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_k8simp17-ng_ingress_cluster_to_node_webhooks" {
-  security_group_id        = aws_security_group.eks_node_group_k8simp17-ng_group.id
-  source_security_group_id = aws_eks_cluster.k8simp17-eks.vpc_config[0].cluster_security_group_id
-  description              = "Allow Control Plane to Node Webhooks (LB Controller, etc)"
-  from_port                = 9443
-  protocol                 = "tcp"
-  to_port                  = 9443
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "rule_k8simp17-ng_ingress_node_to_node_all" {
-  security_group_id        = aws_security_group.eks_node_group_k8simp17-ng_group.id
-  source_security_group_id = aws_security_group.eks_node_group_k8simp17-ng_group.id
-  description              = "Allow Nodes to communicate with each other"
-  from_port                = 0
-  protocol                 = "-1"
-  to_port                  = 0
-  type                     = "ingress"
 }
 
 resource "aws_security_group_rule" "rule_lb_k8simp17_alb_group_egress_all_protocols" {
@@ -317,8 +247,8 @@ resource "aws_security_group_rule" "rule_lb_k8simp17_alb_group_ingress_tcp_80" {
   type              = "ingress"
 }
 
-resource "aws_security_group_rule" "rule_lb_k8simp17_alb_group_to_eks_node_group_k8simp17_ng_group_tcp_10256" {
-  security_group_id        = aws_security_group.eks_node_group_k8simp17-ng_group.id
+resource "aws_security_group_rule" "rule_lb_k8simp17_alb_group_to_k8simp17_eks_cluster_sg_tcp_10256" {
+  security_group_id        = aws_eks_cluster.k8simp17-eks.vpc_config[0].cluster_security_group_id
   source_security_group_id = aws_security_group.lb_k8simp17-alb_group.id
   description              = "Allow from lb_k8simp17-alb_group (tcp:10256-10256)"
   from_port                = 10256
