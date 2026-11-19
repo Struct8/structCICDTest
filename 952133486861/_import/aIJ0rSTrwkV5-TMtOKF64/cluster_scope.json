@@ -2,5 +2,99 @@
   "platform": "eks",
   "cluster": "k8simp18-cluster",
   "region": "us-west-2",
-  "requestId": "000af5cc-e654-4ca9-b514-51bac662d668"
+  "requestId": "afd75cc0-eb2c-44dd-925a-8bfe9bd04229",
+  "namespaces": [
+    "store",
+    "batch"
+  ],
+  "kinds": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment"
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "StatefulSet"
+    },
+    {
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler"
+    },
+    {
+      "apiVersion": "configuration.konghq.com/v1",
+      "kind": "KongClusterPlugin"
+    },
+    {
+      "apiVersion": "gateway-operator.konghq.com/v1beta1",
+      "kind": "GatewayConfiguration"
+    },
+    {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "kind": "Gateway"
+    },
+    {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "kind": "HTTPRoute"
+    },
+    {
+      "apiVersion": "grafana.integreatly.org/v1beta1",
+      "kind": "Grafana"
+    },
+    {
+      "apiVersion": "k8s.keycloak.org/v2beta1",
+      "kind": "Keycloak"
+    },
+    {
+      "apiVersion": "monitoring.coreos.com/v1",
+      "kind": "Prometheus"
+    },
+    {
+      "apiVersion": "monitoring.coreos.com/v1",
+      "kind": "ServiceMonitor"
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy"
+    },
+    {
+      "apiVersion": "rabbitmq.com/v1beta1",
+      "kind": "Queue"
+    },
+    {
+      "apiVersion": "storage.k8s.io/v1",
+      "kind": "StorageClass"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "LimitRange"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolume"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ResourceQuota"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Secret"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount"
+    }
+  ]
 }
