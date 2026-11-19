@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: batch
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app.kubernetes.io/name: batch
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: batch
+    cloudman.io/creator: rmay-struct
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+spec:
+  project: k8simp18
+  source:
+    repoURL: "https://github.com/Struct8/structCICDTest"
+    targetRevision: HEAD
+    path: 952133486861/batch/templates
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: batch
