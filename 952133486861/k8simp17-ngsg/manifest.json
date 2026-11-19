@@ -1,7 +1,7 @@
 {
   "external_repositories": [],
-  "action": "apply",
-  "trigger_id": "1795048186927",
+  "action": "destroy",
+  "trigger_id": "1795048358839",
   "triggered_by": "k8simp17-lab",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",
@@ -13,7 +13,7 @@
   },
   "pipeline_stages": [
     {
-      "stage_name": "Lab k8simp17: apply",
+      "stage_name": "Lab k8simp17: destroy",
       "parallel_execution": false,
       "states": [
         {
