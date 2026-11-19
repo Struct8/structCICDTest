@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db
+  labels:
+    app.kubernetes.io/name: db
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: store
+    cloudman.io/creator: rmay-struct
+  namespace: store
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: db
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+  template:
+    spec:
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        pool: spot
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      tolerations:
+        - effect: NoSchedule
+          key: workload
+          operator: Equal
+          value: "batch"
+      containers:
+        - args:
+            - |
+              echo "start $(date -u +%FT%TZ)" >> /data/log
+              while true; do echo "OK $(date -u +%FT%TZ) lines=$(wc -l < /data/log)"; sleep 30; done
+          command:
+            - sh
+            - "-c"
+          image: "busybox:1.37"
+          imagePullPolicy: IfNotPresent
+          name: db
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "16Mi"
+          volumeMounts:
+            - name: data
+              mountPath: /data
+    metadata:
+      labels:
+        app: db
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: gp3
+        resources:
+          requests:
+            storage: "1Gi"
+  serviceName: db-svc

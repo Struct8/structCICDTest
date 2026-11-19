@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: store
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app.kubernetes.io/name: store
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: store
+    cloudman.io/creator: rmay-struct
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+spec:
+  project: k8simp18
+  source:
+    repoURL: "https://github.com/Struct8/structCICDTest"
+    targetRevision: HEAD
+    path: 952133486861/store/templates
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: store
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      name: web
+      jsonPointers:
+        - /spec/replicas
+  syncPolicy:
+    syncOptions:
+      - RespectIgnoreDifferences=true

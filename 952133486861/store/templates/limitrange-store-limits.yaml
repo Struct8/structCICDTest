@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: store-limits
+  labels:
+    app.kubernetes.io/name: store-limits
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: store
+    cloudman.io/creator: rmay-struct
+  namespace: store
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+spec:
+  limits:
+    - default:
+        cpu: 200m
+        memory: 128Mi
+      defaultRequest:
+        cpu: 20m
+        memory: 32Mi
+      type: "Container"

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  labels:
+    app.kubernetes.io/name: web-config
+    app.kubernetes.io/managed-by: struct8
+    app.kubernetes.io/instance: store
+    cloudman.io/creator: rmay-struct
+  namespace: store
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+data:
+  greeting: hello
+  index.html: |
+    <h1>k8simp18 store</h1>
