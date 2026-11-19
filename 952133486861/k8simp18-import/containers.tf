@@ -111,6 +111,9 @@ resource "aws_eks_fargate_profile" "k8simp18-batch" {
   fargate_profile_name   = "k8simp18-batch"
   pod_execution_role_arn = aws_iam_role.k8simp18-fargate-role.arn
   subnet_ids             = [aws_subnet.k8simp18-private-us-west-2a.id, aws_subnet.k8simp18-private-us-west-2b.id]
+  selector {
+    namespace = "batch"
+  }
   tags = {
     Project        = "k8s-import-lab"
     Name           = "k8simp18-batch"
