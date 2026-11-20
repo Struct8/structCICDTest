@@ -265,16 +265,6 @@ resource "aws_security_group_rule" "rule_k8simp19-lt_ingress_cluster_to_node_dns
   type                     = "ingress"
 }
 
-resource "aws_security_group_rule" "rule_k8simp19-lt_ingress_cluster_to_node_kubelet" {
-  security_group_id        = aws_security_group.k8simp19-nodes-sg.id
-  source_security_group_id = aws_eks_cluster.k8simp19-cluster.vpc_config[0].cluster_security_group_id
-  description              = "Allow Control Plane to Kubelet (logs/exec)"
-  from_port                = 10250
-  protocol                 = "tcp"
-  to_port                  = 10250
-  type                     = "ingress"
-}
-
 resource "aws_security_group_rule" "rule_k8simp19-lt_ingress_cluster_to_node_webhooks" {
   security_group_id        = aws_security_group.k8simp19-nodes-sg.id
   source_security_group_id = aws_eks_cluster.k8simp19-cluster.vpc_config[0].cluster_security_group_id

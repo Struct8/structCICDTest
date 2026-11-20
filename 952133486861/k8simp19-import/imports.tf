@@ -232,11 +232,6 @@ import {
 }
 
 import {
-  to = aws_security_group_rule.rule_k8simp19-lt_ingress_node_to_node_all
-  id = "sg-0614deb261682f6d3_ingress_all_0_0_sg-0614deb261682f6d3"
-}
-
-import {
   to = aws_security_group_rule.rule_k8simp19_nodes_sg_egress_all_protocols
   id = "sg-0614deb261682f6d3_egress_all_0_0_0.0.0.0/0"
 }
