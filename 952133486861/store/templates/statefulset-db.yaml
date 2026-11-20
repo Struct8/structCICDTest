@@ -67,4 +67,4 @@ spec:
         resources:
           requests:
             storage: "1Gi"
-  serviceName: db-svc
+  serviceName: db

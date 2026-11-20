@@ -31,9 +31,13 @@ spec:
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
       volumes:
-        - name: html
-          configMap:
+        - configMap:
+            defaultMode: 420
+            items:
+              - key: index.html
+                path: index.html
             name: web-config
+          name: html
       containers:
         - image: "nginx:1.29-alpine"
           imagePullPolicy: IfNotPresent
@@ -42,6 +46,10 @@ spec:
           terminationMessagePolicy: File
           env:
             - name: GREETING
+              valueFrom:
+                configMapKeyRef:
+                  key: greeting
+                  name: web-config
           ports:
             - containerPort: 80
               protocol: TCP
@@ -50,8 +58,8 @@ spec:
               cpu: "50m"
               memory: "32Mi"
           volumeMounts:
-            - name: html
-              mountPath: /usr/share/nginx/html
+            - mountPath: /usr/share/nginx/html
+              name: html
     metadata:
       labels:
         app: web

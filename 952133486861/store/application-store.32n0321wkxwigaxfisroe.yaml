@@ -13,7 +13,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-10"
 spec:
-  project: k8simp18
+  project: k8simp19
   source:
     repoURL: "https://github.com/Struct8/structCICDTest"
     targetRevision: HEAD

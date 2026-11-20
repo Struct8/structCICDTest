@@ -26,7 +26,7 @@ spec:
     spec:
       dnsPolicy: ClusterFirst
       nodeSelector:
-        eks.amazonaws.com/nodegroup: k8simp18-lt
+        eks.amazonaws.com/nodegroup: k8simp19-lt
       restartPolicy: Always
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
@@ -41,7 +41,5 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
     metadata:
-      annotations:
-        kubectl.kubernetes.io/restartedAt: "2026-11-19T07:51:17-03:00"
       labels:
         app: secure
