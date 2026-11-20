@@ -3,7 +3,7 @@
   "platform": "eks",
   "cluster": "k8simp19-cluster",
   "region": "us-west-2",
-  "requestId": "c34e5e44-1f52-4256-b58a-a1968a40c2af",
+  "requestId": "f07fa1d1-5ad9-40e2-ad01-44eebba38ed8",
   "releases": [
     {
       "name": "argocd",
@@ -94,5 +94,705 @@
       }
     }
   ],
+  "kinds": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "StatefulSet",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "configuration.konghq.com/v1",
+      "kind": "KongClusterPlugin",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway-operator.konghq.com/v1beta1",
+      "kind": "GatewayConfiguration",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "kind": "Gateway",
+      "served": false
+    },
+    {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "kind": "HTTPRoute",
+      "served": false
+    },
+    {
+      "apiVersion": "grafana.integreatly.org/v1beta1",
+      "kind": "Grafana",
+      "served": false
+    },
+    {
+      "apiVersion": "k8s.keycloak.org/v2beta1",
+      "kind": "Keycloak",
+      "served": false
+    },
+    {
+      "apiVersion": "monitoring.coreos.com/v1",
+      "kind": "Prometheus",
+      "served": false
+    },
+    {
+      "apiVersion": "monitoring.coreos.com/v1",
+      "kind": "ServiceMonitor",
+      "served": false
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "rabbitmq.com/v1beta1",
+      "kind": "Queue",
+      "served": false
+    },
+    {
+      "apiVersion": "storage.k8s.io/v1",
+      "kind": "StorageClass",
+      "served": true,
+      "namespaced": false
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "LimitRange",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolume",
+      "served": true,
+      "namespaced": false
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ResourceQuota",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Secret",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "served": true,
+      "namespaced": true
+    },
+    {
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "served": true,
+      "namespaced": true
+    }
+  ],
+  "objects": [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "secure",
+        "namespace": "store",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "secure"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "secure"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "command": [
+                  "sh",
+                  "-c",
+                  "while true; do if nslookup kubernetes.default.svc.cluster.local >/dev/null 2>&1; then echo \"OK $(date -u +%FT%TZ) dns\"; else echo \"FAIL $(date -u +%FT%TZ) dns\"; fi; sleep 30; done"
+                ],
+                "image": "busybox:1.37",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "secure",
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "nodeSelector": {
+              "eks.amazonaws.com/nodegroup": "k8simp19-lt"
+            },
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "web",
+        "namespace": "store",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "web"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "web"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "env": [
+                  {
+                    "name": "GREETING",
+                    "valueFrom": {
+                      "configMapKeyRef": {
+                        "key": "greeting",
+                        "name": "web-config"
+                      }
+                    }
+                  }
+                ],
+                "image": "nginx:1.29-alpine",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "web",
+                "ports": [
+                  {
+                    "containerPort": 80,
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "50m",
+                    "memory": "32Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/usr/share/nginx/html",
+                    "name": "html"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "nodeSelector": {
+              "pool": "arm"
+            },
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30,
+            "volumes": [
+              {
+                "configMap": {
+                  "defaultMode": 420,
+                  "items": [
+                    {
+                      "key": "index.html",
+                      "path": "index.html"
+                    }
+                  ],
+                  "name": "web-config"
+                },
+                "name": "html"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "runner",
+        "namespace": "batch",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "runner"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "runner"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "command": [
+                  "sh",
+                  "-c",
+                  "while true; do echo \"OK $(date -u +%FT%TZ) fargate\"; sleep 30; done"
+                ],
+                "image": "busybox:1.37",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "runner",
+                "resources": {
+                  "requests": {
+                    "cpu": "250m",
+                    "memory": "512Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "StatefulSet",
+      "metadata": {
+        "name": "db",
+        "namespace": "store"
+      },
+      "spec": {
+        "persistentVolumeClaimRetentionPolicy": {
+          "whenDeleted": "Retain",
+          "whenScaled": "Retain"
+        },
+        "podManagementPolicy": "OrderedReady",
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "db"
+          }
+        },
+        "serviceName": "db",
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "db"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "args": [
+                  "echo \"start $(date -u +%FT%TZ)\" >> /data/log\nwhile true; do echo \"OK $(date -u +%FT%TZ) lines=$(wc -l < /data/log)\"; sleep 30; done\n"
+                ],
+                "command": [
+                  "sh",
+                  "-c"
+                ],
+                "image": "busybox:1.37",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "db",
+                "resources": {
+                  "requests": {
+                    "cpu": "10m",
+                    "memory": "16Mi"
+                  }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/data",
+                    "name": "data"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "nodeSelector": {
+              "pool": "spot"
+            },
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {},
+            "terminationGracePeriodSeconds": 30,
+            "tolerations": [
+              {
+                "effect": "NoSchedule",
+                "key": "workload",
+                "operator": "Equal",
+                "value": "batch"
+              }
+            ]
+          }
+        },
+        "updateStrategy": {
+          "rollingUpdate": {
+            "maxUnavailable": 1,
+            "partition": 0
+          },
+          "type": "RollingUpdate"
+        },
+        "volumeClaimTemplates": [
+          {
+            "apiVersion": "v1",
+            "kind": "PersistentVolumeClaim",
+            "metadata": {
+              "name": "data"
+            },
+            "spec": {
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "resources": {
+                "requests": {
+                  "storage": "1Gi"
+                }
+              },
+              "storageClassName": "gp3",
+              "volumeMode": "Filesystem"
+            },
+            "status": {
+              "phase": "Pending"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler",
+      "metadata": {
+        "name": "web",
+        "namespace": "store"
+      },
+      "spec": {
+        "maxReplicas": 3,
+        "metrics": [
+          {
+            "resource": {
+              "name": "cpu",
+              "target": {
+                "averageUtilization": 80,
+                "type": "Utilization"
+              }
+            },
+            "type": "Resource"
+          }
+        ],
+        "minReplicas": 1,
+        "scaleTargetRef": {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "name": "web"
+        }
+      }
+    },
+    {
+      "apiVersion": "storage.k8s.io/v1",
+      "kind": "StorageClass",
+      "metadata": {
+        "name": "gp2"
+      },
+      "parameters": {
+        "fsType": "ext4",
+        "type": "gp2"
+      },
+      "provisioner": "kubernetes.io/aws-ebs",
+      "reclaimPolicy": "Delete",
+      "volumeBindingMode": "WaitForFirstConsumer"
+    },
+    {
+      "apiVersion": "storage.k8s.io/v1",
+      "kind": "StorageClass",
+      "metadata": {
+        "name": "gp3"
+      },
+      "parameters": {
+        "tagSpecification_1": "Project=k8s-import-lab",
+        "tagSpecification_2": "k8simp19=volume",
+        "type": "gp3"
+      },
+      "provisioner": "ebs.csi.aws.com",
+      "reclaimPolicy": "Delete",
+      "volumeBindingMode": "WaitForFirstConsumer"
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "kube-root-ca.crt",
+        "namespace": "store",
+        "annotations": {
+          "kubernetes.io/description": "Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubernetes.default.svc. No other usage is guaranteed across distributions of Kubernetes clusters."
+        }
+      },
+      "data": {
+        "ca.crt": "-----BEGIN CERTIFICATE-----\nMIIDMjCCAhqgAwIBAgIRAI1Gck70AitsbsgrlUulbIMwDQYJKoZIhvcNAQELBQAw\nJzEQMA4GA1UEChMHQVdTIEVLUzETMBEGA1UEAxMKa3ViZXJuZXRlczAeFw0yNjEx\nMjAxMzE0NTdaFw0zMTExMTkxMzE0NTdaMCcxEDAOBgNVBAoTB0FXUyBFS1MxEzAR\nBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQCcZB/rwYpfkpbn4+iXY3t+XPebNWsIFWi7e0op7lLlZ2SUP3nuhern7z2ippws\ndRy+Lvslb14nzuFz6J3cjXusV7FmP7mRRiktbMVKqFIq1z0/KbMRguxmSjRkqQnN\nz09O0BHtK8YtWVWEGHd1yWQzVNCaHfZUphkz1V8x+rBpEoP7rD8yc87xo/KdkY40\n7nEnbQlxUf7INh7Oq5LxqehCYAZf1Bj9L4FXsMzyL7Abw6npy12jv2sWZ5xLTrC3\nf1TOUuUT9k9ys5Ne5fzkME+epKhz7ct0tHkDdx1N15mYrMxt7XZJ8iD1XxNIXqez\n/LVPqmcO5seO319McXF098GZAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAPBgNV\nHRMBAf8EBTADAQH/MB0GA1UdDgQWBBREdyNSArnFNY1txZmCUwRaOJ9d7DAVBgNV\nHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQAaTSsTekx78Zfi\neuseo4ohazgQe5zSX6kaDAL89EOv3MP4Jp2BwI88rWt7WZtK76Ke+7xNsvfoL8PW\nrzkd1aTrPpOEHiy/eEx6gesA3ipiXBMqhTyzdhVCZBzVhKcf99lqccabAyo9HhdY\nOMid27+D3+2gB+VJ1V64v1E6nFLmAmZ4F7PPDHIIoz90lRL12vwvQkRDMZBgqHV6\ni0sjDiDS0YiHdhIrbuQ4G9SchkTcE/TFmV4VTD2kfnGEtu02VB15SrKdxMu6OGzV\nPQr75CtbBIWNsXMfy4MvAPHEvz1GKRnWbk2SAFxho6dSWwtlYb5bJGpFzWJ4qw+J\nIGI5sjln\n-----END CERTIFICATE-----\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "web-config",
+        "namespace": "store"
+      },
+      "data": {
+        "greeting": "hello",
+        "index.html": "<h1>k8simp19 store</h1>\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "kube-root-ca.crt",
+        "namespace": "batch",
+        "annotations": {
+          "kubernetes.io/description": "Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubernetes.default.svc. No other usage is guaranteed across distributions of Kubernetes clusters."
+        }
+      },
+      "data": {
+        "ca.crt": "-----BEGIN CERTIFICATE-----\nMIIDMjCCAhqgAwIBAgIRAI1Gck70AitsbsgrlUulbIMwDQYJKoZIhvcNAQELBQAw\nJzEQMA4GA1UEChMHQVdTIEVLUzETMBEGA1UEAxMKa3ViZXJuZXRlczAeFw0yNjEx\nMjAxMzE0NTdaFw0zMTExMTkxMzE0NTdaMCcxEDAOBgNVBAoTB0FXUyBFS1MxEzAR\nBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQCcZB/rwYpfkpbn4+iXY3t+XPebNWsIFWi7e0op7lLlZ2SUP3nuhern7z2ippws\ndRy+Lvslb14nzuFz6J3cjXusV7FmP7mRRiktbMVKqFIq1z0/KbMRguxmSjRkqQnN\nz09O0BHtK8YtWVWEGHd1yWQzVNCaHfZUphkz1V8x+rBpEoP7rD8yc87xo/KdkY40\n7nEnbQlxUf7INh7Oq5LxqehCYAZf1Bj9L4FXsMzyL7Abw6npy12jv2sWZ5xLTrC3\nf1TOUuUT9k9ys5Ne5fzkME+epKhz7ct0tHkDdx1N15mYrMxt7XZJ8iD1XxNIXqez\n/LVPqmcO5seO319McXF098GZAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAPBgNV\nHRMBAf8EBTADAQH/MB0GA1UdDgQWBBREdyNSArnFNY1txZmCUwRaOJ9d7DAVBgNV\nHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQAaTSsTekx78Zfi\neuseo4ohazgQe5zSX6kaDAL89EOv3MP4Jp2BwI88rWt7WZtK76Ke+7xNsvfoL8PW\nrzkd1aTrPpOEHiy/eEx6gesA3ipiXBMqhTyzdhVCZBzVhKcf99lqccabAyo9HhdY\nOMid27+D3+2gB+VJ1V64v1E6nFLmAmZ4F7PPDHIIoz90lRL12vwvQkRDMZBgqHV6\ni0sjDiDS0YiHdhIrbuQ4G9SchkTcE/TFmV4VTD2kfnGEtu02VB15SrKdxMu6OGzV\nPQr75CtbBIWNsXMfy4MvAPHEvz1GKRnWbk2SAFxho6dSWwtlYb5bJGpFzWJ4qw+J\nIGI5sjln\n-----END CERTIFICATE-----\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "LimitRange",
+      "metadata": {
+        "name": "store-limits",
+        "namespace": "store"
+      },
+      "spec": {
+        "limits": [
+          {
+            "default": {
+              "cpu": "200m",
+              "memory": "128Mi"
+            },
+            "defaultRequest": {
+              "cpu": "20m",
+              "memory": "32Mi"
+            },
+            "type": "Container"
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolume",
+      "metadata": {
+        "name": "pvc-513619bb-0ce2-4cca-93eb-5a11ea5ed08f",
+        "annotations": {
+          "pv.kubernetes.io/provisioned-by": "ebs.csi.aws.com",
+          "volume.kubernetes.io/provisioner-deletion-secret-name": "",
+          "volume.kubernetes.io/provisioner-deletion-secret-namespace": ""
+        }
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "capacity": {
+          "storage": "1Gi"
+        },
+        "claimRef": {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "name": "data-db-0",
+          "namespace": "store",
+          "resourceVersion": "3237",
+          "uid": "513619bb-0ce2-4cca-93eb-5a11ea5ed08f"
+        },
+        "csi": {
+          "driver": "ebs.csi.aws.com",
+          "fsType": "ext4",
+          "volumeAttributes": {
+            "storage.kubernetes.io/csiProvisionerIdentity": "1795181265807-3314-ebs.csi.aws.com"
+          },
+          "volumeHandle": "vol-096dde3821907979e"
+        },
+        "nodeAffinity": {
+          "required": {
+            "nodeSelectorTerms": [
+              {
+                "matchExpressions": [
+                  {
+                    "key": "topology.kubernetes.io/zone",
+                    "operator": "In",
+                    "values": [
+                      "us-west-2a"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "persistentVolumeReclaimPolicy": "Delete",
+        "storageClassName": "gp3",
+        "volumeMode": "Filesystem"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "metadata": {
+        "name": "data-db-0",
+        "namespace": "store",
+        "labels": {
+          "app": "db"
+        },
+        "annotations": {
+          "pv.kubernetes.io/bind-completed": "yes",
+          "pv.kubernetes.io/bound-by-controller": "yes",
+          "volume.beta.kubernetes.io/storage-provisioner": "ebs.csi.aws.com",
+          "volume.kubernetes.io/selected-node": "ip-10-89-1-67.us-west-2.compute.internal",
+          "volume.kubernetes.io/storage-provisioner": "ebs.csi.aws.com"
+        }
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "1Gi"
+          }
+        },
+        "storageClassName": "gp3",
+        "volumeMode": "Filesystem",
+        "volumeName": "pvc-513619bb-0ce2-4cca-93eb-5a11ea5ed08f"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ResourceQuota",
+      "metadata": {
+        "name": "store-quota",
+        "namespace": "store"
+      },
+      "spec": {
+        "hard": {
+          "persistentvolumeclaims": "4",
+          "pods": "20",
+          "requests.storage": "20Gi"
+        }
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "default",
+        "namespace": "store"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "name": "default",
+        "namespace": "batch"
+      }
+    }
+  ],
+  "applications": [],
   "errors": []
 }
