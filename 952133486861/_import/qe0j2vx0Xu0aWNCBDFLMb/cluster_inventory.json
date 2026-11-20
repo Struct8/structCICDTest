@@ -1,0 +1,98 @@
+{
+  "version": 2,
+  "platform": "eks",
+  "cluster": "k8simp19-cluster",
+  "region": "us-west-2",
+  "requestId": "c34e5e44-1f52-4256-b58a-a1968a40c2af",
+  "releases": [
+    {
+      "name": "argocd",
+      "namespace": "argocd",
+      "chart": "argo-cd",
+      "version": "10.18.2",
+      "appVersion": "v3.6.2",
+      "status": "deployed"
+    }
+  ],
+  "namespaces": [
+    {
+      "metadata": {
+        "name": "argocd",
+        "labels": {
+          "kubernetes.io/metadata.name": "argocd",
+          "name": "argocd"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "batch",
+        "labels": {
+          "kubernetes.io/metadata.name": "batch"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "default",
+        "labels": {
+          "kubernetes.io/metadata.name": "default"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-node-lease",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-node-lease"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-public",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-public"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-system",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-system"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "metadata": {
+        "name": "store",
+        "labels": {
+          "kubernetes.io/metadata.name": "store"
+        }
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+  ],
+  "errors": []
+}
