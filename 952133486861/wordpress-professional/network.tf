@@ -203,10 +203,6 @@ resource "aws_route" "route_rtPrivate_to_nat-wp_ipv4" {
   destination_cidr_block = "0.0.0.0/0"
 }
 
-resource "aws_route" "route_rt_to_dest_ipv4" {
-  destination_cidr_block = "0.0.0.0/0"
-}
-
 resource "aws_route53_record" "Route53_Record_certAlb_origin_wp_cloudman_pro" {
   for_each = {
     for dvo in aws_acm_certificate.certAlb.domain_validation_options : dvo.domain_name => dvo
