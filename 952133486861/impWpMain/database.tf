@@ -3,7 +3,7 @@ resource "aws_db_subnet_group" "subnet_group_wp-aurora" {
   subnet_ids = [aws_subnet.dataA.id, aws_subnet.dataB.id]
   tags = {
     Name           = "subnet_group_wp-aurora"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -31,19 +31,16 @@ resource "aws_rds_cluster" "wp-aurora" {
   skip_final_snapshot             = true
   storage_encrypted               = true
   vpc_security_group_ids          = [aws_security_group.rds_cluster_wp-aurora_group.id]
-  lifecycle {
-    ignore_changes = [manage_master_user_password]
-  }
   serverlessv2_scaling_configuration {
     max_capacity             = 4
     min_capacity             = 0
     seconds_until_auto_pause = 300
   }
   tags = {
-    Name                                    = "wp-aurora"
-    State                                   = "wordpress-professional"
-    Struct8Creator                          = "rmay struct"
     "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
+    Name                                    = "wp-aurora"
+    State                                   = "impWpMain"
+    Struct8Creator                          = "rmay struct"
   }
 }
 
@@ -60,7 +57,7 @@ resource "aws_rds_cluster_instance" "wp-aurora-reader" {
   promotion_tier               = 2
   tags = {
     Name           = "wp-aurora-reader"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -78,7 +75,7 @@ resource "aws_rds_cluster_instance" "wp-aurora-writer" {
   promotion_tier               = 1
   tags = {
     Name           = "wp-aurora-writer"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -102,7 +99,7 @@ resource "aws_elasticache_replication_group" "wpRedis" {
   transit_encryption_enabled = true
   tags = {
     Name           = "wpRedis"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -112,7 +109,7 @@ resource "aws_elasticache_subnet_group" "subnet_group_wpRedis" {
   subnet_ids = [aws_subnet.dataA.id, aws_subnet.dataB.id]
   tags = {
     Name           = "subnet_group_wpRedis"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }

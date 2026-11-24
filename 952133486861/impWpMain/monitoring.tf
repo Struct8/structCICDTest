@@ -9,7 +9,7 @@ resource "aws_cloudwatch_log_group" "logsWordpress" {
   retention_in_days = 30
   tags = {
     Name           = "logsWordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -17,7 +17,7 @@ resource "aws_cloudwatch_log_group" "logsWordpress" {
 resource "aws_cloudwatch_metric_alarm" "alarmDbCapacity" {
   alarm_name          = "alarmDbCapacity"
   metric_name         = "ServerlessDatabaseCapacity"
-  alarm_actions       = ["arn:aws:sns:us-west-2:952133486861:alarmsWordpress"]
+  alarm_actions       = [aws_sns_topic.alarmsWordpress.arn]
   alarm_description   = "Aurora has run at its maximum capacity (2 ACUs) for 15 minutes. If this repeats, raise the maximum capacity of the wp-aurora cluster and this threshold with it."
   comparison_operator = "GreaterThanOrEqualToThreshold"
   datapoints_to_alarm = 3
@@ -32,7 +32,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmDbCapacity" {
   }
   tags = {
     Name           = "alarmDbCapacity"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -40,7 +40,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmDbCapacity" {
 resource "aws_cloudwatch_metric_alarm" "alarmSite5xx" {
   alarm_name          = "alarmSite5xx"
   metric_name         = "HTTPCode_ELB_5XX_Count"
-  alarm_actions       = ["arn:aws:sns:us-west-2:952133486861:alarmsWordpress"]
+  alarm_actions       = [aws_sns_topic.alarmsWordpress.arn]
   alarm_description   = "The load balancer itself answered 5xx (502, 503 or 504) at least 10 times in 5 minutes: no healthy WordPress task, or tasks not answering."
   comparison_operator = "GreaterThanOrEqualToThreshold"
   datapoints_to_alarm = 1
@@ -55,7 +55,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmSite5xx" {
   }
   tags = {
     Name           = "alarmSite5xx"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -63,7 +63,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmSite5xx" {
 resource "aws_cloudwatch_metric_alarm" "alarmTasksCpu" {
   alarm_name          = "alarmTasksCpu"
   metric_name         = "CPUUtilization"
-  alarm_actions       = ["arn:aws:sns:us-west-2:952133486861:alarmsWordpress"]
+  alarm_actions       = [aws_sns_topic.alarmsWordpress.arn]
   alarm_description   = "Average CPU of the WordPress service above 80% for 15 minutes."
   comparison_operator = "GreaterThanThreshold"
   datapoints_to_alarm = 3
@@ -78,7 +78,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmTasksCpu" {
   }
   tags = {
     Name           = "alarmTasksCpu"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -86,7 +86,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmTasksCpu" {
 resource "aws_cloudwatch_metric_alarm" "alarmTasksMemory" {
   alarm_name          = "alarmTasksMemory"
   metric_name         = "MemoryUtilization"
-  alarm_actions       = ["arn:aws:sns:us-west-2:952133486861:alarmsWordpress"]
+  alarm_actions       = [aws_sns_topic.alarmsWordpress.arn]
   alarm_description   = "Average memory of the WordPress service above 85% of the task memory for 15 minutes."
   comparison_operator = "GreaterThanThreshold"
   datapoints_to_alarm = 3
@@ -101,7 +101,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmTasksMemory" {
   }
   tags = {
     Name           = "alarmTasksMemory"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -115,7 +115,7 @@ resource "aws_xray_group" "wordpressTraces" {
   }
   tags = {
     Name           = "wordpressTraces"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }

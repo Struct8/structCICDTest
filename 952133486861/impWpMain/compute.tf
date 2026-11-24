@@ -55,9 +55,6 @@ EOFUData
   iam_instance_profile {
     name = aws_iam_instance_profile.asgWordpress_profile.name
   }
-  lifecycle {
-    ignore_changes = [update_default_version]
-  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 1
@@ -89,13 +86,13 @@ EOFUData
     tags = {
       AmazonECSManaged = true
       Name             = "asgWordpress"
-      State            = "wordpress-professional"
+      State            = "impWpMain"
       Struct8Creator   = "rmay struct"
     }
   }
   tags = {
     Name           = "ltWordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -126,7 +123,7 @@ resource "aws_autoscaling_group" "asgWordpress" {
     strategy = "Rolling"
   }
   lifecycle {
-    ignore_changes = [instance_refresh, termination_policies, desired_capacity]
+    ignore_changes = [desired_capacity]
   }
   mixed_instances_policy {
     instances_distribution {
@@ -167,7 +164,7 @@ resource "aws_autoscaling_group" "asgWordpress" {
   tag {
     key                 = "State"
     propagate_at_launch = true
-    value               = "wordpress-professional"
+    value               = "impWpMain"
   }
   tag {
     key                 = "Struct8Creator"
@@ -223,7 +220,7 @@ resource "aws_appautoscaling_target" "scalingWordpress" {
   }
   tags = {
     Name           = "scalingWordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }

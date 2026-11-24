@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "albLogs" {
   object_lock_enabled = false
   tags = {
     Name           = "albLogs"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -16,10 +16,10 @@ resource "aws_s3_bucket" "wpMedia" {
   force_destroy       = true
   object_lock_enabled = false
   tags = {
-    Name                                    = "wpMedia"
-    State                                   = "wordpress-professional"
-    Struct8Creator                          = "rmay struct"
     "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
+    Name                                    = "wpMedia"
+    State                                   = "impWpMain"
+    Struct8Creator                          = "rmay struct"
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "wpSetupFiles" {
   object_lock_enabled = false
   tags = {
     Name           = "wpSetupFiles"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -203,7 +203,7 @@ resource "aws_s3_object" "wpSetupAssets" {
   key          = "wordpress/wp-setup-assets.tar.gz"
   tags = {
     Name           = "wpSetupAssets"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -214,7 +214,7 @@ resource "aws_s3_object" "wpSetupScript" {
   key          = "wordpress/wp-auto-setup.sh"
   tags = {
     Name           = "wpSetupScript"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -235,7 +235,7 @@ resource "aws_efs_access_point" "ap_wordpress_wpContent" {
   }
   tags = {
     Name           = "ap_wordpress_wpContent"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -249,10 +249,10 @@ resource "aws_efs_file_system" "wpContent" {
     replication_overwrite = "ENABLED"
   }
   tags = {
-    Name                                    = "wpContent"
-    State                                   = "wordpress-professional"
-    Struct8Creator                          = "rmay struct"
     "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
+    Name                                    = "wpContent"
+    State                                   = "impWpMain"
+    Struct8Creator                          = "rmay struct"
   }
 }
 

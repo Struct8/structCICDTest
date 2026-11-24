@@ -14,7 +14,7 @@ resource "aws_ecs_capacity_provider" "wp-capacity" {
   }
   tags = {
     Name           = "wp-capacity"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -27,7 +27,7 @@ resource "aws_ecs_cluster" "wp-cluster" {
   }
   tags = {
     Name           = "wp-cluster"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -81,7 +81,7 @@ resource "aws_ecs_service" "wordpress_service" {
   }
   tags = {
     Name           = "wordpress_service"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_lb_listener_rule.ruleFromCloudFront]
@@ -498,7 +498,7 @@ resource "aws_ecs_task_definition" "wordpress" {
   task_role_arn            = aws_iam_role.task_role_ecs_wordpress.arn
   tags = {
     Name           = "wordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
   volume {
