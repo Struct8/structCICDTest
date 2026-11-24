@@ -96,12 +96,6 @@ data "aws_iam_policy_document" "synthetics_canary_wpReadCanary_st_wp-flowlogs_do
     sid       = "CanaryLogs"
     effect    = "Allow"
     actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/cwsyn-*:*"]
-  }
-  statement {
-    sid       = "CanaryLogs1"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["arn:aws:logs:us-west-2:952133486861:log-group:/aws/lambda/cwsyn-*:*"]
   }
 }
