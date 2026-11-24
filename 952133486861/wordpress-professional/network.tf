@@ -647,10 +647,6 @@ resource "aws_lb_listener_rule" "ruleFromCloudFront" {
     order = 1
     type  = "forward"
     forward {
-      stickiness {
-        duration = 0
-        enabled  = false
-      }
       target_group {
         arn    = aws_lb_target_group.tgWordpress.arn
         weight = 1

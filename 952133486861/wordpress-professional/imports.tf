@@ -48,7 +48,7 @@ import {
 
 import {
   to = aws_acm_certificate.certWordpress
-  id = "arn:aws:acm:us-east-1:952133486861:certificate/62a912bc-1a02-4333-9a7f-3046704c1b2d"
+  id = "arn:aws:acm:us-east-1:952133486861:certificate/62a912bc-1a02-4333-9a7f-3046704c1b2d@us-east-1"
 }
 
 import {
@@ -263,7 +263,7 @@ import {
 
 import {
   to = aws_wafv2_web_acl.wpWaf
-  id = "d8090b26-9b9d-421b-83ef-b33983c25cca/wpWaf/CLOUDFRONT"
+  id = "d8090b26-9b9d-421b-83ef-b33983c25cca/wpWaf/CLOUDFRONT@us-east-1"
 }
 
 import {
