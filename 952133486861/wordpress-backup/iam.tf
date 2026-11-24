@@ -16,11 +16,6 @@ resource "aws_kms_alias" "kmsWordpress_cross_state_alias" {
   target_key_id = aws_kms_key.kmsWordpress.key_id
 }
 
-resource "aws_kms_alias" "kmsWordpress_cross_state_alias" {
-  name          = "alias/kmsWordpress-0fe-Vk6M"
-  target_key_id = aws_kms_key.kmsWordpress.key_id
-}
-
 resource "aws_kms_key" "kmsWordpress" {
   bypass_policy_lockout_safety_check = false
   customer_master_key_spec           = "SYMMETRIC_DEFAULT"

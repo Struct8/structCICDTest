@@ -17,11 +17,6 @@ import {
 }
 
 import {
-  to = aws_kms_alias.kmsWordpress_cross_state_alias
-  id = "alias/kmsWordpress-XefebEei"
-}
-
-import {
   to = aws_kms_key.kmsWordpress
   id = "262383e2-5ad6-4215-a7ac-23734520d998"
 }
@@ -39,4 +34,9 @@ import {
 import {
   to = aws_secretsmanager_secret_version.wpSecrets_version
   id = "arn:aws:secretsmanager:us-west-2:952133486861:secret:wpSecrets-PFyUY3|terraform-S5NQAIv1KkiDuOJsNCq9zJfVBT"
+}
+
+import {
+  to = aws_kms_alias.kmsWordpress_cross_state_alias
+  id = "alias/kmsWordpress-XefebEei"
 }
