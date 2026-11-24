@@ -13,7 +13,7 @@ resource "aws_lambda_function" "analyticsPage" {
   environment {
     variables = {
       ACCESS_KEY                     = "change-me-to-a-long-random-value"
-      ACCOUNT                        = "952133486861"
+      ACCOUNT                        = data.aws_caller_identity.current.account_id
       ATHENA_WORKGROUP               = "cdnAnalytics"
       AWS_ATHENA_WORKGROUP_NAME_0    = "cdnAnalytics"
       AWS_DYNAMODB_TABLE_NAME_0      = "cspTable"
@@ -24,7 +24,7 @@ resource "aws_lambda_function" "analyticsPage" {
       GLUE_DATABASE                  = "cdn_analytics"
       GLUE_TABLE                     = "cdn_log"
       NAME                           = "analyticsPage"
-      REGION                         = "us-west-2"
+      REGION                         = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -61,12 +61,12 @@ resource "aws_lambda_function" "cspReceiver" {
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT                        = "952133486861"
+      ACCOUNT                        = data.aws_caller_identity.current.account_id
       AWS_DYNAMODB_TABLE_NAME_0      = "cspTable"
       AWS_LAMBDA_FUNCTION_URL_NAME_0 = "cspReceiverUrl"
       AWS_XRAY_GROUP_NAME_0          = "analyticsTraces"
       NAME                           = "cspReceiver"
-      REGION                         = "us-west-2"
+      REGION                         = data.aws_region.current.region
       SITE_HOST                      = "wp.cloudman.pro"
     }
   }
@@ -102,19 +102,19 @@ resource "aws_lambda_function_url" "cspReceiverUrl" {
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver" {
   function_name          = aws_lambda_function.cspReceiver.function_name
-  statement_id           = "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver5558350162d9b4b93bace7a55d"
   principal              = "*"
   action                 = "lambda:InvokeFunctionUrl"
   function_url_auth_type = "NONE"
+  statement_id_prefix    = "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver"
   depends_on             = [aws_lambda_function_url.cspReceiverUrl]
 }
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver_invoke" {
   function_name            = aws_lambda_function.cspReceiver.function_name
-  statement_id             = "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver_invoke47b5dc2362949f598995fd2e71"
   principal                = "*"
   action                   = "lambda:InvokeFunction"
   invoked_via_function_url = true
+  statement_id_prefix      = "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver_invoke"
   depends_on               = [aws_lambda_function_url.cspReceiverUrl, aws_lambda_permission.perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver]
 }
 
