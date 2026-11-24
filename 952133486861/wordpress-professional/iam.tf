@@ -1,5 +1,6 @@
 resource "aws_iam_instance_profile" "asgWordpress_profile" {
   name = "asgWordpress_profile"
+  path = "/"
   role = aws_iam_role.asgWordpress_role.name
   tags = {
     Name           = "asgWordpress_profile"
@@ -210,19 +211,8 @@ resource "aws_iam_role" "Struct8Debug-debug-wp" {
 }
 
 resource "aws_iam_role" "asgWordpress_role" {
-  name = "asgWordpress_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "asgWordpress_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -234,19 +224,8 @@ resource "aws_iam_role" "asgWordpress_role" {
 }
 
 resource "aws_iam_role" "execution_role_ecs_wordpress" {
-  name = "execution_role_ecs_wordpress"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "execution_role_ecs_wordpress"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -258,19 +237,8 @@ resource "aws_iam_role" "execution_role_ecs_wordpress" {
 }
 
 resource "aws_iam_role" "task_role_ecs_wordpress" {
-  name = "task_role_ecs_wordpress"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "task_role_ecs_wordpress"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -314,14 +282,16 @@ resource "aws_iam_role_policy_attachment" "service_role_AmazonEC2ContainerServic
 }
 
 resource "aws_acm_certificate" "certAlb" {
-  domain_name       = "origin.wp.cloudman.pro"
-  key_algorithm     = "RSA_2048"
-  validation_method = "DNS"
+  domain_name               = "origin.wp.cloudman.pro"
+  key_algorithm             = "RSA_2048"
+  subject_alternative_names = ["origin.wp.cloudman.pro"]
+  validation_method         = "DNS"
   lifecycle {
     create_before_destroy = true
   }
   options {
     certificate_transparency_logging_preference = "ENABLED"
+    export                                      = "DISABLED"
   }
   tags = {
     Name           = "certAlb"
@@ -331,12 +301,17 @@ resource "aws_acm_certificate" "certAlb" {
 }
 
 resource "aws_acm_certificate" "certWordpress" {
-  domain_name       = "wp.cloudman.pro"
-  key_algorithm     = "RSA_2048"
-  region            = "us-east-1"
-  validation_method = "DNS"
+  domain_name               = "wp.cloudman.pro"
+  key_algorithm             = "RSA_2048"
+  region                    = "us-east-1"
+  subject_alternative_names = ["wp.cloudman.pro"]
+  validation_method         = "DNS"
+  lifecycle {
+    create_before_destroy = true
+  }
   options {
     certificate_transparency_logging_preference = "ENABLED"
+    export                                      = "DISABLED"
   }
   tags = {
     Name           = "certWordpress"
