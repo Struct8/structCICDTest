@@ -19,6 +19,9 @@ resource "aws_dynamodb_table" "cspTable" {
   lifecycle {
     ignore_changes = [read_capacity]
   }
+  point_in_time_recovery {
+    enabled = false
+  }
   tags = {
     Name           = "cspTable"
     State          = "wp-analytics"
