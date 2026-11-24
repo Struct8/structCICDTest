@@ -12,16 +12,16 @@ resource "aws_lambda_function" "wp-process-flow-logs" {
   timeout                        = 120
   environment {
     variables = {
-      ACCOUNT                             = "952133486861"
-      AWS_PROMETHEUS_WORKSPACE_ENDPOINT_0 = "https://aps-workspaces.us-west-2.amazonaws.com/workspaces/ws-2b682713-116b-4e7f-b237-08fa66a36070/"
-      AWS_PROMETHEUS_WORKSPACE_ID_0       = "ws-2b682713-116b-4e7f-b237-08fa66a36070"
+      ACCOUNT                             = data.aws_caller_identity.current.account_id
+      AWS_PROMETHEUS_WORKSPACE_ENDPOINT_0 = aws_prometheus_workspace.wp-flowlogs-amp.prometheus_endpoint
+      AWS_PROMETHEUS_WORKSPACE_ID_0       = aws_prometheus_workspace.wp-flowlogs-amp.id
       AWS_S3_BUCKET_NAME_0                = "flowlogs-bucket-952133486861-us-west-2-an"
       BUCKET_SECONDS                      = "60"
       CUTOFF_SECONDS                      = "120"
       FALLBACK_FIELD_ORDER                = "version vpc-id subnet-id interface-id instance-id srcaddr dstaddr pkt-srcaddr pkt-dstaddr srcport dstport protocol packets bytes start end action log-status flow-direction traffic-path pkt-src-aws-service pkt-dst-aws-service interface-type"
       FLOW_LOG_BUCKET                     = "flowlogs-bucket-952133486861-us-west-2-an"
       NAME                                = "wp-process-flow-logs"
-      REGION                              = "us-west-2"
+      REGION                              = data.aws_region.current.region
     }
   }
   ephemeral_storage {
@@ -35,16 +35,16 @@ resource "aws_lambda_function" "wp-process-flow-logs" {
   }
   tags = {
     Name           = "wp-process-flow-logs"
-    State          = "wp-flowlogs"
+    State          = "impWpFlowlogs"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_iam_role_policy_attachment.lambda_function_wp-process-flow-logs_st_wp-flowlogs_attach_wp-process-flow-logs_role]
 }
 
 resource "aws_lambda_permission" "perm_aws_s3_bucket_flowlogs-bucket_to_wp-process-flow-logs" {
-  function_name = aws_lambda_function.wp-process-flow-logs.function_name
-  statement_id  = "perm_aws_s3_bucket_flowlogs-bucket_to_wp-process-flow-logsa4e07fb23775d8f291dbe71bf5"
-  principal     = "s3.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  source_arn    = aws_s3_bucket.flowlogs-bucket.arn
+  function_name       = aws_lambda_function.wp-process-flow-logs.function_name
+  principal           = "s3.amazonaws.com"
+  action              = "lambda:InvokeFunction"
+  source_arn          = aws_s3_bucket.flowlogs-bucket.arn
+  statement_id_prefix = "perm_aws_s3_bucket_flowlogs-bucket_to_wp-process-flow-logs"
 }

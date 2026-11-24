@@ -6,7 +6,7 @@ resource "aws_flow_log" "flowlog-vpc-b" {
   traffic_type         = "ALL"
   tags = {
     Name           = "flowlog-vpc-b"
-    State          = "wp-flowlogs"
+    State          = "impWpFlowlogs"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_s3_bucket_policy.aws_s3_bucket_policy_flowlogs-bucket_st_wp-flowlogs]

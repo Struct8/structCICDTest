@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "canaryArtifacts" {
   object_lock_enabled = false
   tags = {
     Name           = "canaryArtifacts"
-    State          = "wp-flowlogs"
+    State          = "impWpFlowlogs"
     Struct8Creator = "rmay struct"
   }
 }
@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "flowlogs-bucket" {
   object_lock_enabled = false
   tags = {
     Name           = "flowlogs-bucket"
-    State          = "wp-flowlogs"
+    State          = "impWpFlowlogs"
     Struct8Creator = "rmay struct"
   }
 }
