@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "cdnLogBucket" {
-  bucket              = "cdnlogbucket-952133486861-us-west-2-an"
+  bucket              = "cdnlogbucket-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -28,8 +28,7 @@ resource "aws_s3_bucket_public_access_block" "cdnLogBucket_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "cdnLogBucket_configuration" {
   bucket = aws_s3_bucket.cdnLogBucket.id
   rule {
-    blocked_encryption_types = ["SSE-C"]
-    bucket_key_enabled       = true
+    bucket_key_enabled = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }

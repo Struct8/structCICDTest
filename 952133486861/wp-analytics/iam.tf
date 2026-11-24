@@ -63,13 +63,7 @@ data "aws_iam_policy_document" "lambda_function_analyticsPage_st_wp-analytics_do
     sid       = "AllowReadTable"
     effect    = "Allow"
     actions   = ["glue:GetTable"]
-    resources = [aws_glue_catalog_database.cdn_analytics.arn, aws_glue_catalog_table.cdn_log.arn, "arn:aws:glue:us-west-2:952133486861:catalog"]
-  }
-  statement {
-    sid       = "AllowReadDatabase"
-    effect    = "Allow"
-    actions   = ["glue:GetDatabase"]
-    resources = [aws_glue_catalog_database.cdn_analytics.arn, "arn:aws:glue:us-west-2:952133486861:catalog"]
+    resources = [aws_glue_catalog_table.cdn_log.arn, "arn:aws:glue:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:catalog", "arn:aws:glue:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:database/${aws_glue_catalog_table.cdn_log.database_name}"]
   }
   statement {
     sid       = "AllowBucketLevelActions"
@@ -94,6 +88,12 @@ data "aws_iam_policy_document" "lambda_function_analyticsPage_st_wp-analytics_do
     effect    = "Allow"
     actions   = ["xray:PutTelemetryRecords", "xray:PutTraceSegments"]
     resources = ["*"]
+  }
+  statement {
+    sid       = "AllowReadDatabase"
+    effect    = "Allow"
+    actions   = ["glue:GetDatabase"]
+    resources = ["arn:aws:glue:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:catalog", "arn:aws:glue:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:database/${aws_glue_catalog_table.cdn_log.database_name}"]
   }
 }
 
@@ -131,8 +131,19 @@ resource "aws_iam_policy" "lambda_function_cspReceiver_st_wp-analytics" {
 }
 
 resource "aws_iam_role" "analyticsPage_role" {
-  name                  = "analyticsPage_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "analyticsPage_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -144,8 +155,19 @@ resource "aws_iam_role" "analyticsPage_role" {
 }
 
 resource "aws_iam_role" "cdnLogConfig_role" {
-  name                  = "cdnLogConfig_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"cloudfront.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "cdnLogConfig_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -157,8 +179,19 @@ resource "aws_iam_role" "cdnLogConfig_role" {
 }
 
 resource "aws_iam_role" "cdnLogFirehose_role" {
-  name                  = "cdnLogFirehose_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"firehose.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "cdnLogFirehose_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "firehose.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -170,8 +203,19 @@ resource "aws_iam_role" "cdnLogFirehose_role" {
 }
 
 resource "aws_iam_role" "cspReceiver_role" {
-  name                  = "cspReceiver_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "cspReceiver_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -182,22 +226,22 @@ resource "aws_iam_role" "cspReceiver_role" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "cloudfront_realtime_log_config_cdnLogConfig_st_wp-analytics_attach_cdnLogConfig_role" {
+resource "aws_iam_role_policy_attachment" "cloudfront_realtime_log_config_cdnLogConfig_st_wp-analytics_attach" {
   policy_arn = aws_iam_policy.cloudfront_realtime_log_config_cdnLogConfig_st_wp-analytics.arn
   role       = aws_iam_role.cdnLogConfig_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "kinesis_firehose_delivery_stream_cdnLogFirehose_st_wp-analytics_attach_cdnLogFirehose_role" {
+resource "aws_iam_role_policy_attachment" "kinesis_firehose_delivery_stream_cdnLogFirehose_st_wp-analytics_attach" {
   policy_arn = aws_iam_policy.kinesis_firehose_delivery_stream_cdnLogFirehose_st_wp-analytics.arn
   role       = aws_iam_role.cdnLogFirehose_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_function_analyticsPage_st_wp-analytics_attach_analyticsPage_role" {
+resource "aws_iam_role_policy_attachment" "lambda_function_analyticsPage_st_wp-analytics_attach" {
   policy_arn = aws_iam_policy.lambda_function_analyticsPage_st_wp-analytics.arn
   role       = aws_iam_role.analyticsPage_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_function_cspReceiver_st_wp-analytics_attach_cspReceiver_role" {
+resource "aws_iam_role_policy_attachment" "lambda_function_cspReceiver_st_wp-analytics_attach" {
   policy_arn = aws_iam_policy.lambda_function_cspReceiver_st_wp-analytics.arn
   role       = aws_iam_role.cspReceiver_role.name
 }

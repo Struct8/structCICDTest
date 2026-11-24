@@ -1,15 +1,15 @@
 resource "aws_cloudfront_realtime_log_config" "cdnLogConfig" {
   name          = "cdnLogConfig"
-  fields        = ["c-country", "cache-behavior-path-pattern", "cs-method", "cs-referer", "cs-uri-query", "cs-uri-stem", "cs-user-agent", "sc-bytes", "sc-status", "time-taken", "timestamp", "x-edge-detailed-result-type", "x-edge-result-type"]
+  fields        = ["timestamp", "c-country", "cs-method", "cs-uri-stem", "cs-uri-query", "sc-status", "sc-bytes", "time-taken", "cs-user-agent", "cs-referer", "x-edge-result-type", "x-edge-detailed-result-type", "cache-behavior-path-pattern"]
   sampling_rate = 100
   endpoint {
     stream_type = "Kinesis"
     kinesis_stream_config {
       role_arn   = aws_iam_role.cdnLogConfig_role.arn
-      stream_arn = "arn:aws:kinesis:us-west-2:952133486861:stream/cdnLogStream"
+      stream_arn = aws_kinesis_stream.cdnLogStream.arn
     }
   }
-  depends_on = [aws_iam_role_policy_attachment.cloudfront_realtime_log_config_cdnLogConfig_st_wp-analytics_attach_cdnLogConfig_role]
+  depends_on = [aws_iam_role_policy_attachment.cloudfront_realtime_log_config_cdnLogConfig_st_wp-analytics_attach]
 }
 
 resource "aws_cloudfront_response_headers_policy" "cspReportOnly" {
@@ -19,7 +19,7 @@ resource "aws_cloudfront_response_headers_policy" "cspReportOnly" {
     items {
       header   = "Content-Security-Policy-Report-Only"
       override = true
-      value    = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; report-uri https://jusoimp3rt7keyqrcl6kdk7ibq0qtqbe.lambda-url.us-west-2.on.aws/"
+      value    = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; report-uri ${aws_lambda_function_url.cspReceiverUrl.function_url}"
     }
   }
   security_headers_config {
@@ -36,9 +36,7 @@ resource "aws_cloudfront_response_headers_policy" "cspReportOnly" {
     }
     strict_transport_security {
       access_control_max_age_sec = 31536000
-      include_subdomains         = false
       override                   = false
-      preload                    = false
     }
     xss_protection {
       mode_block = true
