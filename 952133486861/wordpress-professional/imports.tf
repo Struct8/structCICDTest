@@ -472,6 +472,21 @@ import {
 }
 
 import {
+  to = aws_route53_record.dkim_wpMail_wp_cloudman_pro["0"]
+  id = "Z04251074NSF989QRSG9_ksjl3syk2pztn3uox7rqgmhnqplgd26d._domainkey.wp.cloudman.pro._CNAME"
+}
+
+import {
+  to = aws_route53_record.dkim_wpMail_wp_cloudman_pro["1"]
+  id = "Z04251074NSF989QRSG9_j6zo7s7gtfqba2rznaixaw5w3qfhnk5m._domainkey.wp.cloudman.pro._CNAME"
+}
+
+import {
+  to = aws_route53_record.dkim_wpMail_wp_cloudman_pro["2"]
+  id = "Z04251074NSF989QRSG9_yndz2ecaatkoix4hgk5qtwbd5bsp7x5j._domainkey.wp.cloudman.pro._CNAME"
+}
+
+import {
   to = aws_route_table_association.aws_route_table_association_appA_rtPrivate
   id = "subnet-091017582a000fba8/rtb-0ed521978fb37ae7d"
 }
