@@ -14,7 +14,7 @@ resource "aws_backup_plan" "wpDailyBackup" {
   }
   tags = {
     Name           = "wpDailyBackup"
-    State          = "wordpress-backup"
+    State          = "impWpBackup"
     Struct8Creator = "rmay struct"
   }
 }
@@ -38,7 +38,7 @@ resource "aws_backup_vault" "wpBackupVault" {
   kms_key_arn   = "arn:aws:kms:us-west-2:952133486861:key/8b02ffe2-5da5-47a8-a549-8bf0fc7400a8"
   tags = {
     Name           = "wpBackupVault"
-    State          = "wordpress-backup"
+    State          = "impWpBackup"
     Struct8Creator = "rmay struct"
   }
 }

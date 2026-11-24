@@ -6,7 +6,7 @@ resource "aws_iam_role" "wpDailyBackup_backup_role" {
   path                  = "/"
   tags = {
     Name           = "wpDailyBackup_backup_role"
-    State          = "wordpress-backup"
+    State          = "impWpBackup"
     Struct8Creator = "rmay struct"
   }
 }
@@ -48,7 +48,7 @@ resource "aws_kms_key" "kmsWordpress" {
   rotation_period_in_days            = 365
   tags = {
     Name           = "kmsWordpress"
-    State          = "wordpress-backup"
+    State          = "impWpBackup"
     Struct8Creator = "rmay struct"
   }
 }
@@ -61,7 +61,7 @@ resource "aws_secretsmanager_secret" "wpSecrets" {
   recovery_window_in_days        = 0
   tags = {
     Name           = "wpSecrets"
-    State          = "wordpress-backup"
+    State          = "impWpBackup"
     Struct8Creator = "rmay struct"
   }
 }
