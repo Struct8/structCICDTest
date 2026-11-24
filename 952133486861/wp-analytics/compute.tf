@@ -22,7 +22,7 @@ resource "aws_lambda_function" "analyticsPage" {
       ATHENA_WORKGROUP               = aws_athena_workgroup.cdnAnalytics.name
       GLUE_DATABASE                  = aws_glue_catalog_database.cdn_analytics.name
       GLUE_TABLE                     = aws_glue_catalog_table.cdn_log.name
-      ACCESS_KEY                     = "change-me-to-a-long-random-value"
+      ACCESS_KEY                     = "33wXNt6Q9G_CruKz_VHEZmJ-_ZXFQA6B"
       NAME                           = "analyticsPage"
       REGION                         = data.aws_region.current.region
       ACCOUNT                        = data.aws_caller_identity.current.account_id
@@ -72,7 +72,7 @@ resource "aws_lambda_function" "cspReceiver" {
       AWS_LAMBDA_FUNCTION_URL_NAME_0 = "cspReceiverUrl"
       AWS_DYNAMODB_TABLE_NAME_0      = "cspTable"
       AWS_XRAY_GROUP_NAME_0          = "analyticsTraces"
-      SITE_HOST                      = "wp.example.com"
+      SITE_HOST                      = "wp.cloudman.pro"
     }
   }
   tags = {

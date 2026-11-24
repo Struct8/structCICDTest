@@ -1,5 +1,5 @@
 data "aws_route53_zone" "wpZone" {
-  name = "example.com"
+  name = "cloudman.pro"
 }
 
 data "aws_cloudfront_origin_request_policy" "policy_allviewerexcepthostheader" {
