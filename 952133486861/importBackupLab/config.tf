@@ -12,7 +12,7 @@ resource "aws_ssm_parameter" "wpAdminPassword" {
   }
   tags = {
     Name           = "wpAdminPassword"
-    State          = "wordpress-backup"
+    State          = "importBackupLab"
     Struct8Creator = "rmay struct"
   }
 }
