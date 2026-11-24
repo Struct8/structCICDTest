@@ -81,7 +81,7 @@ resource "aws_ecs_task_definition" "Struct8Probe_debug-wp_wordpress" {
   container_definitions    = jsonencode([{"name":"probe","image":"${local.container_def_wordpress_wordpress_1.image}","essential":true,"entryPoint":["/bin/sh","-c","echo \"struct8 probe: host=$1 port=$2\"\ngetent hosts \"$1\" || nslookup \"$1\" 2>/dev/null || echo \"no DNS answer\"\nping -c 3 -W 2 \"$1\" 2>/dev/null || echo \"no ICMP reply (filtered, or not permitted in this container; not conclusive)\"\nif command -v nc >/dev/null 2>&1; then\n  if nc -z -w 5 \"$1\" \"$2\" 2>/dev/null; then echo \"port $2 open\"; else echo \"port $2 closed or filtered\"; fi\nelif command -v bash >/dev/null 2>&1; then\n  if timeout 5 bash -c 'exec 3<>/dev/tcp/\"$1\"/\"$2\"' _ \"$1\" \"$2\" 2>/dev/null; then echo \"port $2 open\"; else echo \"port $2 closed or filtered\"; fi\nelse\n  echo \"port $2 not tested: this image has neither nc nor bash\"\nfi","probe"],"command":["localhost","80"],"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-group":"${aws_cloudwatch_log_group.Struct8Probe_debug-wp_wordpress_logs.name}","awslogs-region":"${data.aws_region.current.region}","awslogs-stream-prefix":"probe"}}}])
   cpu                      = "256"
   execution_role_arn       = aws_iam_role.execution_role_ecs_wordpress.arn
-  family                   = "Struct8Probe-QSceIGwp4PFo90UM2PBXT-wordpress"
+  family                   = "Struct8Probe-Z6iPzr3Qwt-xWFwyPfGnp-wordpress"
   memory                   = "512"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]

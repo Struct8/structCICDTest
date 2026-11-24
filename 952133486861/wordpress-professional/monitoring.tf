@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "Struct8Probe_debug-wp_wordpress_logs" {
-  name              = "/struct8/probe/QSceIGwp4PFo90UM2PBXT/wordpress"
+  name              = "/struct8/probe/Z6iPzr3Qwt-xWFwyPfGnp/wordpress"
   retention_in_days = 1
 }
 
