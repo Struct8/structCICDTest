@@ -633,8 +633,7 @@ resource "aws_lb_listener" "listenerHttps" {
     }
   }
   mutual_authentication {
-    ignore_client_certificate_expiry = false
-    mode                             = "off"
+    mode = "off"
   }
   tags = {
     Name           = "listenerHttps"
