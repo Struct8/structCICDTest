@@ -22,7 +22,7 @@ resource "aws_kinesis_firehose_delivery_stream" "cdnLogFirehose" {
   }
   tags = {
     Name           = "cdnLogFirehose"
-    State          = "wp-analytics"
+    State          = "impWpAnalytics"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_iam_role_policy_attachment.kinesis_firehose_delivery_stream_cdnLogFirehose_st_wp-analytics_attach_cdnLogFirehose_role]
@@ -37,7 +37,7 @@ resource "aws_kinesis_stream" "cdnLogStream" {
   }
   tags = {
     Name           = "cdnLogStream"
-    State          = "wp-analytics"
+    State          = "impWpAnalytics"
     Struct8Creator = "rmay struct"
   }
 }
