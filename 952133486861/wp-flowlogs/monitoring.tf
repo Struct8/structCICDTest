@@ -35,6 +35,9 @@ resource "aws_synthetics_canary" "wpReadCanary" {
   runtime_version      = "syn-nodejs-playwright-9.0"
   start_canary         = true
   zip_file             = "./canary_struct8-templates_wpReadCanary_668449cf39062074.zip"
+  lifecycle {
+    ignore_changes = [run_config, start_canary, zip_file]
+  }
   run_config {
     active_tracing     = false
     ephemeral_storage  = 1024
