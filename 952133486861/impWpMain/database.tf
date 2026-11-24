@@ -3,7 +3,7 @@ resource "aws_db_subnet_group" "subnet_group_wp-aurora" {
   subnet_ids = [aws_subnet.dataA.id, aws_subnet.dataB.id]
   tags = {
     Name           = "subnet_group_wp-aurora"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -109,7 +109,7 @@ resource "aws_elasticache_subnet_group" "subnet_group_wpRedis" {
   subnet_ids = [aws_subnet.dataA.id, aws_subnet.dataB.id]
   tags = {
     Name           = "subnet_group_wpRedis"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
