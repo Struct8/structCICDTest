@@ -38,7 +38,7 @@ import {
 
 import {
   to = aws_backup_selection.wpDailyBackup_selection
-  id = "0f6b7244-4e4a-418b-bbcb-0d3ccc0edd06"
+  id = "c56e7d5f-68ce-4101-a095-d4c44f7bc046|0f6b7244-4e4a-418b-bbcb-0d3ccc0edd06"
 }
 
 import {
