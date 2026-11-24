@@ -9,35 +9,32 @@ resource "aws_db_subnet_group" "subnet_group_wp-aurora" {
 }
 
 resource "aws_rds_cluster" "wp-aurora" {
-  database_name                   = "wordpress"
-  db_cluster_parameter_group_name = "default.aurora-mysql8.4"
-  db_subnet_group_name            = aws_db_subnet_group.subnet_group_wp-aurora.name
-  kms_key_id                      = data.aws_kms_key.kmsWordpress.arn
-  apply_immediately               = true
-  backup_retention_period         = 7
-  cluster_identifier              = "wp-aurora"
-  copy_tags_to_snapshot           = true
-  database_insights_mode          = "standard"
-  enable_http_endpoint            = true
-  engine                          = "aurora-mysql"
-  engine_lifecycle_support        = "open-source-rds-extended-support"
-  engine_version                  = "8.4.mysql_aurora.8.4.8"
-  manage_master_user_password     = true
-  master_username                 = "dbadmin"
-  network_type                    = "IPV4"
-  port                            = 3306
-  preferred_backup_window         = "13:27-13:57"
-  preferred_maintenance_window    = "wed:08:34-wed:09:04"
-  skip_final_snapshot             = true
-  storage_encrypted               = true
-  vpc_security_group_ids          = [aws_security_group.rds_cluster_wp-aurora_group.id]
+  database_name               = "wordpress"
+  db_subnet_group_name        = aws_db_subnet_group.subnet_group_wp-aurora.name
+  kms_key_id                  = data.aws_kms_key.kmsWordpress.arn
+  apply_immediately           = true
+  backup_retention_period     = 7
+  cluster_identifier          = "wp-aurora"
+  copy_tags_to_snapshot       = true
+  database_insights_mode      = "standard"
+  enable_http_endpoint        = true
+  engine                      = "aurora-mysql"
+  engine_version              = "8.4.mysql_aurora.8.4.8"
+  manage_master_user_password = true
+  master_username             = "dbadmin"
+  monitoring_interval         = 0
+  network_type                = "IPV4"
+  port                        = 3306
+  skip_final_snapshot         = var.allow_data_loss
+  storage_encrypted           = true
+  vpc_security_group_ids      = [aws_security_group.rds_cluster_wp-aurora_group.id]
   serverlessv2_scaling_configuration {
     max_capacity             = 4
     min_capacity             = 0
     seconds_until_auto_pause = 300
   }
   tags = {
-    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
+    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
     Name                                    = "wp-aurora"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
@@ -45,16 +42,12 @@ resource "aws_rds_cluster" "wp-aurora" {
 }
 
 resource "aws_rds_cluster_instance" "wp-aurora-reader" {
-  db_parameter_group_name      = "default.aurora-mysql8.4"
-  ca_cert_identifier           = "rds-ca-rsa2048-g1"
-  cluster_identifier           = aws_rds_cluster.wp-aurora.id
-  copy_tags_to_snapshot        = true
-  engine                       = aws_rds_cluster.wp-aurora.engine
-  identifier                   = "wp-aurora-reader"
-  instance_class               = "db.serverless"
-  preferred_backup_window      = "13:27-13:57"
-  preferred_maintenance_window = "sat:11:35-sat:12:05"
-  promotion_tier               = 2
+  cluster_identifier    = aws_rds_cluster.wp-aurora.id
+  copy_tags_to_snapshot = true
+  engine                = aws_rds_cluster.wp-aurora.engine
+  identifier            = "wp-aurora-reader"
+  instance_class        = "db.serverless"
+  promotion_tier        = 2
   tags = {
     Name           = "wp-aurora-reader"
     State          = "wordpress-professional"
@@ -63,16 +56,12 @@ resource "aws_rds_cluster_instance" "wp-aurora-reader" {
 }
 
 resource "aws_rds_cluster_instance" "wp-aurora-writer" {
-  db_parameter_group_name      = "default.aurora-mysql8.4"
-  ca_cert_identifier           = "rds-ca-rsa2048-g1"
-  cluster_identifier           = aws_rds_cluster.wp-aurora.id
-  copy_tags_to_snapshot        = true
-  engine                       = aws_rds_cluster.wp-aurora.engine
-  identifier                   = "wp-aurora-writer"
-  instance_class               = "db.serverless"
-  preferred_backup_window      = "13:27-13:57"
-  preferred_maintenance_window = "sat:09:36-sat:10:06"
-  promotion_tier               = 1
+  cluster_identifier    = aws_rds_cluster.wp-aurora.id
+  copy_tags_to_snapshot = true
+  engine                = aws_rds_cluster.wp-aurora.engine
+  identifier            = "wp-aurora-writer"
+  instance_class        = "db.serverless"
+  promotion_tier        = 1
   tags = {
     Name           = "wp-aurora-writer"
     State          = "wordpress-professional"
@@ -82,7 +71,6 @@ resource "aws_rds_cluster_instance" "wp-aurora-writer" {
 
 resource "aws_elasticache_replication_group" "wpRedis" {
   kms_key_id                 = data.aws_kms_key.kmsWordpress.arn
-  parameter_group_name       = "default.redis7"
   replication_group_id       = "wp-object-cache"
   subnet_group_name          = aws_elasticache_subnet_group.subnet_group_wpRedis.name
   at_rest_encryption_enabled = true
@@ -90,12 +78,10 @@ resource "aws_elasticache_replication_group" "wpRedis" {
   cluster_mode               = "disabled"
   description                = "WordPress object cache for wp_options, postmeta and transients."
   engine_version             = "7.1"
-  maintenance_window         = "mon:11:00-mon:12:00"
   node_type                  = "cache.t4g.micro"
   num_cache_clusters         = 2
   security_group_ids         = [aws_security_group.elasticache_replication_group_wpRedis_group.id]
   snapshot_retention_limit   = 7
-  snapshot_window            = "08:00-09:00"
   transit_encryption_enabled = true
   tags = {
     Name           = "wpRedis"

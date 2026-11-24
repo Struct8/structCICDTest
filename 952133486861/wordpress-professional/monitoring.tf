@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "Struct8Probe_debug-wp_wordpress_logs" {
-  name              = "/struct8/probe/Z6iPzr3Qwt-xWFwyPfGnp/wordpress"
+  name              = "/struct8/probe/aUKnnvWki8OGmPX7UWinr/wordpress"
   retention_in_days = 1
 }
 
@@ -7,6 +7,7 @@ resource "aws_cloudwatch_log_group" "logsWordpress" {
   name              = "/ecs/wordpress"
   log_group_class   = "STANDARD"
   retention_in_days = 30
+  skip_destroy      = false
   tags = {
     Name           = "logsWordpress"
     State          = "wordpress-professional"
@@ -109,10 +110,6 @@ resource "aws_cloudwatch_metric_alarm" "alarmTasksMemory" {
 resource "aws_xray_group" "wordpressTraces" {
   group_name        = "wordpressTraces"
   filter_expression = "service(\"alarmsWordpress\") OR service(\"wordpress\")"
-  insights_configuration {
-    insights_enabled      = false
-    notifications_enabled = false
-  }
   tags = {
     Name           = "wordpressTraces"
     State          = "wordpress-professional"

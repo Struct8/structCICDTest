@@ -1,7 +1,21 @@
 {
-  "external_repositories": [],
-  "action": "destroy",
-  "trigger_id": "1795538901748",
+  "external_repositories": [
+    {
+      "repo_name": "struct8-templates",
+      "org": "Struct8",
+      "branch": "main",
+      "target_dir": ".external_modules/struct8-templates",
+      "folders": [
+        "templates/wordpress-professional/v1/container",
+        "templates/wordpress-professional/v1/lambda/analytics",
+        "templates/vpc-flowlogs-amp/v1/lambda/process-flow-logs",
+        "templates/wordpress-professional/v1/lambda/csp-receiver",
+        "templates/wordpress-professional/v1/canary"
+      ]
+    }
+  ],
+  "action": "apply",
+  "trigger_id": "1795552580666",
   "triggered_by": "assistant.rmay_struct",
   "engine_ref": "devlocal",
   "progress_url": "https://dev.collab.cf.struct8.com/webhooks/engine-progress",

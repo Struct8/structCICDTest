@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "albLogs" {
-  bucket              = "wp-pro-access-logs-952133486861-us-west-2-an"
+  bucket              = "wp-pro-access-logs-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -11,12 +11,12 @@ resource "aws_s3_bucket" "albLogs" {
 }
 
 resource "aws_s3_bucket" "wpMedia" {
-  bucket              = "wp-pro-media-952133486861-us-west-2-an"
+  bucket              = "wp-pro-media-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
   bucket_namespace    = "account-regional"
-  force_destroy       = true
+  force_destroy       = var.allow_data_loss
   object_lock_enabled = false
   tags = {
-    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
+    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
     Name                                    = "wpMedia"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
@@ -24,7 +24,7 @@ resource "aws_s3_bucket" "wpMedia" {
 }
 
 resource "aws_s3_bucket" "wpSetupFiles" {
-  bucket              = "wp-pro-setup-952133486861-us-west-2-an"
+  bucket              = "wp-pro-setup-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -36,8 +36,7 @@ resource "aws_s3_bucket" "wpSetupFiles" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "albLogs_lifecycle" {
-  bucket                                 = aws_s3_bucket.albLogs.id
-  transition_default_minimum_object_size = "all_storage_classes_128K"
+  bucket = aws_s3_bucket.albLogs.id
   rule {
     id     = "expire-alb-logs-7d"
     status = "Enabled"
@@ -142,8 +141,7 @@ resource "aws_s3_bucket_public_access_block" "wpSetupFiles_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "albLogs_configuration" {
   bucket = aws_s3_bucket.albLogs.id
   rule {
-    blocked_encryption_types = ["SSE-C"]
-    bucket_key_enabled       = true
+    bucket_key_enabled = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -153,8 +151,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "albLogs_configura
 resource "aws_s3_bucket_server_side_encryption_configuration" "wpMedia_configuration" {
   bucket = aws_s3_bucket.wpMedia.id
   rule {
-    blocked_encryption_types = ["SSE-C"]
-    bucket_key_enabled       = true
+    bucket_key_enabled = true
     apply_server_side_encryption_by_default {
       kms_master_key_id = data.aws_kms_key.kmsWordpress.arn
       sse_algorithm     = "aws:kms"
@@ -165,8 +162,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "wpMedia_configura
 resource "aws_s3_bucket_server_side_encryption_configuration" "wpSetupFiles_configuration" {
   bucket = aws_s3_bucket.wpSetupFiles.id
   rule {
-    blocked_encryption_types = ["SSE-C"]
-    bucket_key_enabled       = true
+    bucket_key_enabled = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -198,8 +194,10 @@ resource "aws_s3_bucket_versioning" "wpSetupFiles_versioning" {
 }
 
 resource "aws_s3_object" "wpSetupAssets" {
+  source       = "${path.module}/.external_modules/struct8-templates/templates/wordpress-professional/v1/container/wp-setup-assets.tar.gz"
   bucket       = aws_s3_bucket.wpSetupFiles.bucket
   content_type = "application/gzip"
+  etag         = filemd5("${path.module}/.external_modules/struct8-templates/templates/wordpress-professional/v1/container/wp-setup-assets.tar.gz")
   key          = "wordpress/wp-setup-assets.tar.gz"
   tags = {
     Name           = "wpSetupAssets"
@@ -209,8 +207,10 @@ resource "aws_s3_object" "wpSetupAssets" {
 }
 
 resource "aws_s3_object" "wpSetupScript" {
+  source       = "${path.module}/.external_modules/struct8-templates/templates/wordpress-professional/v1/container/wp-auto-setup.sh"
   bucket       = aws_s3_bucket.wpSetupFiles.bucket
   content_type = "text/x-shellscript"
+  etag         = filemd5("${path.module}/.external_modules/struct8-templates/templates/wordpress-professional/v1/container/wp-auto-setup.sh")
   key          = "wordpress/wp-auto-setup.sh"
   tags = {
     Name           = "wpSetupScript"
@@ -222,14 +222,14 @@ resource "aws_s3_object" "wpSetupScript" {
 resource "aws_efs_access_point" "ap_wordpress_wpContent" {
   file_system_id = aws_efs_file_system.wpContent.id
   posix_user {
-    gid = 33
-    uid = 33
+    gid = "33"
+    uid = "33"
   }
   root_directory {
     path = "/wordpress"
     creation_info {
-      owner_gid   = 33
-      owner_uid   = 33
+      owner_gid   = "33"
+      owner_uid   = "33"
       permissions = "0755"
     }
   }
@@ -242,14 +242,10 @@ resource "aws_efs_access_point" "ap_wordpress_wpContent" {
 
 resource "aws_efs_file_system" "wpContent" {
   kms_key_id      = data.aws_kms_key.kmsWordpress.arn
-  creation_token  = "terraform-MXEeaHb2YWYOMNxxsAQQI7SXjC"
   encrypted       = true
   throughput_mode = "elastic"
-  protection {
-    replication_overwrite = "ENABLED"
-  }
   tags = {
-    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
+    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
     Name                                    = "wpContent"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"

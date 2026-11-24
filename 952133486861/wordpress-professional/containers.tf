@@ -21,10 +21,6 @@ resource "aws_ecs_capacity_provider" "wp-capacity" {
 
 resource "aws_ecs_cluster" "wp-cluster" {
   name = "wp-cluster"
-  setting {
-    name  = "containerInsights"
-    value = "disabled"
-  }
   tags = {
     Name           = "wp-cluster"
     State          = "wordpress-professional"
@@ -39,13 +35,11 @@ resource "aws_ecs_cluster_capacity_providers" "assoc_cp_to_wp-cluster" {
 
 resource "aws_ecs_service" "wordpress_service" {
   name                              = "wordpress_service"
-  availability_zone_rebalancing     = "ENABLED"
   cluster                           = aws_ecs_cluster.wp-cluster.id
   desired_count                     = 2
   enable_ecs_managed_tags           = true
   force_delete                      = true
   health_check_grace_period_seconds = 600
-  iam_role                          = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
   propagate_tags                    = "TASK_DEFINITION"
   scheduling_strategy               = "REPLICA"
   task_definition                   = "${aws_ecs_task_definition.wordpress.family}:${aws_ecs_task_definition.wordpress.revision}"
@@ -57,10 +51,6 @@ resource "aws_ecs_service" "wordpress_service" {
   deployment_circuit_breaker {
     enable   = true
     rollback = true
-  }
-  deployment_configuration {
-    bake_time_in_minutes = "0"
-    strategy             = "ROLLING"
   }
   lifecycle {
     ignore_changes = [desired_count]
@@ -91,7 +81,7 @@ resource "aws_ecs_task_definition" "Struct8Probe_debug-wp_wordpress" {
   container_definitions    = jsonencode([{"name":"probe","image":"${local.container_def_wordpress_wordpress_1.image}","essential":true,"entryPoint":["/bin/sh","-c","echo \"struct8 probe: host=$1 port=$2\"\ngetent hosts \"$1\" || nslookup \"$1\" 2>/dev/null || echo \"no DNS answer\"\nping -c 3 -W 2 \"$1\" 2>/dev/null || echo \"no ICMP reply (filtered, or not permitted in this container; not conclusive)\"\nif command -v nc >/dev/null 2>&1; then\n  if nc -z -w 5 \"$1\" \"$2\" 2>/dev/null; then echo \"port $2 open\"; else echo \"port $2 closed or filtered\"; fi\nelif command -v bash >/dev/null 2>&1; then\n  if timeout 5 bash -c 'exec 3<>/dev/tcp/\"$1\"/\"$2\"' _ \"$1\" \"$2\" 2>/dev/null; then echo \"port $2 open\"; else echo \"port $2 closed or filtered\"; fi\nelse\n  echo \"port $2 not tested: this image has neither nc nor bash\"\nfi","probe"],"command":["localhost","80"],"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-group":"${aws_cloudwatch_log_group.Struct8Probe_debug-wp_wordpress_logs.name}","awslogs-region":"${data.aws_region.current.region}","awslogs-stream-prefix":"probe"}}}])
   cpu                      = "256"
   execution_role_arn       = aws_iam_role.execution_role_ecs_wordpress.arn
-  family                   = "Struct8Probe-Z6iPzr3Qwt-xWFwyPfGnp-wordpress"
+  family                   = "Struct8Probe-aUKnnvWki8OGmPX7UWinr-wordpress"
   memory                   = "512"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
@@ -105,10 +95,6 @@ locals {
     memory            = 128
     memoryReservation = 64
     environment = [
-      {
-        name  = "ACCOUNT"
-        value = "952133486861"
-      },
       {
         name = "AOT_CONFIG_CONTENT"
         value = <<EOF
@@ -139,68 +125,8 @@ service:
         EOF
       },
       {
-        name  = "AWS_ECS_CAPACITY_PROVIDER_NAME_0"
-        value = "wp-capacity"
-      },
-      {
-        name  = "AWS_EFS_FILE_SYSTEM_ID_0"
-        value = "fs-0aac7976528f649ba"
-      },
-      {
-        name  = "AWS_ELASTICACHE_REPLICATION_GROUP_ENDPOINT_0"
-        value = "master.wp-object-cache.lgjfeo.usw2.cache.amazonaws.com"
-      },
-      {
-        name  = "AWS_ELASTICACHE_REPLICATION_GROUP_READER_ENDPOINT_0"
-        value = "replica.wp-object-cache.lgjfeo.usw2.cache.amazonaws.com"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_ARN_0"
-        value = "arn:aws:rds:us-west-2:952133486861:cluster:wp-aurora"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_DB_NAME_0"
-        value = "wordpress"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_ENDPOINT_0"
-        value = "wp-aurora.cluster-c9g6oy6oylb0.us-west-2.rds.amazonaws.com"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_ENGINE_0"
-        value = "aurora-mysql"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_NAME_0"
-        value = "wp-aurora"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_PORT_0"
-        value = "3306"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_SECRET_ARN_0"
-        value = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-66d0d61b-0499-43d0-8d5b-8aae29bfa42f-W81oYV"
-      },
-      {
         name  = "AWS_REGION"
-        value = "us-west-2"
-      },
-      {
-        name  = "AWS_S3_BUCKET_NAME_0"
-        value = "wp-pro-media-952133486861-us-west-2-an"
-      },
-      {
-        name  = "AWS_S3_BUCKET_NAME_SETUP"
-        value = "wp-pro-setup-952133486861-us-west-2-an"
-      },
-      {
-        name  = "AWS_SESV2_EMAIL_IDENTITY_NAME_0"
-        value = "wpMail"
-      },
-      {
-        name  = "AWS_XRAY_GROUP_NAME_0"
-        value = "wordpressTraces"
+        value = tostring(data.aws_region.current.region)
       },
       {
         name  = "NAME"
@@ -208,41 +134,110 @@ service:
       },
       {
         name  = "REGION"
-        value = "us-west-2"
+        value = tostring(data.aws_region.current.region)
+      },
+      {
+        name  = "ACCOUNT"
+        value = tostring(data.aws_caller_identity.current.account_id)
+      },
+      {
+        name  = "AWS_ECS_CAPACITY_PROVIDER_NAME_0"
+        value = "wp-capacity"
+      },
+      {
+        name  = "AWS_EFS_FILE_SYSTEM_ID_0"
+        value = tostring(aws_efs_file_system.wpContent.id)
+      },
+      {
+        name  = "AWS_ELASTICACHE_REPLICATION_GROUP_ENDPOINT_0"
+        value = tostring(aws_elasticache_replication_group.wpRedis.primary_endpoint_address)
+      },
+      {
+        name  = "AWS_ELASTICACHE_REPLICATION_GROUP_READER_ENDPOINT_0"
+        value = tostring(aws_elasticache_replication_group.wpRedis.reader_endpoint_address)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_NAME_0"
+        value = tostring(aws_rds_cluster.wp-aurora.cluster_identifier)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_ENGINE_0"
+        value = tostring(aws_rds_cluster.wp-aurora.engine)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_ENDPOINT_0"
+        value = tostring(aws_rds_cluster.wp-aurora.endpoint)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_PORT_0"
+        value = tostring(aws_rds_cluster.wp-aurora.port)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_DB_NAME_0"
+        value = tostring(aws_rds_cluster.wp-aurora.database_name)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_SECRET_ARN_0"
+        value = tostring(one(aws_rds_cluster.wp-aurora.master_user_secret[*].secret_arn))
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_ARN_0"
+        value = tostring(aws_rds_cluster.wp-aurora.arn)
+      },
+      {
+        name  = "AWS_S3_BUCKET_NAME_0"
+        value = "wp-pro-media-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+      },
+      {
+        name  = "AWS_SESV2_EMAIL_IDENTITY_NAME_0"
+        value = "wpMail"
+      },
+      {
+        name  = "AWS_S3_BUCKET_NAME_SETUP"
+        value = "wp-pro-setup-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+      },
+      {
+        name  = "AWS_XRAY_GROUP_NAME_0"
+        value = "wordpressTraces"
+      },
+      {
+        name  = "WP_SETUP_SCRIPT_BUCKET"
+        value = tostring(aws_s3_object.wpSetupScript.bucket)
+      },
+      {
+        name  = "WP_SETUP_SCRIPT_KEY"
+        value = tostring(aws_s3_object.wpSetupScript.key)
+      },
+      {
+        name  = "WP_SETUP_SCRIPT_ETAG"
+        value = tostring(aws_s3_object.wpSetupScript.etag)
       },
       {
         name  = "WP_DOMAIN"
         value = "wp.cloudman.pro"
       },
       {
-        name  = "WP_SETUP_ASSETS_BUCKET"
-        value = "wp-pro-setup-952133486861-us-west-2-an"
+        name  = "WP_ZONE_DOMAIN"
+        value = tostring(data.aws_route53_zone.wpZone.name)
       },
       {
-        name  = "WP_SETUP_ASSETS_ETAG"
-        value = "acc4218dc21f2170afe79b22434ef216"
+        name  = "WP_SETUP_ASSETS_BUCKET"
+        value = tostring(aws_s3_object.wpSetupAssets.bucket)
       },
       {
         name  = "WP_SETUP_ASSETS_KEY"
-        value = "wordpress/wp-setup-assets.tar.gz"
+        value = tostring(aws_s3_object.wpSetupAssets.key)
       },
       {
-        name  = "WP_SETUP_SCRIPT_BUCKET"
-        value = "wp-pro-setup-952133486861-us-west-2-an"
-      },
-      {
-        name  = "WP_SETUP_SCRIPT_ETAG"
-        value = "cef6b4092e620cbdc1144e98d137e2a0"
-      },
-      {
-        name  = "WP_SETUP_SCRIPT_KEY"
-        value = "wordpress/wp-auto-setup.sh"
-      },
-      {
-        name  = "WP_ZONE_DOMAIN"
-        value = "cloudman.pro"
+        name  = "WP_SETUP_ASSETS_ETAG"
+        value = tostring(aws_s3_object.wpSetupAssets.etag)
       }
     ]
+    mountPoints            = []
+    systemControls         = []
+    volumesFrom            = []
+    privileged             = false
+    readonlyRootFilesystem = false
     logConfiguration = {
       logDriver = "awslogs"
       options = {
@@ -251,11 +246,6 @@ service:
         awslogs-stream-prefix = "otel-collector"
       }
     }
-    mountPoints            = []
-    systemControls         = []
-    volumesFrom            = []
-    privileged             = false
-    readonlyRootFilesystem = false
   }
   container_def_wordpress_wordpress_1 = {
     name              = "wordpress"
@@ -274,155 +264,27 @@ service:
     ]
     environment = [
       {
-        name  = "ACCOUNT"
-        value = "952133486861"
-      },
-      {
-        name  = "APACHE_MAX_WORKERS"
-        value = "12"
-      },
-      {
-        name  = "AWS_ECS_CAPACITY_PROVIDER_NAME_0"
-        value = tostring(aws_ecs_capacity_provider.wp-capacity.name)
-      },
-      {
-        name  = "AWS_EFS_FILE_SYSTEM_ID_0"
-        value = "fs-0aac7976528f649ba"
-      },
-      {
-        name  = "AWS_ELASTICACHE_REPLICATION_GROUP_ENDPOINT_0"
-        value = "master.wp-object-cache.lgjfeo.usw2.cache.amazonaws.com"
-      },
-      {
-        name  = "AWS_ELASTICACHE_REPLICATION_GROUP_READER_ENDPOINT_0"
-        value = "replica.wp-object-cache.lgjfeo.usw2.cache.amazonaws.com"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_ARN_0"
-        value = "arn:aws:rds:us-west-2:952133486861:cluster:wp-aurora"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_DB_NAME_0"
-        value = "wordpress"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_ENDPOINT_0"
-        value = "wp-aurora.cluster-c9g6oy6oylb0.us-west-2.rds.amazonaws.com"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_ENGINE_0"
-        value = "aurora-mysql"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_NAME_0"
-        value = "wp-aurora"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_PORT_0"
-        value = "3306"
-      },
-      {
-        name  = "AWS_RDS_CLUSTER_SECRET_ARN_0"
-        value = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-66d0d61b-0499-43d0-8d5b-8aae29bfa42f-W81oYV"
-      },
-      {
-        name  = "AWS_S3_BUCKET_NAME_0"
-        value = "wp-pro-media-952133486861-us-west-2-an"
-      },
-      {
-        name  = "AWS_S3_BUCKET_NAME_SETUP"
-        value = "wp-pro-setup-952133486861-us-west-2-an"
-      },
-      {
-        name  = "AWS_SESV2_EMAIL_IDENTITY_NAME_0"
-        value = "wpMail"
-      },
-      {
-        name  = "AWS_XRAY_GROUP_NAME_0"
-        value = "wordpressTraces"
-      },
-      {
-        name  = "NAME"
-        value = "wordpress"
-      },
-      {
-        name  = "OTEL_SERVICE_NAME"
-        value = "wordpress"
-      },
-      {
-        name  = "REGION"
-        value = "us-west-2"
-      },
-      {
-        name  = "WORDPRESS_CONFIG_EXTRA"
-        value = "define('WP_HOME', 'https://wp.cloudman.pro'); define('WP_SITEURL', 'https://wp.cloudman.pro'); $_SERVER['HTTP_HOST'] = 'wp.cloudman.pro'; define('FORCE_SSL_ADMIN', true); define('DISALLOW_FILE_EDIT', true); define('MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL | MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT); define('WP_REDIS_HOST', 'master.wp-object-cache.lgjfeo.usw2.cache.amazonaws.com'); define('WP_REDIS_PORT', 6379); define('WP_REDIS_SCHEME', 'tls'); define('AS3CF_SETTINGS', serialize(array('provider' => 'aws', 'use-server-roles' => true, 'bucket' => 'wp-pro-media-952133486861-us-west-2-an', 'region' => 'us-west-2', 'copy-to-s3' => true, 'enable-object-prefix' => true, 'object-prefix' => 'wp-content/media/', 'use-yearmonth-folders' => true, 'object-versioning' => true, 'delivery-provider' => 'aws', 'serve-from-s3' => true, 'enable-delivery-domain' => true, 'delivery-domain' => 'wp.cloudman.pro', 'force-https' => true, 'remove-local-file' => false))); define('WPOSES_AWS_USE_EC2_IAM_ROLE', true); define('WPOSES_SETTINGS', serialize(array('region' => 'us-west-2', 'send-via-ses' => true, 'completed-setup' => true, 'enable-open-tracking' => false, 'enable-click-tracking' => false, 'enable-health-report' => false, 'log-duration' => 30)));"
-      },
-      {
         name  = "WORDPRESS_DB_HOST"
-        value = "wp-aurora.cluster-c9g6oy6oylb0.us-west-2.rds.amazonaws.com"
+        value = tostring(aws_rds_cluster.wp-aurora.endpoint)
       },
       {
         name  = "WORDPRESS_DB_NAME"
-        value = "wordpress"
+        value = tostring(aws_rds_cluster.wp-aurora.database_name)
       },
       {
         name  = "WORDPRESS_DB_USER"
         value = "wordpress"
       },
       {
-        name  = "WP_ADMIN_EMAIL"
-        value = "admin@cloudman.pro"
-      },
-      {
-        name  = "WP_ADMIN_USER"
-        value = "wpadmin"
+        name  = "WP_DB_BOOTSTRAP"
+        value = "<?php mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); $q = chr(39); $b = chr(96); $user = getenv('WORDPRESS_DB_USER'); $m = null; for ($i = 1; $i <= 20 && $m === null; $i++) { try { $c = mysqli_init(); $c->real_connect(getenv('WORDPRESS_DB_HOST'), getenv('DB_ADMIN_USER'), getenv('DB_ADMIN_PASSWORD'), '', 3306, null, MYSQLI_CLIENT_SSL | MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT); $m = $c; } catch (mysqli_sql_exception $e) { fwrite(STDERR, 'db-bootstrap: attempt ' . $i . ': ' . $e->getMessage() . PHP_EOL); sleep(10); } } if ($m === null) { exit(1); } $account = $q . $m->real_escape_string($user) . $q . '@' . $q . '%' . $q; $password = $q . $m->real_escape_string(getenv('WORDPRESS_DB_PASSWORD')) . $q; $m->query('CREATE USER IF NOT EXISTS ' . $account . ' IDENTIFIED BY ' . $password . ' REQUIRE SSL'); $m->query('ALTER USER ' . $account . ' IDENTIFIED BY ' . $password . ' REQUIRE SSL'); $m->query('GRANT ALL PRIVILEGES ON ' . $b . str_replace($b, $b . $b, getenv('WORDPRESS_DB_NAME')) . $b . '.* TO ' . $account); echo 'db-bootstrap: database user ' . $user . ' is ready' . PHP_EOL;"
       },
       {
         name  = "WP_AUTO_SETUP"
         value = "true"
       },
       {
-        name  = "WP_DB_BOOTSTRAP"
-        value = "<?php mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); $q = chr(39); $b = chr(96); $user = getenv('WORDPRESS_DB_USER'); $m = null; for ($i = 1; $i <= 20 && $m === null; $i++) { try { $c = mysqli_init(); $c->real_connect(getenv('WORDPRESS_DB_HOST'), getenv('DB_ADMIN_USER'), getenv('DB_ADMIN_PASSWORD'), '', 3306, null, MYSQLI_CLIENT_SSL | MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT); $m = $c; } catch (mysqli_sql_exception $e) { fwrite(STDERR, 'db-bootstrap: attempt ' . $i . ': ' . $e->getMessage() . PHP_EOL); sleep(10); } } if ($m === null) { exit(1); } $account = $q . $m->real_escape_string($user) . $q . '@' . $q . '%' . $q; $password = $q . $m->real_escape_string(getenv('WORDPRESS_DB_PASSWORD')) . $q; $m->query('CREATE USER IF NOT EXISTS ' . $account . ' IDENTIFIED BY ' . $password . ' REQUIRE SSL'); $m->query('ALTER USER ' . $account . ' IDENTIFIED BY ' . $password . ' REQUIRE SSL'); $m->query('GRANT ALL PRIVILEGES ON ' . $b . str_replace($b, $b . $b, getenv('WORDPRESS_DB_NAME')) . $b . '.* TO ' . $account); echo 'db-bootstrap: database user ' . $user . ' is ready' . PHP_EOL;"
-      },
-      {
         name  = "WP_DEMO_CONTENT"
-        value = "true"
-      },
-      {
-        name  = "WP_DOMAIN"
-        value = "wp.cloudman.pro"
-      },
-      {
-        name  = "WP_LOCALE"
-        value = "en_US"
-      },
-      {
-        name  = "WP_SETUP_ASSETS_BUCKET"
-        value = "wp-pro-setup-952133486861-us-west-2-an"
-      },
-      {
-        name  = "WP_SETUP_ASSETS_ETAG"
-        value = "acc4218dc21f2170afe79b22434ef216"
-      },
-      {
-        name  = "WP_SETUP_ASSETS_KEY"
-        value = "wordpress/wp-setup-assets.tar.gz"
-      },
-      {
-        name  = "WP_SETUP_SCRIPT_BUCKET"
-        value = "wp-pro-setup-952133486861-us-west-2-an"
-      },
-      {
-        name  = "WP_SETUP_SCRIPT_ETAG"
-        value = "cef6b4092e620cbdc1144e98d137e2a0"
-      },
-      {
-        name  = "WP_SETUP_SCRIPT_KEY"
-        value = "wordpress/wp-auto-setup.sh"
-      },
-      {
-        name  = "WP_SHOP"
         value = "true"
       },
       {
@@ -430,8 +292,12 @@ service:
         value = "My WordPress site"
       },
       {
-        name  = "WP_SITE_URL"
-        value = "https://wp.cloudman.pro"
+        name  = "WP_ADMIN_USER"
+        value = "wpadmin"
+      },
+      {
+        name  = "WP_LOCALE"
+        value = "en_US"
       },
       {
         name  = "WP_TIMEZONE"
@@ -442,28 +308,164 @@ service:
         value = "true"
       },
       {
+        name  = "OTEL_SERVICE_NAME"
+        value = "wordpress"
+      },
+      {
+        name  = "WP_SHOP"
+        value = "true"
+      },
+      {
+        name  = "APACHE_MAX_WORKERS"
+        value = "12"
+      },
+      {
+        name  = "WORDPRESS_CONFIG_EXTRA"
+        value = "define('WP_HOME', 'https://wp.cloudman.pro'); define('WP_SITEURL', 'https://wp.cloudman.pro'); $_SERVER['HTTP_HOST'] = 'wp.cloudman.pro'; define('FORCE_SSL_ADMIN', true); define('DISALLOW_FILE_EDIT', true); define('MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL | MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT); define('WP_REDIS_HOST', '${aws_elasticache_replication_group.wpRedis.primary_endpoint_address}'); define('WP_REDIS_PORT', 6379); define('WP_REDIS_SCHEME', 'tls'); define('AS3CF_SETTINGS', serialize(array('provider' => 'aws', 'use-server-roles' => true, 'bucket' => '${aws_s3_bucket.wpMedia.bucket}', 'region' => '${data.aws_region.current.region}', 'copy-to-s3' => true, 'enable-object-prefix' => true, 'object-prefix' => 'wp-content/media/', 'use-yearmonth-folders' => true, 'object-versioning' => true, 'delivery-provider' => 'aws', 'serve-from-s3' => true, 'enable-delivery-domain' => true, 'delivery-domain' => 'wp.cloudman.pro', 'force-https' => true, 'remove-local-file' => false))); define('WPOSES_AWS_USE_EC2_IAM_ROLE', true); define('WPOSES_SETTINGS', serialize(array('region' => '${data.aws_region.current.region}', 'send-via-ses' => true, 'completed-setup' => true, 'enable-open-tracking' => false, 'enable-click-tracking' => false, 'enable-health-report' => false, 'log-duration' => 30)));"
+      },
+      {
+        name  = "WP_SITE_URL"
+        value = "https://wp.cloudman.pro"
+      },
+      {
+        name  = "WP_ADMIN_EMAIL"
+        value = "admin@${data.aws_route53_zone.wpZone.name}"
+      },
+      {
+        name  = "NAME"
+        value = "wordpress"
+      },
+      {
+        name  = "REGION"
+        value = tostring(data.aws_region.current.region)
+      },
+      {
+        name  = "ACCOUNT"
+        value = tostring(data.aws_caller_identity.current.account_id)
+      },
+      {
+        name  = "AWS_ECS_CAPACITY_PROVIDER_NAME_0"
+        value = "wp-capacity"
+      },
+      {
+        name  = "AWS_EFS_FILE_SYSTEM_ID_0"
+        value = tostring(aws_efs_file_system.wpContent.id)
+      },
+      {
+        name  = "AWS_ELASTICACHE_REPLICATION_GROUP_ENDPOINT_0"
+        value = tostring(aws_elasticache_replication_group.wpRedis.primary_endpoint_address)
+      },
+      {
+        name  = "AWS_ELASTICACHE_REPLICATION_GROUP_READER_ENDPOINT_0"
+        value = tostring(aws_elasticache_replication_group.wpRedis.reader_endpoint_address)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_NAME_0"
+        value = tostring(aws_rds_cluster.wp-aurora.cluster_identifier)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_ENGINE_0"
+        value = tostring(aws_rds_cluster.wp-aurora.engine)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_ENDPOINT_0"
+        value = tostring(aws_rds_cluster.wp-aurora.endpoint)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_PORT_0"
+        value = tostring(aws_rds_cluster.wp-aurora.port)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_DB_NAME_0"
+        value = tostring(aws_rds_cluster.wp-aurora.database_name)
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_SECRET_ARN_0"
+        value = tostring(one(aws_rds_cluster.wp-aurora.master_user_secret[*].secret_arn))
+      },
+      {
+        name  = "AWS_RDS_CLUSTER_ARN_0"
+        value = tostring(aws_rds_cluster.wp-aurora.arn)
+      },
+      {
+        name  = "AWS_S3_BUCKET_NAME_0"
+        value = "wp-pro-media-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+      },
+      {
+        name  = "AWS_SESV2_EMAIL_IDENTITY_NAME_0"
+        value = "wpMail"
+      },
+      {
+        name  = "AWS_S3_BUCKET_NAME_SETUP"
+        value = "wp-pro-setup-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+      },
+      {
+        name  = "AWS_XRAY_GROUP_NAME_0"
+        value = "wordpressTraces"
+      },
+      {
+        name  = "WP_SETUP_SCRIPT_BUCKET"
+        value = tostring(aws_s3_object.wpSetupScript.bucket)
+      },
+      {
+        name  = "WP_SETUP_SCRIPT_KEY"
+        value = tostring(aws_s3_object.wpSetupScript.key)
+      },
+      {
+        name  = "WP_SETUP_SCRIPT_ETAG"
+        value = tostring(aws_s3_object.wpSetupScript.etag)
+      },
+      {
+        name  = "WP_DOMAIN"
+        value = "wp.cloudman.pro"
+      },
+      {
         name  = "WP_ZONE_DOMAIN"
-        value = "cloudman.pro"
+        value = tostring(data.aws_route53_zone.wpZone.name)
+      },
+      {
+        name  = "WP_SETUP_ASSETS_BUCKET"
+        value = tostring(aws_s3_object.wpSetupAssets.bucket)
+      },
+      {
+        name  = "WP_SETUP_ASSETS_KEY"
+        value = tostring(aws_s3_object.wpSetupAssets.key)
+      },
+      {
+        name  = "WP_SETUP_ASSETS_ETAG"
+        value = tostring(aws_s3_object.wpSetupAssets.etag)
       }
     ]
     secrets = [
       {
-        name      = "DB_ADMIN_PASSWORD"
-        valueFrom = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-66d0d61b-0499-43d0-8d5b-8aae29bfa42f-W81oYV:password::"
+        name      = "WORDPRESS_DB_PASSWORD"
+        valueFrom = data.aws_secretsmanager_secret.wpSecrets.arn
       },
       {
         name      = "DB_ADMIN_USER"
-        valueFrom = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-66d0d61b-0499-43d0-8d5b-8aae29bfa42f-W81oYV:username::"
+        valueFrom = "${aws_rds_cluster.wp-aurora.master_user_secret[0].secret_arn}:username::"
       },
       {
-        name      = "WORDPRESS_DB_PASSWORD"
-        valueFrom = data.aws_secretsmanager_secret.wpSecrets.arn
+        name      = "DB_ADMIN_PASSWORD"
+        valueFrom = "${aws_rds_cluster.wp-aurora.master_user_secret[0].secret_arn}:password::"
       },
       {
         name      = "WP_ADMIN_PASSWORD"
         valueFrom = data.aws_ssm_parameter.wpAdminPassword.arn
       }
     ]
+    mountPoints = [
+      {
+        sourceVolume  = "wpContent"
+        containerPath = "/var/www/html/wp-content/uploads"
+        readOnly      = false
+      }
+    ]
+    systemControls         = []
+    volumesFrom            = []
+    command                = ["sh", "-c", "set -e; mkdir -p /etc/ssl/private; openssl req -x509 -nodes -newkey rsa:2048 -days 3650 -subj /CN=wordpress -addext basicConstraints=critical,CA:FALSE -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem; a2enmod ssl; a2ensite default-ssl; printenv WP_DB_BOOTSTRAP > /tmp/db-bootstrap.php; php /tmp/db-bootstrap.php; rm -f /tmp/db-bootstrap.php; c=''; j() { echo \"$c\" | grep -o \"$1\"'\":\"[^\"]*' | cut -d'\"' -f3; }; n=0; until c=$(curl -fsS \"http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI\") && curl -fsS --retry 2 --aws-sigv4 \"aws:amz:$REGION:s3\" --user \"$(j AccessKeyId):$(j SecretAccessKey)\" -H \"x-amz-security-token: $(j Token)\" -o /tmp/wp-auto-setup.sh \"https://$WP_SETUP_SCRIPT_BUCKET.s3.$REGION.amazonaws.com/$WP_SETUP_SCRIPT_KEY\" && [ \"$(md5sum < /tmp/wp-auto-setup.sh | cut -d' ' -f1)\" = \"$WP_SETUP_SCRIPT_ETAG\" ]; do n=$((n+1)); [ \"$n\" -lt 6 ] || { echo 'setup script: download failed'; exit 1; }; sleep 5; done; bash /tmp/wp-auto-setup.sh; rm -f /tmp/wp-auto-setup.sh; unset WP_DB_BOOTSTRAP WP_ADMIN_PASSWORD DB_ADMIN_USER DB_ADMIN_PASSWORD; exec docker-entrypoint.sh apache2-foreground"]
+    privileged             = false
+    readonlyRootFilesystem = false
     logConfiguration = {
       logDriver = "awslogs"
       options = {
@@ -472,18 +474,6 @@ service:
         awslogs-stream-prefix = "wordpress"
       }
     }
-    mountPoints = [
-      {
-        containerPath = "/var/www/html/wp-content/uploads"
-        readOnly      = false
-        sourceVolume  = "wpContent"
-      }
-    ]
-    systemControls         = []
-    volumesFrom            = []
-    command                = ["sh", "-c", "set -e; mkdir -p /etc/ssl/private; openssl req -x509 -nodes -newkey rsa:2048 -days 3650 -subj /CN=wordpress -addext basicConstraints=critical,CA:FALSE -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem; a2enmod ssl; a2ensite default-ssl; printenv WP_DB_BOOTSTRAP > /tmp/db-bootstrap.php; php /tmp/db-bootstrap.php; rm -f /tmp/db-bootstrap.php; c=''; j() { echo \"$c\" | grep -o \"$1\"'\":\"[^\"]*' | cut -d'\"' -f3; }; n=0; until c=$(curl -fsS \"http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI\") && curl -fsS --retry 2 --aws-sigv4 \"aws:amz:$REGION:s3\" --user \"$(j AccessKeyId):$(j SecretAccessKey)\" -H \"x-amz-security-token: $(j Token)\" -o /tmp/wp-auto-setup.sh \"https://$WP_SETUP_SCRIPT_BUCKET.s3.$REGION.amazonaws.com/$WP_SETUP_SCRIPT_KEY\" && [ \"$(md5sum < /tmp/wp-auto-setup.sh | cut -d' ' -f1)\" = \"$WP_SETUP_SCRIPT_ETAG\" ]; do n=$((n+1)); [ \"$n\" -lt 6 ] || { echo 'setup script: download failed'; exit 1; }; sleep 5; done; bash /tmp/wp-auto-setup.sh; rm -f /tmp/wp-auto-setup.sh; unset WP_DB_BOOTSTRAP WP_ADMIN_PASSWORD DB_ADMIN_USER DB_ADMIN_PASSWORD; exec docker-entrypoint.sh apache2-foreground"]
-    privileged             = false
-    readonlyRootFilesystem = false
   }
 }
 

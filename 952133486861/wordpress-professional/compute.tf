@@ -1,5 +1,18 @@
+data "aws_ami" "AMI_Data_Source_ltWordpress" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["al2023-ami-ecs-hvm-2023.*-kernel-6.1-arm64"]
+  }
+  filter {
+    name   = "architecture"
+    values = ["arm64"]
+  }
+}
+
 resource "aws_launch_template" "ltWordpress" {
-  image_id               = "ami-0a2677eea18563e33"
+  image_id               = data.aws_ami.AMI_Data_Source_ltWordpress.id
   name                   = "ltWordpress"
   instance_type          = "c7g.medium"
   update_default_version = true
@@ -8,10 +21,10 @@ resource "aws_launch_template" "ltWordpress" {
 
 # --- BEGIN STRUCT8 VARIABLES ---
 cat << 'EOFENV' > /etc/struct8_env
-ECS_CLUSTER="wp-cluster"
+ECS_CLUSTER="${aws_ecs_cluster.wp-cluster.name}"
 NAME="asgWordpress"
-REGION="us-west-2"
-ACCOUNT="952133486861"
+REGION="${data.aws_region.current.region}"
+ACCOUNT="${data.aws_caller_identity.current.account_id}"
 EOFENV
 cat /etc/struct8_env >> /etc/environment
 sed 's/^/export /' /etc/struct8_env > /etc/profile.d/struct8_vars.sh
@@ -100,21 +113,15 @@ EOFUData
 resource "aws_autoscaling_group" "asgWordpress" {
   name                  = "asgWordpress"
   capacity_rebalance    = true
-  desired_capacity      = 1
+  desired_capacity      = var.app_min_instances
   enabled_metrics       = ["GroupDesiredCapacity", "GroupInServiceInstances", "GroupMaxSize", "GroupMinSize", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
   health_check_type     = "EC2"
   max_instance_lifetime = 0
   max_size              = 6
   metrics_granularity   = "1Minute"
-  min_size              = 1
+  min_size              = var.app_min_instances
   termination_policies  = ["Default"]
   vpc_zone_identifier   = [aws_subnet.appA.id, aws_subnet.appB.id]
-  availability_zone_distribution {
-    capacity_distribution_strategy = "balanced-best-effort"
-  }
-  capacity_reservation_specification {
-    capacity_reservation_preference = "default"
-  }
   instance_maintenance_policy {
     max_healthy_percentage = 100
     min_healthy_percentage = 90
@@ -123,7 +130,9 @@ resource "aws_autoscaling_group" "asgWordpress" {
     strategy = "Rolling"
   }
   lifecycle {
-    ignore_changes = [desired_capacity]
+    create_before_destroy = false
+    ignore_changes        = [desired_capacity]
+    prevent_destroy       = false
   }
   mixed_instances_policy {
     instances_distribution {
@@ -134,7 +143,7 @@ resource "aws_autoscaling_group" "asgWordpress" {
     }
     launch_template {
       launch_template_specification {
-        version            = "1"
+        version            = aws_launch_template.ltWordpress.latest_version
         launch_template_id = aws_launch_template.ltWordpress.id
       }
       override {
@@ -213,11 +222,6 @@ resource "aws_appautoscaling_target" "scalingWordpress" {
   min_capacity       = 2
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
-  suspended_state {
-    dynamic_scaling_in_suspended  = false
-    dynamic_scaling_out_suspended = false
-    scheduled_scaling_suspended   = false
-  }
   tags = {
     Name           = "scalingWordpress"
     State          = "wordpress-professional"

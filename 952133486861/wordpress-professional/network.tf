@@ -1,10 +1,9 @@
 resource "aws_vpc" "wordpress-professional" {
-  assign_generated_ipv6_cidr_block     = true
-  cidr_block                           = "10.0.0.0/16"
-  enable_dns_hostnames                 = true
-  enable_dns_support                   = true
-  instance_tenancy                     = "default"
-  ipv6_cidr_block_network_border_group = "us-west-2"
+  assign_generated_ipv6_cidr_block = true
+  cidr_block                       = "10.0.0.0/16"
+  enable_dns_hostnames             = true
+  enable_dns_support               = true
+  instance_tenancy                 = "default"
   tags = {
     Name           = "wordpress-professional"
     State          = "wordpress-professional"
@@ -15,7 +14,6 @@ resource "aws_vpc" "wordpress-professional" {
 resource "aws_vpc_endpoint" "vpce-s3_S3" {
   service_name      = "com.amazonaws.us-west-2.s3"
   vpc_id            = aws_vpc.wordpress-professional.id
-  policy            = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}],\"Version\":\"2008-10-17\"}"
   route_table_ids   = [aws_route_table.rt-public-wp.id, aws_route_table.rtPrivate.id]
   vpc_endpoint_type = "Gateway"
   tags = {
@@ -35,14 +33,13 @@ resource "aws_vpc_endpoint" "vpceLogs_LOGS" {
   service_name        = "com.amazonaws.${data.aws_region.current.region}.logs"
   vpc_id              = aws_vpc.wordpress-professional.id
   ip_address_type     = "dualstack"
-  policy              = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}]}"
   private_dns_enabled = true
   security_group_ids  = [aws_security_group.sg_vpce_vpceLogs.id]
-  subnet_ids          = [aws_subnet.appA.id, aws_subnet.appB.id]
+  subnet_ids          = [aws_subnet.appB.id, aws_subnet.appA.id]
   vpc_endpoint_type   = "Interface"
   tags = {
-    DifName        = "vpceLogs_LOGS"
     Name           = "vpceLogs"
+    DifName        = "vpceLogs_LOGS"
     State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
@@ -57,14 +54,13 @@ resource "aws_vpc_endpoint" "vpceSecrets_SECRETSMANAGER" {
   service_name        = "com.amazonaws.${data.aws_region.current.region}.secretsmanager"
   vpc_id              = aws_vpc.wordpress-professional.id
   ip_address_type     = "dualstack"
-  policy              = "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}]}"
   private_dns_enabled = true
   security_group_ids  = [aws_security_group.sg_vpce_vpceSecrets.id]
-  subnet_ids          = [aws_subnet.appA.id, aws_subnet.appB.id]
+  subnet_ids          = [aws_subnet.appB.id, aws_subnet.appA.id]
   vpc_endpoint_type   = "Interface"
   tags = {
-    DifName        = "vpceSecrets_SECRETSMANAGER"
     Name           = "vpceSecrets"
+    DifName        = "vpceSecrets_SECRETSMANAGER"
     State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
@@ -76,13 +72,12 @@ resource "aws_vpc_endpoint" "vpceSecrets_SECRETSMANAGER" {
 }
 
 resource "aws_subnet" "appA" {
-  vpc_id                              = aws_vpc.wordpress-professional.id
-  assign_ipv6_address_on_creation     = true
-  availability_zone                   = "us-west-2a"
-  cidr_block                          = "10.0.11.0/24"
-  ipv6_cidr_block                     = "2600:1f14:1e19:a10b::/64"
-  map_public_ip_on_launch             = false
-  private_dns_hostname_type_on_launch = "ip-name"
+  vpc_id                          = aws_vpc.wordpress-professional.id
+  assign_ipv6_address_on_creation = true
+  availability_zone               = "us-west-2a"
+  cidr_block                      = "10.0.11.0/24"
+  ipv6_cidr_block                 = cidrsubnet(aws_vpc.wordpress-professional.ipv6_cidr_block, 8, 11)
+  map_public_ip_on_launch         = false
   tags = {
     Name           = "appA"
     State          = "wordpress-professional"
@@ -91,13 +86,12 @@ resource "aws_subnet" "appA" {
 }
 
 resource "aws_subnet" "appB" {
-  vpc_id                              = aws_vpc.wordpress-professional.id
-  assign_ipv6_address_on_creation     = true
-  availability_zone                   = "us-west-2b"
-  cidr_block                          = "10.0.12.0/24"
-  ipv6_cidr_block                     = "2600:1f14:1e19:a10c::/64"
-  map_public_ip_on_launch             = false
-  private_dns_hostname_type_on_launch = "ip-name"
+  vpc_id                          = aws_vpc.wordpress-professional.id
+  assign_ipv6_address_on_creation = true
+  availability_zone               = "us-west-2b"
+  cidr_block                      = "10.0.12.0/24"
+  ipv6_cidr_block                 = cidrsubnet(aws_vpc.wordpress-professional.ipv6_cidr_block, 8, 12)
+  map_public_ip_on_launch         = false
   tags = {
     Name           = "appB"
     State          = "wordpress-professional"
@@ -106,11 +100,10 @@ resource "aws_subnet" "appB" {
 }
 
 resource "aws_subnet" "dataA" {
-  vpc_id                              = aws_vpc.wordpress-professional.id
-  availability_zone                   = "us-west-2a"
-  cidr_block                          = "10.0.21.0/24"
-  map_public_ip_on_launch             = false
-  private_dns_hostname_type_on_launch = "ip-name"
+  vpc_id                  = aws_vpc.wordpress-professional.id
+  availability_zone       = "us-west-2a"
+  cidr_block              = "10.0.21.0/24"
+  map_public_ip_on_launch = false
   tags = {
     Name           = "dataA"
     State          = "wordpress-professional"
@@ -119,11 +112,10 @@ resource "aws_subnet" "dataA" {
 }
 
 resource "aws_subnet" "dataB" {
-  vpc_id                              = aws_vpc.wordpress-professional.id
-  availability_zone                   = "us-west-2b"
-  cidr_block                          = "10.0.22.0/24"
-  map_public_ip_on_launch             = false
-  private_dns_hostname_type_on_launch = "ip-name"
+  vpc_id                  = aws_vpc.wordpress-professional.id
+  availability_zone       = "us-west-2b"
+  cidr_block              = "10.0.22.0/24"
+  map_public_ip_on_launch = false
   tags = {
     Name           = "dataB"
     State          = "wordpress-professional"
@@ -132,12 +124,11 @@ resource "aws_subnet" "dataB" {
 }
 
 resource "aws_subnet" "pubA" {
-  vpc_id                              = aws_vpc.wordpress-professional.id
-  availability_zone                   = "us-west-2a"
-  cidr_block                          = "10.0.1.0/24"
-  ipv6_cidr_block                     = "2600:1f14:1e19:a101::/64"
-  map_public_ip_on_launch             = true
-  private_dns_hostname_type_on_launch = "ip-name"
+  vpc_id                  = aws_vpc.wordpress-professional.id
+  availability_zone       = "us-west-2a"
+  cidr_block              = "10.0.1.0/24"
+  ipv6_cidr_block         = cidrsubnet(aws_vpc.wordpress-professional.ipv6_cidr_block, 8, 1)
+  map_public_ip_on_launch = true
   tags = {
     Name           = "pubA"
     State          = "wordpress-professional"
@@ -146,12 +137,11 @@ resource "aws_subnet" "pubA" {
 }
 
 resource "aws_subnet" "pubB" {
-  vpc_id                              = aws_vpc.wordpress-professional.id
-  availability_zone                   = "us-west-2b"
-  cidr_block                          = "10.0.2.0/24"
-  ipv6_cidr_block                     = "2600:1f14:1e19:a102::/64"
-  map_public_ip_on_launch             = true
-  private_dns_hostname_type_on_launch = "ip-name"
+  vpc_id                  = aws_vpc.wordpress-professional.id
+  availability_zone       = "us-west-2b"
+  cidr_block              = "10.0.2.0/24"
+  ipv6_cidr_block         = cidrsubnet(aws_vpc.wordpress-professional.ipv6_cidr_block, 8, 2)
+  map_public_ip_on_launch = true
   tags = {
     Name           = "pubB"
     State          = "wordpress-professional"
@@ -340,7 +330,6 @@ resource "aws_security_group" "alb-cloudfront-wp" {
 resource "aws_security_group" "autoscaling_group_asgWordpress_group" {
   name                   = "autoscaling_group_asgWordpress_group"
   vpc_id                 = aws_vpc.wordpress-professional.id
-  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "autoscaling_group_asgWordpress_group"
@@ -352,7 +341,6 @@ resource "aws_security_group" "autoscaling_group_asgWordpress_group" {
 resource "aws_security_group" "ecs_task_definition_wordpress_group" {
   name                   = "ecs_task_definition_wordpress_group"
   vpc_id                 = aws_vpc.wordpress-professional.id
-  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "ecs_task_definition_wordpress_group"
@@ -364,7 +352,6 @@ resource "aws_security_group" "ecs_task_definition_wordpress_group" {
 resource "aws_security_group" "efs_file_system_wpContent_group" {
   name                   = "efs_file_system_wpContent_group"
   vpc_id                 = aws_vpc.wordpress-professional.id
-  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "efs_file_system_wpContent_group"
@@ -376,7 +363,6 @@ resource "aws_security_group" "efs_file_system_wpContent_group" {
 resource "aws_security_group" "elasticache_replication_group_wpRedis_group" {
   name                   = "elasticache_replication_group_wpRedis_group"
   vpc_id                 = aws_vpc.wordpress-professional.id
-  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "elasticache_replication_group_wpRedis_group"
@@ -388,7 +374,6 @@ resource "aws_security_group" "elasticache_replication_group_wpRedis_group" {
 resource "aws_security_group" "lb_alb-wp_group" {
   name                   = "lb_alb-wp_group"
   vpc_id                 = aws_vpc.wordpress-professional.id
-  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "lb_alb-wp_group"
@@ -400,7 +385,6 @@ resource "aws_security_group" "lb_alb-wp_group" {
 resource "aws_security_group" "rds_cluster_wp-aurora_group" {
   name                   = "rds_cluster_wp-aurora_group"
   vpc_id                 = aws_vpc.wordpress-professional.id
-  description            = "Managed by Terraform"
   revoke_rules_on_delete = false
   tags = {
     Name           = "rds_cluster_wp-aurora_group"
@@ -626,9 +610,6 @@ resource "aws_lb_listener" "listenerHttps" {
       status_code  = "403"
     }
   }
-  mutual_authentication {
-    mode = "off"
-  }
   tags = {
     Name           = "listenerHttps"
     State          = "wordpress-professional"
@@ -642,8 +623,7 @@ resource "aws_lb_listener_rule" "ruleFromCloudFront" {
     type  = "forward"
     forward {
       target_group {
-        arn    = aws_lb_target_group.tgWordpress.arn
-        weight = 1
+        arn = aws_lb_target_group.tgWordpress.arn
       }
     }
   }
@@ -663,62 +643,42 @@ resource "aws_lb_listener_rule" "ruleFromCloudFront" {
 }
 
 resource "aws_lb_target_group" "tgWordpress" {
-  name                               = "tgWordpress"
-  vpc_id                             = aws_vpc.wordpress-professional.id
-  deregistration_delay               = "300"
-  ip_address_type                    = "ipv4"
-  lambda_multi_value_headers_enabled = false
-  load_balancing_algorithm_type      = "round_robin"
-  load_balancing_anomaly_mitigation  = "off"
-  load_balancing_cross_zone_enabled  = "use_load_balancer_configuration"
-  port                               = 443
-  protocol                           = "HTTPS"
-  protocol_version                   = "HTTP1"
-  target_type                        = "ip"
+  name                          = "tgWordpress"
+  vpc_id                        = aws_vpc.wordpress-professional.id
+  deregistration_delay          = "300"
+  ip_address_type               = "ipv4"
+  load_balancing_algorithm_type = "round_robin"
+  port                          = 443
+  protocol                      = "HTTPS"
+  target_type                   = "ip"
   health_check {
     enabled             = true
     healthy_threshold   = 3
     interval            = 30
     matcher             = "200-399"
     path                = "/wp-includes/images/blank.gif"
-    port                = "443"
+    port                = 443
     protocol            = "HTTPS"
     timeout             = 10
     unhealthy_threshold = 5
-  }
-  stickiness {
-    cookie_duration = 86400
-    enabled         = false
-    type            = "lb_cookie"
   }
   tags = {
     Name           = "tgWordpress"
     State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
-  target_group_health {
-    dns_failover {
-      minimum_healthy_targets_count      = "1"
-      minimum_healthy_targets_percentage = "off"
-    }
-    unhealthy_state_routing {
-      minimum_healthy_targets_count      = 1
-      minimum_healthy_targets_percentage = "off"
-    }
-  }
 }
 
 resource "aws_cloudfront_distribution" "cdnWordpress" {
-  web_acl_id          = aws_wafv2_web_acl.wpWaf.arn
-  aliases             = ["wp.cloudman.pro"]
-  enabled             = true
-  http_version        = "http2and3"
-  is_ipv6_enabled     = true
-  price_class         = "PriceClass_All"
-  wait_for_deployment = true
+  web_acl_id      = aws_wafv2_web_acl.wpWaf.arn
+  aliases         = ["wp.cloudman.pro"]
+  enabled         = true
+  http_version    = "http2and3"
+  is_ipv6_enabled = true
+  price_class     = "PriceClass_All"
   default_cache_behavior {
-    cache_policy_id            = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
-    origin_request_policy_id   = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
+    cache_policy_id            = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
+    origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.policy_allviewerexcepthostheader.id
     response_headers_policy_id = data.aws_cloudfront_response_headers_policy.cspReportOnly.id
     target_origin_id           = "originAlb"
     allowed_methods            = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -729,88 +689,57 @@ resource "aws_cloudfront_distribution" "cdnWordpress" {
       event_type   = "viewer-request"
       function_arn = aws_cloudfront_function.traceStart.arn
     }
-    grpc_config {
-      enabled = false
-    }
   }
   ordered_cache_behavior {
-    cache_policy_id            = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
-    origin_request_policy_id   = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
+    cache_policy_id            = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
+    origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.policy_allviewerexcepthostheader.id
     response_headers_policy_id = data.aws_cloudfront_response_headers_policy.cspReportOnly.id
     target_origin_id           = "originAlb"
     allowed_methods            = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods             = ["GET", "HEAD", "OPTIONS"]
-    compress                   = false
-    default_ttl                = 0
-    max_ttl                    = 0
-    min_ttl                    = 0
     path_pattern               = "/wp-admin/*"
-    smooth_streaming           = false
     viewer_protocol_policy     = "redirect-to-https"
-    grpc_config {
-      enabled = false
-    }
   }
   ordered_cache_behavior {
-    cache_policy_id            = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    cache_policy_id            = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
     response_headers_policy_id = data.aws_cloudfront_response_headers_policy.cspReportOnly.id
     target_origin_id           = "originMedia"
     allowed_methods            = ["GET", "HEAD", "OPTIONS"]
     cached_methods             = ["GET", "HEAD", "OPTIONS"]
-    compress                   = false
-    default_ttl                = 0
-    max_ttl                    = 0
-    min_ttl                    = 0
     path_pattern               = "/wp-content/media/*"
-    smooth_streaming           = false
     viewer_protocol_policy     = "redirect-to-https"
-    grpc_config {
-      enabled = false
-    }
   }
   ordered_cache_behavior {
-    cache_policy_id            = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    cache_policy_id            = data.aws_cloudfront_cache_policy.policy_cachingoptimized.id
     response_headers_policy_id = data.aws_cloudfront_response_headers_policy.cspReportOnly.id
     target_origin_id           = "originAlb"
     allowed_methods            = ["GET", "HEAD", "OPTIONS"]
     cached_methods             = ["GET", "HEAD", "OPTIONS"]
-    compress                   = false
-    default_ttl                = 0
-    max_ttl                    = 0
-    min_ttl                    = 0
     path_pattern               = "/wp-content/*"
-    smooth_streaming           = false
     viewer_protocol_policy     = "redirect-to-https"
-    grpc_config {
-      enabled = false
-    }
   }
   ordered_cache_behavior {
-    cache_policy_id            = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
-    origin_request_policy_id   = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
+    cache_policy_id            = data.aws_cloudfront_cache_policy.policy_cachingdisabled.id
+    origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.policy_allviewerexcepthostheader.id
     response_headers_policy_id = data.aws_cloudfront_response_headers_policy.cspReportOnly.id
     target_origin_id           = "analytics"
     allowed_methods            = ["GET", "HEAD"]
     cached_methods             = ["GET", "HEAD"]
-    compress                   = false
-    default_ttl                = 0
-    max_ttl                    = 0
-    min_ttl                    = 0
     path_pattern               = "/analytics*"
-    smooth_streaming           = false
     viewer_protocol_policy     = "redirect-to-https"
     function_association {
       event_type   = "viewer-request"
       function_arn = aws_cloudfront_function.traceStartLambda.arn
     }
-    grpc_config {
-      enabled = false
-    }
   }
   origin {
-    domain_name                 = "origin.wp.cloudman.pro"
-    origin_id                   = "originAlb"
-    response_completion_timeout = 0
+    domain_name              = aws_s3_bucket.wpMedia.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.oac_wpmedia.id
+    origin_id                = "originMedia"
+  }
+  origin {
+    domain_name = "origin.wp.cloudman.pro"
+    origin_id   = "originAlb"
     custom_header {
       name  = "X-Origin-Verify"
       value = random_id.originVerify.hex
@@ -824,22 +753,15 @@ resource "aws_cloudfront_distribution" "cdnWordpress" {
     }
   }
   origin {
-    domain_name                 = trimsuffix(trimprefix(data.aws_lambda_function_url.analyticsUrl.function_url, "https://"), "/")
-    origin_access_control_id    = aws_cloudfront_origin_access_control.OAC.id
-    origin_id                   = "analytics"
-    response_completion_timeout = 0
+    domain_name              = trimsuffix(trimprefix(data.aws_lambda_function_url.analyticsUrl.function_url, "https://"), "/")
+    origin_access_control_id = aws_cloudfront_origin_access_control.OAC.id
+    origin_id                = "analytics"
     custom_origin_config {
       http_port              = 80
       https_port             = 443
       origin_protocol_policy = "https-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
-  }
-  origin {
-    domain_name                 = aws_s3_bucket.wpMedia.bucket_regional_domain_name
-    origin_access_control_id    = aws_cloudfront_origin_access_control.oac_wpmedia.id
-    origin_id                   = "originMedia"
-    response_completion_timeout = 0
   }
   restrictions {
     geo_restriction {
@@ -932,7 +854,6 @@ EOF
 
 resource "aws_cloudfront_origin_access_control" "OAC" {
   name                              = "OAC"
-  description                       = "Managed by Terraform"
   origin_access_control_origin_type = "lambda"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
