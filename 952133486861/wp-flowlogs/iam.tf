@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "synthetics_canary_wpReadCanary_st_wp-flowlogs_do
     sid       = "CanaryLogs"
     effect    = "Allow"
     actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["arn:aws:logs:us-west-2:952133486861:log-group:/aws/lambda/cwsyn-*:*"]
+    resources = ["arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/cwsyn-*:*"]
   }
 }
 
@@ -76,8 +76,19 @@ resource "aws_iam_policy" "synthetics_canary_wpReadCanary_st_wp-flowlogs" {
 }
 
 resource "aws_iam_role" "wp-process-flow-logs_role" {
-  name                  = "wp-process-flow-logs_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "wp-process-flow-logs_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -89,8 +100,19 @@ resource "aws_iam_role" "wp-process-flow-logs_role" {
 }
 
 resource "aws_iam_role" "wpReadCanary_role" {
-  name                  = "wpReadCanary_role"
-  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  name = "wpReadCanary_role"
+  assume_role_policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ]
+})
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -101,7 +123,7 @@ resource "aws_iam_role" "wpReadCanary_role" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_function_wp-process-flow-logs_st_wp-flowlogs_attach_wp-process-flow-logs_role" {
+resource "aws_iam_role_policy_attachment" "lambda_function_wp-process-flow-logs_st_wp-flowlogs_attach" {
   policy_arn = aws_iam_policy.lambda_function_wp-process-flow-logs_st_wp-flowlogs.arn
   role       = aws_iam_role.wp-process-flow-logs_role.name
 }

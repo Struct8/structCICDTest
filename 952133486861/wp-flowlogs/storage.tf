@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "canaryArtifacts" {
-  bucket              = "canaryartifacts-952133486861-us-west-2-an"
+  bucket              = "canaryartifacts-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "canaryArtifacts" {
 }
 
 resource "aws_s3_bucket" "flowlogs-bucket" {
-  bucket              = "flowlogs-bucket-952133486861-us-west-2-an"
+  bucket              = "flowlogs-bucket-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
   bucket_namespace    = "account-regional"
   force_destroy       = true
   object_lock_enabled = false
@@ -23,8 +23,7 @@ resource "aws_s3_bucket" "flowlogs-bucket" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "canaryArtifacts_lifecycle" {
-  bucket                                 = aws_s3_bucket.canaryArtifacts.id
-  transition_default_minimum_object_size = "all_storage_classes_128K"
+  bucket = aws_s3_bucket.canaryArtifacts.id
   rule {
     id     = "abort-incomplete-uploads"
     status = "Enabled"
@@ -39,8 +38,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "canaryArtifacts_lifecycle" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "flowlogs-bucket_lifecycle" {
-  bucket                                 = aws_s3_bucket.flowlogs-bucket.id
-  transition_default_minimum_object_size = "all_storage_classes_128K"
+  bucket = aws_s3_bucket.flowlogs-bucket.id
   rule {
     id     = "expire-logs"
     status = "Enabled"
@@ -76,6 +74,44 @@ resource "aws_s3_bucket_ownership_controls" "flowlogs-bucket_controls" {
   }
 }
 
+data "aws_iam_policy_document" "aws_s3_bucket_policy_flowlogs-bucket_st_wp-flowlogs_doc" {
+  statement {
+    sid    = "AllowLogDeliveryAclCheck"
+    effect = "Allow"
+    principals {
+      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "Service"
+    }
+    actions   = ["s3:GetBucketAcl"]
+    resources = [aws_s3_bucket.flowlogs-bucket.arn]
+    condition {
+      test     = "StringEquals"
+      values   = [data.aws_caller_identity.current.account_id]
+      variable = "AWS:SourceAccount"
+    }
+  }
+  statement {
+    sid    = "AllowLogDeliveryWrite"
+    effect = "Allow"
+    principals {
+      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "Service"
+    }
+    actions   = ["s3:PutObject"]
+    resources = ["${aws_s3_bucket.flowlogs-bucket.arn}/*"]
+    condition {
+      test     = "StringEquals"
+      values   = [data.aws_caller_identity.current.account_id]
+      variable = "AWS:SourceAccount"
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "aws_s3_bucket_policy_flowlogs-bucket_st_wp-flowlogs" {
+  bucket = aws_s3_bucket.flowlogs-bucket.id
+  policy = data.aws_iam_policy_document.aws_s3_bucket_policy_flowlogs-bucket_st_wp-flowlogs_doc.json
+}
+
 resource "aws_s3_bucket_public_access_block" "canaryArtifacts_block" {
   block_public_acls       = true
   block_public_policy     = true
@@ -95,8 +131,7 @@ resource "aws_s3_bucket_public_access_block" "flowlogs-bucket_block" {
 resource "aws_s3_bucket_server_side_encryption_configuration" "canaryArtifacts_configuration" {
   bucket = aws_s3_bucket.canaryArtifacts.id
   rule {
-    blocked_encryption_types = ["SSE-C"]
-    bucket_key_enabled       = true
+    bucket_key_enabled = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
@@ -106,8 +141,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "canaryArtifacts_c
 resource "aws_s3_bucket_server_side_encryption_configuration" "flowlogs-bucket_configuration" {
   bucket = aws_s3_bucket.flowlogs-bucket.id
   rule {
-    blocked_encryption_types = ["SSE-C"]
-    bucket_key_enabled       = true
+    bucket_key_enabled = true
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
