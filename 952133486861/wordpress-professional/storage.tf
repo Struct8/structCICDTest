@@ -16,10 +16,10 @@ resource "aws_s3_bucket" "wpMedia" {
   force_destroy       = true
   object_lock_enabled = false
   tags = {
+    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
     Name                                    = "wpMedia"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
-    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
   }
 }
 
@@ -249,10 +249,10 @@ resource "aws_efs_file_system" "wpContent" {
     replication_overwrite = "ENABLED"
   }
   tags = {
+    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
     Name                                    = "wpContent"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
-    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
   }
 }
 

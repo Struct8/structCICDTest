@@ -19,10 +19,10 @@ resource "aws_vpc_endpoint" "vpce-s3_S3" {
   route_table_ids   = [aws_route_table.rt-public-wp.id, aws_route_table.rtPrivate.id]
   vpc_endpoint_type = "Gateway"
   tags = {
+    DifName        = "vpce-s3_S3"
     Name           = "vpce-s3"
     State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
-    DifName        = "vpce-s3_S3"
   }
   timeouts {
     create = "10m"
@@ -41,10 +41,10 @@ resource "aws_vpc_endpoint" "vpceLogs_LOGS" {
   subnet_ids          = [aws_subnet.appA.id, aws_subnet.appB.id]
   vpc_endpoint_type   = "Interface"
   tags = {
+    DifName        = "vpceLogs_LOGS"
     Name           = "vpceLogs"
     State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
-    DifName        = "vpceLogs_LOGS"
   }
   timeouts {
     create = "10m"
@@ -63,10 +63,10 @@ resource "aws_vpc_endpoint" "vpceSecrets_SECRETSMANAGER" {
   subnet_ids          = [aws_subnet.appA.id, aws_subnet.appB.id]
   vpc_endpoint_type   = "Interface"
   tags = {
+    DifName        = "vpceSecrets_SECRETSMANAGER"
     Name           = "vpceSecrets"
     State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
-    DifName        = "vpceSecrets_SECRETSMANAGER"
   }
   timeouts {
     create = "10m"
@@ -413,9 +413,6 @@ resource "aws_security_group" "sg_vpce_vpceLogs" {
   name        = "vpce-sg-vpcelogs"
   vpc_id      = aws_vpc.wordpress-professional.id
   description = "Auto-generated SG for vpceLogs"
-  lifecycle {
-    ignore_changes = [revoke_rules_on_delete]
-  }
   tags = {
     Name           = "vpceLogs"
     DifName        = "sg_vpce_vpceLogs"
@@ -428,9 +425,6 @@ resource "aws_security_group" "sg_vpce_vpceSecrets" {
   name        = "vpce-sg-vpcesecrets"
   vpc_id      = aws_vpc.wordpress-professional.id
   description = "Auto-generated SG for vpceSecrets"
-  lifecycle {
-    ignore_changes = [revoke_rules_on_delete]
-  }
   tags = {
     Name           = "vpceSecrets"
     DifName        = "sg_vpce_vpceSecrets"
@@ -661,9 +655,6 @@ resource "aws_lb_listener_rule" "ruleFromCloudFront" {
   }
   listener_arn = aws_lb_listener.listenerHttps.arn
   priority     = 1
-  lifecycle {
-    ignore_changes = [action]
-  }
   tags = {
     Name           = "ruleFromCloudFront"
     State          = "wordpress-professional"
@@ -894,9 +885,6 @@ EOF
   comment = "Starts the trace at the edge: writes X-Amzn-Trace-Id (Root), X-Request-Start and X-Cdn-Distribution-Id."
   publish = true
   runtime = "cloudfront-js-2.0"
-  lifecycle {
-    ignore_changes = [publish]
-  }
   tags = {
     Name           = "traceStart"
     State          = "wordpress-professional"
@@ -935,9 +923,6 @@ EOF
   comment = "Starts the trace at the edge for a Lambda origin: X-Amzn-Trace-Id with Root, Parent and Sampled."
   publish = true
   runtime = "cloudfront-js-2.0"
-  lifecycle {
-    ignore_changes = [publish]
-  }
   tags = {
     Name           = "traceStartLambda"
     State          = "wordpress-professional"
@@ -1039,7 +1024,6 @@ resource "aws_wafv2_web_acl" "wpWaf" {
   }
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [rule, rule_json]
   }
   tags = {
     Name           = "wpWaf"

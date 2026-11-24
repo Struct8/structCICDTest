@@ -31,19 +31,16 @@ resource "aws_rds_cluster" "wp-aurora" {
   skip_final_snapshot             = true
   storage_encrypted               = true
   vpc_security_group_ids          = [aws_security_group.rds_cluster_wp-aurora_group.id]
-  lifecycle {
-    ignore_changes = [manage_master_user_password]
-  }
   serverlessv2_scaling_configuration {
     max_capacity             = 4
     min_capacity             = 0
     seconds_until_auto_pause = 300
   }
   tags = {
+    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
     Name                                    = "wp-aurora"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
-    "Struct8:Backup:wpDailyBackup-hbzliH5R" = true
   }
 }
 

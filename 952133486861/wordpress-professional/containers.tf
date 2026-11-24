@@ -241,6 +241,10 @@ service:
       {
         name  = "WP_ZONE_DOMAIN"
         value = "cloudman.pro"
+      },
+      {
+        name  = "AWS_KMS_KEY_NAME_0"
+        value = "kmsWordpress"
       }
     ]
     logConfiguration = {
@@ -444,6 +448,10 @@ service:
       {
         name  = "WP_ZONE_DOMAIN"
         value = "cloudman.pro"
+      },
+      {
+        name  = "AWS_KMS_KEY_NAME_0"
+        value = "kmsWordpress"
       }
     ]
     secrets = [
