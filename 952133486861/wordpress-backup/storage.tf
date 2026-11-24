@@ -18,12 +18,12 @@ resource "aws_backup_plan" "wpDailyBackup" {
 }
 
 resource "aws_backup_selection" "wpDailyBackup_selection" {
-  name      = "wpDailyBackup-dikeO-32-resources"
+  name      = "wpDailyBackup-hbzliH5R-resources"
   plan_id   = aws_backup_plan.wpDailyBackup.id
   resources = ["arn:aws:elasticfilesystem:*:*:file-system/*", "arn:aws:rds:*:*:cluster:*", "arn:aws:s3:::*"]
   condition {
     string_equals {
-      key   = "aws:ResourceTag/Struct8:Backup:wpDailyBackup-dikeO-32"
+      key   = "aws:ResourceTag/Struct8:Backup:wpDailyBackup-hbzliH5R"
       value = true
     }
   }

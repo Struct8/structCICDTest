@@ -1,5 +1,5 @@
 resource "aws_iam_role" "wpDailyBackup_backup_role" {
-  name = "wpDailyBackup-dikeO-32-backup"
+  name = "wpDailyBackup-hbzliH5R-backup"
   assume_role_policy = jsonencode({
   Version = "2012-10-17"
   Statement = [{
@@ -36,7 +36,7 @@ resource "aws_iam_role_policy_attachment" "wpDailyBackup_backup_role_s3_restore"
 }
 
 resource "aws_kms_alias" "kmsWordpress_cross_state_alias" {
-  name          = "alias/kmsWordpress-Y3qaiqf_"
+  name          = "alias/kmsWordpress-XefebEei"
   target_key_id = aws_kms_key.kmsWordpress.key_id
 }
 
