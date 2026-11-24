@@ -6,7 +6,7 @@ resource "aws_ssm_parameter" "wpAdminPassword" {
   overwrite   = false
   tier        = "Standard"
   type        = "SecureString"
-  value       = random_password.wpAdminPassword.result
+  value       = "imported_value_not_managed_here"
   lifecycle {
     ignore_changes = [value]
   }
