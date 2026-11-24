@@ -69,7 +69,7 @@ resource "aws_s3_bucket_ownership_controls" "wpSetupFiles_controls" {
   }
 }
 
-data "aws_iam_policy_document" "aws_s3_bucket_policy_albLogs_st_impWpMain_doc" {
+data "aws_iam_policy_document" "aws_s3_bucket_policy_albLogs_st_wordpress-professional_doc" {
   statement {
     sid    = "AllowElbAccessLogs"
     effect = "Allow"
@@ -87,12 +87,12 @@ data "aws_iam_policy_document" "aws_s3_bucket_policy_albLogs_st_impWpMain_doc" {
   }
 }
 
-resource "aws_s3_bucket_policy" "aws_s3_bucket_policy_albLogs_st_impWpMain" {
+resource "aws_s3_bucket_policy" "aws_s3_bucket_policy_albLogs_st_wordpress-professional" {
   bucket = aws_s3_bucket.albLogs.id
-  policy = data.aws_iam_policy_document.aws_s3_bucket_policy_albLogs_st_impWpMain_doc.json
+  policy = data.aws_iam_policy_document.aws_s3_bucket_policy_albLogs_st_wordpress-professional_doc.json
 }
 
-data "aws_iam_policy_document" "aws_s3_bucket_policy_wpMedia_st_impWpMain_doc" {
+data "aws_iam_policy_document" "aws_s3_bucket_policy_wpMedia_st_wordpress-professional_doc" {
   statement {
     sid    = "AllowCloudFrontServicePrincipalReadOnly"
     effect = "Allow"
@@ -110,9 +110,9 @@ data "aws_iam_policy_document" "aws_s3_bucket_policy_wpMedia_st_impWpMain_doc" {
   }
 }
 
-resource "aws_s3_bucket_policy" "aws_s3_bucket_policy_wpMedia_st_impWpMain" {
+resource "aws_s3_bucket_policy" "aws_s3_bucket_policy_wpMedia_st_wordpress-professional" {
   bucket = aws_s3_bucket.wpMedia.id
-  policy = data.aws_iam_policy_document.aws_s3_bucket_policy_wpMedia_st_impWpMain_doc.json
+  policy = data.aws_iam_policy_document.aws_s3_bucket_policy_wpMedia_st_wordpress-professional_doc.json
 }
 
 resource "aws_s3_bucket_public_access_block" "albLogs_block" {

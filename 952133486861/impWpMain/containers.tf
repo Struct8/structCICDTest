@@ -512,5 +512,5 @@ resource "aws_ecs_task_definition" "wordpress" {
       }
     }
   }
-  depends_on = [aws_iam_role_policy_attachment.ecs_task_definition_wordpress_st_impWpMain_attach, aws_iam_role_policy_attachment.ecs_task_definition_wordpress_st_wordpress-professional_attach_task_role_ecs_wordpress, aws_iam_role_policy_attachment.ecs_task_definition_wordpress_execution_st_impWpMain_attach, aws_iam_role_policy_attachment.ecs_task_definition_wordpress_execution_st_wordpress-professional_attach_execution_role_ecs_wordpress]
+  depends_on = [aws_iam_role_policy_attachment.ecs_task_definition_wordpress_st_wordpress-professional_attach, aws_iam_role_policy_attachment.ecs_task_definition_wordpress_execution_st_wordpress-professional_attach]
 }

@@ -613,7 +613,7 @@ resource "aws_lb" "alb-wp" {
     State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
-  depends_on = [aws_s3_bucket_policy.aws_s3_bucket_policy_albLogs_st_impWpMain]
+  depends_on = [aws_s3_bucket_policy.aws_s3_bucket_policy_albLogs_st_wordpress-professional]
 }
 
 resource "aws_lb_listener" "listenerHttps" {

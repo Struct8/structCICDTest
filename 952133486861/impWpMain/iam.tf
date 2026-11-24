@@ -9,7 +9,7 @@ resource "aws_iam_instance_profile" "asgWordpress_profile" {
   }
 }
 
-data "aws_iam_policy_document" "autoscaling_group_asgWordpress_st_impWpMain_doc" {
+data "aws_iam_policy_document" "autoscaling_group_asgWordpress_st_wordpress-professional_doc" {
   statement {
     sid       = "AllowWpcluster"
     effect    = "Allow"
@@ -18,26 +18,19 @@ data "aws_iam_policy_document" "autoscaling_group_asgWordpress_st_impWpMain_doc"
   }
 }
 
-resource "aws_iam_policy" "autoscaling_group_asgWordpress_st_impWpMain" {
-  name        = "autoscaling_group_asgWordpress_st_impWpMain"
-  description = "Access Policy for asgWordpress"
-  policy      = data.aws_iam_policy_document.autoscaling_group_asgWordpress_st_impWpMain_doc.json
-}
-
 resource "aws_iam_policy" "autoscaling_group_asgWordpress_st_wordpress-professional" {
   name        = "autoscaling_group_asgWordpress_st_wordpress-professional"
   description = "Access Policy for asgWordpress"
-  policy = <<EOF
-{"Statement":[{"Action":["ecs:Submit*","ecs:StartTelemetrySession","ecs:RegisterContainerInstance","ecs:Poll","ecs:DiscoverPollEndpoint","ecs:DeregisterContainerInstance"],"Effect":"Allow","Resource":"${aws_ecs_cluster.wp-cluster.arn}","Sid":"AllowWpcluster"}],"Version":"2012-10-17"}
-  EOF
-  tags = {
-    Name           = "autoscaling_group_asgWordpress_st_wordpress-professional"
-    State          = "impWpMain"
-    Struct8Creator = "rmay struct"
-  }
+  policy      = data.aws_iam_policy_document.autoscaling_group_asgWordpress_st_wordpress-professional_doc.json
 }
 
-data "aws_iam_policy_document" "ecs_task_definition_wordpress_execution_st_impWpMain_doc" {
+data "aws_iam_policy_document" "ecs_task_definition_wordpress_execution_st_wordpress-professional_doc" {
+  statement {
+    sid       = "AllowWriteLogs"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.logsWordpress.arn}:*"]
+  }
   statement {
     sid       = "AllowDecryptInjectedSecrets"
     effect    = "Allow"
@@ -50,87 +43,44 @@ data "aws_iam_policy_document" "ecs_task_definition_wordpress_execution_st_impWp
     actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
     resources = [aws_rds_cluster.wp-aurora.master_user_secret[0].secret_arn]
   }
-}
-
-resource "aws_iam_policy" "ecs_task_definition_wordpress_execution_st_impWpMain" {
-  name        = "ecs_task_definition_wordpress_execution_st_impWpMain"
-  description = "Access Policy for wordpress (Role: execution)"
-  policy      = data.aws_iam_policy_document.ecs_task_definition_wordpress_execution_st_impWpMain_doc.json
+  statement {
+    sid       = "AllowSecretAccess"
+    effect    = "Allow"
+    actions   = ["secretsmanager:GetSecretValue"]
+    resources = [data.aws_secretsmanager_secret.wpSecrets.arn]
+  }
+  statement {
+    sid       = "AllowReadParam"
+    effect    = "Allow"
+    actions   = ["ssm:GetParameter", "ssm:GetParameters"]
+    resources = [data.aws_ssm_parameter.wpAdminPassword.arn]
+  }
+  statement {
+    sid       = "AllowSecureStringDecrypt"
+    effect    = "Allow"
+    actions   = ["kms:Decrypt"]
+    resources = ["*"]
+    condition {
+      test     = "StringLike"
+      values   = ["ssm.*.amazonaws.com"]
+      variable = "kms:ViaService"
+    }
+  }
 }
 
 resource "aws_iam_policy" "ecs_task_definition_wordpress_execution_st_wordpress-professional" {
   name        = "ecs_task_definition_wordpress_execution_st_wordpress-professional"
   description = "Access Policy for wordpress (Role: execution)"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "${aws_cloudwatch_log_group.logsWordpress.arn}:*"
-      ],
-      "Sid": "AllowWriteLogs"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "secretsmanager:DescribeSecret",
-        "secretsmanager:GetSecretValue"
-      ],
-      "Resource": [
-        "${aws_rds_cluster.wp-aurora.master_user_secret[0].secret_arn}"
-      ],
-      "Sid": "AllowRDSSecretAccesswpaurora"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "secretsmanager:GetSecretValue"
-      ],
-      "Resource": [
-        "${data.aws_secretsmanager_secret.wpSecrets.arn}"
-      ],
-      "Sid": "AllowSecretAccess"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ssm:GetParameter",
-        "ssm:GetParameters"
-      ],
-      "Resource": [
-        "${data.aws_ssm_parameter.wpAdminPassword.arn}"
-      ],
-      "Sid": "AllowReadParam"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "kms:Decrypt"
-      ],
-      "Resource": [
-        "*"
-      ],
-      "Sid": "AllowSecureStringDecrypt",
-      "Condition": [
-        {
-          "test": "StringLike",
-          "variable": "kms:ViaService",
-          "values": [
-            "ssm.*.amazonaws.com"
-          ]
-        }
-      ]
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.ecs_task_definition_wordpress_execution_st_wordpress-professional_doc.json
 }
 
-data "aws_iam_policy_document" "ecs_task_definition_wordpress_st_impWpMain_doc" {
+data "aws_iam_policy_document" "ecs_task_definition_wordpress_st_wordpress-professional_doc" {
+  statement {
+    sid       = "AllowEFSBasicAccess"
+    effect    = "Allow"
+    actions   = ["elasticfilesystem:ClientMount", "elasticfilesystem:ClientWrite"]
+    resources = [aws_efs_file_system.wpContent.arn]
+  }
   statement {
     sid       = "AllowRDSDataApiwpaurora"
     effect    = "Allow"
@@ -143,117 +93,42 @@ data "aws_iam_policy_document" "ecs_task_definition_wordpress_st_impWpMain_doc" 
     actions   = ["secretsmanager:DescribeSecret", "secretsmanager:GetSecretValue"]
     resources = [aws_rds_cluster.wp-aurora.master_user_secret[0].secret_arn]
   }
-}
-
-resource "aws_iam_policy" "ecs_task_definition_wordpress_st_impWpMain" {
-  name        = "ecs_task_definition_wordpress_st_impWpMain"
-  description = "Access Policy for wordpress"
-  policy      = data.aws_iam_policy_document.ecs_task_definition_wordpress_st_impWpMain_doc.json
+  statement {
+    sid       = "AllowBucketLevelActions"
+    effect    = "Allow"
+    actions   = ["s3:GetBucketLocation", "s3:GetBucketOwnershipControls", "s3:GetBucketPublicAccessBlock", "s3:ListBucket"]
+    resources = [aws_s3_bucket.wpMedia.arn]
+  }
+  statement {
+    sid       = "AllowObjectCRUD"
+    effect    = "Allow"
+    actions   = ["s3:DeleteObject", "s3:GetObject", "s3:PutObject"]
+    resources = ["${aws_s3_bucket.wpMedia.arn}/*"]
+  }
+  statement {
+    sid       = "ReadWordPressSetupFiles"
+    effect    = "Allow"
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.wpSetupFiles.arn}/wordpress/*"]
+  }
+  statement {
+    sid       = "AllowSesSendFromIdentity"
+    effect    = "Allow"
+    actions   = ["ses:SendEmail", "ses:SendRawEmail"]
+    resources = [aws_sesv2_email_identity.wpMail.arn]
+  }
+  statement {
+    sid       = "AllowSendTracesToXRay"
+    effect    = "Allow"
+    actions   = ["xray:GetSamplingRules", "xray:GetSamplingTargets", "xray:PutTelemetryRecords", "xray:PutTraceSegments"]
+    resources = ["*"]
+  }
 }
 
 resource "aws_iam_policy" "ecs_task_definition_wordpress_st_wordpress-professional" {
   name        = "ecs_task_definition_wordpress_st_wordpress-professional"
   description = "Access Policy for wordpress"
-  policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "elasticfilesystem:ClientMount",
-        "elasticfilesystem:ClientWrite"
-      ],
-      "Resource": [
-        "${aws_efs_file_system.wpContent.arn}"
-      ],
-      "Sid": "AllowEFSBasicAccess"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "rds-data:BatchExecuteStatement",
-        "rds-data:BeginTransaction",
-        "rds-data:CommitTransaction",
-        "rds-data:ExecuteStatement",
-        "rds-data:RollbackTransaction"
-      ],
-      "Resource": [
-        "${aws_rds_cluster.wp-aurora.arn}"
-      ],
-      "Sid": "AllowRDSDataApiwpaurora"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "secretsmanager:DescribeSecret",
-        "secretsmanager:GetSecretValue"
-      ],
-      "Resource": [
-        "${aws_rds_cluster.wp-aurora.master_user_secret[0].secret_arn}"
-      ],
-      "Sid": "AllowRDSSecretAccesswpaurora"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetBucketLocation",
-        "s3:GetBucketOwnershipControls",
-        "s3:GetBucketPublicAccessBlock",
-        "s3:ListBucket"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.wpMedia.arn}"
-      ],
-      "Sid": "AllowBucketLevelActions"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:DeleteObject",
-        "s3:GetObject",
-        "s3:PutObject"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.wpMedia.arn}/*"
-      ],
-      "Sid": "AllowObjectCRUD"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.wpSetupFiles.arn}/wordpress/*"
-      ],
-      "Sid": "ReadWordPressSetupFiles"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ses:SendEmail",
-        "ses:SendRawEmail"
-      ],
-      "Resource": [
-        "${aws_sesv2_email_identity.wpMail.arn}"
-      ],
-      "Sid": "AllowSesSendFromIdentity"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "xray:GetSamplingRules",
-        "xray:GetSamplingTargets",
-        "xray:PutTelemetryRecords",
-        "xray:PutTraceSegments"
-      ],
-      "Resource": [
-        "*"
-      ],
-      "Sid": "AllowSendTracesToXRay"
-    }
-  ]
-})
+  policy      = data.aws_iam_policy_document.ecs_task_definition_wordpress_st_wordpress-professional_doc.json
 }
 
 data "aws_iam_policy_document" "debug-wp_debug_permissions" {
@@ -386,32 +261,17 @@ resource "aws_iam_role_policy" "Struct8ProbeLogs-debug-wp-wordpress" {
   role   = aws_iam_role.execution_role_ecs_wordpress.id
 }
 
-resource "aws_iam_role_policy_attachment" "autoscaling_group_asgWordpress_st_impWpMain_attach" {
-  policy_arn = aws_iam_policy.autoscaling_group_asgWordpress_st_impWpMain.arn
-  role       = aws_iam_role.asgWordpress_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "autoscaling_group_asgWordpress_st_wordpress-professional_to_asgWordpress_role_attach" {
+resource "aws_iam_role_policy_attachment" "autoscaling_group_asgWordpress_st_wordpress-professional_attach" {
   policy_arn = aws_iam_policy.autoscaling_group_asgWordpress_st_wordpress-professional.arn
   role       = aws_iam_role.asgWordpress_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_task_definition_wordpress_execution_st_impWpMain_attach" {
-  policy_arn = aws_iam_policy.ecs_task_definition_wordpress_execution_st_impWpMain.arn
-  role       = aws_iam_role.execution_role_ecs_wordpress.name
-}
-
-resource "aws_iam_role_policy_attachment" "ecs_task_definition_wordpress_execution_st_wordpress-professional_attach_execution_role_ecs_wordpress" {
+resource "aws_iam_role_policy_attachment" "ecs_task_definition_wordpress_execution_st_wordpress-professional_attach" {
   policy_arn = aws_iam_policy.ecs_task_definition_wordpress_execution_st_wordpress-professional.arn
   role       = aws_iam_role.execution_role_ecs_wordpress.name
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_task_definition_wordpress_st_impWpMain_attach" {
-  policy_arn = aws_iam_policy.ecs_task_definition_wordpress_st_impWpMain.arn
-  role       = aws_iam_role.task_role_ecs_wordpress.name
-}
-
-resource "aws_iam_role_policy_attachment" "ecs_task_definition_wordpress_st_wordpress-professional_attach_task_role_ecs_wordpress" {
+resource "aws_iam_role_policy_attachment" "ecs_task_definition_wordpress_st_wordpress-professional_attach" {
   policy_arn = aws_iam_policy.ecs_task_definition_wordpress_st_wordpress-professional.arn
   role       = aws_iam_role.task_role_ecs_wordpress.name
 }
