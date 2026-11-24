@@ -1,34 +1,65 @@
-data "aws_iam_policy_document" "lambda_function_wp-process-flow-logs_st_wp-flowlogs_doc" {
-  statement {
-    sid       = "AllowPrometheusRemoteWrite"
-    effect    = "Allow"
-    actions   = ["aps:GetLabels", "aps:GetMetricMetadata", "aps:GetSeries", "aps:QueryMetrics", "aps:RemoteWrite"]
-    resources = [aws_prometheus_workspace.wp-flowlogs-amp.arn]
-  }
-  statement {
-    sid       = "AllowBucketLevelActions"
-    effect    = "Allow"
-    actions   = ["s3:GetBucketLocation", "s3:ListBucket"]
-    resources = [aws_s3_bucket.flowlogs-bucket.arn]
-  }
-  statement {
-    sid       = "AllowObjectCRUD"
-    effect    = "Allow"
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.flowlogs-bucket.arn}/*"]
-  }
-  statement {
-    sid       = "AllowReadingWhoOwnsEachAddress"
-    effect    = "Allow"
-    actions   = ["ec2:DescribeInstances", "ec2:DescribeNatGateways", "ec2:DescribeNetworkInterfaces", "ec2:DescribeVpcEndpoints", "ec2:DescribeVpcs", "elasticloadbalancing:DescribeTags", "lambda:ListTags", "rds:DescribeDBInstances", "rds:DescribeDBProxies", "tag:GetResources"]
-    resources = ["*"]
-  }
-}
-
 resource "aws_iam_policy" "lambda_function_wp-process-flow-logs_st_wp-flowlogs" {
   name        = "lambda_function_wp-process-flow-logs_st_wp-flowlogs"
   description = "Access Policy for wp-process-flow-logs"
-  policy      = data.aws_iam_policy_document.lambda_function_wp-process-flow-logs_st_wp-flowlogs_doc.json
+  policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "aps:GetLabels",
+        "aps:GetMetricMetadata",
+        "aps:GetSeries",
+        "aps:QueryMetrics",
+        "aps:RemoteWrite"
+      ],
+      "Resource": [
+        "${aws_prometheus_workspace.wp-flowlogs-amp.arn}"
+      ],
+      "Sid": "AllowPrometheusRemoteWrite"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketLocation",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.flowlogs-bucket.arn}"
+      ],
+      "Sid": "AllowBucketLevelActions"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.flowlogs-bucket.arn}/*"
+      ],
+      "Sid": "AllowObjectCRUD"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "ec2:DescribeNatGateways",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DescribeVpcEndpoints",
+        "ec2:DescribeVpcs",
+        "elasticloadbalancing:DescribeTags",
+        "lambda:ListTags",
+        "rds:DescribeDBInstances",
+        "rds:DescribeDBProxies",
+        "tag:GetResources"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Sid": "AllowReadingWhoOwnsEachAddress"
+    }
+  ]
+})
 }
 
 data "aws_iam_policy_document" "synthetics_canary_wpReadCanary_st_wp-flowlogs_doc" {
@@ -67,6 +98,12 @@ data "aws_iam_policy_document" "synthetics_canary_wpReadCanary_st_wp-flowlogs_do
     actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/cwsyn-*:*"]
   }
+  statement {
+    sid       = "CanaryLogs1"
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["arn:aws:logs:us-west-2:952133486861:log-group:/aws/lambda/cwsyn-*:*"]
+  }
 }
 
 resource "aws_iam_policy" "synthetics_canary_wpReadCanary_st_wp-flowlogs" {
@@ -76,19 +113,8 @@ resource "aws_iam_policy" "synthetics_canary_wpReadCanary_st_wp-flowlogs" {
 }
 
 resource "aws_iam_role" "wp-process-flow-logs_role" {
-  name = "wp-process-flow-logs_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "wp-process-flow-logs_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -100,19 +126,8 @@ resource "aws_iam_role" "wp-process-flow-logs_role" {
 }
 
 resource "aws_iam_role" "wpReadCanary_role" {
-  name = "wpReadCanary_role"
-  assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-})
+  name                  = "wpReadCanary_role"
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
@@ -123,7 +138,7 @@ resource "aws_iam_role" "wpReadCanary_role" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_function_wp-process-flow-logs_st_wp-flowlogs_attach" {
+resource "aws_iam_role_policy_attachment" "lambda_function_wp-process-flow-logs_st_wp-flowlogs_attach_wp-process-flow-logs_role" {
   policy_arn = aws_iam_policy.lambda_function_wp-process-flow-logs_st_wp-flowlogs.arn
   role       = aws_iam_role.wp-process-flow-logs_role.name
 }
