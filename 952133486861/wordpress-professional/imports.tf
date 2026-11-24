@@ -122,11 +122,6 @@ import {
 }
 
 import {
-  to = aws_iam_policy.autoscaling_group_asgWordpress_st_wordpress-professional
-  id = "arn:aws:iam::952133486861:policy/autoscaling_group_asgWordpress_st_wordpress-professional"
-}
-
-import {
   to = aws_iam_policy.ecs_task_definition_wordpress_execution_st_wordpress-professional
   id = "arn:aws:iam::952133486861:policy/ecs_task_definition_wordpress_execution_st_wordpress-professional"
 }
@@ -392,6 +387,16 @@ import {
 }
 
 import {
+  to = aws_iam_role_policy_attachment.ecs_task_definition_wordpress_execution_st_wordpress-professional_attach
+  id = "execution_role_ecs_wordpress/arn:aws:iam::952133486861:policy/ecs_task_definition_wordpress_execution_st_wordpress-professional"
+}
+
+import {
+  to = aws_iam_role_policy_attachment.ecs_task_definition_wordpress_st_wordpress-professional_attach
+  id = "task_role_ecs_wordpress/arn:aws:iam::952133486861:policy/ecs_task_definition_wordpress_st_wordpress-professional"
+}
+
+import {
   to = aws_security_group_rule.rule_ecs_task_definition_wordpress_group_to_efs_file_system_wpContent_group_tcp_2049
   id = "sg-064cf6912849dc7ad_ingress_tcp_2049_2049_sg-0d8ab6cd38b4e46f1"
 }
@@ -422,6 +427,11 @@ import {
 }
 
 import {
+  to = aws_s3_bucket_policy.aws_s3_bucket_policy_albLogs_st_wordpress-professional
+  id = "wp-pro-access-logs-952133486861-us-west-2-an"
+}
+
+import {
   to = aws_s3_bucket_public_access_block.albLogs_block
   id = "wp-pro-access-logs-952133486861-us-west-2-an"
 }
@@ -438,6 +448,11 @@ import {
 
 import {
   to = aws_s3_bucket_ownership_controls.wpMedia_controls
+  id = "wp-pro-media-952133486861-us-west-2-an"
+}
+
+import {
+  to = aws_s3_bucket_policy.aws_s3_bucket_policy_wpMedia_st_wordpress-professional
   id = "wp-pro-media-952133486861-us-west-2-an"
 }
 
@@ -459,6 +474,16 @@ import {
 import {
   to = aws_route_table_association.aws_route_table_association_appA_rtPrivate
   id = "subnet-091017582a000fba8/rtb-0ed521978fb37ae7d"
+}
+
+import {
+  to = aws_iam_policy.autoscaling_group_asgWordpress_st_wordpress-professional
+  id = "arn:aws:iam::952133486861:policy/autoscaling_group_asgWordpress_st_wordpress-professional"
+}
+
+import {
+  to = aws_iam_role_policy_attachment.autoscaling_group_asgWordpress_st_wordpress-professional_attach
+  id = "asgWordpress_role/arn:aws:iam::952133486861:policy/autoscaling_group_asgWordpress_st_wordpress-professional"
 }
 
 import {
@@ -557,41 +582,6 @@ import {
 }
 
 import {
-  to = aws_iam_role_policy_attachment.autoscaling_group_asgWordpress_st_wordpress-professional_attach
-  id = "asgWordpress_role/arn:aws:iam::952133486861:policy/autoscaling_group_asgWordpress_st_wordpress-professional"
-}
-
-import {
-  to = aws_iam_role_policy_attachment.autoscaling_group_asgWordpress_st_wordpress-professional_to_asgWordpress_role_attach
-  id = "asgWordpress_role/arn:aws:iam::952133486861:policy/autoscaling_group_asgWordpress_st_wordpress-professional"
-}
-
-import {
-  to = aws_iam_role_policy_attachment.ecs_task_definition_wordpress_execution_st_wordpress-professional_attach
-  id = "execution_role_ecs_wordpress/arn:aws:iam::952133486861:policy/ecs_task_definition_wordpress_execution_st_wordpress-professional"
-}
-
-import {
-  to = aws_iam_role_policy_attachment.ecs_task_definition_wordpress_execution_st_wordpress-professional_attach_execution_role_ecs_wordpress
-  id = "execution_role_ecs_wordpress/arn:aws:iam::952133486861:policy/ecs_task_definition_wordpress_execution_st_wordpress-professional"
-}
-
-import {
-  to = aws_iam_role_policy_attachment.ecs_task_definition_wordpress_execution_st_wordpress-professional_attach_task_role_ecs_wordpress
-  id = "task_role_ecs_wordpress/arn:aws:iam::952133486861:policy/ecs_task_definition_wordpress_execution_st_wordpress-professional"
-}
-
-import {
-  to = aws_iam_role_policy_attachment.ecs_task_definition_wordpress_st_wordpress-professional_attach
-  id = "task_role_ecs_wordpress/arn:aws:iam::952133486861:policy/ecs_task_definition_wordpress_st_wordpress-professional"
-}
-
-import {
-  to = aws_iam_role_policy_attachment.ecs_task_definition_wordpress_st_wordpress-professional_attach_task_role_ecs_wordpress
-  id = "task_role_ecs_wordpress/arn:aws:iam::952133486861:policy/ecs_task_definition_wordpress_st_wordpress-professional"
-}
-
-import {
   to = aws_route.route_rt-public-wp_to_igw-wp_ipv4
   id = "rtb-0b34005af94d367de_0.0.0.0/0"
 }
@@ -659,16 +649,6 @@ import {
 import {
   to = aws_security_group_rule.rule_sg_vpce_vpceSecrets_ingress_tcp_443
   id = "sg-0eb6fbe3a3b4ca8af_ingress_tcp_443_443_10.0.0.0/16"
-}
-
-import {
-  to = aws_s3_bucket_policy.aws_s3_bucket_policy_albLogs_st_wordpress-professional
-  id = "wp-pro-access-logs-952133486861-us-west-2-an"
-}
-
-import {
-  to = aws_s3_bucket_policy.aws_s3_bucket_policy_wpMedia_st_wordpress-professional
-  id = "wp-pro-media-952133486861-us-west-2-an"
 }
 
 import {
