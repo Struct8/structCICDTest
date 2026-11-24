@@ -55,6 +55,9 @@ EOFUData
   iam_instance_profile {
     name = aws_iam_instance_profile.asgWordpress_profile.name
   }
+  lifecycle {
+    ignore_changes = [update_default_version]
+  }
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 1
@@ -123,7 +126,7 @@ resource "aws_autoscaling_group" "asgWordpress" {
     strategy = "Rolling"
   }
   lifecycle {
-    ignore_changes = [desired_capacity]
+    ignore_changes = [instance_refresh, termination_policies, desired_capacity]
   }
   mixed_instances_policy {
     instances_distribution {
