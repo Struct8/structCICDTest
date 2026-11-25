@@ -661,6 +661,9 @@ resource "aws_lb_listener_rule" "ruleFromCloudFront" {
   }
   listener_arn = aws_lb_listener.listenerHttps.arn
   priority     = 1
+  lifecycle {
+    ignore_changes = [action]
+  }
   tags = {
     Name           = "ruleFromCloudFront"
     State          = "wordpress-professional"
@@ -891,6 +894,9 @@ EOF
   comment = "Starts the trace at the edge: writes X-Amzn-Trace-Id (Root), X-Request-Start and X-Cdn-Distribution-Id."
   publish = true
   runtime = "cloudfront-js-2.0"
+  lifecycle {
+    ignore_changes = [publish]
+  }
   tags = {
     Name           = "traceStart"
     State          = "wordpress-professional"
@@ -929,6 +935,9 @@ EOF
   comment = "Starts the trace at the edge for a Lambda origin: X-Amzn-Trace-Id with Root, Parent and Sampled."
   publish = true
   runtime = "cloudfront-js-2.0"
+  lifecycle {
+    ignore_changes = [publish]
+  }
   tags = {
     Name           = "traceStartLambda"
     State          = "wordpress-professional"
@@ -1030,6 +1039,7 @@ resource "aws_wafv2_web_acl" "wpWaf" {
   }
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [rule, rule_json]
   }
   tags = {
     Name           = "wpWaf"
