@@ -14,18 +14,18 @@ resource "aws_backup_plan" "wpDailyBackup" {
   }
   tags = {
     Name           = "wpDailyBackup"
-    State          = "impWpBackup"
+    State          = "wordpress-backup"
     Struct8Creator = "rmay struct"
   }
 }
 
 resource "aws_backup_selection" "wpDailyBackup_selection" {
-  name      = "wpDailyBackup-LG8tjg6d-resources"
+  name      = "wpDailyBackup-NBdWLPOf-resources"
   plan_id   = aws_backup_plan.wpDailyBackup.id
   resources = ["arn:aws:elasticfilesystem:*:*:file-system/*", "arn:aws:rds:*:*:cluster:*", "arn:aws:s3:::*"]
   condition {
     string_equals {
-      key   = "aws:ResourceTag/Struct8:Backup:wpDailyBackup-LG8tjg6d"
+      key   = "aws:ResourceTag/Struct8:Backup:wpDailyBackup-NBdWLPOf"
       value = true
     }
   }
@@ -38,7 +38,7 @@ resource "aws_backup_vault" "wpBackupVault" {
   kms_key_arn   = "arn:aws:kms:us-west-2:952133486861:key/8b02ffe2-5da5-47a8-a549-8bf0fc7400a8"
   tags = {
     Name           = "wpBackupVault"
-    State          = "impWpBackup"
+    State          = "wordpress-backup"
     Struct8Creator = "rmay struct"
   }
 }

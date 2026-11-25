@@ -1,12 +1,12 @@
 resource "aws_iam_role" "wpDailyBackup_backup_role" {
-  name                  = "wpDailyBackup-LG8tjg6d-backup"
+  name                  = "wpDailyBackup-NBdWLPOf-backup"
   assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"backup.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   force_detach_policies = false
   max_session_duration  = 3600
   path                  = "/"
   tags = {
     Name           = "wpDailyBackup_backup_role"
-    State          = "impWpBackup"
+    State          = "wordpress-backup"
     Struct8Creator = "rmay struct"
   }
 }
@@ -32,7 +32,7 @@ resource "aws_iam_role_policy_attachment" "wpDailyBackup_backup_role_s3_restore"
 }
 
 resource "aws_kms_alias" "kmsWordpress_cross_state_alias" {
-  name          = "alias/kmsWordpress-XCX3V2wA"
+  name          = "alias/kmsWordpress--A6hBC1m"
   target_key_id = aws_kms_key.kmsWordpress.key_id
 }
 
@@ -48,7 +48,7 @@ resource "aws_kms_key" "kmsWordpress" {
   rotation_period_in_days            = 365
   tags = {
     Name           = "kmsWordpress"
-    State          = "impWpBackup"
+    State          = "wordpress-backup"
     Struct8Creator = "rmay struct"
   }
 }
@@ -61,7 +61,7 @@ resource "aws_secretsmanager_secret" "wpSecrets" {
   recovery_window_in_days        = 0
   tags = {
     Name           = "wpSecrets"
-    State          = "impWpBackup"
+    State          = "wordpress-backup"
     Struct8Creator = "rmay struct"
   }
 }
