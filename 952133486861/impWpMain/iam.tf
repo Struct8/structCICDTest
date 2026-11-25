@@ -4,7 +4,7 @@ resource "aws_iam_instance_profile" "asgWordpress_profile" {
   role = aws_iam_role.asgWordpress_role.name
   tags = {
     Name           = "asgWordpress_profile"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -218,7 +218,7 @@ resource "aws_iam_role" "asgWordpress_role" {
   path                  = "/"
   tags = {
     Name           = "asgWordpress_role"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -231,7 +231,7 @@ resource "aws_iam_role" "execution_role_ecs_wordpress" {
   path                  = "/"
   tags = {
     Name           = "execution_role_ecs_wordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -244,7 +244,7 @@ resource "aws_iam_role" "task_role_ecs_wordpress" {
   path                  = "/"
   tags = {
     Name           = "task_role_ecs_wordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -295,7 +295,7 @@ resource "aws_acm_certificate" "certAlb" {
   }
   tags = {
     Name           = "certAlb"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -315,7 +315,7 @@ resource "aws_acm_certificate" "certWordpress" {
   }
   tags = {
     Name           = "certWordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }

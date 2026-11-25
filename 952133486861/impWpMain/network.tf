@@ -7,7 +7,7 @@ resource "aws_vpc" "wordpress-professional" {
   ipv6_cidr_block_network_border_group = "us-west-2"
   tags = {
     Name           = "wordpress-professional"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -19,10 +19,10 @@ resource "aws_vpc_endpoint" "vpce-s3_S3" {
   route_table_ids   = [aws_route_table.rt-public-wp.id, aws_route_table.rtPrivate.id]
   vpc_endpoint_type = "Gateway"
   tags = {
-    Name           = "vpce-s3"
-    State          = "wordpress-professional"
-    Struct8Creator = "rmay struct"
     DifName        = "vpce-s3_S3"
+    Name           = "vpce-s3"
+    State          = "impWpMain"
+    Struct8Creator = "rmay struct"
   }
   timeouts {
     create = "10m"
@@ -41,10 +41,10 @@ resource "aws_vpc_endpoint" "vpceLogs_LOGS" {
   subnet_ids          = [aws_subnet.appA.id, aws_subnet.appB.id]
   vpc_endpoint_type   = "Interface"
   tags = {
-    Name           = "vpceLogs"
-    State          = "wordpress-professional"
-    Struct8Creator = "rmay struct"
     DifName        = "vpceLogs_LOGS"
+    Name           = "vpceLogs"
+    State          = "impWpMain"
+    Struct8Creator = "rmay struct"
   }
   timeouts {
     create = "10m"
@@ -63,10 +63,10 @@ resource "aws_vpc_endpoint" "vpceSecrets_SECRETSMANAGER" {
   subnet_ids          = [aws_subnet.appA.id, aws_subnet.appB.id]
   vpc_endpoint_type   = "Interface"
   tags = {
-    Name           = "vpceSecrets"
-    State          = "wordpress-professional"
-    Struct8Creator = "rmay struct"
     DifName        = "vpceSecrets_SECRETSMANAGER"
+    Name           = "vpceSecrets"
+    State          = "impWpMain"
+    Struct8Creator = "rmay struct"
   }
   timeouts {
     create = "10m"
@@ -85,7 +85,7 @@ resource "aws_subnet" "appA" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "appA"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -100,7 +100,7 @@ resource "aws_subnet" "appB" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "appB"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -113,7 +113,7 @@ resource "aws_subnet" "dataA" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "dataA"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -126,7 +126,7 @@ resource "aws_subnet" "dataB" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "dataB"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -140,7 +140,7 @@ resource "aws_subnet" "pubA" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "pubA"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -154,7 +154,7 @@ resource "aws_subnet" "pubB" {
   private_dns_hostname_type_on_launch = "ip-name"
   tags = {
     Name           = "pubB"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -163,7 +163,7 @@ resource "aws_internet_gateway" "igw-wp" {
   vpc_id = aws_vpc.wordpress-professional.id
   tags = {
     Name           = "igw-wp"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -172,7 +172,7 @@ resource "aws_egress_only_internet_gateway" "eigw-wp" {
   vpc_id = aws_vpc.wordpress-professional.id
   tags = {
     Name           = "eigw-wp"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -183,7 +183,7 @@ resource "aws_nat_gateway" "nat-wp" {
   connectivity_type = "public"
   tags = {
     Name           = "nat-wp"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_internet_gateway.igw-wp]
@@ -291,7 +291,7 @@ resource "aws_route_table" "rt-public-wp" {
   vpc_id = aws_vpc.wordpress-professional.id
   tags = {
     Name           = "rt-public-wp"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -300,7 +300,7 @@ resource "aws_route_table" "rtPrivate" {
   vpc_id = aws_vpc.wordpress-professional.id
   tags = {
     Name           = "rtPrivate"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -332,7 +332,7 @@ resource "aws_security_group" "alb-cloudfront-wp" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "alb-cloudfront-wp"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -344,7 +344,7 @@ resource "aws_security_group" "autoscaling_group_asgWordpress_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "autoscaling_group_asgWordpress_group"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -356,7 +356,7 @@ resource "aws_security_group" "ecs_task_definition_wordpress_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "ecs_task_definition_wordpress_group"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -368,7 +368,7 @@ resource "aws_security_group" "efs_file_system_wpContent_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "efs_file_system_wpContent_group"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -380,7 +380,7 @@ resource "aws_security_group" "elasticache_replication_group_wpRedis_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "elasticache_replication_group_wpRedis_group"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -392,7 +392,7 @@ resource "aws_security_group" "lb_alb-wp_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "lb_alb-wp_group"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -404,7 +404,7 @@ resource "aws_security_group" "rds_cluster_wp-aurora_group" {
   revoke_rules_on_delete = false
   tags = {
     Name           = "rds_cluster_wp-aurora_group"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -413,13 +413,10 @@ resource "aws_security_group" "sg_vpce_vpceLogs" {
   name        = "vpce-sg-vpcelogs"
   vpc_id      = aws_vpc.wordpress-professional.id
   description = "Auto-generated SG for vpceLogs"
-  lifecycle {
-    ignore_changes = [revoke_rules_on_delete]
-  }
   tags = {
     Name           = "vpceLogs"
     DifName        = "sg_vpce_vpceLogs"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -428,13 +425,10 @@ resource "aws_security_group" "sg_vpce_vpceSecrets" {
   name        = "vpce-sg-vpcesecrets"
   vpc_id      = aws_vpc.wordpress-professional.id
   description = "Auto-generated SG for vpceSecrets"
-  lifecycle {
-    ignore_changes = [revoke_rules_on_delete]
-  }
   tags = {
     Name           = "vpceSecrets"
     DifName        = "sg_vpce_vpceSecrets"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -610,7 +604,7 @@ resource "aws_lb" "alb-wp" {
   }
   tags = {
     Name           = "alb-wp"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_s3_bucket_policy.aws_s3_bucket_policy_albLogs_st_wordpress-professional]
@@ -637,7 +631,7 @@ resource "aws_lb_listener" "listenerHttps" {
   }
   tags = {
     Name           = "listenerHttps"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -661,12 +655,9 @@ resource "aws_lb_listener_rule" "ruleFromCloudFront" {
   }
   listener_arn = aws_lb_listener.listenerHttps.arn
   priority     = 1
-  lifecycle {
-    ignore_changes = [action]
-  }
   tags = {
     Name           = "ruleFromCloudFront"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -702,7 +693,7 @@ resource "aws_lb_target_group" "tgWordpress" {
   }
   tags = {
     Name           = "tgWordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
   target_group_health {
@@ -857,7 +848,7 @@ resource "aws_cloudfront_distribution" "cdnWordpress" {
   }
   tags = {
     Name           = "cdnWordpress"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
   viewer_certificate {
@@ -894,12 +885,9 @@ EOF
   comment = "Starts the trace at the edge: writes X-Amzn-Trace-Id (Root), X-Request-Start and X-Cdn-Distribution-Id."
   publish = true
   runtime = "cloudfront-js-2.0"
-  lifecycle {
-    ignore_changes = [publish]
-  }
   tags = {
     Name           = "traceStart"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -935,12 +923,9 @@ EOF
   comment = "Starts the trace at the edge for a Lambda origin: X-Amzn-Trace-Id with Root, Parent and Sampled."
   publish = true
   runtime = "cloudfront-js-2.0"
-  lifecycle {
-    ignore_changes = [publish]
-  }
   tags = {
     Name           = "traceStartLambda"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
 }
@@ -1039,11 +1024,10 @@ resource "aws_wafv2_web_acl" "wpWaf" {
   }
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [rule, rule_json]
   }
   tags = {
     Name           = "wpWaf"
-    State          = "wordpress-professional"
+    State          = "impWpMain"
     Struct8Creator = "rmay struct"
   }
   visibility_config {
