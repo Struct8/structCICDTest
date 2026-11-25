@@ -135,7 +135,7 @@ data "aws_iam_policy_document" "debug-wp_debug_permissions" {
     sid       = "RunProbeTaskwordpress"
     effect    = "Allow"
     actions   = ["ecs:RunTask"]
-    resources = ["arn:aws:ecs:*:*:task-definition/Struct8Probe-aUKnnvWki8OGmPX7UWinr-wordpress:*"]
+    resources = ["arn:aws:ecs:*:*:task-definition/Struct8Probe-fPdZ2x-dyV6nchXm6u9Q--wordpress:*"]
     condition {
       test     = "ArnEquals"
       values   = [aws_ecs_cluster.wp-cluster.arn]
@@ -204,7 +204,7 @@ data "aws_iam_policy_document" "debug-wp_wordpress_probe_logs" {
 }
 
 resource "aws_iam_role" "Struct8Debug-debug-wp" {
-  name                 = "Struct8Debug-aUKnnvWki8OGmPX7UWinr"
+  name                 = "Struct8Debug-fPdZ2x-dyV6nchXm6u9Q-"
   assume_role_policy   = data.aws_iam_policy_document.debug-wp_debug_trust.json
   max_session_duration = 3600
 }
@@ -282,13 +282,13 @@ resource "aws_iam_role" "task_role_ecs_wordpress" {
 }
 
 resource "aws_iam_role_policy" "Struct8Debug-debug-wp_policy" {
-  name   = "Struct8Debug-aUKnnvWki8OGmPX7UWinr-policy"
+  name   = "Struct8Debug-fPdZ2x-dyV6nchXm6u9Q--policy"
   policy = data.aws_iam_policy_document.debug-wp_debug_permissions.json
   role   = aws_iam_role.Struct8Debug-debug-wp.id
 }
 
 resource "aws_iam_role_policy" "Struct8ProbeLogs-debug-wp-wordpress" {
-  name   = "Struct8ProbeLogs-aUKnnvWki8OGmPX7UWinr-wordpress"
+  name   = "Struct8ProbeLogs-fPdZ2x-dyV6nchXm6u9Q--wordpress"
   policy = data.aws_iam_policy_document.debug-wp_wordpress_probe_logs.json
   role   = aws_iam_role.execution_role_ecs_wordpress.id
 }

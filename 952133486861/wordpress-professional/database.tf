@@ -34,7 +34,7 @@ resource "aws_rds_cluster" "wp-aurora" {
     seconds_until_auto_pause = 300
   }
   tags = {
-    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
+    "Struct8:Backup:wpDailyBackup-NBdWLPOf" = true
     Name                                    = "wp-aurora"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"

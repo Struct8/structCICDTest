@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "wpMedia" {
   force_destroy       = var.allow_data_loss
   object_lock_enabled = false
   tags = {
-    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
+    "Struct8:Backup:wpDailyBackup-NBdWLPOf" = true
     Name                                    = "wpMedia"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
@@ -245,7 +245,7 @@ resource "aws_efs_file_system" "wpContent" {
   encrypted       = true
   throughput_mode = "elastic"
   tags = {
-    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
+    "Struct8:Backup:wpDailyBackup-NBdWLPOf" = true
     Name                                    = "wpContent"
     State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"

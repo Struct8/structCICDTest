@@ -1,5 +1,5 @@
 data "aws_kms_key" "kmsWordpress" {
-  key_id = "alias/kmsWordpress-XCX3V2wA"
+  key_id = "alias/kmsWordpress--A6hBC1m"
 }
 
 data "aws_secretsmanager_secret" "wpSecrets" {
