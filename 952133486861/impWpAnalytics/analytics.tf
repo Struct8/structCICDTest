@@ -8,7 +8,7 @@ resource "aws_glue_catalog_database" "cdn_analytics" {
   }
   tags = {
     Name           = "cdn_analytics"
-    State          = "wp-analytics"
+    State          = "impWpAnalytics"
     Struct8Creator = "rmay struct"
   }
 }
@@ -204,7 +204,7 @@ resource "aws_athena_workgroup" "cdnAnalytics" {
   }
   tags = {
     Name           = "cdnAnalytics"
-    State          = "wp-analytics"
+    State          = "impWpAnalytics"
     Struct8Creator = "rmay struct"
   }
 }
