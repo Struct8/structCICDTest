@@ -4,7 +4,7 @@ resource "aws_cloudwatch_log_group" "wpReadCanaryLogs" {
   retention_in_days = 30
   tags = {
     Name           = "wpReadCanaryLogs"
-    State          = "impWpFlowlogs"
+    State          = "wp-flowlogs"
     Struct8Creator = "rmay struct"
   }
 }
@@ -12,10 +12,10 @@ resource "aws_cloudwatch_log_group" "wpReadCanaryLogs" {
 resource "aws_prometheus_workspace" "wp-flowlogs-amp" {
   alias = "wp-flowlogs-amp"
   tags = {
-    Struct8Management = "Struct8Flow"
     Name              = "wp-flowlogs-amp"
-    State             = "impWpFlowlogs"
+    State             = "wp-flowlogs"
     Struct8Creator    = "rmay struct"
+    Struct8Management = "Struct8Flow"
   }
 }
 
@@ -40,10 +40,10 @@ resource "aws_synthetics_canary" "wpReadCanary" {
     memory_in_mb       = 960
     timeout_in_seconds = 120
     environment_variables = {
-      ACCOUNT              = data.aws_caller_identity.current.account_id
+      ACCOUNT              = "952133486861"
       AWS_S3_BUCKET_NAME_0 = "canaryartifacts-952133486861-us-west-2-an"
       NAME                 = "wpReadCanary"
-      REGION               = data.aws_region.current.region
+      REGION               = "us-west-2"
       TARGET_URL           = "https://wp.cloudman.pro/"
     }
   }
@@ -55,7 +55,7 @@ resource "aws_synthetics_canary" "wpReadCanary" {
   }
   tags = {
     Name           = "wpReadCanary"
-    State          = "impWpFlowlogs"
+    State          = "wp-flowlogs"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_iam_role_policy_attachment.synthetics_canary_wpReadCanary_st_wp-flowlogs_attach]
