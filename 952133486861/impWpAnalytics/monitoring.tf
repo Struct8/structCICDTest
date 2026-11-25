@@ -4,7 +4,7 @@ resource "aws_cloudwatch_log_group" "analyticsPageLogs" {
   retention_in_days = 7
   tags = {
     Name           = "analyticsPageLogs"
-    State          = "impWpAnalytics"
+    State          = "wp-analytics"
     Struct8Creator = "rmay struct"
   }
 }
@@ -15,7 +15,7 @@ resource "aws_cloudwatch_log_group" "cspReceiverLogs" {
   retention_in_days = 7
   tags = {
     Name           = "cspReceiverLogs"
-    State          = "impWpAnalytics"
+    State          = "wp-analytics"
     Struct8Creator = "rmay struct"
   }
 }
@@ -29,7 +29,7 @@ resource "aws_xray_group" "analyticsTraces" {
   }
   tags = {
     Name           = "analyticsTraces"
-    State          = "impWpAnalytics"
+    State          = "wp-analytics"
     Struct8Creator = "rmay struct"
   }
 }

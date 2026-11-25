@@ -19,7 +19,7 @@ resource "aws_cloudfront_response_headers_policy" "cspReportOnly" {
     items {
       header   = "Content-Security-Policy-Report-Only"
       override = true
-      value    = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; report-uri https://oyza6obena56algskpuj7yqeji0gyypw.lambda-url.us-west-2.on.aws/"
+      value    = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; report-uri https://66wamo3ael2cbfnzramimgscoy0famrj.lambda-url.us-west-2.on.aws/"
     }
   }
   security_headers_config {

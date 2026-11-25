@@ -24,7 +24,7 @@ resource "aws_dynamodb_table" "cspTable" {
   }
   tags = {
     Name           = "cspTable"
-    State          = "impWpAnalytics"
+    State          = "wp-analytics"
     Struct8Creator = "rmay struct"
   }
   ttl {

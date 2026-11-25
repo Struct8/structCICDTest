@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "cdnLogBucket" {
   object_lock_enabled = false
   tags = {
     Name           = "cdnLogBucket"
-    State          = "impWpAnalytics"
+    State          = "wp-analytics"
     Struct8Creator = "rmay struct"
   }
 }

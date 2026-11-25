@@ -12,8 +12,8 @@ resource "aws_lambda_function" "analyticsPage" {
   timeout                        = 60
   environment {
     variables = {
-      ACCESS_KEY                     = "33wXNt6Q9G_CruKz_VHEZmJ-_ZXFQA6B"
-      ACCOUNT                        = data.aws_caller_identity.current.account_id
+      ACCESS_KEY                     = "9c4a78eaae11b3e503363fe7fe6c5251"
+      ACCOUNT                        = "952133486861"
       ATHENA_WORKGROUP               = "cdnAnalytics"
       AWS_ATHENA_WORKGROUP_NAME_0    = "cdnAnalytics"
       AWS_DYNAMODB_TABLE_NAME_0      = "cspTable"
@@ -24,7 +24,7 @@ resource "aws_lambda_function" "analyticsPage" {
       GLUE_DATABASE                  = "cdn_analytics"
       GLUE_TABLE                     = "cdn_log"
       NAME                           = "analyticsPage"
-      REGION                         = data.aws_region.current.region
+      REGION                         = "us-west-2"
     }
   }
   ephemeral_storage {
@@ -38,7 +38,7 @@ resource "aws_lambda_function" "analyticsPage" {
   }
   tags = {
     Name           = "analyticsPage"
-    State          = "impWpAnalytics"
+    State          = "wp-analytics"
     Struct8Creator = "rmay struct"
   }
   tracing_config {
@@ -61,12 +61,12 @@ resource "aws_lambda_function" "cspReceiver" {
   timeout                        = 10
   environment {
     variables = {
-      ACCOUNT                        = data.aws_caller_identity.current.account_id
+      ACCOUNT                        = "952133486861"
       AWS_DYNAMODB_TABLE_NAME_0      = "cspTable"
       AWS_LAMBDA_FUNCTION_URL_NAME_0 = "cspReceiverUrl"
       AWS_XRAY_GROUP_NAME_0          = "analyticsTraces"
       NAME                           = "cspReceiver"
-      REGION                         = data.aws_region.current.region
+      REGION                         = "us-west-2"
       SITE_HOST                      = "wp.cloudman.pro"
     }
   }
@@ -81,7 +81,7 @@ resource "aws_lambda_function" "cspReceiver" {
   }
   tags = {
     Name           = "cspReceiver"
-    State          = "impWpAnalytics"
+    State          = "wp-analytics"
     Struct8Creator = "rmay struct"
   }
   tracing_config {
@@ -102,19 +102,19 @@ resource "aws_lambda_function_url" "cspReceiverUrl" {
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver" {
   function_name          = aws_lambda_function.cspReceiver.function_name
+  statement_id           = "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiverff8ca27e3100c391b86032b0e9"
   principal              = "*"
   action                 = "lambda:InvokeFunctionUrl"
   function_url_auth_type = "NONE"
-  statement_id_prefix    = "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver"
   depends_on             = [aws_lambda_function_url.cspReceiverUrl]
 }
 
 resource "aws_lambda_permission" "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver_invoke" {
   function_name            = aws_lambda_function.cspReceiver.function_name
+  statement_id             = "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver_invokecfb4014fa533b880308d13fbaa"
   principal                = "*"
   action                   = "lambda:InvokeFunction"
   invoked_via_function_url = true
-  statement_id_prefix      = "perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver_invoke"
   depends_on               = [aws_lambda_function_url.cspReceiverUrl, aws_lambda_permission.perm_aws_lambda_function_url_cspReceiverUrl_to_cspReceiver]
 }
 
@@ -140,7 +140,7 @@ resource "aws_appautoscaling_target" "sc_target_Read_cspTable" {
   service_namespace  = "dynamodb"
   tags = {
     Name           = "sc_target_Read_cspTable"
-    State          = "impWpAnalytics"
+    State          = "wp-analytics"
     Struct8Creator = "rmay struct"
   }
 }
