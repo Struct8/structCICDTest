@@ -34,6 +34,9 @@ resource "aws_synthetics_canary" "wpReadCanary" {
   handler              = "index.handler"
   runtime_version      = "syn-nodejs-playwright-9.0"
   start_canary         = true
+  lifecycle {
+    ignore_changes = [run_config, start_canary]
+  }
   run_config {
     active_tracing     = false
     ephemeral_storage  = 1024
