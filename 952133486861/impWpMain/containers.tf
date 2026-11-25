@@ -14,7 +14,7 @@ resource "aws_ecs_capacity_provider" "wp-capacity" {
   }
   tags = {
     Name           = "wp-capacity"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -27,7 +27,7 @@ resource "aws_ecs_cluster" "wp-cluster" {
   }
   tags = {
     Name           = "wp-cluster"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -81,7 +81,7 @@ resource "aws_ecs_service" "wordpress_service" {
   }
   tags = {
     Name           = "wordpress_service"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_lb_listener_rule.ruleFromCloudFront]
@@ -91,7 +91,7 @@ resource "aws_ecs_task_definition" "Struct8Probe_debug-wp_wordpress" {
   container_definitions    = jsonencode([{"name":"probe","image":"${local.container_def_wordpress_wordpress_1.image}","essential":true,"entryPoint":["/bin/sh","-c","echo \"struct8 probe: host=$1 port=$2\"\ngetent hosts \"$1\" || nslookup \"$1\" 2>/dev/null || echo \"no DNS answer\"\nping -c 3 -W 2 \"$1\" 2>/dev/null || echo \"no ICMP reply (filtered, or not permitted in this container; not conclusive)\"\nif command -v nc >/dev/null 2>&1; then\n  if nc -z -w 5 \"$1\" \"$2\" 2>/dev/null; then echo \"port $2 open\"; else echo \"port $2 closed or filtered\"; fi\nelif command -v bash >/dev/null 2>&1; then\n  if timeout 5 bash -c 'exec 3<>/dev/tcp/\"$1\"/\"$2\"' _ \"$1\" \"$2\" 2>/dev/null; then echo \"port $2 open\"; else echo \"port $2 closed or filtered\"; fi\nelse\n  echo \"port $2 not tested: this image has neither nc nor bash\"\nfi","probe"],"command":["localhost","80"],"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-group":"${aws_cloudwatch_log_group.Struct8Probe_debug-wp_wordpress_logs.name}","awslogs-region":"${data.aws_region.current.region}","awslogs-stream-prefix":"probe"}}}])
   cpu                      = "256"
   execution_role_arn       = aws_iam_role.execution_role_ecs_wordpress.arn
-  family                   = "Struct8Probe-aUKnnvWki8OGmPX7UWinr-wordpress"
+  family                   = "Struct8Probe-fPdZ2x-dyV6nchXm6u9Q--wordpress"
   memory                   = "512"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
@@ -144,7 +144,7 @@ service:
       },
       {
         name  = "AWS_EFS_FILE_SYSTEM_ID_0"
-        value = "fs-07f7e55adb769ded6"
+        value = "fs-01f6afdd8b4cdc040"
       },
       {
         name  = "AWS_ELASTICACHE_REPLICATION_GROUP_ENDPOINT_0"
@@ -180,7 +180,7 @@ service:
       },
       {
         name  = "AWS_RDS_CLUSTER_SECRET_ARN_0"
-        value = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-7368ca53-bb08-4170-a7af-2e881b307d2d-O43jmE"
+        value = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-4fbdfcb7-40d8-421e-a082-4c6730a1be0e-2EbEkK"
       },
       {
         name  = "AWS_REGION"
@@ -287,7 +287,7 @@ service:
       },
       {
         name  = "AWS_EFS_FILE_SYSTEM_ID_0"
-        value = "fs-07f7e55adb769ded6"
+        value = "fs-01f6afdd8b4cdc040"
       },
       {
         name  = "AWS_ELASTICACHE_REPLICATION_GROUP_ENDPOINT_0"
@@ -323,7 +323,7 @@ service:
       },
       {
         name  = "AWS_RDS_CLUSTER_SECRET_ARN_0"
-        value = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-7368ca53-bb08-4170-a7af-2e881b307d2d-O43jmE"
+        value = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-4fbdfcb7-40d8-421e-a082-4c6730a1be0e-2EbEkK"
       },
       {
         name  = "AWS_S3_BUCKET_NAME_0"
@@ -449,11 +449,11 @@ service:
     secrets = [
       {
         name      = "DB_ADMIN_PASSWORD"
-        valueFrom = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-7368ca53-bb08-4170-a7af-2e881b307d2d-O43jmE:password::"
+        valueFrom = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-4fbdfcb7-40d8-421e-a082-4c6730a1be0e-2EbEkK:password::"
       },
       {
         name      = "DB_ADMIN_USER"
-        valueFrom = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-7368ca53-bb08-4170-a7af-2e881b307d2d-O43jmE:username::"
+        valueFrom = "arn:aws:secretsmanager:us-west-2:952133486861:secret:rds!cluster-4fbdfcb7-40d8-421e-a082-4c6730a1be0e-2EbEkK:username::"
       },
       {
         name      = "WORDPRESS_DB_PASSWORD"
@@ -498,7 +498,7 @@ resource "aws_ecs_task_definition" "wordpress" {
   task_role_arn            = aws_iam_role.task_role_ecs_wordpress.arn
   tags = {
     Name           = "wordpress"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
   volume {

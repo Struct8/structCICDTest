@@ -3,7 +3,7 @@ resource "aws_sns_topic" "alarmsWordpress" {
   tracing_config = "Active"
   tags = {
     Name           = "alarmsWordpress"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
   depends_on = [aws_xray_resource_policy.aws_xray_resource_policy_st_wordpress-professional_6a7eb02276]
@@ -22,7 +22,7 @@ resource "aws_sesv2_email_identity" "wpMail" {
   }
   tags = {
     Name           = "wpMail"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }

@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "albLogs" {
   object_lock_enabled = false
   tags = {
     Name           = "albLogs"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -16,10 +16,10 @@ resource "aws_s3_bucket" "wpMedia" {
   force_destroy       = true
   object_lock_enabled = false
   tags = {
-    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
     Name                                    = "wpMedia"
-    State                                   = "impWpMain"
+    State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
+    "Struct8:Backup:wpDailyBackup-NBdWLPOf" = true
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "wpSetupFiles" {
   object_lock_enabled = false
   tags = {
     Name           = "wpSetupFiles"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -203,7 +203,7 @@ resource "aws_s3_object" "wpSetupAssets" {
   key          = "wordpress/wp-setup-assets.tar.gz"
   tags = {
     Name           = "wpSetupAssets"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -214,7 +214,7 @@ resource "aws_s3_object" "wpSetupScript" {
   key          = "wordpress/wp-auto-setup.sh"
   tags = {
     Name           = "wpSetupScript"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -235,24 +235,24 @@ resource "aws_efs_access_point" "ap_wordpress_wpContent" {
   }
   tags = {
     Name           = "ap_wordpress_wpContent"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
 
 resource "aws_efs_file_system" "wpContent" {
   kms_key_id      = data.aws_kms_key.kmsWordpress.arn
-  creation_token  = "terraform-Vx5bOBe8GhoNAYvtkBfBgNsie0"
+  creation_token  = "terraform-ITpMFQhgDWtFpEIQwmwPltW1F7"
   encrypted       = true
   throughput_mode = "elastic"
   protection {
     replication_overwrite = "ENABLED"
   }
   tags = {
-    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
     Name                                    = "wpContent"
-    State                                   = "impWpMain"
+    State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
+    "Struct8:Backup:wpDailyBackup-NBdWLPOf" = true
   }
 }
 

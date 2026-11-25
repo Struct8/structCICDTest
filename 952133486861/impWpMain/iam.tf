@@ -4,7 +4,7 @@ resource "aws_iam_instance_profile" "asgWordpress_profile" {
   role = aws_iam_role.asgWordpress_role.name
   tags = {
     Name           = "asgWordpress_profile"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -136,7 +136,7 @@ data "aws_iam_policy_document" "debug-wp_debug_permissions" {
     sid       = "RunProbeTaskwordpress"
     effect    = "Allow"
     actions   = ["ecs:RunTask"]
-    resources = ["arn:aws:ecs:*:*:task-definition/Struct8Probe-aUKnnvWki8OGmPX7UWinr-wordpress:*"]
+    resources = ["arn:aws:ecs:*:*:task-definition/Struct8Probe-fPdZ2x-dyV6nchXm6u9Q--wordpress:*"]
     condition {
       test     = "ArnEquals"
       values   = [aws_ecs_cluster.wp-cluster.arn]
@@ -205,7 +205,7 @@ data "aws_iam_policy_document" "debug-wp_wordpress_probe_logs" {
 }
 
 resource "aws_iam_role" "Struct8Debug-debug-wp" {
-  name                 = "Struct8Debug-aUKnnvWki8OGmPX7UWinr"
+  name                 = "Struct8Debug-fPdZ2x-dyV6nchXm6u9Q-"
   assume_role_policy   = data.aws_iam_policy_document.debug-wp_debug_trust.json
   max_session_duration = 3600
 }
@@ -218,7 +218,7 @@ resource "aws_iam_role" "asgWordpress_role" {
   path                  = "/"
   tags = {
     Name           = "asgWordpress_role"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -231,7 +231,7 @@ resource "aws_iam_role" "execution_role_ecs_wordpress" {
   path                  = "/"
   tags = {
     Name           = "execution_role_ecs_wordpress"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -244,19 +244,19 @@ resource "aws_iam_role" "task_role_ecs_wordpress" {
   path                  = "/"
   tags = {
     Name           = "task_role_ecs_wordpress"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
 
 resource "aws_iam_role_policy" "Struct8Debug-debug-wp_policy" {
-  name   = "Struct8Debug-aUKnnvWki8OGmPX7UWinr-policy"
+  name   = "Struct8Debug-fPdZ2x-dyV6nchXm6u9Q--policy"
   policy = data.aws_iam_policy_document.debug-wp_debug_permissions.json
   role   = aws_iam_role.Struct8Debug-debug-wp.id
 }
 
 resource "aws_iam_role_policy" "Struct8ProbeLogs-debug-wp-wordpress" {
-  name   = "Struct8ProbeLogs-aUKnnvWki8OGmPX7UWinr-wordpress"
+  name   = "Struct8ProbeLogs-fPdZ2x-dyV6nchXm6u9Q--wordpress"
   policy = data.aws_iam_policy_document.debug-wp_wordpress_probe_logs.json
   role   = aws_iam_role.execution_role_ecs_wordpress.id
 }
@@ -295,7 +295,7 @@ resource "aws_acm_certificate" "certAlb" {
   }
   tags = {
     Name           = "certAlb"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -315,7 +315,7 @@ resource "aws_acm_certificate" "certWordpress" {
   }
   tags = {
     Name           = "certWordpress"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }

@@ -3,7 +3,7 @@ resource "aws_db_subnet_group" "subnet_group_wp-aurora" {
   subnet_ids = [aws_subnet.dataA.id, aws_subnet.dataB.id]
   tags = {
     Name           = "subnet_group_wp-aurora"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -26,8 +26,8 @@ resource "aws_rds_cluster" "wp-aurora" {
   master_username                 = "dbadmin"
   network_type                    = "IPV4"
   port                            = 3306
-  preferred_backup_window         = "06:55-07:25"
-  preferred_maintenance_window    = "wed:12:36-wed:13:06"
+  preferred_backup_window         = "11:10-11:40"
+  preferred_maintenance_window    = "sat:09:07-sat:09:37"
   skip_final_snapshot             = true
   storage_encrypted               = true
   vpc_security_group_ids          = [aws_security_group.rds_cluster_wp-aurora_group.id]
@@ -37,10 +37,10 @@ resource "aws_rds_cluster" "wp-aurora" {
     seconds_until_auto_pause = 300
   }
   tags = {
-    "Struct8:Backup:wpDailyBackup-LG8tjg6d" = true
     Name                                    = "wp-aurora"
-    State                                   = "impWpMain"
+    State                                   = "wordpress-professional"
     Struct8Creator                          = "rmay struct"
+    "Struct8:Backup:wpDailyBackup-NBdWLPOf" = true
   }
 }
 
@@ -52,12 +52,12 @@ resource "aws_rds_cluster_instance" "wp-aurora-reader" {
   engine                       = aws_rds_cluster.wp-aurora.engine
   identifier                   = "wp-aurora-reader"
   instance_class               = "db.serverless"
-  preferred_backup_window      = "06:55-07:25"
-  preferred_maintenance_window = "sun:06:35-sun:07:05"
+  preferred_backup_window      = "11:10-11:40"
+  preferred_maintenance_window = "thu:07:13-thu:07:43"
   promotion_tier               = 2
   tags = {
     Name           = "wp-aurora-reader"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -70,12 +70,12 @@ resource "aws_rds_cluster_instance" "wp-aurora-writer" {
   engine                       = aws_rds_cluster.wp-aurora.engine
   identifier                   = "wp-aurora-writer"
   instance_class               = "db.serverless"
-  preferred_backup_window      = "06:55-07:25"
-  preferred_maintenance_window = "tue:13:00-tue:13:30"
+  preferred_backup_window      = "11:10-11:40"
+  preferred_maintenance_window = "thu:06:42-thu:07:12"
   promotion_tier               = 1
   tags = {
     Name           = "wp-aurora-writer"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -90,7 +90,7 @@ resource "aws_elasticache_replication_group" "wpRedis" {
   cluster_mode               = "disabled"
   description                = "WordPress object cache for wp_options, postmeta and transients."
   engine_version             = "7.1"
-  maintenance_window         = "tue:11:00-tue:12:00"
+  maintenance_window         = "sun:11:00-sun:12:00"
   node_type                  = "cache.t4g.micro"
   num_cache_clusters         = 2
   security_group_ids         = [aws_security_group.elasticache_replication_group_wpRedis_group.id]
@@ -99,7 +99,7 @@ resource "aws_elasticache_replication_group" "wpRedis" {
   transit_encryption_enabled = true
   tags = {
     Name           = "wpRedis"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -109,7 +109,7 @@ resource "aws_elasticache_subnet_group" "subnet_group_wpRedis" {
   subnet_ids = [aws_subnet.dataA.id, aws_subnet.dataB.id]
   tags = {
     Name           = "subnet_group_wpRedis"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }

@@ -86,13 +86,13 @@ EOFUData
     tags = {
       AmazonECSManaged = true
       Name             = "asgWordpress"
-      State            = "impWpMain"
+      State            = "wordpress-professional"
       Struct8Creator   = "rmay struct"
     }
   }
   tags = {
     Name           = "ltWordpress"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
@@ -164,7 +164,7 @@ resource "aws_autoscaling_group" "asgWordpress" {
   tag {
     key                 = "State"
     propagate_at_launch = true
-    value               = "impWpMain"
+    value               = "wordpress-professional"
   }
   tag {
     key                 = "Struct8Creator"
@@ -220,7 +220,7 @@ resource "aws_appautoscaling_target" "scalingWordpress" {
   }
   tags = {
     Name           = "scalingWordpress"
-    State          = "impWpMain"
+    State          = "wordpress-professional"
     Struct8Creator = "rmay struct"
   }
 }
